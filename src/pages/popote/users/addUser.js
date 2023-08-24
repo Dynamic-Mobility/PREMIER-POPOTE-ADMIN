@@ -19,6 +19,7 @@ import { useAuth } from "../../../hooks/use-auth";
 import { toast } from "react-hot-toast";
 import { getAllRoles } from "../../../slices/dashboard/roles";
 import { createUser } from "../../../redux/services/users";
+import MKTypography from "../../../components/@mui-components/typography";
 
 const AddUser = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
@@ -118,6 +119,7 @@ const AddUser = (props) => {
       >
         {/* <DialogTitle id="alert-dialog-title">{"Create User"}</DialogTitle> */}
         <DialogContent>
+          <MKTypography fontWeight={"bold"} color="primary">Create User</MKTypography>
           <form onSubmit={formik.handleSubmit}>
             <Grid container spacing={2} sx={{ mt: 2 }}>
               <Grid item md={6} sx={12}>
