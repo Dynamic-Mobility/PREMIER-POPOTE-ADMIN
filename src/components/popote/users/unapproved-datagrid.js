@@ -13,8 +13,6 @@ import MKButton from "../../@mui-components/button";
 import { getAllUsers } from "../../../slices/dashboard/users";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
-import AddUser from "../../../pages/popote/users/addUser";
-import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
 
 // import PermissionsForm from "./permissions-form";
@@ -112,8 +110,7 @@ const UnapprovedDataGrid = (props) => {
     return (
       <div>
         <DoneIcon
-          fontSize={"20px"}
-          sx={{ cursor: "pointer", color: "#002E5E" }}
+          sx={{ cursor: "pointer", color: "#002E5E",fontSize:"80px"}}
         />
       </div>
     );
@@ -121,7 +118,6 @@ const UnapprovedDataGrid = (props) => {
 
   return (
     <>
-      <AddUser {...{ handleClickOpen, handleClose, open, setOpen }} />
       <DataGrid
         dataSource={users}
         allowColumnReordering={true}
