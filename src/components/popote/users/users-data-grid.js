@@ -4,7 +4,7 @@ import { Column, Item, SearchPanel, Toolbar } from "devextreme-react/data-grid";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { MoreHoriz } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import MKBox from "../../@mui-components/box";
@@ -17,7 +17,6 @@ import AddUser from "../../../pages/popote/users/addUser";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
-// import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
 });
@@ -71,6 +70,7 @@ export const MenuDots = ({ data }) => {
 const UsersDataGrid = (props) => {
   const { data, handleOnAdd } = props;
   const [open, setOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
   //   const { users } = useSelector(({ users }) => users)
 
   const handleClickOpen = () => {
@@ -109,14 +109,14 @@ const UsersDataGrid = (props) => {
     },
   ];
 
+  //   filter users based on search query
+  const filteredUser = users.filter((user) => {
+    return user.name.toLocaleLowerCase().includes(searchQuery.toLowerCase());
+  });
+
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
-        {/* <EditIcon
-          onClick={handleClickOpen}
-          fontSize={"20px"}
-          sx={{ cursor: "pointer",color: "#002E5E"}}
-        /> */}
         <MenuDots />
       </div>
     );
@@ -124,13 +124,34 @@ const UsersDataGrid = (props) => {
 
   return (
     <>
-      <AddUser {...{ handleClickOpen, handleClose, open, setOpen }} />
+      <MKBox
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          my: 1,
+        }}
+      >
+        <AddUser {...{ handleClickOpen, handleClose, open, setOpen }} />
+        <form>
+          <TextField
+            onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchQuery}
+            fullWidth
+            label="Search..."
+          />
+        </form>
+      </MKBox>
       <DataGrid
-        dataSource={users}
+        dataSource={filteredUser}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
-        // height={"70vh"}
+        remoteOperations={true}
+        showColumnLines={true}
+        showRowLines={true}
+        wordWrapEnabled={true}
+        height={"70vh"}
       >
         <Column dataField="name" caption="Name" />
         <Column dataField="profile_name" caption="Profile Name" />
