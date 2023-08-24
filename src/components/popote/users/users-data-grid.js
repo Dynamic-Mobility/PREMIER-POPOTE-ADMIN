@@ -60,7 +60,19 @@ export const MenuDots = ({ data }) => {
           onClick={() => handleRedirect(data)}
           sx={{ textTransform: "uppercase" }}
         >
-          Set Permissions
+          View User
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleRedirect(data)}
+          sx={{ textTransform: "uppercase" }}
+        >
+          Approve User
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleRedirect(data)}
+          sx={{ textTransform: "uppercase" }}
+        >
+          Edit User
         </MenuItem>
       </Menu>
     </div>
@@ -111,11 +123,12 @@ const UsersDataGrid = (props) => {
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
-        <EditIcon
+        {/* <EditIcon
           onClick={handleClickOpen}
           fontSize={"20px"}
           sx={{ cursor: "pointer",color: "#002E5E"}}
-        />
+        /> */}
+        <MenuDots />
       </div>
     );
   };
