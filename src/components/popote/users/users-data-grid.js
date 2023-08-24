@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
 import AddUser from "../../../pages/popote/users/addUser";
 import EditIcon from "@mui/icons-material/Edit";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 // import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
@@ -56,23 +57,11 @@ export const MenuDots = ({ data }) => {
           horizontal: "left",
         }}
       >
-        <MenuItem
-          onClick={() => handleRedirect(data)}
-          sx={{ textTransform: "uppercase" }}
-        >
-          View User
+        <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
+          <EditIcon sx={{ color: "#002E5E", fontSize: "20px" }} />
         </MenuItem>
-        <MenuItem
-          onClick={() => handleRedirect(data)}
-          sx={{ textTransform: "uppercase" }}
-        >
-          Approve User
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleRedirect(data)}
-          sx={{ textTransform: "uppercase" }}
-        >
-          Edit User
+        <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
+          <RemoveRedEyeIcon sx={{ color: "#002E5E", fontSize: "20px" }} />
         </MenuItem>
       </Menu>
     </div>
