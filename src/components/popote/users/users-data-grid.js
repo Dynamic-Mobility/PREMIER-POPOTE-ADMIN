@@ -13,7 +13,10 @@ import MKButton from "../../@mui-components/button";
 import { getAllUsers } from "../../../slices/dashboard/users";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
-import AddUser from "../../../pages/dashboard/users/addUser";
+import AddUser from "../../../pages/popote/users/addUser";
+import EditIcon from "@mui/icons-material/Edit";
+
+
 // import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -68,9 +71,7 @@ export const MenuDots = ({ data }) => {
 const UsersDataGrid = (props) => {
   const { data, handleOnAdd } = props;
   const [open, setOpen] = React.useState(false);
-  const [selectedRole, setSelectedRole] = useState(null);
   //   const { users } = useSelector(({ users }) => users)
-  const [openDialog, setOpenDialog] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -111,13 +112,18 @@ const UsersDataGrid = (props) => {
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
-        <MenuDots data={data} />
+        <EditIcon
+          onClick={handleClickOpen}
+          sx={{ cursor: "pointer", color: "primary" }}
+        />
+        {/* <MenuDots data={data} /> */}
       </div>
     );
   };
 
   return (
     <>
+      <AddUser {...{ handleClickOpen, handleClose, open, setOpen }} />
       <DataGrid
         dataSource={users}
         allowColumnReordering={true}
@@ -125,14 +131,6 @@ const UsersDataGrid = (props) => {
         showBorders={true}
         // height={"70vh"}
       >
-        <SearchPanel visible={true} highlightCaseSensitive={true} />
-        {/* <Column
-          caption="Action"
-          width={180}
-          alignment={"center"}
-          allowFiltering={false}
-          cellRender={actionLink}
-        /> */}
         <Column dataField="name" caption="Name" />
         <Column dataField="profile_name" caption="Profile Name" />
         <Column dataField="phoneNumber" caption="Phone Number" />
@@ -142,12 +140,13 @@ const UsersDataGrid = (props) => {
           width={200}
           allowFiltering={false}
         />
-        <Toolbar>
-          <Item location="before">
-            <AddUser {...{ handleClickOpen, handleClose, open, setOpen }} />
-          </Item>
-          <Item location="after" name="searchPanel" />
-        </Toolbar>
+        <Column
+          caption="Action"
+          width={180}
+          alignment={"center"}
+          allowFiltering={false}
+          cellRender={actionLink}
+        />
       </DataGrid>
     </>
   );
