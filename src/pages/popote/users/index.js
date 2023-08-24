@@ -1,6 +1,6 @@
 import React from "react";
-import { DashboardLayout } from "../../../../components/layouts/dashboard";
-import { AuthGuard } from "../../../../hocs/auth-guard";
+import { DashboardLayout } from "../../../components/layouts/dashboard";
+import { AuthGuard } from "../../../hocs/auth-guard";
 import { Typography, Card, Container } from "@mui/material";
 
 const Users = () => {
