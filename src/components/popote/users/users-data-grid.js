@@ -16,7 +16,6 @@ import { useAuth } from "../../../hooks/use-auth";
 import AddUser from "../../../pages/popote/users/addUser";
 import EditIcon from "@mui/icons-material/Edit";
 
-
 // import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -114,9 +113,9 @@ const UsersDataGrid = (props) => {
       <div>
         <EditIcon
           onClick={handleClickOpen}
-          sx={{ cursor: "pointer", color: "primary" }}
+          fontSize={"20px"}
+          sx={{ cursor: "pointer",color: "#002E5E"}}
         />
-        {/* <MenuDots data={data} /> */}
       </div>
     );
   };
