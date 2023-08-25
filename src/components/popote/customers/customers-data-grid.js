@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import AddCustomer from "../../../pages/popote/customers/addCustomer";
+import Link from "next/link";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -131,7 +131,11 @@ const CustomersDataGrid = (props) => {
           my: 1,
         }}
       >
-        <AddCustomer {...{ handleClickOpen, handleClose, open, setOpen }} />
+        <Link href="/popote/customers/add-new-customer">
+          <MKButton variant="contained" color="primary">
+            Add Customer
+          </MKButton>
+        </Link>
         <form>
           <TextField
             onChange={(e) => setSearchQuery(e.target.value)}
