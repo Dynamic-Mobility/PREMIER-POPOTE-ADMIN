@@ -20,6 +20,13 @@ import { toast } from "react-hot-toast";
 import { getAllRoles } from "../../../slices/dashboard/roles";
 import { createUser } from "../../../redux/services/users";
 import MKTypography from "../../../components/@mui-components/typography";
+import Slide from '@mui/material/Slide';
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
@@ -114,8 +121,11 @@ const AddCustomer = (props) => {
       <Dialog
         open={open}
         onClose={handleClose}
+        TransitionComponent={Transition}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        maxWidth="xl"
+        fullWidth
       >
         <DialogContent>
           <MKTypography fontWeight={"bold"} color="primary">
