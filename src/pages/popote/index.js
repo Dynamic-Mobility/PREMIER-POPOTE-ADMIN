@@ -11,7 +11,7 @@ const Dashboard = () => {
         <MKTypography fontWeight="bold" fontSize="20px">
           Dashboard
         </MKTypography>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{my:1}}>
           <Grid item md={3} xs={12}>
             <Card sx={{p:2}}>Dashboard</Card>
           </Grid>
