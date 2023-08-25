@@ -11,9 +11,7 @@ import { createUser } from "../../../redux/services/users";
 import MKTypography from "../../../components/@mui-components/typography";
 import MKBox from "../../../components/@mui-components/box";
 import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
