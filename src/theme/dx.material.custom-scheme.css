@@ -15098,7 +15098,7 @@
     display: none!important;
 }
 .dx-datagrid-summary-item {
-    font-weight: 700;
+    font-weight: 400;
 }
 .dx-datagrid-export-menu .dx-dropdownbutton-content .dx-list-item {
     display: block;
@@ -16087,7 +16087,7 @@
     -webkit-box-shadow: 0 0 1px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.2);
     box-shadow: 0 0 1px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.2);
     color: #000;
-    font-weight: 700;
+    font-weight: 400;
     padding: 20px;
     background-color: #fff;
     line-height: 16px;
@@ -16140,7 +16140,7 @@
 .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
     border-bottom: 1px solid #e0e0e0;
     line-height: 16px;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 14px;
 }
 .dx-datagrid-headers .dx-datagrid-table .dx-row>td .dx-sort,
