@@ -11,7 +11,9 @@ import { createUser } from "../../../redux/services/users";
 import MKTypography from "../../../components/@mui-components/typography";
 import MKBox from "../../../components/@mui-components/box";
 import Divider from "@mui/material/Divider";
-
+import { DashboardLayout } from "../../../components/layouts/dashboard";
+import MKInput from "../../../components/@mui-components/text-field";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
@@ -76,7 +78,7 @@ const AddCustomer = (props) => {
           <Grid container spacing={2}>
             <Grid item md={8} xs={12}>
               <form>
-                <TextField
+                <MKInput
                   sx={{ my: 2 }}
                   fullWidth
                   maxWidth="sm"
@@ -214,22 +216,22 @@ const AddCustomer = (props) => {
                   Save Changes
                 </MKButton>
               </MKBox>
-              <MKBox sx={{my:2,border:'1px solid gray',borderRadius:'4px',textAlign:'center'}}>
-                <MKTypography sx={{py:1,textTransform:"uppercase"}}>Disable</MKTypography>
-                <Divider />
-                <MKTypography sx={{py:1,textTransform:"uppercase"}}>Update Limits</MKTypography>
-                <Divider />
-                <MKTypography sx={{py:1,textTransform:"uppercase"}}>Recreate Key</MKTypography>
-                <Divider />
-                <MKTypography sx={{py:1,textTransform:"uppercase"}}>Reset Pin</MKTypography>
-                <Divider />
-                <MKTypography sx={{py:1,textTransform:"uppercase"}}>Maintain Card</MKTypography>
-                <Divider />
-                <MKTypography sx={{py:1,textTransform:"uppercase"}}>Manage Device</MKTypography>
-                <Divider />
-                <MKTypography sx={{py:1,textTransform:"uppercase"}}>Cancel</MKTypography>
-                <Divider />
-              </MKBox>
+              
+                <ButtonGroup
+                  sx={{my:1}}
+                  fullWidth
+                  orientation="vertical"
+                  variant="contained"
+                  aria-label="vertical outlined button group"
+                >
+                  <MKButton>Disable</MKButton>
+                  <MKButton>Update Limits</MKButton>
+                  <MKButton>Recreate Key</MKButton>
+                  <MKButton>Reset Pin</MKButton>
+                  <MKButton>Maintain Card</MKButton>
+                  <MKButton>Manage Device</MKButton>
+                  <MKButton>Cancel</MKButton>
+                </ButtonGroup>
             </Grid>
           </Grid>
         </Card>
@@ -237,5 +239,7 @@ const AddCustomer = (props) => {
     </>
   );
 };
+
+AddCustomer.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default AddCustomer;
