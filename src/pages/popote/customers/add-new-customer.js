@@ -14,6 +14,7 @@ import Divider from "@mui/material/Divider";
 import { DashboardLayout } from "../../../components/layouts/dashboard";
 import MKInput from "../../../components/@mui-components/text-field";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import DMTTextInput from "../../../components/@dmt-components/form/text-input";
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
@@ -78,7 +79,7 @@ const AddCustomer = (props) => {
           <Grid container spacing={2}>
             <Grid item md={8} xs={12}>
               <form>
-                <MKInput
+                <DMTTextInput
                   sx={{ my: 2 }}
                   fullWidth
                   maxWidth="sm"
@@ -99,7 +100,7 @@ const AddCustomer = (props) => {
                 <MKTypography fontWeight="bold">Personal Details</MKTypography>
                 <Grid container spacing={2}>
                   <Grid item md={4} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -108,7 +109,7 @@ const AddCustomer = (props) => {
                     />
                   </Grid>
                   <Grid item md={4} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -117,7 +118,7 @@ const AddCustomer = (props) => {
                     />
                   </Grid>
                   <Grid item md={4} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -128,7 +129,7 @@ const AddCustomer = (props) => {
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item md={6} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -137,7 +138,7 @@ const AddCustomer = (props) => {
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -148,7 +149,7 @@ const AddCustomer = (props) => {
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item md={6} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -157,7 +158,7 @@ const AddCustomer = (props) => {
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -172,7 +173,7 @@ const AddCustomer = (props) => {
                 <MKTypography fontWeight="bold">Account Details</MKTypography>
                 <Grid container spacing={2}>
                   <Grid item md={4} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -181,7 +182,7 @@ const AddCustomer = (props) => {
                     />
                   </Grid>
                   <Grid item md={4} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -190,7 +191,7 @@ const AddCustomer = (props) => {
                     />
                   </Grid>
                   <Grid item md={4} xs={12}>
-                    <TextField
+                    <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       maxWidth="sm"
@@ -216,22 +217,36 @@ const AddCustomer = (props) => {
                   Save Changes
                 </MKButton>
               </MKBox>
-              
-                <ButtonGroup
-                  sx={{my:1}}
-                  fullWidth
-                  orientation="vertical"
-                  variant="contained"
-                  aria-label="vertical outlined button group"
-                >
-                  <MKButton>Disable</MKButton>
-                  <MKButton>Update Limits</MKButton>
-                  <MKButton>Recreate Key</MKButton>
-                  <MKButton>Reset Pin</MKButton>
-                  <MKButton>Maintain Card</MKButton>
-                  <MKButton>Manage Device</MKButton>
-                  <MKButton>Cancel</MKButton>
-                </ButtonGroup>
+
+              <ButtonGroup
+                sx={{ my: 1 }}
+                fullWidth
+                orientation="vertical"
+                variant="contained"
+                aria-label="vertical outlined button group"
+              >
+                <MKButton variant="outlined" color="primary">
+                  Disable
+                </MKButton>
+                <MKButton variant="outlined" color="primary">
+                  Update Limits
+                </MKButton>
+                <MKButton variant="outlined" color="primary">
+                  Recreate Key
+                </MKButton>
+                <MKButton variant="outlined" color="primary">
+                  Reset Pin
+                </MKButton>
+                <MKButton variant="outlined" color="primary">
+                  Maintain Card
+                </MKButton>
+                <MKButton variant="outlined" color="primary">
+                  Manage Device
+                </MKButton>
+                <MKButton variant="outlined" color="primary">
+                  Cancel
+                </MKButton>
+              </ButtonGroup>
             </Grid>
           </Grid>
         </Card>
