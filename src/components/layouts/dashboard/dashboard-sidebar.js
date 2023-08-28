@@ -4,7 +4,7 @@ import {
     Drawer,
     useMediaQuery,
 } from "@mui/material";
-import { useEffect,} from "react";
+import {useEffect, useMemo,} from "react";
 
 import { DashboardSidebarSection } from "./dashboard-sidebar-section";
 import PropTypes from "prop-types";
@@ -26,8 +26,8 @@ export const DashboardSidebar = (props) => {
         noSsr: true,
     });
     const { menus } = useSelector(({ role }) => role);
-    //const sections = useMemo(() => getSections(t), [t]);
-    const sections = [{child:menus}];
+    const sections = useMemo(() => getSections(t), [t]);
+    //const sections = [{child:menus}];
 
     const handlePathChange = () => {
         if (!router.isReady) {

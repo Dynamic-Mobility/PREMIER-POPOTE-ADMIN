@@ -35,7 +35,7 @@ export const AUTH_TOKEN_KEY = 'accessToken';
 export const USER_DETAILS = 'accessToken';
 export const AUTH_REFRESH_TOKEN_KEY = 'refreshToken';
 
-export const ALLOWED_PAGE_SIZES = [ 10, 25,];
+export const ALLOWED_PAGE_SIZES = [1, 25, 50, 100];
 
 export const USER_ROLES = {
     PRINCIPAL: 'principal',
