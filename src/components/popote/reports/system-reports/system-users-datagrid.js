@@ -81,24 +81,28 @@ const SystemUsersDataGrid = (props) => {
       profile_name: "Marcos",
       phoneNumber: "073242432",
       email: "marcos@gmail.com",
+      status: 'Active',
     },
     {
       name: "Derrick Ochieng",
       profile_name: "Marcos",
       phoneNumber: "073242432",
       email: "marcos@gmail.com",
+      status: 'Inactive',
     },
     {
       name: "Jane Ochieng",
       profile_name: "Marcos",
       phoneNumber: "073242432",
       email: "marcos@gmail.com",
+      status: 'Active',
     },
     {
       name: "Ann Ochieng",
       profile_name: "Marcos",
       phoneNumber: "073242432",
       email: "marcos@gmail.com",
+      status: 'Inactive',
     },
   ];
 
@@ -127,6 +131,12 @@ const SystemUsersDataGrid = (props) => {
         <Column
           dataField="email"
           caption="email"
+          width={200}
+          allowFiltering={false}
+        />
+        <Column
+          dataField="status"
+          caption="Status"
           width={200}
           allowFiltering={false}
         />
