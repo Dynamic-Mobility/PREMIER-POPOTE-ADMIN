@@ -5,9 +5,12 @@ import esbReducer from './dashboard/transactions/esb-report'
 import atmReducer from './dashboard/transactions/atm-report'
 import userReducer from './dashboard/users'
 import roleReducer from './dashboard/roles'
+import allTransactionsReducer from './popote/all-transactions';
 
 
 const reducers = {
+    allTransactions: allTransactionsReducer,
+
     users: userReducer,
     role: roleReducer,
     dashboard: dashboardReducer,

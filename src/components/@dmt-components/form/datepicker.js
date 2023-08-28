@@ -17,7 +17,7 @@ export const calculateAge = (date) => {
 }
 
 const DMTDatePicker = props => {
-    const { value, onChange, maxYears, minYears, showAge, required, disableFuture, ...other} = props;
+    const { value, onChange, maxYears, minYears, showAge, required, inputFormat="dd/MM/yyyy", disableFuture, ...other} = props;
     const age =  calculateAge(value);
     const maxDate = getMaxYear(maxYears);
     const minDate = getMaxYear(minYears);
@@ -27,9 +27,9 @@ const DMTDatePicker = props => {
     return (
         <>
             <DatePicker
-                openTo="year"
-                views={['year', 'month', 'day']}
-                inputFormat="dd/MM/yyyy"
+                openTo="day"
+                views={['day', 'month', 'year']}
+                inputFormat={inputFormat}
                 maxDate = {maxDate}
                 minDate={minDate}
                 disableFuture={disableFuture}
