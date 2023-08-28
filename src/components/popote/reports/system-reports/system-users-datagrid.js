@@ -61,7 +61,7 @@ export const MenuDots = ({ data }) => {
   );
 };
 
-const DormantCustomersDataGrid = (props) => {
+const SystemUsersDataGrid = (props) => {
   const { data, handleOnAdd } = props;
   const [open, setOpen] = React.useState(false);
   //   const { users } = useSelector(({ users }) => users)
@@ -106,7 +106,7 @@ const DormantCustomersDataGrid = (props) => {
     return (
       <div>
         <DoneIcon
-          sx={{ cursor: "pointer", color: "#002E5E",fontSize:"80px"}}
+          sx={{ cursor: "pointer", color: "#002E5E", fontSize: "80px" }}
         />
       </div>
     );
@@ -126,7 +126,7 @@ const DormantCustomersDataGrid = (props) => {
         <Column dataField="phoneNumber" caption="Phone Number" />
         <Column
           dataField="email"
-          caption="Email"
+          caption="email"
           width={200}
           allowFiltering={false}
         />
@@ -135,4 +135,4 @@ const DormantCustomersDataGrid = (props) => {
   );
 };
 
-export default DormantCustomersDataGrid;
+export default SystemUsersDataGrid;
