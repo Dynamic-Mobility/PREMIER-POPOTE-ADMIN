@@ -35,9 +35,9 @@ export const DashboardSidebarItem = (props) => {
     if (depth > 0) {
         paddingLeft = 32 + 8 * depth;
     }
-    if(!key){
-        return null;
-    }
+    // if(!key){
+    //     return null;
+    // }
 
     // Branch
     if (children) {

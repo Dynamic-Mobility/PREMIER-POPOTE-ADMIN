@@ -57,16 +57,7 @@ const AtmTransactionsDatagrid = props => {
     return (
         <>
             <DataGrid
-                dataSource={[
-                    {
-                        affectedAccount: '129039827392', paN02: '9000',
-                        success: 'true', trxnAmount04:20000
-                    },
-                    {
-                        affectedAccount: '129039827392', paN02: '9000',
-                        success: 'false', trxnAmount04:200000
-                    }
-                ]}
+                dataSource={data}
                 showBorders={true}
                 height={'75vh'}
                 showColumnLines={true}

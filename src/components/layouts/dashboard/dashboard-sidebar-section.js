@@ -76,7 +76,7 @@ const reduceChildRoutes = ({ acc, depth, item, path }) => {
 
 export const DashboardSidebarSection = (props) => {
     //const { items, path, title, role, ...other } = props;
-    console.log('PROPS', props);
+    //console.log('PROPS', props);
     const { child,  path, name, icon, ...other } = props;
     return (
         <List

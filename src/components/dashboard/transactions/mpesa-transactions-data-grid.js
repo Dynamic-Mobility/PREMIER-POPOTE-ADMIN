@@ -8,7 +8,7 @@ import {
   Tabs,
   Box,
   Tab,
-  Button,
+  Button, Collapse,
 } from "@mui/material";
 import {
   Column,
@@ -29,9 +29,12 @@ import { LoadingButton } from "@mui/lab";
 import { Filter1Outlined } from "@mui/icons-material";
 import MpesaDetails from "./mpesa-details-datagrid";
 import MKButton from "../../@mui-components/button";
+import ExcelExportButton from "../../@dmt-components/export-button";
+import DMTChip from "../../@dmt-components/chip";
 
 
-const MpesaTransactionDataGrid = () => {
+const MpesaTransactionDataGrid = props => {
+  const { showFilters } = props;
   const [responseData, setResponseData] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const authUser = useAuth();
@@ -97,6 +100,18 @@ const MpesaTransactionDataGrid = () => {
     return displayValue;
   };
 
+  const formatAmount = ({ data, displayValue }) => {
+    let color = 'info';
+    return (
+        <DMTChip
+            numeral={true}
+            label={displayValue}
+            color={color}
+            variant={"outlined"}
+        />
+    )
+  }
+
   const selected = ({ displayValue, data }) => {
     const handleOnSelect = () => {
       setOpenDrawer(true);
@@ -119,71 +134,81 @@ const MpesaTransactionDataGrid = () => {
 
   return (
     <>
-      <form onSubmit={filterFormik.handleSubmit}>
-        <Grid
-          container
-          sx={{ mb: 2 }}
-          spacing={2}
-          display={"flex"}
-          alignItems={"center"}
-        >
-          <Grid item md={3} xs={12}>
-            <DateTimePicker
-              disableFuture
-              label="Starting Date"
-              inputFormat="dd-MMM-yyyy hh:mm a"
-              fullWidth
-              value={filterFormik.values.dateRange.datefrom}
-              onChange={(date) =>
-                filterFormik.setFieldValue("dateRange.datefrom", date)
-              }
-              renderInput={(params) => <TextField {...params} />}
-              error={
-                filterFormik.touched.dateRange?.datefrom &&
-                Boolean(filterFormik.errors.dateRange?.datefrom)
-              }
-              helperText={
-                filterFormik.touched.dateRange?.datefrom &&
-                filterFormik.errors.dateRange?.datefrom
-              }
-            />
+      <Collapse in={showFilters}>
+        <form onSubmit={filterFormik.handleSubmit}>
+          <Grid
+              container
+              sx={{ mb: 2 }}
+              spacing={2}
+              display={"flex"}
+              alignItems={"center"}
+          >
+            <Grid item md={4} xs={12}>
+              <DateTimePicker
+                  disableFuture
+                  label="Starting Date"
+                  inputFormat="dd-MMM-yyyy hh:mm a"
+                  fullWidth
+                  value={filterFormik.values.dateRange.datefrom}
+                  onChange={(date) =>
+                      filterFormik.setFieldValue("dateRange.datefrom", date)
+                  }
+                  renderInput={(params) => <TextField {...params} />}
+                  error={
+                      filterFormik.touched.dateRange?.datefrom &&
+                      Boolean(filterFormik.errors.dateRange?.datefrom)
+                  }
+                  helperText={
+                      filterFormik.touched.dateRange?.datefrom &&
+                      filterFormik.errors.dateRange?.datefrom
+                  }
+              />
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <DateTimePicker
+                  disableFuture
+                  label="Ending Date"
+                  inputFormat="dd-MMM-yyyy hh:mm a"
+                  fullWidth
+                  value={filterFormik.values.dateRange.dateTo}
+                  onChange={(date) =>
+                      filterFormik.setFieldValue("dateRange.dateTo", date)
+                  }
+                  renderInput={(params) => <TextField {...params} />}
+                  error={
+                      filterFormik.touched.dateRange?.dateTo &&
+                      Boolean(filterFormik.errors.dateRange?.dateTo)
+                  }
+                  helperText={
+                      filterFormik.touched.dateRange?.dateTo &&
+                      filterFormik.errors.dateRange?.dateTo
+                  }
+              />
+            </Grid>
+            <Grid item md={2} xs={12}>
+              <LoadingButton
+                  type="submit"
+                  loading={filterFormik.isSubmitting}
+                  color="primary"
+                  size="small"
+                  variant="contained"
+                  startIcon={<Filter1Outlined />}
+                  loadingPosition={"start"}
+              >
+                {filterFormik.isSubmitting ? "Filtering" : "Filter"}
+              </LoadingButton>
+            </Grid>
+            <Grid item md={2} xs={12}>
+              <ExcelExportButton
+                  label={'Export to Excel'}
+                  apiData={responseData}
+              />
+            </Grid>
+
           </Grid>
-          <Grid item md={3} xs={12}>
-            <DateTimePicker
-              disableFuture
-              label="Ending Date"
-              inputFormat="dd-MMM-yyyy hh:mm a"
-              fullWidth
-              value={filterFormik.values.dateRange.dateTo}
-              onChange={(date) =>
-                filterFormik.setFieldValue("dateRange.dateTo", date)
-              }
-              renderInput={(params) => <TextField {...params} />}
-              error={
-                filterFormik.touched.dateRange?.dateTo &&
-                Boolean(filterFormik.errors.dateRange?.dateTo)
-              }
-              helperText={
-                filterFormik.touched.dateRange?.dateTo &&
-                filterFormik.errors.dateRange?.dateTo
-              }
-            />
-          </Grid>
-          <Grid item md={2} xs={12}>
-            <LoadingButton
-              type="submit"
-              loading={filterFormik.isSubmitting}
-              color="primary"
-              size="small"
-              variant="contained"
-              startIcon={<Filter1Outlined />}
-              loadingPosition={"start"}
-            >
-              {filterFormik.isSubmitting ? "Filtering" : "Filter"}
-            </LoadingButton>
-          </Grid>
-        </Grid>
-      </form>
+        </form>
+      </Collapse>
+
       <DataGrid
         dataSource={responseData}
         allowColumnReordering={true}
@@ -215,7 +240,13 @@ const MpesaTransactionDataGrid = () => {
           caption="Recipient Phone"
           width={180}
         />
-        <Column dataField="amount" caption="Amount" width={180} />
+        <Column
+            format={formatAmount}
+            dataField="amount"
+            key="Amount"
+            caption="Amount"
+            minWidth={180}
+        />
         <Column
           dataField="responseDescription"
           caption="Response Description"
@@ -224,15 +255,9 @@ const MpesaTransactionDataGrid = () => {
           cellRender={displayData}
         />
         <Column
-          dataField="status"
+          dataField="transactionStatus"
           key="Status"
           caption="Status"
-          minWidth={120}
-        />
-        <Column
-          dataField="channelType"
-          key="channelType"
-          caption="Channel Type"
           minWidth={120}
         />
         <Column
