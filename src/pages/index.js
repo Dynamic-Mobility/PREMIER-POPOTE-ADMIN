@@ -62,7 +62,7 @@ const LoginPage = () => {
                     {/*    {'Premier Bank'}*/}
                     {/*</MKTypography>*/}
                     <MKTypography sx={{ my:2}} variant={'h5'} color={'light'}>
-                        {'ESB Admin Portal'}
+                        {'Mobile Banking Admin Portal'}
                     </MKTypography>
                     <LoginLottie />
                     {/*<img loading={'lazy'} src={'/static/login.svg'} alt={'Login'}/>*/}
@@ -91,7 +91,7 @@ const LoginPage = () => {
                     </a>
                   </NextLink>
                   <MKTypography variant="h5" sx={{ mt: 2 }}>
-                    {"ESB Admin Portal"}
+                      {'Mobile Banking Admin Portal'}
                   </MKTypography>
                   
                 </MKBox>

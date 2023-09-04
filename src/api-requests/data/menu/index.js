@@ -1,11 +1,12 @@
 export const getMenuItems = (t) => [
   {
+    //name: 'Dashboard',
     child: [
       {
         name: "Dashboard",
         link: "/popote/",
         enabled: true,
-        icon: 'dashboard',
+        icon: 'home',
       },
       {
         name: "User Management",
@@ -66,7 +67,33 @@ export const getMenuItems = (t) => [
         ],
       },
       {
-        name: "Parameters Management",
+        name: "Reports",
+        enabled: true,
+        link: "/popote/reports/",
+        icon: 'groups',
+        child: [
+          {
+            name: "Transaction Reports",
+            enabled: true,
+            link: "/popote/reports/transactions",
+            icon: 'groups',
+          },
+          {
+            name: "Add Customer",
+            enabled: true,
+            link: "/popote/customers/add-new-customer",
+            icon: 'add',
+          },
+          {
+            name: "Approve Registrations",
+            enabled: true,
+            link: "/popote/customers/registrations",
+            icon: 'verified_user',
+          },
+        ],
+      },
+      {
+        name: "Parameters Mgt",
         link: "/popote/parameters/",
         enabled: true,
         icon: 'settings',

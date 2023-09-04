@@ -3,7 +3,7 @@ import borders from "../../base/borders";
 import pxToRem from "../../functions/pxToRem";
 
 
-const { fontWeightBold, size } = typography;
+const { fontWeightBold, fontWeightMedium, size } = typography;
 const { borderRadius } = borders;
 
 export default {
@@ -11,7 +11,7 @@ export default {
   justifyContent: "center",
   alignItems: "center",
   fontSize: size.xs,
-  fontWeight: fontWeightBold,
+  fontWeight: fontWeightMedium,
   borderRadius: borderRadius.lg,
   padding: `${pxToRem(6.302)} ${pxToRem(16.604)}`,
   lineHeight: 1.4,

@@ -38,6 +38,7 @@ function MyApp({ Component, pageProps }) {
                   <AuthProvider>
                   <ThemeProvider theme={theme}>
                       <CssBaseline />
+
                       <ToastContainer />
                       <AuthConsumer>
                           {(auth) =>

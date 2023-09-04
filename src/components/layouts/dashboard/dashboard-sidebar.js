@@ -16,7 +16,7 @@ import NextLink from "next/link";
 import {getMenuItems} from "../../../api-requests/data/menu";
 import {useSelector} from "../../../store";
 
-const getSections = (t) => getMenuItems(t);
+export const getSections = (t) => getMenuItems(t);
 
 export const DashboardSidebar = (props) => {
     const { onClose, open } = props;
@@ -44,7 +44,6 @@ export const DashboardSidebar = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [router.isReady, router.asPath]
     );
-
 
     const content = (
         <>

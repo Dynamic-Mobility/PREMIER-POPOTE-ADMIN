@@ -12,6 +12,7 @@ import TransactionDataGrid from "../../../../components/popote/reports/transacti
 import {Card} from "@mui/material";
 import TransactionsActionButtons from "../../../../components/popote/reports/transactions/transactions-action-buttons";
 import {setPageSize, setActivePage} from "../../../../slices/popote/all-transactions";
+import ModernLayout from "../../../../components/layouts/modern";
 
 
 const title = "All Transactions";
@@ -40,33 +41,32 @@ const TransactionsPage = () => {
         <title>{title} | {appName}</title>
       </Head>
       <MKBox
-        component="main"
+        //component="main"
         sx={{
           flexGrow: 1,
           pt: 2,
+            px:2,
         }}
       >
-        <Container maxWidth="xl">
           <MKBox sx={{ mb: 2 }}>
-            <Grid container justifyContent="space-between" spacing={3}>
-              <Grid item>
-                <MKTypography variant="h5">{title}</MKTypography>
+              <Grid container justifyContent="space-between" spacing={3}>
+                  <Grid item>
+                      <MKTypography variant="h5">{title}</MKTypography>
+                  </Grid>
+                  <Grid item>
+                      <TransactionsActionButtons/>
+                  </Grid>
               </Grid>
-                <Grid item>
-                    <TransactionsActionButtons/>
-                </Grid>
-            </Grid>
           </MKBox>
-            <Card sx={{p:1}}>
-                <TransactionDataGrid
-                    data={allTransactions}
-                    limit={pageSize}
-                    activePage={activePage}
-                    onPageSizeChange = {handleOnPageSizeChange}
-                    onPageChange={handleOnPageChange}
-                />
-            </Card>
-        </Container>
+          <Card sx={{p:1}}>
+              <TransactionDataGrid
+                  data={allTransactions}
+                  limit={pageSize}
+                  activePage={activePage}
+                  onPageSizeChange = {handleOnPageSizeChange}
+                  onPageChange={handleOnPageChange}
+              />
+          </Card>
       </MKBox>
     </>
   );
@@ -74,7 +74,9 @@ const TransactionsPage = () => {
 
 TransactionsPage.getLayout = (page) => (
   // <AuthGuard>
-    <DashboardLayout>{page}</DashboardLayout>
+    <ModernLayout>
+        {page}
+    </ModernLayout>
   // </AuthGuard>
 );
 

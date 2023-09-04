@@ -79,7 +79,7 @@ const LanguageButton = () => {
     );
 };
 
-const AccountButton = () => {
+export const AccountButton = () => {
     const anchorRef = useRef(null);
     const [openPopover, setOpenPopover] = useState(false);
     const { user } = useAuth();
@@ -115,7 +115,7 @@ const AccountButton = () => {
                 >
                     <UserCircleIcon />
                 </Avatar>
-                <Typography sx={{ ml: 1, fontSize:'14px'}} variant={'body1'} color={'white.main'} >{user?.fullname}</Typography>
+                <Typography sx={{ ml: 1, fontSize:'14px'}} variant={'body1'} color={'white.main'} >{user?.fullname}Dennis Njoroge</Typography>
             </Box>
             <AccountPopover
                 anchorEl={anchorRef.current}

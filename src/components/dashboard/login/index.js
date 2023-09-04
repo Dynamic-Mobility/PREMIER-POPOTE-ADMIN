@@ -72,7 +72,7 @@ export const LoginForm = (props) => {
     <>
       {activeStep === 0 && (
         <>
-          <MKTypography sx={{ mt: 2 }} variant="body2">
+          <MKTypography sx={{ mt: 2 }} align={'center'} variant="body2">
             {"Please login to continue..."}
           </MKTypography>
           <form noValidate onSubmit={formik.handleSubmit} {...props}>
