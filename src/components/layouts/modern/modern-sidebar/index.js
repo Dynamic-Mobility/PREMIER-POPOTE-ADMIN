@@ -116,19 +116,19 @@ const ModernSidebar = props => {
                     </Box>
                 </Scrollbar>
                 <Box sx={{ px:2, backgroundColor:'neutral.100', pb:1, display: 'fixed', width: 'inherit', bottom: 0}}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent:'center'}}>
-                        <ButtonGroup variant={'outlined'} color={'primary'} fullWidth size="small" aria-label="small button group">
-                            <IconButton variant={'outlined'} color={'primary'}>
-                                <Person/>
-                            </IconButton >
-                            <IconButton variant={'outlined'} color={'primary'}>
-                                <Settings/>
-                            </IconButton>
-                            <IconButton variant={'outlined'} color={'primary'}>
-                                <Logout/>
-                            </IconButton>
-                        </ButtonGroup>
-                        <Typography variant={'caption'} fontWeight={'bold'}>
+                    <Box sx={{ display: 'flex', mt:1, flexDirection: 'column', justifyContent:'center'}}>
+                        {/*<ButtonGroup variant={'outlined'} color={'primary'} fullWidth size="small" aria-label="small button group">*/}
+                        {/*    <IconButton variant={'outlined'} color={'primary'}>*/}
+                        {/*        <Person/>*/}
+                        {/*    </IconButton >*/}
+                        {/*    <IconButton variant={'outlined'} color={'primary'}>*/}
+                        {/*        <Settings/>*/}
+                        {/*    </IconButton>*/}
+                        {/*    <IconButton variant={'outlined'} color={'primary'}>*/}
+                        {/*        <Logout/>*/}
+                        {/*    </IconButton>*/}
+                        {/*</ButtonGroup>*/}
+                        <Typography variant={'caption'} >
                             {'Last Logon: 24/01/2020 10:00 PM'}
                         </Typography>
                     </Box>
