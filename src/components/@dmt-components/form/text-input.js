@@ -2,7 +2,7 @@ import {styled} from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import {alpha} from "@mui/material";
 
-const RedditTextField = styled((props) => (
+export const RedditTextField = styled((props) => (
     <TextField InputProps={{ disableUnderline: true }} {...props} />
 ))(({ theme }) => ({
     '& .MuiFilledInput-root': {
