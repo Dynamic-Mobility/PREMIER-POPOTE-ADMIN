@@ -3,6 +3,7 @@ import { DashboardLayout } from "../../../../components/layouts/dashboard";
 import { Container, Card } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import DormantCustomersDataGrid from "../../../../components/popote/reports/system-reports/dormant-customers-datagrid";
+import ModernLayout from "../../../../components/layouts/modern";
 
 const DormantCustomers = () => {
   return (
@@ -18,7 +19,7 @@ const DormantCustomers = () => {
 };
 
 DormantCustomers.getLayout = (page) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <ModernLayout>{page}</ModernLayout>
 );
 
 export default DormantCustomers;

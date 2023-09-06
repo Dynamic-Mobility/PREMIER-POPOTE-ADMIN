@@ -3,6 +3,7 @@ import { DashboardLayout } from "../../../../components/layouts/dashboard";
 import { Container,Card } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import SystemReportDataGrid from "../../../../components/popote/reports/system-reports";
+import ModernLayout from "../../../../components/layouts/modern";
 
 const SystemReports = () => {
   return (
@@ -17,6 +18,6 @@ const SystemReports = () => {
   );
 };
 
-SystemReports.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+SystemReports.getLayout = (page) => <ModernLayout>{page}</ModernLayout>;
 
 export default SystemReports;

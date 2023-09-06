@@ -4,6 +4,7 @@ import { AuthGuard } from "../../../hocs/auth-guard";
 import { Typography, Card, Container } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
 import UnapprovedDataGrid from "../../../components/popote/users/unapproved-datagrid";
+import ModernLayout from "../../../components/layouts/modern";
 
 
 const UnapprovedUsers = () => {
@@ -25,7 +26,7 @@ UnapprovedUsers.getLayout = (page) => {
   return (
     <>
       {/* <AuthGuard> */}
-      <DashboardLayout>{page}</DashboardLayout>; // {/* </AuthGuard> */}
+      <ModernLayout>{page}</ModernLayout>; // {/* </AuthGuard> */}
     </>
   );
 };
