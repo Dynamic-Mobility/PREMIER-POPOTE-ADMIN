@@ -4,6 +4,7 @@ import { Card, Container } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
 import { AuthGuard } from "../../../hocs/auth-guard";
 import RegistrationsDatagrid from "../../../components/popote/customers/registrations-datagrid";
+import ModernLayout from "../../../components/layouts/modern";
 
 const Registrations = () => {
   return (
@@ -22,7 +23,7 @@ Registrations.getLayout = (page) => {
   return (
     <>
       {/* <AuthGuard> */}
-      <DashboardLayout>{page}</DashboardLayout>;{/* </AuthGuard> */}
+      <ModernLayout>{page}</ModernLayout>;{/* </AuthGuard> */}
     </>
   );
 };

@@ -15,6 +15,7 @@ import { DashboardLayout } from "../../../components/layouts/dashboard";
 import MKInput from "../../../components/@mui-components/text-field";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import DMTTextInput from "../../../components/@dmt-components/form/text-input";
+import ModernLayout from '../../../components/layouts/modern'
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
@@ -255,6 +256,6 @@ const AddCustomer = (props) => {
   );
 };
 
-AddCustomer.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddCustomer.getLayout = (page) => <ModernLayout>{page}</ModernLayout>;
 
 export default AddCustomer;

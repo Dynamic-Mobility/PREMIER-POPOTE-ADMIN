@@ -3,6 +3,7 @@ import { DashboardLayout } from "../../../../components/layouts/dashboard";
 import { Container,Card } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import FailedRegistrationDataGrid from "../../../../components/popote/reports/system-reports/failed-registration-datagrid";
+import ModernLayout from "../../../../components/layouts/modern";
 
 const FailedRegistration = () => {
   return (
@@ -17,6 +18,6 @@ const FailedRegistration = () => {
   );
 };
 
-FailedRegistration.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+FailedRegistration.getLayout = (page) => <ModernLayout>{page}</ModernLayout>;
 
 export default FailedRegistration;

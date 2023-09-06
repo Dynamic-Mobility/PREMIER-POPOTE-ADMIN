@@ -3,6 +3,7 @@ import { DashboardLayout } from "../../../../components/layouts/dashboard";
 import { Container, Card } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import SystemUsersDataGrid from "../../../../components/popote/reports/system-reports/system-users-datagrid";
+import ModernLayout from "../../../../components/layouts/modern";
 
 const SystemUsers = () => {
   return (
@@ -17,6 +18,6 @@ const SystemUsers = () => {
   );
 };
 
-SystemUsers.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+SystemUsers.getLayout = (page) => <ModernLayout>{page}</ModernLayout>;
 
 export default SystemUsers;

@@ -2,7 +2,9 @@ import React from "react";
 import { DashboardLayout } from "../../components/layouts/dashboard";
 import MKTypography from "../../components/@mui-components/typography";
 import { Container, Grid, Card } from "@mui/material";
-import MKBox from "../../components/@mui-components/box";
+import ModernLayout from '../../components/layouts/modern'
+
+
 
 const Dashboard = () => {
   return (
@@ -35,6 +37,6 @@ const Dashboard = () => {
   );
 };
 
-Dashboard.getLayout = (pages) => <DashboardLayout>{pages}</DashboardLayout>;
+Dashboard.getLayout = (pages) => <ModernLayout>{pages}</ModernLayout>;
 
 export default Dashboard;

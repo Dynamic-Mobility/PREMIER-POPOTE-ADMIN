@@ -4,6 +4,7 @@ import { AuthGuard } from "../../../hocs/auth-guard";
 import { Card, Container } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
 import CustomersDataGrid from "../../../components/popote/customers/customers-data-grid";
+import ModernLayout from "../../../components/layouts/modern";
 
 
 const Customers = () => {
@@ -25,7 +26,7 @@ Customers.getLayout = (page) => {
   return (
     <>
       {/* <AuthGuard> */}
-      <DashboardLayout>{page}</DashboardLayout>; // {/* </AuthGuard> */}
+      <ModernLayout>{page}</ModernLayout>; // {/* </AuthGuard> */}
     </>
   );
 };
