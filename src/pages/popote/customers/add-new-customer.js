@@ -173,35 +173,6 @@ const AddCustomer = (props) => {
               <Divider />
               <MKBox sx={{ my: 2 }}>
                 <CustomerDetailsDataGrid />
-                {/* <Grid container spacing={2}>
-                  <Grid item md={4} xs={12}>
-                    <DMTTextInput
-                      sx={{ my: 2 }}
-                      fullWidth
-                      maxWidth="sm"
-                      size="small"
-                      label="Account Number"
-                    />
-                  </Grid>
-                  <Grid item md={4} xs={12}>
-                    <DMTTextInput
-                      sx={{ my: 2 }}
-                      fullWidth
-                      maxWidth="sm"
-                      size="small"
-                      label="Transaction Limit"
-                    />
-                  </Grid>
-                  <Grid item md={4} xs={12}>
-                    <DMTTextInput
-                      sx={{ my: 2 }}
-                      fullWidth
-                      maxWidth="sm"
-                      size="small"
-                      label="Currency Code"
-                    />
-                  </Grid>
-                </Grid> */}
               </MKBox>
             </Grid>
             <Grid item md={3} xs={12}>
@@ -242,7 +213,7 @@ const AddCustomer = (props) => {
                 <MKButton variant="outlined" color="primary">
                   Maintain Card
                 </MKButton>
-                <MKButton variant="outlined" color="primary">
+                <MKButton disabled variant="outlined" color="primary">
                   Manage Device
                 </MKButton>
                 <MKButton variant="outlined" color="primary">

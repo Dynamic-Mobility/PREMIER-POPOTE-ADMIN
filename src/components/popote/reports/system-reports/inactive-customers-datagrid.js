@@ -4,20 +4,14 @@ import { Column, Item, SearchPanel, Toolbar } from "devextreme-react/data-grid";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { TextField, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { MoreHoriz } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import MKBox from "../../@mui-components/box";
-import { Add } from "@mui/icons-material";
-import MKButton from "../../@mui-components/button";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../../hooks/use-auth";
-import EditIcon from "@mui/icons-material/Edit";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import Link from "next/link";
-import MKTypography from "../../@mui-components/typography";
-import LinkAccountModal from "./link-account-modal";
+import { useAuth } from "../../../../hooks/use-auth";
+import DoneIcon from "@mui/icons-material/Done";
 
+// import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
 });
@@ -34,9 +28,7 @@ export const MenuDots = ({ data }) => {
   };
 
   const handleRedirect = (data) => {
-    router.push("/popote/customers/add-new-customer", {
-      query: { state: data },
-    });
+    router.push("/dashboard/api-users", { query: { state: data } });
   };
 
   return (
@@ -60,20 +52,18 @@ export const MenuDots = ({ data }) => {
         }}
       >
         <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
-          <MKTypography>Block Account</MKTypography>
-        </MenuItem>
-        <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
-          <MKTypography>Unlink Account</MKTypography>
+          <DoneIcon
+            sx={{ color: "#002E5E", fontSize: "20px", fontWeight: "bold" }}
+          />
         </MenuItem>
       </Menu>
     </div>
   );
 };
 
-const CustomerDetailsDataGrid = (props) => {
+const InactiveCustomersDataGrid = (props) => {
   const { data, handleOnAdd } = props;
   const [open, setOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
   //   const { users } = useSelector(({ users }) => users)
 
   const handleClickOpen = () => {
@@ -85,28 +75,28 @@ const CustomerDetailsDataGrid = (props) => {
   };
 
   //   users dummy data
-  const accounts = [
+  const users = [
     {
-      account_number: "0110282332394",
-      currency_code: "404",
+      name: "Marcos Ochieng",
+      profile_name: "Marcos",
       phoneNumber: "073242432",
       email: "marcos@gmail.com",
     },
     {
-      account_number: "0110292392391",
-      currency_code: "404",
+      name: "Derrick Ochieng",
+      profile_name: "Marcos",
       phoneNumber: "073242432",
       email: "marcos@gmail.com",
     },
     {
-      account_number: "0110292392392",
-      currency_code: "404",
+      name: "Jane Ochieng",
+      profile_name: "Marcos",
       phoneNumber: "073242432",
       email: "marcos@gmail.com",
     },
     {
-      account_number: "0110292392397",
-      currency_code: "404",
+      name: "Ann Ochieng",
+      profile_name: "Marcos",
       phoneNumber: "073242432",
       email: "marcos@gmail.com",
     },
@@ -115,49 +105,34 @@ const CustomerDetailsDataGrid = (props) => {
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
-        <MenuDots />
+        <DoneIcon
+          sx={{ cursor: "pointer", color: "#002E5E",fontSize:"80px"}}
+        />
       </div>
     );
   };
 
   return (
     <>
-      <MKBox
-        size="small"
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          my: 1,
-        }}
-      >
-        <MKTypography fontWeight="bold">Account Details</MKTypography>
-        <LinkAccountModal />
-      </MKBox>
       <DataGrid
-        dataSource={accounts}
+        dataSource={users}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
-        remoteOperations={true}
-        showColumnLines={true}
-        showRowLines={true}
-        wordWrapEnabled={true}
         // height={"70vh"}
       >
-        <Column dataField="account_number" caption="A/C Number" />
-        <Column dataField="" caption="Transaction Limit" />
-        <Column dataField="currency_code" caption="Currency Code" />
+        <Column dataField="name" caption="Name" />
+        <Column dataField="profile_name" caption="Profile Name" />
+        <Column dataField="phoneNumber" caption="Phone Number" />
         <Column
-          caption="Action"
-          width={180}
-          alignment={"center"}
+          dataField="email"
+          caption="Email"
+          width={200}
           allowFiltering={false}
-          cellRender={actionLink}
         />
       </DataGrid>
     </>
   );
 };
 
-export default CustomerDetailsDataGrid;
+export default InactiveCustomersDataGrid;
