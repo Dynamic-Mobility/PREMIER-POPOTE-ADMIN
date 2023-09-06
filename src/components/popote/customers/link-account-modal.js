@@ -1,18 +1,22 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import MKButton from "../../@mui-components/button";
-import { Typography } from "@mui/material";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import { Typography, Box } from "@mui/material";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import InboxIcon from "@mui/icons-material/Inbox";
 
 const LinkAccountModal = () => {
   const [open, setOpen] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,44 +47,99 @@ const LinkAccountModal = () => {
           <Typography fontWeight={"bold"} fontSize={"20px"}>
             Available Accounts
           </Typography>
-          <List>
-            <ListItem alignItems="flex-start" sx={{ my: 1 }}>
-              <ListItemText
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="h6"
-                      color="primary"
-                    >
-                      Account Number
-                    </Typography>
-                    {"    — 0213131313134"}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem alignItems="flex-start" sx={{ my: 1 }}>
-              <ListItemText
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="h6"
-                      color="primary"
-                    >
-                      Account Number
-                    </Typography>
-                    {"    — 0213131313134"}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </List>
+          <Box
+            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          >
+            <List component="nav" aria-label="main mailbox folders">
+              <ListItemButton
+                selected={selectedIndex === 0}
+                onClick={(event) => handleListItemClick(event, 0)}
+              >
+                <ListItemText
+                  primary="21313333"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="primary"
+                      >
+                        Currency
+                      </Typography>
+                      {" Ksh"}
+                    </React.Fragment>
+                  }
+                />
+              </ListItemButton>
+              <ListItemButton
+                selected={selectedIndex === 1}
+                onClick={(event) => handleListItemClick(event, 1)}
+              >
+                <ListItemText
+                  primary="313123123"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="primary"
+                      >
+                        Currency
+                      </Typography>
+                      {" Ksh"}
+                    </React.Fragment>
+                  }
+                />
+              </ListItemButton>
+            </List>
+            <Divider />
+            <List component="nav" aria-label="secondary mailbox folder">
+              <ListItemButton
+                selected={selectedIndex === 2}
+                onClick={(event) => handleListItemClick(event, 2)}
+              >
+                <ListItemText
+                  primary="2323213213"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="primary"
+                      >
+                        Currency
+                      </Typography>
+                      {" Ksh"}
+                    </React.Fragment>
+                  }
+                />
+              </ListItemButton>
+              <ListItemButton
+                selected={selectedIndex === 3}
+                onClick={(event) => handleListItemClick(event, 3)}
+              >
+                <ListItemText
+                  primary="2321323123"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="primary"
+                      >
+                        Currency
+                      </Typography>
+                      {" Ksh"}
+                    </React.Fragment>
+                  }
+                />
+              </ListItemButton>
+            </List>
+          </Box>
         </DialogContent>
       </Dialog>
     </>
