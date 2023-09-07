@@ -79,7 +79,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.beneficiaries}
+                value={summaries[0].description}
                 thousandSeparator={true}
                 prefix={""}
               />
@@ -95,7 +95,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.sponsors}
+                value={summaries[1].description}
                 thousandSeparator={true}
                 prefix={""}
               />
@@ -111,7 +111,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.uploads}
+                value={summaries[2].description}
                 thousandSeparator={true}
                 prefix={""}
               />
@@ -127,7 +127,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.counties}
+                value={summaries[3].description}
                 thousandSeparator={true}
                 prefix={""}
               />
@@ -143,7 +143,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.counties}
+                value={summaries[4].description}
                 thousandSeparator={true}
                 prefix={""}
               />

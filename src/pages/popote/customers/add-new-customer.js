@@ -213,7 +213,7 @@ const AddCustomer = (props) => {
                 <MKButton variant="outlined" color="primary">
                   Maintain Card
                 </MKButton>
-                <MKButton disabled variant="outlined" color="primary">
+                <MKButton variant="outlined" color="primary">
                   Manage Device
                 </MKButton>
                 <MKButton variant="outlined" color="primary">
