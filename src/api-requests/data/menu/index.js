@@ -126,7 +126,7 @@ export const getMenuItems = (t) => [
             name: "Inactive Customers",
             enabled: true,
             link: "/popote/reports/system-reports/inactive-customers",
-            icon: 'people',
+            icon: 'block',
           },
           {
             name: "Failed Registrations",
