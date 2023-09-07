@@ -83,29 +83,24 @@ const CustomersDataGrid = (props) => {
   //   users dummy data
   const users = [
     {
-      name: "Marcos Ochieng",
-      profile_name: "Marcos",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
+      name: "Ann Wanjiku",
+      profile_name: "Ann",
+      phoneNumber: "0712121343",
+      email: "ann@gmail.com",
     },
     {
-      name: "Derrick Ochieng",
-      profile_name: "Marcos",
+      name: "Derrick Oyugi",
+      profile_name: "Derrick",
       phoneNumber: "073242432",
-      email: "marcos@gmail.com",
+      email: "derrick@gmail.com",
     },
     {
-      name: "Jane Ochieng",
-      profile_name: "Marcos",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
+      name: "Jane Kamau",
+      profile_name: "Jane",
+      phoneNumber: "0732321121",
+      email: "jane@gmail.com",
     },
-    {
-      name: "Ann Ochieng",
-      profile_name: "Marcos",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-    },
+    
   ];
 
   //   filter users based on search query
@@ -157,7 +152,7 @@ const CustomersDataGrid = (props) => {
         height={"70vh"}
       >
         <Column dataField="name" caption="Name" />
-        <Column dataField="profile_name" caption="Profile Name" />
+        <Column dataField="profile_name" caption="Username" />
         <Column dataField="phoneNumber" caption="Phone Number" />
         <Column
           dataField="email"

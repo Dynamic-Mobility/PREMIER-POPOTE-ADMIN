@@ -5,14 +5,18 @@ import { Card, Container } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
 import CustomersDataGrid from "../../../components/popote/customers/customers-data-grid";
 import ModernLayout from "../../../components/layouts/modern";
+import Head from "next/head";
 
+
+const title="Existing Customers"
 
 const Customers = () => {
   return (
     <>
+    <Head>{title}</Head>
       <Container maxWidth="xl" sx={{ py: 2 }}>
         <MKTypography sx={{ my: 1 }} fontWeight={"semibold"} fontSize={"20px"}>
-          Customer Management
+          {title}
         </MKTypography>
         <Card sx={{ p: 3 }}>
           <CustomersDataGrid />
