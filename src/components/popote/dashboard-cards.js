@@ -10,7 +10,7 @@ const summaries = [
     icon: "how_to_reg",
     title: "Registered Customers",
     type: "applicationCount",
-    description:'200'
+    description:'10'
   },
   {
     id: 2,
@@ -18,15 +18,15 @@ const summaries = [
     icon: "people",
     title: "Active Customers",
     type: "applicationCompleted",
-    description:'900'
+    description:'9'
   },
   {
     id: 3,
     color: "error",
-    icon: "people",
+    icon: "block",
     title: "Inactive Customers",
     type: "applicationInComplete",
-    description:'500'
+    description:'5'
   },
   {
     id: 4,
@@ -34,7 +34,7 @@ const summaries = [
     icon: "feedback",
     title: "Failed Registrations",
     type: "customersCount",
-    description:'1,000'
+    description:'1'
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ const summaries = [
     icon: "people",
     title: "Dormant Customers",
     type: "customersCount",
-    description:'1,000'
+    description:'1'
   },
 ];
 const getCount = (customers, applications, type) => {
