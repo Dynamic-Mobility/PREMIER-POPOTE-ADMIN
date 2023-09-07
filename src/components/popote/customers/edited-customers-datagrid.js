@@ -4,20 +4,20 @@ import { Column, Item, SearchPanel, Toolbar } from "devextreme-react/data-grid";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { MoreHoriz } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import MKBox from "../../@mui-components/box";
 import { Add } from "@mui/icons-material";
 import MKButton from "../../@mui-components/button";
-import { getAllUsers } from "../../../slices/dashboard/users";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
-import DoneIcon from "@mui/icons-material/Done";
-import ApproveEditedUser from "./approve-edited-users";
-import RejectEditedUsers from "./reject-edited-users";
+import EditIcon from "@mui/icons-material/Edit";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Link from "next/link";
+import ApproveEditedCustomer from "./approve-edited-customer";
+import RejectEditedCustomer from "./reject-edited-customer";
 
-// import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
 });
@@ -34,7 +34,7 @@ export const MenuDots = ({ data }) => {
   };
 
   const handleRedirect = (data) => {
-    router.push("/dashboard/api-users", { query: { state: data } });
+    router.push("/popote/customers/add-new-customer", { query: { state: data } });
   };
 
   return (
@@ -58,19 +58,20 @@ export const MenuDots = ({ data }) => {
         }}
       >
         <MenuItem sx={{ py: 1 }}>
-          <ApproveEditedUser />
+            <ApproveEditedCustomer />
         </MenuItem>
         <MenuItem sx={{ py: 1 }}>
-          <RejectEditedUsers />
+          <RejectEditedCustomer />
         </MenuItem>
       </Menu>
     </div>
   );
 };
 
-const EditedUsersDataGrid = (props) => {
+const EditedCustomersDataGrid = (props) => {
   const { data, handleOnAdd } = props;
   const [open, setOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
   //   const { users } = useSelector(({ users }) => users)
 
   const handleClickOpen = () => {
@@ -109,6 +110,11 @@ const EditedUsersDataGrid = (props) => {
     },
   ];
 
+  //   filter users based on search query
+  const filteredUser = users.filter((user) => {
+    return user.name.toLocaleLowerCase().includes(searchQuery.toLowerCase());
+  });
+
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
@@ -119,12 +125,33 @@ const EditedUsersDataGrid = (props) => {
 
   return (
     <>
+      <MKBox
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          my: 1,
+        }}
+      >
+        <form>
+          <TextField
+            onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchQuery}
+            fullWidth
+            label="Search..."
+          />
+        </form>
+      </MKBox>
       <DataGrid
-        dataSource={users}
+        dataSource={filteredUser}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
-        // height={"70vh"}
+        remoteOperations={true}
+        showColumnLines={true}
+        showRowLines={true}
+        wordWrapEnabled={true}
+        height={"70vh"}
       >
         <Column dataField="name" caption="Name" />
         <Column dataField="profile_name" caption="Profile Name" />
@@ -136,7 +163,7 @@ const EditedUsersDataGrid = (props) => {
           allowFiltering={false}
         />
         <Column
-          caption="Approve"
+          caption="Action"
           width={180}
           alignment={"center"}
           allowFiltering={false}
@@ -147,4 +174,4 @@ const EditedUsersDataGrid = (props) => {
   );
 };
 
-export default EditedUsersDataGrid;
+export default EditedCustomersDataGrid;

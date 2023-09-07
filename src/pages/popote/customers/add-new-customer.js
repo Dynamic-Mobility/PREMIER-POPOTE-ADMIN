@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect } from "react";
 import { Card, Container, Grid, TextField } from "@mui/material";
 import MKButton from "../../../components/@mui-components/button";
 import * as yup from "yup";
@@ -160,6 +160,8 @@ const AddCustomer = (props) => {
                 <DMTTextInput
                   sx={{ my: 2 }}
                   fullWidth
+                  maxWidth="sm"
+                  size="small"
                   label="CIF NUMBER"
                   name="cif_number"
                   value={formik.values.cif_number}

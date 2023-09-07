@@ -10,7 +10,7 @@ const summaries = [
     icon: "how_to_reg",
     title: "Registered Customers",
     type: "applicationCount",
-    description:'200'
+    description:'10'
   },
   {
     id: 2,
@@ -18,15 +18,15 @@ const summaries = [
     icon: "people",
     title: "Active Customers",
     type: "applicationCompleted",
-    description:'900'
+    description:'9'
   },
   {
     id: 3,
     color: "error",
-    icon: "people",
+    icon: "block",
     title: "Inactive Customers",
     type: "applicationInComplete",
-    description:'500'
+    description:'5'
   },
   {
     id: 4,
@@ -34,7 +34,7 @@ const summaries = [
     icon: "feedback",
     title: "Failed Registrations",
     type: "customersCount",
-    description:'1,000'
+    description:'1'
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ const summaries = [
     icon: "people",
     title: "Dormant Customers",
     type: "customersCount",
-    description:'1,000'
+    description:'1'
   },
 ];
 const getCount = (customers, applications, type) => {
@@ -79,7 +79,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.beneficiaries}
+                value={summaries[0].description}
                 thousandSeparator={true}
                 prefix={""}
               />
@@ -95,7 +95,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.sponsors}
+                value={summaries[1].description}
                 thousandSeparator={true}
                 prefix={""}
               />
@@ -111,7 +111,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.uploads}
+                value={summaries[2].description}
                 thousandSeparator={true}
                 prefix={""}
               />
@@ -127,7 +127,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.counties}
+                value={summaries[3].description}
                 thousandSeparator={true}
                 prefix={""}
               />
@@ -143,7 +143,7 @@ const DashboardCards = () => {
             description={
               <CurrencyFormat
                 displayType={"text"}
-                value={data?.counties}
+                value={summaries[4].description}
                 thousandSeparator={true}
                 prefix={""}
               />
