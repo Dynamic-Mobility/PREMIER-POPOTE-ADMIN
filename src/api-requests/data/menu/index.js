@@ -53,6 +53,12 @@ export const getMenuItems = (t) => [
             icon: 'groups',
           },
           {
+            name: "Edited Customers",
+            enabled: true,
+            link: "/popote/customers/edited-customers",
+            icon: 'people',
+          },
+          {
             name: "Add Customer",
             enabled: true,
             link: "/popote/customers/add-new-customer",
