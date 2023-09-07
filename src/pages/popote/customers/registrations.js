@@ -5,17 +5,23 @@ import MKTypography from "../../../components/@mui-components/typography";
 import { AuthGuard } from "../../../hocs/auth-guard";
 import RegistrationsDatagrid from "../../../components/popote/customers/registrations-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
+import MKBox from "../../../components/@mui-components/box";
+import Head from "next/head";
 
+const title = "Approve Registrations";
 const Registrations = () => {
   return (
-    <Container maxWidth="xl" sx={{ py: 2 }}>
-      <MKTypography sx={{ my: 1 }} fontWeight={"semibold"} fontSize={"20px"}>
-        Approve Registrations
-      </MKTypography>
-      <Card sx={{ p: 3 }}>
-        <RegistrationsDatagrid />
-      </Card>
-    </Container>
+    <>
+    <Head>{title}</Head>
+      <MKBox sx={{ p: 2 }}>
+        <MKTypography sx={{ my: 1 }} fontWeight={"semibold"} fontSize={"20px"}>
+          {title}
+        </MKTypography>
+        <Card sx={{ p: 3 }}>
+          <RegistrationsDatagrid />
+        </Card>
+      </MKBox>
+    </>
   );
 };
 
