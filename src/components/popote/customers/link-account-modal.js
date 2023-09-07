@@ -94,51 +94,6 @@ const LinkAccountModal = () => {
                 />
               </ListItemButton>
             </List>
-            <Divider />
-            <List component="nav" aria-label="secondary mailbox folder">
-              <ListItemButton
-                selected={selectedIndex === 2}
-                onClick={(event) => handleListItemClick(event, 2)}
-              >
-                <ListItemText
-                  primary="2323213213"
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="primary"
-                      >
-                        Currency
-                      </Typography>
-                      {" Ksh"}
-                    </React.Fragment>
-                  }
-                />
-              </ListItemButton>
-              <ListItemButton
-                selected={selectedIndex === 3}
-                onClick={(event) => handleListItemClick(event, 3)}
-              >
-                <ListItemText
-                  primary="2321323123"
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="primary"
-                      >
-                        Currency
-                      </Typography>
-                      {" Ksh"}
-                    </React.Fragment>
-                  }
-                />
-              </ListItemButton>
-            </List>
           </Box>
         </DialogContent>
       </Dialog>

@@ -17,6 +17,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
 import MKTypography from "../../@mui-components/typography";
 import LinkAccountModal from "./link-account-modal";
+import DMTChip from "../../@dmt-components/chip";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -84,33 +85,18 @@ const CustomerDetailsDataGrid = (props) => {
     setOpen(false);
   };
 
-  //   users dummy data
-  const accounts = [
-    {
-      account_number: "0110282332394",
-      currency_code: "404",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-    },
-    {
-      account_number: "0110292392391",
-      currency_code: "404",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-    },
-    {
-      account_number: "0110292392392",
-      currency_code: "404",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-    },
-    {
-      account_number: "0110292392397",
-      currency_code: "404",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-    },
-  ];
+    const formatStatus = ({ data, displayValue }) => {
+        let color = displayValue === 'Active' ? 'success' :  'error';
+        return (
+            <DMTChip
+                //numeral={true}
+                label={displayValue}
+                color={color}
+                variant={"outlined"}
+            />
+        )
+
+    }
 
   const actionLink = ({ data, rowIndex }) => {
     return (
@@ -135,7 +121,7 @@ const CustomerDetailsDataGrid = (props) => {
         <LinkAccountModal />
       </MKBox>
       <DataGrid
-        dataSource={accounts}
+        dataSource={data}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
@@ -146,11 +132,12 @@ const CustomerDetailsDataGrid = (props) => {
         // height={"70vh"}
       >
         <Column dataField="account_number" caption="A/C Number" />
-        <Column dataField="" caption="Transaction Limit" />
+        <Column dataField="transactionLimit" caption="Txn Limit" />
         <Column dataField="currency_code" caption="Currency Code" />
+        <Column cellRender={formatStatus} dataField="status" caption="Status" />
         <Column
           caption="Action"
-          width={180}
+          width={120}
           alignment={"center"}
           allowFiltering={false}
           cellRender={actionLink}

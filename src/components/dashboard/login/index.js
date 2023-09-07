@@ -165,13 +165,13 @@ const Otp = ({ userDetail }) => {
       console.log("OTP VALUE ", values);
       try {
         const res = await validateOtp(values, userDetail);
-        if (!res.success) {
+        if (res.success) {
           await login(userDetail);
-          const returnUrl = router.query.returnUrl || "/app/atmdashboard";
+          const returnUrl = router.query.returnUrl || "/popote/dashboard";
           router.push(returnUrl).catch(console.error);
-          toast.success(res.errordesc);
+          //toast.success(res.errordesc);
           helpers.resetForm();
-        } else if (!res.success) {
+        } else {
           toast.error(res.errordesc);
         }
       } catch (error) {

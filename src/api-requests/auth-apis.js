@@ -14,11 +14,10 @@ class AuthApis{
 
         return new Promise(async (resolve, reject) => {
             axiosInstance.post(APP_API_URL.LOGIN, encryptedData).then( response => {
-                console.log("PATH ",APP_API_URL.LOGIN)
                 const data = secretKey.decrypt(response.data);
                 if(data.token !== null){
                     resolve(data);
-                    console.log(data)
+                    // console.log(data)
                 }
                 //reject(new Error('Wrong Username/Password Combination.'))
             }).catch(e => {
