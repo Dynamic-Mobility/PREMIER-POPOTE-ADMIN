@@ -167,7 +167,7 @@ const Otp = ({ userDetail }) => {
         const res = await validateOtp(values, userDetail);
         if (res.success) {
           await login(userDetail);
-          const returnUrl = router.query.returnUrl || "/popote/dashboard";
+          const returnUrl = router.query.returnUrl || "/popote";
           router.push(returnUrl).catch(console.error);
           //toast.success(res.errordesc);
           helpers.resetForm();

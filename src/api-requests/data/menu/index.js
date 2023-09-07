@@ -1,12 +1,45 @@
 export const getMenuItems = (t) => [
   {
-    //name: 'Dashboard',
+    name: 'General',
     child: [
       {
         name: "Dashboard",
         link: "/popote/",
         enabled: true,
         icon: 'home',
+      },
+
+      {
+        name: "Customer Management",
+        enabled: true,
+        link: "/popote/customers/",
+        icon: 'groups',
+        child: [
+          {
+            name: "Existing Customers",
+            enabled: true,
+            link: "/popote/customers/",
+            icon: 'groups',
+          },
+          {
+            name: "Add Customer",
+            enabled: true,
+            link: "/popote/customers/add-new-customer",
+            icon: 'add',
+          },
+          {
+            name: "Approve Edited Customers",
+            enabled: true,
+            link: "/popote/customers/edited-customers",
+            icon: 'edit',
+          },
+          {
+            name: "Approve Registrations",
+            enabled: true,
+            link: "/popote/customers/registrations",
+            icon: 'verified_user',
+          },
+        ],
       },
       {
         name: "User Management",
@@ -40,38 +73,11 @@ export const getMenuItems = (t) => [
           },
         ],
       },
-      {
-        name: "Customer Management",
-        enabled: true,
-        link: "/popote/customers/",
-        icon: 'groups',
-        child: [
-          {
-            name: "Existing Customers",
-            enabled: true,
-            link: "/popote/customers/",
-            icon: 'groups',
-          },
-          {
-            name: "Edited Customers",
-            enabled: true,
-            link: "/popote/customers/edited-customers",
-            icon: 'edit',
-          },
-          {
-            name: "Add Customer",
-            enabled: true,
-            link: "/popote/customers/add-new-customer",
-            icon: 'add',
-          },
-          {
-            name: "Approve Registrations",
-            enabled: true,
-            link: "/popote/customers/registrations",
-            icon: 'verified_user',
-          },
-        ],
-      },
+    ],
+  },
+  {
+    name: 'Reports',
+    child:[
       {
         name: "Transaction Reports",
         enabled: true,
@@ -166,6 +172,11 @@ export const getMenuItems = (t) => [
           },
         ]
       },
+    ]
+  },
+  {
+    name: 'Maintenance',
+    child: [
       {
         name: "Parameters Mgt",
         link: "/popote/parameters/",
@@ -187,5 +198,5 @@ export const getMenuItems = (t) => [
         ],
       },
     ],
-  },
+  }
 ];

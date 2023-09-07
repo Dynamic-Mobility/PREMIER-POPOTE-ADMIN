@@ -16,6 +16,7 @@ import {getMenuItems} from "../../../../api-requests/data/menu";
 import ModernSidebarSection from "./modern-sidebar-section";
 import {Logout, Person, Settings} from "@mui/icons-material";
 import MKButton from "../../../@mui-components/button";
+import moment from "moment";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -129,7 +130,7 @@ const ModernSidebar = props => {
                         {/*    </IconButton>*/}
                         {/*</ButtonGroup>*/}
                         <Typography variant={'caption'} >
-                            {'Last Logon: 24/01/2020 10:00 PM'}
+                            {'Last Logon: '+ moment().format('DD/MM/YYYY H:m ')}
                         </Typography>
                     </Box>
                 </Box>
