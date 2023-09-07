@@ -12,7 +12,7 @@ const Users = () => {
   return (
     <>
       <Container maxWidth="xl" sx={{py:2}}>
-        <MKTypography sx={{my:1}} fontWeight={"semibold"} fontSize={"20px"}>User Management</MKTypography>
+        <MKTypography sx={{my:1}} fontWeight={"semibold"} fontSize={"20px"}>Existing Users</MKTypography>
         <Card sx={{ p: 3 }}>
           <UsersDataGrid />
         </Card>
