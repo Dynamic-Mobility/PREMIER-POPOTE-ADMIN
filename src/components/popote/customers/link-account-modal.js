@@ -36,7 +36,7 @@ const LinkAccountModal = () => {
         Link Account
       </MKButton>
       <Dialog
-        width="md"
+        maxWidth="xs"
         fullWidth
         open={open}
         onClose={handleClose}
@@ -48,7 +48,7 @@ const LinkAccountModal = () => {
             Available Accounts
           </Typography>
           <Box
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            sx={{ width: "100%", bgcolor: "background.paper" }}
           >
             <List component="nav" aria-label="main mailbox folders">
               <ListItemButton
