@@ -14,6 +14,8 @@ import { getAllUsers } from "../../../slices/dashboard/users";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
 import DoneIcon from "@mui/icons-material/Done";
+import ApproveUser from "./approve-user";
+import RejectUser from "./reject-user";
 
 // import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
@@ -55,10 +57,11 @@ export const MenuDots = ({ data }) => {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
-          <DoneIcon
-            sx={{ color: "#002E5E", fontSize: "20px", fontWeight: "bold" }}
-          />
+        <MenuItem sx={{ py: 1 }}>
+          <ApproveUser />
+        </MenuItem>
+        <MenuItem sx={{ py: 1 }}>
+          <RejectUser />
         </MenuItem>
       </Menu>
     </div>
@@ -109,9 +112,7 @@ const UnapprovedDataGrid = (props) => {
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
-        <DoneIcon
-          sx={{ cursor: "pointer", color: "#002E5E",fontSize:"80px"}}
-        />
+        <MenuDots />
       </div>
     );
   };

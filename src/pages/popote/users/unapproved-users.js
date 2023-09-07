@@ -5,19 +5,20 @@ import { Typography, Card, Container } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
 import UnapprovedDataGrid from "../../../components/popote/users/unapproved-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
+import MKBox from "../../../components/@mui-components/box";
 
 
 const UnapprovedUsers = () => {
   return (
     <>
-      <Container maxWidth="xl" sx={{ py: 2 }}>
+      <MKBox sx={{p:2}}>
         <MKTypography sx={{ my: 1 }} fontWeight={"semibold"} fontSize={"20px"}>
           Unapproved Users
         </MKTypography>
         <Card sx={{ p: 3 }}>
           <UnapprovedDataGrid />
         </Card>
-      </Container>
+      </MKBox>
     </>
   );
 };
@@ -25,8 +26,8 @@ const UnapprovedUsers = () => {
 UnapprovedUsers.getLayout = (page) => {
   return (
     <>
-      {/* <AuthGuard> */}
-      <ModernLayout>{page}</ModernLayout>; // {/* </AuthGuard> */}
+    
+      <ModernLayout>{page}</ModernLayout>; 
     </>
   );
 };
