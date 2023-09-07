@@ -32,7 +32,7 @@ export const MenuDots = ({ data }) => {
   };
 
   const handleRedirect = (data) => {
-    router.push("/dashboard/api-users", { query: { state: data } });
+    router.push("/popote/customers/add-new-customer", { query: { state: data } });
   };
 
   return (
@@ -56,7 +56,7 @@ export const MenuDots = ({ data }) => {
         }}
       >
         <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
-          <EditIcon sx={{ color: "#002E5E", fontSize: "20px" }} />
+            <EditIcon sx={{ color: "#002E5E", fontSize: "20px" }} />
         </MenuItem>
         <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
           <RemoveRedEyeIcon sx={{ color: "#002E5E", fontSize: "20px" }} />

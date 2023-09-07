@@ -4,6 +4,7 @@ import { AuthGuard } from "../../../hocs/auth-guard";
 import { Typography, Card, Container } from "@mui/material";
 import UsersDataGrid from "../../../components/popote/users/users-data-grid";
 import MKTypography from "../../../components/@mui-components/typography";
+import ModernLayout from "../../../components/layouts/modern";
 
 
 
@@ -24,7 +25,7 @@ Users.getLayout = (page) => {
   return (
     <>
       {/* <AuthGuard> */}
-      <DashboardLayout>{page}</DashboardLayout>; // {/* </AuthGuard> */}
+      <ModernLayout>{page}</ModernLayout>; // {/* </AuthGuard> */}
     </>
   );
 };

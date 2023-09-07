@@ -15,6 +15,8 @@ import { DashboardLayout } from "../../../components/layouts/dashboard";
 import MKInput from "../../../components/@mui-components/text-field";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import DMTTextInput from "../../../components/@dmt-components/form/text-input";
+import ModernLayout from '../../../components/layouts/modern'
+import CustomerDetailsDataGrid from "../../../components/popote/customers/customer-details-datagrid";
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
@@ -77,7 +79,7 @@ const AddCustomer = (props) => {
         </MKTypography>
         <Card sx={{ p: 2 }}>
           <Grid container spacing={2}>
-            <Grid item md={8} xs={12}>
+            <Grid item md={9} xs={12}>
               <form>
                 <DMTTextInput
                   sx={{ my: 2 }}
@@ -170,39 +172,10 @@ const AddCustomer = (props) => {
               </MKBox>
               <Divider />
               <MKBox sx={{ my: 2 }}>
-                <MKTypography fontWeight="bold">Account Details</MKTypography>
-                <Grid container spacing={2}>
-                  <Grid item md={4} xs={12}>
-                    <DMTTextInput
-                      sx={{ my: 2 }}
-                      fullWidth
-                      maxWidth="sm"
-                      size="small"
-                      label="Account Number"
-                    />
-                  </Grid>
-                  <Grid item md={4} xs={12}>
-                    <DMTTextInput
-                      sx={{ my: 2 }}
-                      fullWidth
-                      maxWidth="sm"
-                      size="small"
-                      label="Transaction Limit"
-                    />
-                  </Grid>
-                  <Grid item md={4} xs={12}>
-                    <DMTTextInput
-                      sx={{ my: 2 }}
-                      fullWidth
-                      maxWidth="sm"
-                      size="small"
-                      label="Currency Code"
-                    />
-                  </Grid>
-                </Grid>
+                <CustomerDetailsDataGrid />
               </MKBox>
             </Grid>
-            <Grid item md={4} xs={12}>
+            <Grid item md={3} xs={12}>
               <MKTypography sx={{ textAlign: "center", fontWeight: "bold" }}>
                 Actions
               </MKTypography>
@@ -240,7 +213,7 @@ const AddCustomer = (props) => {
                 <MKButton variant="outlined" color="primary">
                   Maintain Card
                 </MKButton>
-                <MKButton variant="outlined" color="primary">
+                <MKButton disabled variant="outlined" color="primary">
                   Manage Device
                 </MKButton>
                 <MKButton variant="outlined" color="primary">
@@ -255,6 +228,6 @@ const AddCustomer = (props) => {
   );
 };
 
-AddCustomer.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddCustomer.getLayout = (page) => <ModernLayout>{page}</ModernLayout>;
 
 export default AddCustomer;
