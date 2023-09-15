@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Card, Container, Grid, TextField } from "@mui/material";
 import MKButton from "../../../components/@mui-components/button";
 import * as yup from "yup";
@@ -18,6 +18,7 @@ import {getAllUsers} from "../../../slices/dashboard/users";
 import {getAutoCompleteValue} from "../../../utils/helper-functions";
 import customers from "./index";
 import {toast} from "react-toastify";
+import { parametersApis } from "../../../api-requests/customers-api";
 
 
 const customersList = [
@@ -78,6 +79,7 @@ const customersList = [
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
+  const [cifResponse,setCifResponse] = useState()
   const dispatch = useDispatch();
   const authUser = useAuth();
   const fetchData = async () => {
@@ -127,17 +129,24 @@ const AddCustomer = (props) => {
     },
   });
 
-  const handleOnBlur = (e) => {
+  const handleOnBlur = async(e) => {
     if(e.target.value){
-      const customer = getAutoCompleteValue(customersList, e.target.value, 'cif_number');
-      if (customer){
+      try{
+        const cifNumber = e.target.value;
+        const res = await parametersApis.fetchCustomerCif(authUser,cifNumber)
+        setCifResponse(res)
+        console.log("CIF_RESPONSE ",res)
+        if (cifNumber){
         toast.success('Customer Found!')
-        formik.setValues(customer);
       }
       else{
         toast.error('No customer found')
         formik.setValues({...formik.initialValues, cif_number: e.target.value});
       }
+      }catch(err){
+        console.log("CIF_ERROR ",err)
+      }
+      
     }
 
   }
@@ -182,16 +191,16 @@ const AddCustomer = (props) => {
                     <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
-                      label="First Name"
+                      label="Name"
                       name={'firstName'}
                       error={Boolean(formik.touched.firstName && formik.errors.firstName)}
                       helperText={formik.touched.firstName && formik.errors.firstName}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={formik.values.firstName}
+                      value={cifResponse?.name}
                     />
                   </Grid>
-                  <Grid item md={4} xs={12}>
+                  {/* <Grid item md={4} xs={12}>
                     <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
@@ -203,8 +212,8 @@ const AddCustomer = (props) => {
                       onChange={formik.handleChange}
                       value={formik.values.middleName}
                     />
-                  </Grid>
-                  <Grid item md={4} xs={12}>
+                  </Grid> */}
+                  {/* <Grid item md={4} xs={12}>
                     <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
@@ -216,7 +225,7 @@ const AddCustomer = (props) => {
                       onChange={formik.handleChange}
                       value={formik.values.lastName}
                     />
-                  </Grid>
+                  </Grid> */}
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item md={6} xs={12}>
@@ -229,7 +238,7 @@ const AddCustomer = (props) => {
                       helperText={formik.touched.idNumber && formik.errors.idNumber}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={formik.values.idNumber}
+                      value={cifResponse?.idno}
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -242,7 +251,7 @@ const AddCustomer = (props) => {
                       helperText={formik.touched.kraPin && formik.errors.kraPin}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={formik.values.kraPin}
+                      value={cifResponse?.krapin}
                     />
                   </Grid>
                 </Grid>
@@ -257,7 +266,7 @@ const AddCustomer = (props) => {
                       helperText={formik.touched.email && formik.errors.email}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={formik.values.email}
+                      value={cifResponse?.email}
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -269,7 +278,7 @@ const AddCustomer = (props) => {
                       helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={formik.values.phoneNumber}
+                      value={cifResponse?.mobile}
                       label="Phone Number"
                     />
                   </Grid>
