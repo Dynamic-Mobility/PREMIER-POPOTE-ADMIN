@@ -8,7 +8,7 @@ import Head from "next/head";
 import MKBox from "../../../components/@mui-components/box";
 
 
-const title = 'Edited Customers'
+const title = 'Approve Edited Customers'
 const EditedCustomers = () => {
   return (
     <>
