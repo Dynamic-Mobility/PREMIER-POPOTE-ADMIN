@@ -1,38 +1,13 @@
-
-import Dashboard from "../../components/popote";
 import { appName } from "../../utils/constants";
 import MKTypography from "../../components/@mui-components/typography";
 import Head from "next/head";
-import Container from "@mui/material/Container";
 import MKBox from "../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
-import { AuthGuard } from "../../hocs/auth-guard";
-import { DashboardLayout } from "../../components/layouts/dashboard";
-import { useMounted } from "../../hooks/use-mounted";
-import { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "../../store";
-import { useAuth } from "../../hooks/use-auth";
-import { getDashboardData } from "../../slices/dashboard";
 import ModernLayout from '../../components/layouts/modern';
+import DashboardCards from "../../components/popote/dashboard-cards";
+import DashboardSummary from "../../components/popote/dashboard-summary";
 
 const DashboardPage = () => {
-  const isMounted = useMounted();
-  const dispatch = useDispatch();
-  const authUser = useAuth();
-  const { data } = useSelector(({ dashboard }) => dashboard);
-
-  const fetchDashboardData = async () => {
-    try {
-      await dispatch(getDashboardData(authUser));
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
-
   return (
     <>
       <Head>
@@ -45,8 +20,8 @@ const DashboardPage = () => {
           py: 2,
         }}
       >
-        <MKBox sx={{p:2}}>
-          <MKBox sx={{ mb: 4 }}>
+        <MKBox sx={{px:2}}>
+          <MKBox sx={{ mb: 2 }}>
             <Grid container justifyContent="space-between" spacing={3}>
               <Grid item>
                 <MKTypography variant="h4">Dashboard</MKTypography>
@@ -55,8 +30,11 @@ const DashboardPage = () => {
           </MKBox>
           <Grid container spacing={4}>
             <Grid item md={12} xs={12}>
-              <Dashboard data={data} />
+              <DashboardCards />
             </Grid>
+              <Grid item md={9} xs={12}>
+               <DashboardSummary/>
+              </Grid>
           </Grid>
         </MKBox>
       </MKBox>

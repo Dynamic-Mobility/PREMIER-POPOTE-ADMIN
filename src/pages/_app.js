@@ -27,10 +27,7 @@ function MyApp({ Component, pageProps }) {
           <Head>
               <title>{appName}</title>
               <meta name="viewport" content="initial-scale=1, width=device-width" />
-              <link rel="icon" href="/favicon.ico" />
-              <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
-              <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Inter+Tight:wght@300;400;900&family=Inter:wght@200;300;400&family=Josefin+Sans:wght@300;400&family=Kumbh+Sans&family=Montserrat:wght@400;500&family=Nunito:wght@400;500;600;700&family=Poltawski+Nowy:wght@500&family=Roboto+Flex:opsz,wght@8..144,400;8..144,500&family=Space+Grotesk&display=swap" rel="stylesheet"></link>
+              <link rel="icon" href="/favicon.jpg" />
           </Head>
           <Script src={"https://kit.fontawesome.com/42d5adcbca.js"} crossOrigin="anonymous"  async/>
           <Provider store={store}>

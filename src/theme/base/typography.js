@@ -5,13 +5,13 @@ import pxToRem from "../functions/pxToRem";
 const { dark } = colors;
 
 const baseProperties = {
-  fontFamily: '"Montserrat", sans-serif',
-  fontFamily2: '"Montserrat", sans-serif',
-  fontWeightLighter: 100,
-  fontWeightLight: 300,
-  fontWeightRegular: 400,
-  fontWeightMedium: 500,
-  fontWeightBold: 700,
+  fontFamily: '"Mulish", sans-serif',
+  fontFamily2: '"Mulish", sans-serif',
+  fontWeightLighter: 300,
+  fontWeightLight: 400,
+  fontWeightRegular: 500,
+  fontWeightMedium: 600,
+  fontWeightBold: 800,
   fontSizeXXS: pxToRem(10.4),
   fontSizeXS: pxToRem(13),
   fontSizeSM: pxToRem(14),
