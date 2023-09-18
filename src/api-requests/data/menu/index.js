@@ -175,24 +175,24 @@ export const getMenuItems = (t) => [
     ]
   },
   {
-    name: 'Maintenance',
+    name: 'Parameters Management',
     child: [
       {
-        name: "Parameters Mgt",
+        name: "Transaction Limits",
         link: "/popote/parameters/",
         enabled: true,
-        icon: 'settings',
+        icon: 'smartphone',
         child: [
           {
-            name: "Transaction Limits",
+            name: "Global Limits",
             enabled: true,
-            link: "/popote/parameters/transactions",
+            link: "/popote/parameters/global-limits",
             icon: 'smartphone',
           },
           {
-            name: "System Parameters",
+            name: "Personalized Limits",
             enabled: true,
-            link: "/popote/parameters/system",
+            link: "/popote/parameters/personalized-limits",
             icon: 'verified_user',
           },
         ],

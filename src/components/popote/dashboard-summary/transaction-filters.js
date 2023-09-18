@@ -4,16 +4,59 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import {useState} from "react";
+import {getAutoCompleteValue} from "../../../utils/helper-functions";
 
-const TransactionFilters = () => {
+const daysFilters = [
+    {
+        id: 1,
+        label: 'Today',
+        value: 0,
+    },
+    {
+        id: 2,
+        label: 'Yesterday',
+        value: -1,
+    },
+    {
+        id: 3,
+        label: 'Last 7 days',
+        value: -7,
+    },
+    {
+        id: 4,
+        label: 'Last 30 days',
+        value: -30,
+    },
+    {
+        id: 5,
+        label: 'Custom',
+        value: 1,
+    },
+
+]
+
+
+const TransactionFilters = props => {
+    const { dateRange } = props;
     const [anchorEl, setAnchorEl] = useState(null);
+    const [selectedValue, setSelectedValue] = useState(0);
+    const selected = getAutoCompleteValue(daysFilters, selectedValue, 'value');
     const open = Boolean(anchorEl);
+    const [openDialog, setOpenDialog] = useState(false);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleOnChangeFilter = value => {
+        setSelectedValue(value);
+        handleClose();
+    }
+
+
+
     return(
         <>
             <MKButton
@@ -28,22 +71,23 @@ const TransactionFilters = () => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                {"Today"}
+                {selected?.label}
             </MKButton>
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
+               // variant={"selectedMenu"}
                 onClose={handleClose}
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>Today</MenuItem>
-                <MenuItem onClick={handleClose}>Yesterday</MenuItem>
-                <MenuItem onClick={handleClose}>Last 7 Days</MenuItem>
-                <MenuItem onClick={handleClose}>Last 30 Days</MenuItem>
-                <MenuItem onClick={handleClose}>Custom</MenuItem>
+                {daysFilters.map((filter, index) => (
+                    <MenuItem key={index} onClick={() => handleOnChangeFilter(filter?.value)}>
+                        {filter.label}
+                    </MenuItem>
+                ))}
             </Menu>
         </>
     )

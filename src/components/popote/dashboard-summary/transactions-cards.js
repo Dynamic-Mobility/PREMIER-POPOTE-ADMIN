@@ -4,6 +4,7 @@ import MKTypography from "../../@mui-components/typography";
 import CurrencyFormat from "react-currency-format";
 import Icon from "@mui/material/Icon";
 import {alpha} from "@mui/material/styles";
+import TransactionsGraph from "./transactions-graph";
 
 const transactionCardsOpts = [
     {
@@ -51,6 +52,9 @@ const TransactionsCards = () => {
                         </MKBox>
                     </Grid>
                 ))}
+                <Grid item xs={12} md={12} sm={12}>
+                    <TransactionsGraph/>
+                </Grid>
             </Grid>
         </>
     )

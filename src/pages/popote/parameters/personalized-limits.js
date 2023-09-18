@@ -1,20 +1,16 @@
 import { appName } from "../../../utils/constants";
 import MKTypography from "../../../components/@mui-components/typography";
 import Head from "next/head";
-
 import MKBox from "../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
-import { useMounted } from "../../../hooks/use-mounted";
-import { useDispatch, useSelector } from "../../../store";
-import { useAuth } from "../../../hooks/use-auth";
 import {Card} from "@mui/material";
 import ModernLayout from "../../../components/layouts/modern";
-import GlobalLimits from "../../../components/popote/limits/global-limits";
+import PersonalizedLimits from "../../../components/popote/limits/personalized-limits";
 
 
-const title = "Global Limits";
+const title = "Personalized Limits";
 
-const GlobalLimitsPage = () => {
+const PersonalizedLimitsPage = () => {
   return (
     <>
       <Head>
@@ -36,14 +32,14 @@ const GlobalLimitsPage = () => {
               </Grid>
           </MKBox>
           <Card sx={{p:1, minHeight: '50vh'}}>
-              <GlobalLimits/>
+              <PersonalizedLimits/>
           </Card>
       </MKBox>
     </>
   );
 };
 
-GlobalLimitsPage.getLayout = (page) => (
+PersonalizedLimitsPage.getLayout = (page) => (
   // <AuthGuard>
     <ModernLayout>
         {page}
@@ -51,4 +47,4 @@ GlobalLimitsPage.getLayout = (page) => (
   // </AuthGuard>
 );
 
-export default GlobalLimitsPage;
+export default PersonalizedLimitsPage;
