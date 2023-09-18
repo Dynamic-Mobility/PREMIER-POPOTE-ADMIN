@@ -25,6 +25,18 @@ class CustomersApis {
             })
         })
     }
+    
+    getAccountSwitchByCif(auth,cif){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.GET_ACCOUNT_SWITCHBY_CIF,{cif:cif}).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
    
 }
 

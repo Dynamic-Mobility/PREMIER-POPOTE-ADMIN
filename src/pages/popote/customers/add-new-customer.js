@@ -77,7 +77,8 @@ const customersList = [
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
-  const [cifResponse, setCifResponse] = useState();
+  const [cifResponse, setCifResponse] = useState(null);
+  const [switchResponse, setSwitchResponse] = useState([]);
   const dispatch = useDispatch();
   const authUser = useAuth();
   const fetchData = async () => {
@@ -98,16 +99,18 @@ const AddCustomer = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      cif_number: "",
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      idNumber: "",
-      kraPin: "",
+      cif_number: cifResponse?.cif_no ?? "",
+      firstName: cifResponse?.firstName ?? "",
+      middlename: cifResponse?.middleName ?? "",
+      lastName: cifResponse?.lastName ?? "",
+      email: cifResponse?.email ?? "",
+      mobile: cifResponse?.mobile ?? "",
+      idNumber: cifResponse?.idno ?? "",
+      kraPin: cifResponse?.krapin ?? "",
       accounts: [],
     },
+    enableReinitialization: true
+    ,
     validationSchema: validationSchema,
     onSubmit: async (values, helpers) => {
       try {
@@ -132,8 +135,20 @@ const AddCustomer = (props) => {
       try {
         const cifNumber = e.target.value;
         const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
+        formik.setValues(
+          {
+            cif_number: cifResponse?.cif_no ?? "",
+            firstName: cifResponse?.firstName ?? "",
+            middlename: cifResponse?.middlename ?? "",
+            lastName: cifResponse?.lastName ?? "",
+            email: cifResponse?.email ?? "",
+            mobile: cifResponse?.mobile ?? "",
+            idNumber: cifResponse?.idno ?? "",
+            kraPin: cifResponse?.krapin ?? "",
+            accounts: [],
+          }
+        )
         setCifResponse(res);
-        console.log("CIF_RESPONSE ", res);
         if (cifNumber) {
           toast.success("Customer Found!");
         } else {
@@ -143,8 +158,12 @@ const AddCustomer = (props) => {
             cif_number: e.target.value,
           });
         }
+        if(res.cif_no !== ''){
+          const switchRes = await customersApis.getAccountSwitchByCif(authUser,res?.cif_no)
+          setSwitchResponse(switchRes?.data)
+          console.log("SWITCH_RESPONSE ",switchRes)
+        }
       } catch (err) {
-        console.log("CIF_ERROR ", err);
       }
     }
   };
@@ -181,6 +200,43 @@ const AddCustomer = (props) => {
       );
       if(res.success){
         toast.success('Customer details added successfully')
+      }
+    } catch (err) {
+      console.log("ADD_UPDATE_ERROR ",err)
+    }
+  };
+  const updateCustomers = async () => {
+    const formattedData = {
+      firstName: cifResponse.firstName,
+      lastName: cifResponse.lastName,
+      cif: cifResponse.cif_no,
+      dob: cifResponse.dateofBirth,
+      alias: cifResponse.name,
+      address: cifResponse.postalAddress,
+      phone: cifResponse.tel,
+      kraPin: cifResponse.krapin,
+      email: cifResponse.email,
+      customerTypeId: null,
+      secondaryPhone: cifResponse.mobile,
+      pobox: cifResponse.postalAddress,
+      industry: cifResponse.industry,
+      industryCategory: cifResponse.category,
+      location: cifResponse.physicalAddress,
+      town: cifResponse.physicalAddress,
+      geoLocation: null,
+      name: cifResponse.name,
+      secondaryEmail: cifResponse.email,
+      actionDesc: cifResponse.accountDescription,
+      idnumber: cifResponse.idno,
+      ip: null,
+    };
+    try {
+      const res = await customersApis.addUpdateCustomers(
+        authUser,
+        formattedData
+      );
+      if(res.success){
+        toast.success('Customer details updated successfully')
       }
     } catch (err) {
       console.log("ADD_UPDATE_ERROR ",err)
@@ -229,7 +285,7 @@ const AddCustomer = (props) => {
                     <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
-                      label="Name"
+                      label="First Name"
                       name={"firstName"}
                       error={Boolean(
                         formik.touched.firstName && formik.errors.firstName
@@ -239,23 +295,23 @@ const AddCustomer = (props) => {
                       }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={cifResponse?.name}
+                      value={formik.values.firstName}
                     />
                   </Grid>
-                  {/* <Grid item md={4} xs={12}>
+                  <Grid item md={4} xs={12}>
                     <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
                       label="Middle Name"
                       name={'middleName'}
-                      error={Boolean(formik.touched.middleName && formik.errors.middleName)}
-                      helperText={formik.touched.middleName && formik.errors.middleName}
+                      error={Boolean(formik.touched.middlename && formik.errors.middlename)}
+                      helperText={formik.touched.middlename && formik.errors.middlename}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={formik.values.middleName}
+                      value={formik.values.middlename}
                     />
-                  </Grid> */}
-                  {/* <Grid item md={4} xs={12}>
+                  </Grid>
+                  <Grid item md={4} xs={12}>
                     <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
@@ -267,7 +323,7 @@ const AddCustomer = (props) => {
                       onChange={formik.handleChange}
                       value={formik.values.lastName}
                     />
-                  </Grid> */}
+                  </Grid>
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item md={6} xs={12}>
@@ -284,7 +340,7 @@ const AddCustomer = (props) => {
                       }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={cifResponse?.idno}
+                      value={formik.values.idNumber}
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -299,7 +355,7 @@ const AddCustomer = (props) => {
                       helperText={formik.touched.kraPin && formik.errors.kraPin}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={cifResponse?.krapin}
+                      value={formik.values.kraPin}
                     />
                   </Grid>
                 </Grid>
@@ -316,7 +372,7 @@ const AddCustomer = (props) => {
                       helperText={formik.touched.email && formik.errors.email}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={cifResponse?.email}
+                      value={formik.values.email}
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -325,14 +381,14 @@ const AddCustomer = (props) => {
                       fullWidth
                       name={"phoneNumber"}
                       error={Boolean(
-                        formik.touched.phoneNumber && formik.errors.phoneNumber
+                        formik.touched.mobile && formik.errors.mobile
                       )}
                       helperText={
-                        formik.touched.phoneNumber && formik.errors.phoneNumber
+                        formik.touched.mobile && formik.errors.mobile
                       }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      value={cifResponse?.mobile}
+                      value={formik.values.mobile}
                       label="Phone Number"
                     />
                   </Grid>
@@ -340,7 +396,7 @@ const AddCustomer = (props) => {
               </MKBox>
               <Divider />
               <MKBox sx={{ my: 2 }}>
-                <CustomerDetailsDataGrid data={formik.values.accounts} />
+                <CustomerDetailsDataGrid data={switchResponse} />
               </MKBox>
             </Grid>
             <Grid item md={3} xs={12}>
@@ -358,7 +414,7 @@ const AddCustomer = (props) => {
                   Add
                 </MKButton>
                 <MKButton
-                  onClick={addUpdateCustomers}
+                  onClick={updateCustomers}
                   disabled={Boolean(!cifResponse?.custExist)}
                   sx={{ my: 1 }}
                   variant="contained"

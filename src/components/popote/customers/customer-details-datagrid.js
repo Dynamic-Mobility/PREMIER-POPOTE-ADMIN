@@ -86,7 +86,7 @@ const CustomerDetailsDataGrid = (props) => {
   };
 
     const formatStatus = ({ data, displayValue }) => {
-        let color = displayValue === 'Active' ? 'success' :  'error';
+        let color = displayValue === 'A' ? 'success' :  'error';
         return (
             <DMTChip
                 //numeral={true}
@@ -118,7 +118,7 @@ const CustomerDetailsDataGrid = (props) => {
         }}
       >
         <MKTypography fontWeight="bold">Account Details</MKTypography>
-        <LinkAccountModal />
+        <LinkAccountModal cifResponse={data} />
       </MKBox>
       <DataGrid
         dataSource={data}
@@ -131,9 +131,9 @@ const CustomerDetailsDataGrid = (props) => {
         wordWrapEnabled={true}
         // height={"70vh"}
       >
-        <Column dataField="account_number" caption="A/C Number" />
-        <Column dataField="transactionLimit" caption="Txn Limit" />
-        <Column dataField="currency_code" caption="Currency Code" />
+        <Column dataField="account" caption="A/C Number" />
+        <Column minWidth={250} dataField="longname" caption="A/C Name" />
+        <Column dataField="currencyCode" caption="Currency Code" />
         <Column cellRender={formatStatus} dataField="status" caption="Status" />
         <Column
           caption="Action"

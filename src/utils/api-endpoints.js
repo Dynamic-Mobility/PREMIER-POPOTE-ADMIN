@@ -54,6 +54,7 @@ export const API_URL = {
 
     FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
     ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
+    GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
 
 }
 
@@ -109,6 +110,7 @@ export const APP_API_URL = {
 
     FETCH_CUSTOMER_CIF: '/api/popote/customers',
     ADD_UPDATE_CUSTOMERS: '/api/popote/customers/add-update-customers',
+    GET_ACCOUNT_SWITCHBY_CIF: '/api/popote/customers/get-account-switch',
 
 }
 
