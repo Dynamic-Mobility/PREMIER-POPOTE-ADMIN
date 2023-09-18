@@ -1,7 +1,7 @@
 import useAxios from "../hooks/use-axios";
 import {APP_API_URL} from "../utils/api-endpoints";
 
-class ParametersApis {
+class CustomersApis {
     fetchCustomerCif(auth,cif){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(auth);
@@ -13,7 +13,19 @@ class ParametersApis {
             })
         })
     }
+
+    addUpdateCustomers(auth,payload){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.ADD_UPDATE_CUSTOMERS,payload).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
    
 }
 
-export const parametersApis = new ParametersApis();
+export const customersApis = new CustomersApis();

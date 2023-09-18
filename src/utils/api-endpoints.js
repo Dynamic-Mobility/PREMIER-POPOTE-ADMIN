@@ -53,6 +53,7 @@ export const API_URL = {
     /***************** CUSTOMERS **********************/
 
     FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
+    ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
 
 }
 
@@ -107,6 +108,7 @@ export const APP_API_URL = {
     /***************** CUSTOMERS **********************/
 
     FETCH_CUSTOMER_CIF: '/api/popote/customers',
+    ADD_UPDATE_CUSTOMERS: '/api/popote/customers/add-update-customers',
 
 }
 

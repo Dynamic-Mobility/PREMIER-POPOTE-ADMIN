@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Container, Grid, TextField } from "@mui/material";
 import MKButton from "../../../components/@mui-components/button";
 import * as yup from "yup";
@@ -12,26 +12,25 @@ import MKBox from "../../../components/@mui-components/box";
 import Divider from "@mui/material/Divider";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import DMTTextInput from "../../../components/@dmt-components/form/text-input";
-import ModernLayout from '../../../components/layouts/modern'
+import ModernLayout from "../../../components/layouts/modern";
 import CustomerDetailsDataGrid from "../../../components/popote/customers/customer-details-datagrid";
-import {getAllUsers} from "../../../slices/dashboard/users";
-import {getAutoCompleteValue} from "../../../utils/helper-functions";
+import { getAllUsers } from "../../../slices/dashboard/users";
+import { getAutoCompleteValue } from "../../../utils/helper-functions";
 import customers from "./index";
-import {toast} from "react-toastify";
-import { parametersApis } from "../../../api-requests/customers-api";
-
+import { toast } from "react-toastify";
+import { customersApis } from "../../../api-requests/customers-api";
 
 const customersList = [
   {
     id: 1,
-    cif_number: '4253627183',
-    firstName: 'Marcos',
-    middleName: '',
-    lastName: 'Ochieng',
-    email: 'marcos@gmail.com',
-    phoneNumber: '0701824145',
-    idNumber: '35834295',
-    kraPin: 'A123523819I',
+    cif_number: "4253627183",
+    firstName: "Marcos",
+    middleName: "",
+    lastName: "Ochieng",
+    email: "marcos@gmail.com",
+    phoneNumber: "0701824145",
+    idNumber: "35834295",
+    kraPin: "A123523819I",
     isNew: false,
     accounts: [
       {
@@ -40,7 +39,7 @@ const customersList = [
         phoneNumber: "073242432",
         email: "marcos@gmail.com",
         transactionLimit: 4000000,
-        status: 'Active',
+        status: "Active",
       },
       {
         account_number: "0110292392391",
@@ -48,20 +47,20 @@ const customersList = [
         phoneNumber: "073242432",
         email: "marcos@gmail.com",
         transactionLimit: 4000000,
-        status: 'Active',
+        status: "Active",
       },
-    ]
+    ],
   },
   {
     id: 1,
-    cif_number: '12345678',
-    firstName: 'Denzel',
-    middleName: 'Kamau',
-    lastName: 'Gatungu',
-    email: 'denzelkamau@gmail.com',
-    phoneNumber: '0701824145',
-    idNumber: '231234595',
-    kraPin: 'A1235903928I',
+    cif_number: "12345678",
+    firstName: "Denzel",
+    middleName: "Kamau",
+    lastName: "Gatungu",
+    email: "denzelkamau@gmail.com",
+    phoneNumber: "0701824145",
+    idNumber: "231234595",
+    kraPin: "A1235903928I",
     accounts: [
       {
         account_number: "0110292392391",
@@ -69,17 +68,16 @@ const customersList = [
         phoneNumber: "073242432",
         email: "marcos@gmail.com",
         transactionLimit: 5000000,
-        status: 'Active',
+        status: "Active",
       },
     ],
-    isNew:true,
+    isNew: true,
   },
-
-]
+];
 
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
-  const [cifResponse,setCifResponse] = useState()
+  const [cifResponse, setCifResponse] = useState();
   const dispatch = useDispatch();
   const authUser = useAuth();
   const fetchData = async () => {
@@ -101,13 +99,13 @@ const AddCustomer = (props) => {
   const formik = useFormik({
     initialValues: {
       cif_number: "",
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      idNumber: '',
-      kraPin: '',
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      idNumber: "",
+      kraPin: "",
       accounts: [],
     },
     validationSchema: validationSchema,
@@ -129,27 +127,65 @@ const AddCustomer = (props) => {
     },
   });
 
-  const handleOnBlur = async(e) => {
-    if(e.target.value){
-      try{
+  const handleOnBlur = async (e) => {
+    if (e.target.value) {
+      try {
         const cifNumber = e.target.value;
-        const res = await parametersApis.fetchCustomerCif(authUser,cifNumber)
-        setCifResponse(res)
-        console.log("CIF_RESPONSE ",res)
-        if (cifNumber){
-        toast.success('Customer Found!')
+        const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
+        setCifResponse(res);
+        console.log("CIF_RESPONSE ", res);
+        if (cifNumber) {
+          toast.success("Customer Found!");
+        } else {
+          toast.error("No customer found");
+          formik.setValues({
+            ...formik.initialValues,
+            cif_number: e.target.value,
+          });
+        }
+      } catch (err) {
+        console.log("CIF_ERROR ", err);
       }
-      else{
-        toast.error('No customer found')
-        formik.setValues({...formik.initialValues, cif_number: e.target.value});
-      }
-      }catch(err){
-        console.log("CIF_ERROR ",err)
-      }
-      
     }
+  };
 
-  }
+  const addUpdateCustomers = async () => {
+    const formattedData = {
+      firstName: cifResponse.firstName,
+      lastName: cifResponse.lastName,
+      cif: cifResponse.cif_no,
+      dob: cifResponse.dateofBirth,
+      alias: cifResponse.name,
+      address: cifResponse.postalAddress,
+      phone: cifResponse.tel,
+      kraPin: cifResponse.krapin,
+      email: cifResponse.email,
+      customerTypeId: null,
+      secondaryPhone: cifResponse.mobile,
+      pobox: cifResponse.postalAddress,
+      industry: cifResponse.industry,
+      industryCategory: cifResponse.category,
+      location: cifResponse.physicalAddress,
+      town: cifResponse.physicalAddress,
+      geoLocation: null,
+      name: cifResponse.name,
+      secondaryEmail: cifResponse.email,
+      actionDesc: cifResponse.accountDescription,
+      idnumber: cifResponse.idno,
+      ip: null,
+    };
+    try {
+      const res = await customersApis.addUpdateCustomers(
+        authUser,
+        formattedData
+      );
+      if(res.success){
+        toast.success('Customer details added successfully')
+      }
+    } catch (err) {
+      console.log("ADD_UPDATE_ERROR ",err)
+    }
+  };
 
   return (
     <>
@@ -180,7 +216,9 @@ const AddCustomer = (props) => {
                     formik.touched.cif_number &&
                     Boolean(formik.errors.cif_number)
                   }
-                  helperText={formik.touched.cif_number && formik.errors.cif_number}
+                  helperText={
+                    formik.touched.cif_number && formik.errors.cif_number
+                  }
                 />
               </form>
               <Divider />
@@ -192,9 +230,13 @@ const AddCustomer = (props) => {
                       sx={{ my: 2 }}
                       fullWidth
                       label="Name"
-                      name={'firstName'}
-                      error={Boolean(formik.touched.firstName && formik.errors.firstName)}
-                      helperText={formik.touched.firstName && formik.errors.firstName}
+                      name={"firstName"}
+                      error={Boolean(
+                        formik.touched.firstName && formik.errors.firstName
+                      )}
+                      helperText={
+                        formik.touched.firstName && formik.errors.firstName
+                      }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                       value={cifResponse?.name}
@@ -233,9 +275,13 @@ const AddCustomer = (props) => {
                       sx={{ my: 2 }}
                       fullWidth
                       label="ID Number"
-                      name={'idNumber'}
-                      error={Boolean(formik.touched.idNumber && formik.errors.idNumber)}
-                      helperText={formik.touched.idNumber && formik.errors.idNumber}
+                      name={"idNumber"}
+                      error={Boolean(
+                        formik.touched.idNumber && formik.errors.idNumber
+                      )}
+                      helperText={
+                        formik.touched.idNumber && formik.errors.idNumber
+                      }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                       value={cifResponse?.idno}
@@ -246,8 +292,10 @@ const AddCustomer = (props) => {
                       sx={{ my: 2 }}
                       fullWidth
                       label="KRA Pin"
-                      name={'kraPin'}
-                      error={Boolean(formik.touched.kraPin && formik.errors.kraPin)}
+                      name={"kraPin"}
+                      error={Boolean(
+                        formik.touched.kraPin && formik.errors.kraPin
+                      )}
                       helperText={formik.touched.kraPin && formik.errors.kraPin}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
@@ -261,8 +309,10 @@ const AddCustomer = (props) => {
                       sx={{ my: 2 }}
                       fullWidth
                       label="Email Address"
-                      name={'email'}
-                      error={Boolean(formik.touched.email && formik.errors.email)}
+                      name={"email"}
+                      error={Boolean(
+                        formik.touched.email && formik.errors.email
+                      )}
                       helperText={formik.touched.email && formik.errors.email}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
@@ -273,9 +323,13 @@ const AddCustomer = (props) => {
                     <DMTTextInput
                       sx={{ my: 2 }}
                       fullWidth
-                      name={'phoneNumber'}
-                      error={Boolean(formik.touched.phoneNumber && formik.errors.phoneNumber)}
-                      helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                      name={"phoneNumber"}
+                      error={Boolean(
+                        formik.touched.phoneNumber && formik.errors.phoneNumber
+                      )}
+                      helperText={
+                        formik.touched.phoneNumber && formik.errors.phoneNumber
+                      }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                       value={cifResponse?.mobile}
@@ -294,10 +348,22 @@ const AddCustomer = (props) => {
                 Actions
               </MKTypography>
               <MKBox sx={{ display: "grid" }}>
-                <MKButton disabled={Boolean(!formik.values.isNew)} sx={{ my: 1 }} variant="outlined" color="primary">
+                <MKButton
+                  onClick={addUpdateCustomers}
+                  disabled={Boolean(cifResponse?.custExist)}
+                  sx={{ my: 1 }}
+                  variant="outlined"
+                  color="primary"
+                >
                   Add
                 </MKButton>
-                <MKButton disabled={Boolean(formik.values.isNew)} sx={{ my: 1 }} variant="contained" color="primary">
+                <MKButton
+                  onClick={addUpdateCustomers}
+                  disabled={Boolean(!cifResponse?.custExist)}
+                  sx={{ my: 1 }}
+                  variant="contained"
+                  color="primary"
+                >
                   Update
                 </MKButton>
                 <MKButton sx={{ my: 1 }} variant="contained" color="success">

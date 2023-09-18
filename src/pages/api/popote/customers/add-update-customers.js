@@ -43,9 +43,11 @@ export default async function handler(req, res) {
                     'Authorization': req.headers.authorization,
                 }
             };
-            const body = req.body.cif;
+            const body = req.body
 
-            await backendAxiosInstance.post(`${API_URL.FETCH_CUSTOMER_CIF}/${body}`,{}, config)
+            console.log("ADD_UPDATE_CUSTOMERS ",body)
+
+            await backendAxiosInstance.post(`${API_URL.ADD_UPDATE_CUSTOMERS}`,body, config)
                 .then(response => {
                     res.status(200).json(response.data);
                 })
