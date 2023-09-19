@@ -330,7 +330,7 @@ const AddCustomer = (props) => {
               </MKBox>
               <Divider />
               <MKBox sx={{ my: 2 }}>
-                <CustomerDetailsDataGrid data={switchResponse} />
+                <CustomerDetailsDataGrid data={switchResponse} cifResponse={cifResponse} />
               </MKBox>
             </Grid>
             <Grid item md={3} xs={12}>

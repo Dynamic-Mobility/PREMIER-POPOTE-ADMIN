@@ -56,7 +56,8 @@ export const API_URL = {
     ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
     GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
     FETCH_ALL_CUSTOMERS: '/api/v1/customer/getallcustomers',
-    FETCH_UNAPPROVED_CUSTOMERS: '/api/v1/customer/getunapprovedcustomers'
+    FETCH_UNAPPROVED_CUSTOMERS: '/api/v1/customer/getunapprovedcustomers',
+    LINK_ACCOUNTS: '/api/v1/customer/linkaccounts'
 
 }
 
@@ -114,7 +115,8 @@ export const APP_API_URL = {
     ADD_UPDATE_CUSTOMERS: '/api/popote/customers/add-update-customers',
     GET_ACCOUNT_SWITCHBY_CIF: '/api/popote/customers/get-account-switch',
     FETCH_ALL_CUSTOMERS: '/api/popote/customers',
-    FETCH_UNAPPROVED_CUSTOMERS: '/api/popote/customers/unapproved'
+    FETCH_UNAPPROVED_CUSTOMERS: '/api/popote/customers/unapproved',
+    LINK_ACCOUNTS: '/api/popote/customers/link-accounts'
 
 }
 
