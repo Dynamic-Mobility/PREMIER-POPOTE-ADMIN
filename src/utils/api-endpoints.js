@@ -47,7 +47,14 @@ export const API_URL = {
 
     GET_LIVE_ATM_TRANSACTIONS: '/api/Transactions/GetAtmTransactions/daily',
     GET_ATM_TRANSACTION_TYPES: '/api/Transactions/getATMTransactionType',
-    GET_FILTERED_ATM_TRANSACTIONS: '/api/Transactions/FilterAtmTransactions'
+    GET_FILTERED_ATM_TRANSACTIONS: '/api/Transactions/FilterAtmTransactions',
+
+
+    /***************** CUSTOMERS **********************/
+
+    FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
+    ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
+    GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
 
 }
 
@@ -97,6 +104,13 @@ export const APP_API_URL = {
     GET_ATM_TRANSACTION_TYPES: '/api/transactions/atm/types',
     GET_FILTERED_ATM_TRANSACTIONS: '/api/transactions/atm/',
 
+
+    
+    /***************** CUSTOMERS **********************/
+
+    FETCH_CUSTOMER_CIF: '/api/popote/customers',
+    ADD_UPDATE_CUSTOMERS: '/api/popote/customers/add-update-customers',
+    GET_ACCOUNT_SWITCHBY_CIF: '/api/popote/customers/get-account-switch',
 
 }
 
