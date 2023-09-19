@@ -4,9 +4,6 @@ import Head from "next/head";
 
 import MKBox from "../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
-import { useMounted } from "../../../hooks/use-mounted";
-import { useDispatch, useSelector } from "../../../store";
-import { useAuth } from "../../../hooks/use-auth";
 import {Card} from "@mui/material";
 import ModernLayout from "../../../components/layouts/modern";
 import GlobalLimits from "../../../components/popote/limits/global-limits";
