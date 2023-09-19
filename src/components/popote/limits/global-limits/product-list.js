@@ -2,11 +2,12 @@ import {List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {useState} from "react";
 import ProductItem from "./product-item";
 
-const dummyProducts = [
+export const dummyProducts = [
     {
         id: 1,
         name: 'Mpesa',
         icon: '',
+        desc: 'Please '
     },
     {
         id: 2,
@@ -15,20 +16,24 @@ const dummyProducts = [
     },
     {
         id: 3,
-        name: 'RTGs',
+        name: 'RTGS',
+        icon: '',
+    },
+    {
+        id: 4,
+        name: 'Bill Payments',
         icon: '',
     }
 ]
 const ProductList = props => {
+    const { selectedProduct, onProductSelect} = props;
     const [products, setProducts] = useState([...dummyProducts]);
-    const [selectedProduct, setSelectedProduct] = useState(dummyProducts[0]);
-
     const handleOnSelect = (product) => {
-        setSelectedProduct(product)
+        onProductSelect(product)
     }
     return(
         <>
-            <List component="nav" aria-label="product list">
+            <List aria-label="product list">
                 {products.map((product, index) => (
                     <ProductItem key={ index} {...{selectedProduct,  product, onSelect: handleOnSelect}}/>
                 ))}

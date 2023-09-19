@@ -1,10 +1,8 @@
 import { appName } from "../../../../utils/constants";
 import MKTypography from "../../../../components/@mui-components/typography";
 import Head from "next/head";
-import Container from "@mui/material/Container";
 import MKBox from "../../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
-import { DashboardLayout } from "../../../../components/layouts/dashboard";
 import { useMounted } from "../../../../hooks/use-mounted";
 import { useDispatch, useSelector } from "../../../../store";
 import { useAuth } from "../../../../hooks/use-auth";

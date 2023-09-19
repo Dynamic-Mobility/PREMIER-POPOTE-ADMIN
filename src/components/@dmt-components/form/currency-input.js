@@ -15,6 +15,7 @@ const DMTCurrencyInput = props => {
                 thousandSeparator={true}
                 prefix={prefix+' '}
                 customInput={RedditTextField}
+                variant="filled"
                 error={error}
                 onBlur={onBlur}
                 placeholder={placeholder}

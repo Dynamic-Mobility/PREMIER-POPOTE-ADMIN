@@ -1,6 +1,6 @@
 import MKBox from "../../@mui-components/box";
 import MKTypography from "../../@mui-components/typography";
-import TransactionFilters from "./TransactionFilters";
+import TransactionFilters from "./transaction-filters";
 import Divider from "@mui/material/Divider";
 import TransactionsCards from "./transactions-cards";
 

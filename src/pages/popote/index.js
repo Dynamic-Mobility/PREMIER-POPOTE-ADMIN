@@ -8,6 +8,7 @@ import DashboardCards from "../../components/popote/dashboard-cards";
 import DashboardSummary from "../../components/popote/dashboard-summary";
 
 const DashboardPage = () => {
+
   return (
     <>
       <Head>
@@ -32,7 +33,7 @@ const DashboardPage = () => {
             <Grid item md={12} xs={12}>
               <DashboardCards />
             </Grid>
-              <Grid item md={9} xs={12}>
+              <Grid item md={12} sm={12} xs={12}>
                <DashboardSummary/>
               </Grid>
           </Grid>
