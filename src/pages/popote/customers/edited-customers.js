@@ -2,7 +2,7 @@ import React from "react";
 import { AuthGuard } from "../../../hocs/auth-guard";
 import { Card } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import EditedCustomersDataGrid from "../../../components/popote/customers/edited-customers-datagrid";
+import EditedCustomersDataGrid from "../../../components/dashboard/customers/edited-customers-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
 import MKBox from "../../../components/@mui-components/box";

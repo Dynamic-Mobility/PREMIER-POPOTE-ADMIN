@@ -6,7 +6,7 @@ import MKBox from "../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
 import {Card} from "@mui/material";
 import ModernLayout from "../../../components/layouts/modern";
-import GlobalLimits from "../../../components/popote/limits/global-limits";
+import GlobalLimits from "../../../components/dashboard/limits/global-limits";
 
 
 const title = "Global Limits";

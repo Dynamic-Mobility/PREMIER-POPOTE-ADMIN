@@ -4,7 +4,7 @@ import MKTypography from "../../../../components/@mui-components/typography";
 import ModernLayout from "../../../../components/layouts/modern";
 import { appName } from "../../../../utils/constants";
 import Head from "next/head";
-import AuditTrailDataGrid from "../../../../components/popote/reports/system-reports/audit-trail-datagrid";
+import AuditTrailDataGrid from "../../../../components/dashboard/reports/system-reports/audit-trail-datagrid";
 
 const title = "Audit Trail";
 

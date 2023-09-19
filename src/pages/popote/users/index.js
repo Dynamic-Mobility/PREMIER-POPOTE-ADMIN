@@ -2,7 +2,7 @@ import React from "react";
 import { DashboardLayout } from "../../../components/layouts/dashboard";
 import { AuthGuard } from "../../../hocs/auth-guard";
 import { Typography, Card, Container } from "@mui/material";
-import UsersDataGrid from "../../../components/popote/users/users-data-grid";
+import UsersDataGrid from "../../../components/dashboard/users/users-data-grid";
 import MKTypography from "../../../components/@mui-components/typography";
 import ModernLayout from "../../../components/layouts/modern";
 

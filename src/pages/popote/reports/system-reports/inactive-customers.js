@@ -4,7 +4,7 @@ import { Container, Card } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import ModernLayout from "../../../../components/layouts/modern";
 import Head from "next/head";
-import InactiveCustomersDataGrid from "../../../../components/popote/reports/system-reports/inactive-customers-datagrid";
+import InactiveCustomersDataGrid from "../../../../components/dashboard/reports/system-reports/inactive-customers-datagrid";
 
 const title = "In Active Customers";
 const InactiveCustomers = () => {

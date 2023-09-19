@@ -3,7 +3,7 @@ import ModernLayout from "../../../../components/layouts/modern";
 import { Card, Container } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import Head from "next/head";
-import PesaLinkTransactionDatagrid from "../../../../components/popote/reports/transactions/pesa-link-transaction-datagrid";
+import PesaLinkTransactionDatagrid from "../../../../components/dashboard/reports/transactions/pesa-link-transaction-datagrid";
 
 const title = "Pesa Link Transaction Report";
 const PesaLink = () => {

@@ -4,8 +4,8 @@ import Head from "next/head";
 import MKBox from "../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
 import ModernLayout from '../../components/layouts/modern';
-import DashboardCards from "../../components/popote/dashboard-cards";
-import DashboardSummary from "../../components/popote/dashboard-summary";
+import DashboardCards from "../../components/dashboard/dashboard-cards";
+import DashboardSummary from "../../components/dashboard/dashboard-summary";
 
 const DashboardPage = () => {
 

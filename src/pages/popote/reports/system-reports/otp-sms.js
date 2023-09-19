@@ -3,7 +3,7 @@ import { Container, Card } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import ModernLayout from "../../../../components/layouts/modern";
 import { appName } from "../../../../utils/constants";
-import DormantCustomersDataGrid from "../../../../components/popote/reports/system-reports/dormant-customers-datagrid";
+import DormantCustomersDataGrid from "../../../../components/dashboard/reports/system-reports/dormant-customers-datagrid";
 import Head from "next/head";
 
 const title = "OTP Sms";

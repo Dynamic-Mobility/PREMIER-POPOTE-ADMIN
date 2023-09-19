@@ -6,9 +6,9 @@ import Grid from "@mui/material/Grid";
 import { useMounted } from "../../../../hooks/use-mounted";
 import { useDispatch, useSelector } from "../../../../store";
 import { useAuth } from "../../../../hooks/use-auth";
-import TransactionDataGrid from "../../../../components/popote/reports/transactions/transactions-data-grid";
+import TransactionDataGrid from "../../../../components/dashboard/reports/transactions/transactions-data-grid";
 import {Card} from "@mui/material";
-import TransactionsActionButtons from "../../../../components/popote/reports/transactions/transactions-action-buttons";
+import TransactionsActionButtons from "../../../../components/dashboard/reports/transactions/transactions-action-buttons";
 import {setPageSize, setActivePage} from "../../../../slices/popote/all-transactions";
 import ModernLayout from "../../../../components/layouts/modern";
 

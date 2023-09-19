@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container, Grid, TextField } from "@mui/material";
+import { Card, Container, Grid } from "@mui/material";
 import MKButton from "../../../components/@mui-components/button";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
 import { getAllRoles } from "../../../slices/dashboard/roles";
 import { createUser } from "../../../redux/services/users";
@@ -13,83 +13,16 @@ import Divider from "@mui/material/Divider";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import DMTTextInput from "../../../components/@dmt-components/form/text-input";
 import ModernLayout from "../../../components/layouts/modern";
-import CustomerDetailsDataGrid from "../../../components/popote/customers/customer-details-datagrid";
+import CustomerDetailsDataGrid from "../../../components/dashboard/customers/customer-details-datagrid";
 import { getAllUsers } from "../../../slices/dashboard/users";
-import { getAutoCompleteValue } from "../../../utils/helper-functions";
-import customers from "./index";
 import { toast } from "react-toastify";
 import { customersApis } from "../../../api-requests/customers-api";
-
-const customersList = [
-  {
-    id: 1,
-    cif_number: "4253627183",
-    firstName: "Marcos",
-    middleName: "",
-    lastName: "Ochieng",
-    email: "marcos@gmail.com",
-    phoneNumber: "0701824145",
-    idNumber: "35834295",
-    kraPin: "A123523819I",
-    isNew: false,
-    accounts: [
-      {
-        account_number: "0110282332394",
-        currency_code: "404",
-        phoneNumber: "073242432",
-        email: "marcos@gmail.com",
-        transactionLimit: 4000000,
-        status: "Active",
-      },
-      {
-        account_number: "0110292392391",
-        currency_code: "404",
-        phoneNumber: "073242432",
-        email: "marcos@gmail.com",
-        transactionLimit: 4000000,
-        status: "Active",
-      },
-    ],
-  },
-  {
-    id: 1,
-    cif_number: "12345678",
-    firstName: "Denzel",
-    middleName: "Kamau",
-    lastName: "Gatungu",
-    email: "denzelkamau@gmail.com",
-    phoneNumber: "0701824145",
-    idNumber: "231234595",
-    kraPin: "A1235903928I",
-    accounts: [
-      {
-        account_number: "0110292392391",
-        currency_code: "404",
-        phoneNumber: "073242432",
-        email: "marcos@gmail.com",
-        transactionLimit: 5000000,
-        status: "Active",
-      },
-    ],
-    isNew: true,
-  },
-];
-
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
   const [cifResponse, setCifResponse] = useState(null);
   const [switchResponse, setSwitchResponse] = useState([]);
   const dispatch = useDispatch();
   const authUser = useAuth();
-  const fetchData = async () => {
-    //   await dispatch(getAllBranches(authUser));
-    //   await dispatch(getAllDepartments(authUser));
-    await dispatch(getAllRoles(authUser));
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const validationSchema = yup.object({
     cif_number: yup
@@ -284,6 +217,7 @@ const AddCustomer = (props) => {
                   <Grid item md={4} xs={12}>
                     <DMTTextInput
                       sx={{ my: 2 }}
+                      disabled={true}
                       fullWidth
                       label="First Name"
                       name={"firstName"}

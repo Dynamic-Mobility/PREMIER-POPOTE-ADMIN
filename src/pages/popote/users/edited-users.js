@@ -3,7 +3,7 @@ import { DashboardLayout } from "../../../components/layouts/dashboard";
 import { Card, Container } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
 import { AuthGuard } from "../../../hocs/auth-guard";
-import EditedUsersDataGrid from '../../../components/popote/users/edited-users-datagrid';
+import EditedUsersDataGrid from '../../../components/dashboard/users/edited-users-datagrid';
 import ModernLayout from '../../../components/layouts/modern';
 
 

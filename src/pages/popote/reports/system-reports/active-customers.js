@@ -3,7 +3,7 @@ import { Container, Card } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import ModernLayout from "../../../../components/layouts/modern";
 import Head from "next/head";
-import ActiveCustomersDataGrid from "../../../../components/popote/reports/system-reports/active-customers-datagrid";
+import ActiveCustomersDataGrid from "../../../../components/dashboard/reports/system-reports/active-customers-datagrid";
 
 const title = "Active Customers";
 const ActiveCustomers = () => {

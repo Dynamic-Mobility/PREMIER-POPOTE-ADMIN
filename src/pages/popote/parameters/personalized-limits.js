@@ -5,7 +5,7 @@ import MKBox from "../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
 import {Card} from "@mui/material";
 import ModernLayout from "../../../components/layouts/modern";
-import PersonalizedLimits from "../../../components/popote/limits/personalized-limits";
+import PersonalizedLimits from "../../../components/dashboard/limits/personalized-limits";
 
 
 const title = "Personalized Limits";

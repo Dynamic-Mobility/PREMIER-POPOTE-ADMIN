@@ -1,7 +1,7 @@
 import React from "react";
 import ModernLayout from "../../../../components/layouts/modern";
 import { Card, Container } from "@mui/material";
-import B2cDatagrid from "../../../../components/popote/reports/transactions/b2c-datagrid";
+import B2cDatagrid from "../../../../components/dashboard/reports/transactions/b2c-datagrid";
 import MKTypography from "../../../../components/@mui-components/typography";
 import Head from "next/head";
 

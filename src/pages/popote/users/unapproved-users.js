@@ -3,7 +3,7 @@ import { DashboardLayout } from "../../../components/layouts/dashboard";
 import { AuthGuard } from "../../../hocs/auth-guard";
 import { Typography, Card, Container } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import UnapprovedDataGrid from "../../../components/popote/users/unapproved-datagrid";
+import UnapprovedDataGrid from "../../../components/dashboard/users/unapproved-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import MKBox from "../../../components/@mui-components/box";
 

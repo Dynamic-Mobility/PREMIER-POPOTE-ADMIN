@@ -3,7 +3,7 @@ import ModernLayout from "../../../../components/layouts/modern";
 import { Card, Container } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import Head from "next/head";
-import AirtimePurchaseDatagrid from "../../../../components/popote/reports/transactions/airtime-purchase-datagrid";
+import AirtimePurchaseDatagrid from "../../../../components/dashboard/reports/transactions/airtime-purchase-datagrid";
 
 const title = "Airtime Purchase Transaction Report";
 const AirtimePurchase = () => {

@@ -9,7 +9,7 @@ export const config = {
     }
 }
 export default async function handler(req, res) {
-     if (req.method === API_METHODS.POST) {
+    if (req.method === API_METHODS.POST) {
         try {
             if (!req.headers?.authorization){
                 res.status(401).send('Unauthorized');
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             };
             const body = req.body;
 
-            await backendAxiosInstance.post(`${API_URL.FETCH_ALL_CUSTOMERS}`,body, config)
+            await backendAxiosInstance.post(`${API_URL.FETCH_CUSTOMER_CIF}/${body.cif}`,{}, config)
                 .then(response => {
                     res.status(200).json(response.data);
                 })

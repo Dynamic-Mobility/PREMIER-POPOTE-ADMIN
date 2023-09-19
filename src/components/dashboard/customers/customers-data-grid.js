@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import { Column, Item, SearchPanel, Toolbar } from "devextreme-react/data-grid";
-import Button from "@mui/material/Button";
+import { Column } from "devextreme-react/data-grid";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { TextField, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 import { MoreHoriz } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import MKBox from "../../@mui-components/box";
-import { Add } from "@mui/icons-material";
 import MKButton from "../../@mui-components/button";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../../hooks/use-auth";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
@@ -68,46 +64,6 @@ export const MenuDots = ({ data }) => {
 
 const CustomersDataGrid = (props) => {
   const { data, handleOnAdd } = props;
-  const [open, setOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  //   const { users } = useSelector(({ users }) => users)
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  //   users dummy data
-  const users = [
-    {
-      name: "Ann Wanjiku",
-      profile_name: "Ann",
-      phoneNumber: "0712121343",
-      email: "ann@gmail.com",
-    },
-    {
-      name: "Derrick Oyugi",
-      profile_name: "Derrick",
-      phoneNumber: "073242432",
-      email: "derrick@gmail.com",
-    },
-    {
-      name: "Jane Kamau",
-      profile_name: "Jane",
-      phoneNumber: "0732321121",
-      email: "jane@gmail.com",
-    },
-    
-  ];
-
-  //   filter users based on search query
-  const filteredUser = users.filter((user) => {
-    return user.name.toLocaleLowerCase().includes(searchQuery.toLowerCase());
-  });
-
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
@@ -118,30 +74,8 @@ const CustomersDataGrid = (props) => {
 
   return (
     <>
-      <MKBox
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          my: 1,
-        }}
-      >
-        <Link href="/popote/customers/add-new-customer">
-          <MKButton variant="contained" color="primary">
-            Add Customer
-          </MKButton>
-        </Link>
-        <form>
-          <TextField
-            onChange={(e) => setSearchQuery(e.target.value)}
-            value={searchQuery}
-            fullWidth
-            label="Search..."
-          />
-        </form>
-      </MKBox>
       <DataGrid
-        dataSource={filteredUser}
+        dataSource={data}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
@@ -151,18 +85,18 @@ const CustomersDataGrid = (props) => {
         wordWrapEnabled={true}
         height={"70vh"}
       >
-        <Column dataField="name" caption="Name" />
-        <Column dataField="profile_name" caption="Username" />
-        <Column dataField="phoneNumber" caption="Phone Number" />
+        <Column  minWidth={250} dataField="name" caption="Name" />
+        <Column  minWidth={200} dataField="customerIdNo" caption="ID No" />
+        <Column  minWidth={200} dataField="phoneNumber" caption="Phone Number" />
         <Column
           dataField="email"
           caption="Email"
-          width={200}
+          minWidth={200}
           allowFiltering={false}
         />
         <Column
           caption="Action"
-          width={180}
+          minWidth={150}
           alignment={"center"}
           allowFiltering={false}
           cellRender={actionLink}

@@ -6,10 +6,12 @@ import atmReducer from './dashboard/transactions/atm-report'
 import userReducer from './dashboard/users'
 import roleReducer from './dashboard/roles'
 import allTransactionsReducer from './popote/all-transactions';
+import customersReducer from './popote/customers';
 
 
 const reducers = {
     allTransactions: allTransactionsReducer,
+    customers: customersReducer,
 
     users: userReducer,
     role: roleReducer,
