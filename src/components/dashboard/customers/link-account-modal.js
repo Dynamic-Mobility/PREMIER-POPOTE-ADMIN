@@ -4,20 +4,12 @@ import DialogContent from "@mui/material/DialogContent";
 import MKButton from "../../@mui-components/button";
 import { Typography, Box } from "@mui/material";
 import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/Inbox";
+import LinkAccountComponent from "./link-account-component";
 
 const LinkAccountModal = (props) => {
-  const { cifResponse } = props;
+  const { cifResponse, data } = props;
   const [open, setOpen] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,33 +38,13 @@ const LinkAccountModal = (props) => {
       >
         <DialogContent>
           <Typography fontWeight={"bold"} fontSize={"20px"}>
-            {cifResponse?.length <= 0 ? <p>No Accounts Available Yet</p> : <p>Available Accounts</p>}
+            {data?.length <= 0 ? <p>No Accounts Available Yet</p> : <p>Available Accounts</p>}
           </Typography>
           <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
             <List component="nav" aria-label="main mailbox folders">
-              {cifResponse?.map((item, index) => (
-                <ListItemButton
-                  key={index}
-                  selected={selectedIndex === 0}
-                  onClick={(event) => handleListItemClick(event, 0)}
-                >
-                  <ListItemText
-                    primary={item?.account}
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="primary"
-                        >
-                          Currency Code :
-                        </Typography>
-                        {item?.currencyCode}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItemButton>
+              {data?.map((item, index) => (
+                
+                <LinkAccountComponent key={index} item={item} cifResponse={cifResponse} />
               ))}
             </List>
           </Box>

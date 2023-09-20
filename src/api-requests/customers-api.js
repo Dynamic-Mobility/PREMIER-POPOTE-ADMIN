@@ -59,6 +59,18 @@ class CustomersApis {
             })
         })
     }
+
+    linkAccounts(auth,payload){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.LINK_ACCOUNTS,payload).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
    
 }
 

@@ -72,7 +72,7 @@ export const MenuDots = ({ data }) => {
 };
 
 const CustomerDetailsDataGrid = (props) => {
-  const { data, handleOnAdd } = props;
+  const { data, handleOnAdd, cifResponse } = props;
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   //   const { users } = useSelector(({ users }) => users)
@@ -118,7 +118,7 @@ const CustomerDetailsDataGrid = (props) => {
         }}
       >
         <MKTypography fontWeight="bold">Account Details</MKTypography>
-        <LinkAccountModal cifResponse={data} />
+        <LinkAccountModal data={data} cifResponse={cifResponse} />
       </MKBox>
       <DataGrid
         dataSource={data}
