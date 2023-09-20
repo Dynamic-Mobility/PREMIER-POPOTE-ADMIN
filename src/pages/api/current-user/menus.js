@@ -20,15 +20,16 @@ export default async function handler(req, res) {
                 }
             };
             const formData = req.body;
+            res.status(200).json([]);
 
-            await backendAxiosInstance.post(`${API_URL.GET_USER_MENUS}`, formData, config)
-                .then(response => {
-                    res.status(200).json(response.data);
-                })
-                .catch(e => {
-                        res.status(e.response?.status ?? 500).json(e.response?.data)
-                    }
-                )     
+            // await backendAxiosInstance.post(`${API_URL.GET_USER_MENUS}`, formData, config)
+            //     .then(response => {
+            //         res.status(200).json(response.data);
+            //     })
+            //     .catch(e => {
+            //             res.status(e.response?.status ?? 500).json(e.response?.data)
+            //         }
+            //     )
 
         } catch (e) {
             res.status(500).json(e.message);

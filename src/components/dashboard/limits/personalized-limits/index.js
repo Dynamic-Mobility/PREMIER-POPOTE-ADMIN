@@ -1,6 +1,6 @@
 import MKBox from "../../../@mui-components/box";
 import {Collapse, Grid} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import MKTypography from "../../../@mui-components/typography";
 import LimitsLottie from "../../../lottie-files/limits-lottie";
 import ProductList, {dummyProducts} from "../global-limits/product-list";
@@ -8,8 +8,11 @@ import LimitsForm from "../global-limits/limits-form";
 import SearchByCif from "./search-by-cif";
 import MKButton from "../../../@mui-components/button";
 import {ArrowBack} from "@mui/icons-material";
+import {useRouter} from "next/router";
 
 const PersonalizedLimits = () => {
+    const router = useRouter();
+    const cifNo = router.query?.cif;
     const [selectedProduct, setSelectedProduct] = useState(dummyProducts[0]);
     const [customerFound, setCustomerFound] = useState(null);
 
@@ -22,6 +25,12 @@ const PersonalizedLimits = () => {
     const handleOnProductSelect = product => {
         setSelectedProduct(product);
     }
+
+    useEffect(() => {
+        if (cifNo){
+            handleOnFoundCustomer({ id: cifNo})
+        }
+    },[cifNo]);
 
     return (
         <>

@@ -28,16 +28,16 @@ export const getMenuItems = (t) => [
             icon: 'add',
           },
           {
-            name: "Approve Edited Customers",
-            enabled: true,
-            link: "/popote/customers/edited-customers",
-            icon: 'edit',
-          },
-          {
             name: "Approve Registrations",
             enabled: true,
             link: "/popote/customers/registrations",
             icon: 'verified_user',
+          },
+          {
+            name: "Approve Edited Customers",
+            enabled: true,
+            link: "/popote/customers/edited-customers",
+            icon: 'edit',
           },
         ],
       },

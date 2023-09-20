@@ -16,7 +16,7 @@ class CustomersApis {
     fetchUnapprovedCustomers (authUser, values) {
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(authUser);
-            axiosInstance.post(APP_API_URL.FETCH_ALL_CUSTOMERS, values).then( response => {
+            axiosInstance.post(APP_API_URL.FETCH_UNAPPROVED_CUSTOMERS, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))
@@ -64,6 +64,18 @@ class CustomersApis {
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(auth);
             axiosInstance.post(APP_API_URL.LINK_ACCOUNTS,payload).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    approveCustomer(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.APPROVE_CUSTOMER, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))

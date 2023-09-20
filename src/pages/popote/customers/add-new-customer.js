@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
-import { getAllRoles } from "../../../slices/dashboard/roles";
 import { createUser } from "../../../redux/services/users";
 import MKTypography from "../../../components/@mui-components/typography";
 import MKBox from "../../../components/@mui-components/box";
@@ -17,12 +16,14 @@ import CustomerDetailsDataGrid from "../../../components/dashboard/customers/cus
 import { getAllUsers } from "../../../slices/dashboard/users";
 import { toast } from "react-toastify";
 import { customersApis } from "../../../api-requests/customers-api";
+import {useRouter} from "next/router";
 const AddCustomer = (props) => {
   const { handleClickOpen, open, setOpen, handleClose } = props;
   const [cifResponse, setCifResponse] = useState(null);
   const [switchResponse, setSwitchResponse] = useState([]);
   const dispatch = useDispatch();
   const authUser = useAuth();
+  const router = useRouter();
 
   const validationSchema = yup.object({
     cif_number: yup
@@ -32,6 +33,7 @@ const AddCustomer = (props) => {
 
   const formik = useFormik({
     initialValues: {
+      cif_no: "",
       cif_number: cifResponse?.cif_no ?? "",
       firstName: cifResponse?.firstName ?? "",
       middlename: cifResponse?.middleName ?? "",
@@ -68,34 +70,36 @@ const AddCustomer = (props) => {
       try {
         const cifNumber = e.target.value;
         const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
-        formik.setValues(
-          {
-            cif_number: cifResponse?.cif_no ?? "",
-            firstName: cifResponse?.firstName ?? "",
-            middlename: cifResponse?.middlename ?? "",
-            lastName: cifResponse?.lastName ?? "",
-            email: cifResponse?.email ?? "",
-            mobile: cifResponse?.mobile ?? "",
-            idNumber: cifResponse?.idno ?? "",
-            kraPin: cifResponse?.krapin ?? "",
-            accounts: [],
-          }
-        )
-        setCifResponse(res);
-        if (cifNumber) {
+        if (res?.cif_no !== ''){
           toast.success("Customer Found!");
-        } else {
+          formik.setValues(
+              {
+                cif_no: res?.cif_no ?? "",
+                cif_number: e.target.value,
+                firstName: res?.firstName ?? "",
+                middlename: res?.middlename ?? "",
+                lastName: res?.lastName ?? "",
+                email: res?.email ?? "",
+                mobile: res?.mobile ?? "",
+                idNumber: res?.idno ?? "",
+                kraPin: res?.krapin ?? "",
+                accounts: [],
+              }
+          )
+          setCifResponse(res);
+          const switchRes = await customersApis.getAccountSwitchByCif(authUser,res?.cif_no)
+          setSwitchResponse(switchRes?.data)
+        }
+        else{
           toast.error("No customer found");
           formik.setValues({
             ...formik.initialValues,
             cif_number: e.target.value,
           });
         }
-        if(res.cif_no !== ''){
-          const switchRes = await customersApis.getAccountSwitchByCif(authUser,res?.cif_no)
-          setSwitchResponse(switchRes?.data)
-          console.log("SWITCH_RESPONSE ",switchRes)
-        }
+
+
+
       } catch (err) {
       }
     }
@@ -176,6 +180,10 @@ const AddCustomer = (props) => {
     }
   };
 
+  const handleOnUpdateLimits = async () => {
+    router.push({ pathname: '/popote/parameters/personalized-limits', query: { cif: formik.values.cif_number }})
+  }
+
   return (
     <>
       <Container sx={{ py: 2 }} maxWidth="xl">
@@ -217,7 +225,7 @@ const AddCustomer = (props) => {
                   <Grid item md={4} xs={12}>
                     <DMTTextInput
                       sx={{ my: 2 }}
-                      disabled={true}
+                      //disabled={true}
                       fullWidth
                       label="First Name"
                       name={"firstName"}
@@ -345,20 +353,20 @@ const AddCustomer = (props) => {
                   variant="outlined"
                   color="primary"
                 >
-                  Add
+                  Add Customer
                 </MKButton>
                 <MKButton
                   onClick={updateCustomers}
                   disabled={Boolean(!cifResponse?.custExist)}
                   sx={{ my: 1 }}
                   variant="contained"
-                  color="primary"
+                  color="success"
                 >
-                  Update
+                  Update Changes
                 </MKButton>
-                <MKButton sx={{ my: 1 }} variant="contained" color="success">
-                  Save Changes
-                </MKButton>
+                {/*<MKButton sx={{ my: 1 }} variant="contained" color="success">*/}
+                {/*  Save Changes*/}
+                {/*</MKButton>*/}
               </MKBox>
 
               <ButtonGroup
@@ -368,15 +376,15 @@ const AddCustomer = (props) => {
                 variant="contained"
                 aria-label="vertical outlined button group"
               >
-                <MKButton variant="outlined" color="primary">
-                  Disable
-                </MKButton>
-                <MKButton variant="outlined" color="primary">
+                {/*<MKButton variant="outlined" color="primary">*/}
+                {/*  Disable*/}
+                {/*</MKButton>*/}
+                <MKButton onClick={handleOnUpdateLimits} variant="outlined" color="primary">
                   Update Limits
                 </MKButton>
-                <MKButton variant="outlined" color="primary">
-                  Recreate Key
-                </MKButton>
+                {/*<MKButton variant="outlined" color="primary">*/}
+                {/*  Recreate Key*/}
+                {/*</MKButton>*/}
                 <MKButton variant="outlined" color="primary">
                   Reset Pin
                 </MKButton>

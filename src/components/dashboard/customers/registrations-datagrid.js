@@ -70,7 +70,7 @@ export const MenuDots = ({ data }) => {
 };
 
 const RegistrationsDatagrid = (props) => {
-  const { data, handleOnAdd } = props;
+  const { data, handleOnAdd, onRefresh } = props;
   const [open, setOpen] = React.useState(false);
   //   const { users } = useSelector(({ users }) => users)
 
@@ -120,7 +120,7 @@ const RegistrationsDatagrid = (props) => {
           }}
         >
           <MenuItem sx={{ py: 1 }}>
-            <ApproveRegistration />
+            <ApproveRegistration customer={data} onRefresh={onRefresh} />
           </MenuItem>
           <MenuItem sx={{ py: 1 }}>
             <RejectRegistration />
@@ -129,34 +129,6 @@ const RegistrationsDatagrid = (props) => {
       </div>
     );
   };
-
-  //   users dummy data
-  const users = [
-    {
-      name: "Jane Kamau",
-      profile_name: "Jane",
-      phoneNumber: "0732321121",
-      email: "jane@gmail.com",
-    },
-    {
-      name: "Marcos Ochieng",
-      profile_name: "Marcos",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-    },
-    {
-      name: "Derrick Oyugi",
-      profile_name: "Derrick",
-      phoneNumber: "073242432",
-      email: "derrick@gmail.com",
-    },
-    {
-      name: "Ann Wanjiku",
-      profile_name: "Ann",
-      phoneNumber: "0712121321",
-      email: "ann@gmail.com",
-    },
-  ];
 
   const actionLink = ({ data, rowIndex }) => {
     return (
@@ -169,23 +141,24 @@ const RegistrationsDatagrid = (props) => {
   return (
     <>
       <DataGrid
-        dataSource={users}
+        dataSource={data}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
+        height={"70vh"}
         // height={"70vh"}
       >
-        <Column dataField="name" caption="Name" />
-        <Column dataField="profile_name" caption="Username" />
-        <Column dataField="phoneNumber" caption="Phone Number" />
+        <Column  minWidth={250} dataField="name" caption="Name" />
+        <Column  minWidth={200} dataField="customerIdNo" caption="ID No" />
+        <Column  minWidth={200} dataField="phoneNumber" caption="Phone Number" />
         <Column
-          dataField="email"
-          caption="Email"
-          width={200}
-          allowFiltering={false}
+            dataField="email"
+            caption="Email"
+            minWidth={200}
+            allowFiltering={false}
         />
         <Column
-          caption="Approve"
+          caption="Action"
           width={180}
           alignment={"center"}
           allowFiltering={false}

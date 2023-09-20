@@ -6,8 +6,14 @@ import DialogContent from "@mui/material/DialogContent";
 import MKButton from "../../@mui-components/button";
 import { Typography } from "@mui/material";
 import MKTypography from "../../@mui-components/typography";
+import DialogTitle from "@mui/material/DialogTitle";
+import {customersApis} from "../../../api-requests/customers-api";
+import {useAuth} from "../../../hooks/use-auth";
+import {toast} from "react-toastify";
 
-const ApproveRegistration = () => {
+const ApproveRegistration = props => {
+    const { customer, onRefresh } = props;
+    const authUser = useAuth();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -17,6 +23,23 @@ const ApproveRegistration = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const onProceed = async () => {
+      try{
+          const formData = {
+              customerId: customer?.id,
+              approvedBy: "",
+              ip: ""
+          }
+         const res =  await customersApis.approveCustomer(authUser, formData );
+         toast.success('Customer approved successfully!');
+          await onRefresh?.();
+          handleClose();
+      }
+      catch (e) {
+          console.log(e.error)
+      }
+  }
+
   return (
     <>
       <MKTypography color="success" onClick={handleClickOpen}>
@@ -25,17 +48,22 @@ const ApproveRegistration = () => {
       <Dialog
         open={open}
         onClose={handleClose}
+        maxWidth={'sm'}
+        fullWidth
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
+          <DialogTitle>
+              {"Confirmation"}
+          </DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to proceed?</Typography>
+          <Typography>Are you sure you want to proceed approve {customer?.name}?</Typography>
         </DialogContent>
         <DialogActions>
-          <MKButton color="success" variant="contained" size="small" >Proceed</MKButton>
-          <MKButton onClick={handleClose} color="error" variant="contained" size="small" autoFocus>
+          <MKButton onClick={handleClose} color="error" variant="contained" autoFocus>
             Cancel
           </MKButton>
+            <MKButton color="success" variant="contained"   onClick={onProceed}>Proceed</MKButton>
         </DialogActions>
       </Dialog>
     </>
