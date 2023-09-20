@@ -2,6 +2,7 @@ import React from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MKTypography from "../../@mui-components/typography";
+import MKBox from "../../@mui-components/box";
 import { customersApis } from "../../../api-requests/customers-api";
 import { useAuth } from "../../../hooks/use-auth";
 import { toast } from "react-toastify";
@@ -39,9 +40,10 @@ const LinkAccountComponent = (props) => {
       const res = await customersApis.linkAccounts(authUser, formattedData);
       if (res.success) {
         setProgressStatus("Operation Complete");
-        toast.success(res.errorMessage)
-      }else{
-        toast.error(res.errorMessage)
+        toast.success(res.errorMessage);
+      } else {
+        toast.error(res.errorMessage);
+        setProgressStatus("Operation Failed");
       }
       console.log("LINK_ACCOUNT_RESPONSE ", res);
     } catch (err) {
@@ -58,16 +60,36 @@ const LinkAccountComponent = (props) => {
           primary={item?.account}
           secondary={
             <React.Fragment>
-              <MKTypography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="primary"
+              <MKBox
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
               >
-                Currency Code :
-              </MKTypography>
-              {item?.currencyCode}
-              <MKTypography variant="h6">{progresStatus}</MKTypography>
+                <MKTypography
+                  sx={{ display: "inline" }}
+                  component="span"
+                  variant="body2"
+                  color="primary"
+                >
+                  Currency Code :{item?.currencyCode}
+                </MKTypography>
+                <MKTypography
+                  fontWeight="thin"
+                  color={
+                    progresStatus === "Operation Complete"
+                      ? "success"
+                      : progresStatus === "Operation Failed"
+                      ? "error"
+                      : "grey"
+                  }
+                  variant="overline"
+                  display="block"
+                >
+                  {progresStatus}
+                </MKTypography>
+              </MKBox>
             </React.Fragment>
           }
         />
