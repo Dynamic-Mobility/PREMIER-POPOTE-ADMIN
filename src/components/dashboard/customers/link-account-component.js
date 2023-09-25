@@ -15,7 +15,7 @@ const LinkAccountComponent = (props) => {
   const { item, cifResponse } = props;
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [progresStatus, setProgressStatus] = React.useState("");
-  const [selectedItems, setSelectedItems] = useState([]); // Initialize as an empty array
+  const [selectedItems, setSelectedItems] = useState([]);
   const authUser = useAuth();
 
   const handleCheckboxToggle = () => {
@@ -28,7 +28,6 @@ const LinkAccountComponent = (props) => {
     }
   };
 
-  console.log("CIF_RESPONSE ", cifResponse);
 
   const linkAccount = async () => {
     const formattedData = {
