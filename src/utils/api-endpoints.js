@@ -58,7 +58,12 @@ export const API_URL = {
     FETCH_ALL_CUSTOMERS: '/api/v1/customer/getallcustomers',
     FETCH_UNAPPROVED_CUSTOMERS: '/api/v1/customer/getallcustomersunapproved',
     APPROVE_CUSTOMER: '/api/v1/customer/approvecustomer',
-    LINK_ACCOUNTS: '/api/v1/customer/linkaccounts'
+    LINK_ACCOUNTS: '/api/v1/customer/linkaccounts',
+    RESET_CUSTOMER_PIN: '/api/v1/customer/resetpin',
+    VALIDATE_RESET_PIN_OTP: '/api/v1/customer/approveresetpin',
+
+    FETCH_UPDATED_CUSTOMERS: '/api/v1/customer/geteditedcustomers',
+    APPROVE_UPDATED_CUSTOMER: '/api/v1/customer/approveedited',
 
 }
 
@@ -112,13 +117,18 @@ export const APP_API_URL = {
     
     /***************** CUSTOMERS **********************/
 
-    FETCH_CUSTOMER_CIF: '/api/popote/customers/fetch-by-cif',
-    ADD_UPDATE_CUSTOMERS: '/api/popote/customers/add-update-customers',
-    GET_ACCOUNT_SWITCHBY_CIF: '/api/popote/customers/get-account-switch',
-    FETCH_ALL_CUSTOMERS: '/api/popote/customers',
-    FETCH_UNAPPROVED_CUSTOMERS: '/api/popote/customers/unapproved',
-    LINK_ACCOUNTS: '/api/popote/customers/link-accounts',
-    APPROVE_CUSTOMER: '/api/popote/customers/approve-customer'
+    FETCH_CUSTOMER_CIF: '/api/admin/customers/fetch-by-cif',
+    ADD_UPDATE_CUSTOMERS: '/api/admin/customers/add-update-customers',
+    GET_ACCOUNT_SWITCHBY_CIF: '/api/admin/customers/get-account-switch',
+    FETCH_ALL_CUSTOMERS: '/api/admin/customers',
+    FETCH_UNAPPROVED_CUSTOMERS: '/api/admin/customers/unapproved',
+    LINK_ACCOUNTS: '/api/admin/customers/link-accounts',
+    APPROVE_CUSTOMER: '/api/admin/customers/approve-customer',
+    RESET_CUSTOMER_PIN: '/api/admin/customers/reset-pin',
+    VALIDATE_RESET_PIN_OTP: '/api/admin/customers/reset-pin-otp',
+
+    FETCH_UPDATED_CUSTOMERS: '/api/admin/customers/get-updated',
+    APPROVE_UPDATED_CUSTOMER: '/api/admin/customers/approve-updated',
 
 }
 

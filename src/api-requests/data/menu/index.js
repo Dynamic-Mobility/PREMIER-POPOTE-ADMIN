@@ -1,10 +1,10 @@
-export const getMenuItems = (t) => [
+export const getMenuItems = () => [
   {
     name: 'General',
     child: [
       {
         name: "Dashboard",
-        link: "/popote/",
+        link: "/dashboard/",
         enabled: true,
         icon: 'home',
       },
@@ -12,63 +12,63 @@ export const getMenuItems = (t) => [
       {
         name: "Customer Management",
         enabled: true,
-        link: "/popote/customers/",
+        link: "/dashboard/customers/",
         icon: 'groups',
         child: [
           {
-            name: "Existing Customers",
-            enabled: true,
-            link: "/popote/customers/",
-            icon: 'groups',
-          },
-          {
             name: "Add Customer",
             enabled: true,
-            link: "/popote/customers/add-new-customer",
+            link: "/dashboard/customers/customer-details",
             icon: 'add',
           },
           {
-            name: "Approve Registrations",
+            name: "Existing Customers",
             enabled: true,
-            link: "/popote/customers/registrations",
+            link: "/dashboard/customers/",
+            icon: 'groups',
+          },
+          {
+            name: "New Customers List",
+            enabled: true,
+            link: "/dashboard/customers/new-customers",
             icon: 'verified_user',
           },
           {
-            name: "Approve Edited Customers",
+            name: "Updated Customers List",
             enabled: true,
-            link: "/popote/customers/edited-customers",
+            link: "/dashboard/customers/edited-customers",
             icon: 'edit',
           },
         ],
       },
       {
         name: "User Management",
-        link: "/popote/users",
+        link: "/dashboard/users",
         enabled: true,
         icon: 'group',
         child: [
           {
             name: "Existing Users",
             enabled: true,
-            link: "/popote/users/",
+            link: "/dashboard/users/",
             icon: 'people',
           },
           {
             name: "Approve New Users",
             enabled: true,
-            link: "/popote/users/unapproved-users",
+            link: "/dashboard/users/unapproved-users",
             icon: 'verified_user',
           },
           {
             name: "Approve Edited Users",
             enabled: true,
-            link: "/popote/users/edited-users",
+            link: "/dashboard/users/edited-users",
             icon: 'verified_user',
           },
           {
             name: "Approve Password Resets",
             enabled: true,
-            link: "/popote/users/password-resets",
+            link: "/dashboard/users/password-resets",
             icon: 'verified_user',
           },
         ],
@@ -81,37 +81,37 @@ export const getMenuItems = (t) => [
       {
         name: "Transaction Reports",
         enabled: true,
-        link: "/popote/reports/",
+        link: "/dashboard/reports/",
         icon: 'book',
         child: [
           {
             name: "All Transactions",
             enabled: true,
-            link: "/popote/reports/transactions",
+            link: "/dashboard/reports/transactions",
             icon: 'receipt_long',
           },
           {
             name: "B2C",
             enabled: true,
-            link: "/popote/reports/transactions/b2c",
+            link: "/dashboard/reports/transactions/b2c",
             icon: 'add',
           },
           {
             name: "Pesa Link",
             enabled: true,
-            link: "/popote/reports/transactions/pesa-link",
+            link: "/dashboard/reports/transactions/pesa-link",
             icon: 'link',
           },
           {
             name: "Airtime Purchase",
             enabled: true,
-            link: "/popote/reports/transactions/airtime-purchase",
+            link: "/dashboard/reports/transactions/airtime-purchase",
             icon: 'shop_two',
           },
           {
             name: "Bill Payments",
             enabled: true,
-            link: "/popote/reports/transactions/bill-payments",
+            link: "/dashboard/reports/transactions/bill-payments",
             icon: 'payments',
           },
         ],
@@ -119,55 +119,55 @@ export const getMenuItems = (t) => [
       {
         name: "System Reports",
         enabled: true,
-        link: "/popote/reports/system-reports",
+        link: "/dashboard/reports/system-reports",
         icon: 'book',
         child:[
           {
             name: "Registered Customers",
             enabled: true,
-            link: "/popote/rports/system-reports",
+            link: "/dashboard/rports/system-reports",
             icon: 'how_to_reg',
           },
           {
             name: "Active Customers",
             enabled: true,
-            link: "/popote/reports/system-reports/active-customers",
+            link: "/dashboard/reports/system-reports/active-customers",
             icon: 'people',
           },
           {
             name: "Inactive Customers",
             enabled: true,
-            link: "/popote/reports/system-reports/inactive-customers",
+            link: "/dashboard/reports/system-reports/inactive-customers",
             icon: 'block',
           },
           {
-            name: "Failed Registrations",
+            name: "Failed NewCustomers",
             enabled: true,
-            link: "/popote/reports/system-reports/failed-registration",
+            link: "/dashboard/reports/system-reports/failed-registration",
             icon: 'feedback',
           },
           {
             name: "Dormant Customers",
             enabled: true,
-            link: "/popote/reports/system-reports/dormant-customers",
+            link: "/dashboard/reports/system-reports/dormant-customers",
             icon: 'do_not_disturb_on',
           },
           {
             name: "System Users",
             enabled: true,
-            link: "/popote/reports/system-reports/system-users",
+            link: "/dashboard/reports/system-reports/system-users",
             icon: 'people',
           },
           {
             name: "Audit Trail",
             enabled: true,
-            link: "/popote/reports/system-reports/audit-trail",
+            link: "/dashboard/reports/system-reports/audit-trail",
             icon: 'receipt_long',
           },
           {
             name: "OTP Sms",
             enabled: true,
-            link: "/popote/reports/system-reports/otp-sms",
+            link: "/dashboard/reports/system-reports/otp-sms",
             icon: 'sms',
           },
         ]
@@ -179,20 +179,20 @@ export const getMenuItems = (t) => [
     child: [
       {
         name: "Transaction Limits",
-        link: "/popote/parameters/",
+        link: "/dashboard/parameters/",
         enabled: true,
         icon: 'smartphone',
         child: [
           {
             name: "Global Limits",
             enabled: true,
-            link: "/popote/parameters/global-limits",
+            link: "/dashboard/parameters/global-limits",
             icon: 'smartphone',
           },
           {
             name: "Personalized Limits",
             enabled: true,
-            link: "/popote/parameters/personalized-limits",
+            link: "/dashboard/parameters/personalized-limits",
             icon: 'verified_user',
           },
         ],

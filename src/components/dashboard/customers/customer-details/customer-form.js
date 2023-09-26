@@ -3,52 +3,46 @@ import {useFormik} from "formik";
 import MKBox from "../../../@mui-components/box";
 import MKTypography from "../../../@mui-components/typography";
 import {Grid} from "@mui/material";
-import React from "react";
+import React, {useEffect} from "react";
 const CustomerForm = props => {
     const { customer } = props;
     
     const formik = useFormik({
         initialValues: {
-            cif_number: customer?.cif_no ?? "",
-            firstName: customer?.firstName ?? "",
-            middlename: customer?.middleName ?? "",
-            lastName: customer?.lastName ?? "",
-            email: customer?.email ?? "",
-            mobile: customer?.mobile ?? "",
-            idNumber: customer?.idno ?? "",
-            kraPin: customer?.krapin ?? "",
+            firstName: "",
+            middlename:  "",
+            lastName: "",
+            cif_no: "",
+            email: "",
+            mobile:  "",
+            idNumber: "",
+            kraPin:  "",
         }
-    })
+    });
+
+    console.log(customer);
+
+    useEffect(() => {
+        formik.setValues({
+            cif_no: customer?.cif_no ?? "",
+            firstName:  customer?.firstName ?? "",
+            middlename:  customer?.middlename ?? "",
+            lastName:  customer?.lastName ?? "",
+            email:  customer?.email ?? "",
+            mobile:  customer?.mobile ?? "",
+            idNumber:  customer?.idno ?? "",
+            kraPin:  customer?.krapin ?? "",
+        })
+    }, [customer])
     
     return (
         <>
-            <form onSubmit={formik.handleSubmit}>
-                <DMTTextInput
-                    sx={{ my: 2 }}
-                    fullWidth
-                    maxWidth="sm"
-                    size="small"
-                    label="CIF NUMBER"
-                    name="cif_number"
-                    value={formik.values.cif_number}
-                    onChange={formik.handleChange}
-                    onBlur={handleOnBlur}
-                    error={
-                        formik.touched.cif_number &&
-                        Boolean(formik.errors.cif_number)
-                    }
-                    helperText={
-                        formik.touched.cif_number && formik.errors.cif_number
-                    }
-                />
-            </form>
             <MKBox sx={{ my: 2 }}>
-                <MKTypography fontWeight="bold">Personal Details</MKTypography>
+                <MKTypography fontWeight="bold" gutterBottom>Personal Details</MKTypography>
                 <Grid container spacing={2}>
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
-                            sx={{ my: 2 }}
-                            disabled={true}
+                            //disabled={true}
                             fullWidth
                             label="First Name"
                             name={"firstName"}
@@ -65,7 +59,6 @@ const CustomerForm = props => {
                     </Grid>
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
-                            sx={{ my: 2 }}
                             fullWidth
                             label="Middle Name"
                             name={'middleName'}
@@ -78,7 +71,6 @@ const CustomerForm = props => {
                     </Grid>
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
-                            sx={{ my: 2 }}
                             fullWidth
                             label="Last Name"
                             name={'lastName'}
@@ -89,11 +81,24 @@ const CustomerForm = props => {
                             value={formik.values.lastName}
                         />
                     </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                    <Grid item md={6} xs={12}>
+                    <Grid item md={4} xs={12}>
                         <DMTTextInput
-                            sx={{ my: 2 }}
+                            fullWidth
+                            label="CIF Number"
+                            name={"cif_no"}
+                            error={Boolean(
+                                formik.touched.cif_no && formik.errors.cif_no
+                            )}
+                            helperText={
+                                formik.touched.cif_no && formik.errors.cif_no
+                            }
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.cif_no}
+                        />
+                    </Grid>
+                    <Grid item md={4} xs={12}>
+                        <DMTTextInput
                             fullWidth
                             label="ID Number"
                             name={"idNumber"}
@@ -108,9 +113,8 @@ const CustomerForm = props => {
                             value={formik.values.idNumber}
                         />
                     </Grid>
-                    <Grid item md={6} xs={12}>
+                    <Grid item md={4} xs={12}>
                         <DMTTextInput
-                            sx={{ my: 2 }}
                             fullWidth
                             label="KRA Pin"
                             name={"kraPin"}
@@ -123,11 +127,8 @@ const CustomerForm = props => {
                             value={formik.values.kraPin}
                         />
                     </Grid>
-                </Grid>
-                <Grid container spacing={2}>
                     <Grid item md={6} xs={12}>
                         <DMTTextInput
-                            sx={{ my: 2 }}
                             fullWidth
                             label="Email Address"
                             name={"email"}
@@ -142,7 +143,6 @@ const CustomerForm = props => {
                     </Grid>
                     <Grid item md={6} xs={12}>
                         <DMTTextInput
-                            sx={{ my: 2 }}
                             fullWidth
                             name={"phoneNumber"}
                             error={Boolean(

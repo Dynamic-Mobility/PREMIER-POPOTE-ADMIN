@@ -6,10 +6,8 @@ import { authApi } from "../../../api-requests/auth-apis";
 import {
   Alert,
   Box,
-  Button,
   IconButton,
   InputAdornment,
-  Card,
   TextField,
 } from "@mui/material";
 import DMTTextInput from "../../@dmt-components/form/text-input";
@@ -17,8 +15,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import * as Yup from "yup";
 import MKButton from "../../@mui-components/button";
 import MKTypography from "../../@mui-components/typography";
-import { userLogin, setAuthUser } from "../../../slices/auth";
-import { useDispatch } from "react-redux";
 import { useAuth } from "../../../hooks/use-auth";
 import MKBox from "../../@mui-components/box";
 import { validateOtp } from "../../../redux/services/otp";
@@ -30,8 +26,6 @@ import jwtDecode from "jwt-decode";
 export const LoginForm = (props) => {
   const [activeStep, setActiveStep] = useState(0);
   const [userDetail, setUserDetail] = useState(null);
-  let router = useRouter();
-  const dispatch = useDispatch();
   const isMounted = useMounted();
   const formik = useFormik({
     initialValues: {
@@ -110,7 +104,7 @@ export const LoginForm = (props) => {
               onChange={formik.handleChange}
               type={showPassword ? "text" : "Password"}
               value={formik.values.Password}
-              inputProps={{
+              InputProps={{
                 form: {
                   autocomplete: "Password",
                 },

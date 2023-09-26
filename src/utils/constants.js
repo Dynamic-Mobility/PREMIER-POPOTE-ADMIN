@@ -43,6 +43,21 @@ export const USER_ROLES = {
     BASIC: 'basic',
 }
 
+export const CHANNEL_TYPES = [
+    {
+        id: 1,
+        label: 'USSD',
+        icon: 'pin',
+        value: 'USSD'
+    },
+    {
+        id: 2,
+        label: 'Mobile App',
+        icon: 'phone',
+        value: 'APP'
+    }
+]
+
 export const COLORS = ['#22bb33', '#e7bd17', '#e78617', '#c40f0f', '#5AB9FE'];
 export const GRADIENT_COLORS = [
     ['#22bb33', '#018c11'],

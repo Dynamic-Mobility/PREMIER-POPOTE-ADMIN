@@ -7,6 +7,7 @@ const MKButton = forwardRef(
     <MKButtonRoot
       {...rest}
       ref={ref}
+      sx={{width: 'auto'}}
       color="primary"
       variant={variant === "gradient" ? "contained" : variant}
       size={size}
