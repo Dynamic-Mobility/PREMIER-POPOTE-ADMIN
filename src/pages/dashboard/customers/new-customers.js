@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { DashboardLayout } from "../../../components/layouts/dashboard";
-import {Card, Container, Grid} from "@mui/material";
+import {Card, Grid} from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import { AuthGuard } from "../../../hocs/auth-guard";
 import RegistrationsDatagrid from "../../../components/dashboard/customers/registrations-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import MKBox from "../../../components/@mui-components/box";

@@ -1,5 +1,4 @@
 import React from "react";
-import { DashboardLayout } from "../../../../components/layouts/dashboard";
 import { Container, Card } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import SystemUsersDataGrid from "../../../../components/dashboard/reports/system-reports/system-users-datagrid";

@@ -3,9 +3,7 @@ import MKTypography from "../../../../components/@mui-components/typography";
 import Head from "next/head";
 import MKBox from "../../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
-import { useMounted } from "../../../../hooks/use-mounted";
 import { useDispatch, useSelector } from "../../../../store";
-import { useAuth } from "../../../../hooks/use-auth";
 import TransactionDataGrid from "../../../../components/dashboard/reports/transactions/transactions-data-grid";
 import {Card} from "@mui/material";
 import TransactionsActionButtons from "../../../../components/dashboard/reports/transactions/transactions-action-buttons";
@@ -16,9 +14,7 @@ import ModernLayout from "../../../../components/layouts/modern";
 const title = "All Transactions";
 
 const TransactionsPage = () => {
-  const isMounted = useMounted();
   const dispatch = useDispatch();
-  const authUser = useAuth();
   const {
       allTransactions,
       pageSize,

@@ -1,8 +1,6 @@
 import React from "react";
-import { DashboardLayout } from "../../../components/layouts/dashboard";
 import { Card, Container } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import { AuthGuard } from "../../../hocs/auth-guard";
 import PasswordResetDataGrid from "../../../components/dashboard/users/password-resets-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 

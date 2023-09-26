@@ -1,14 +1,8 @@
 import React, { useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
 import { Grid, TextField } from "@mui/material";
-import { branches, departments } from "../../../api-requests/dummy-data";
 import Autocomplete from "@mui/material/Autocomplete";
 import { getAutoCompleteValue } from "../../../utils/fileHelper";
 import MKButton from "../../../components/@mui-components/button";
@@ -22,17 +16,13 @@ import { createUser } from "../../../redux/services/users";
 import MKTypography from "../../../components/@mui-components/typography";
 
 const AddUser = (props) => {
-  const { handleClickOpen, open, setOpen, handleClose } = props;
-  // const { departments } = useSelector(({ departments }) => departments);
+  const { handleClickOpen, open,  handleClose } = props;
   const { roles } = useSelector(({ role }) => role);
-  console.log("ROLES ", roles);
-  // const { branches } = useSelector(({ branches }) => branches);
+
   const dispatch = useDispatch();
   const authUser = useAuth();
 
   const fetchData = async () => {
-    //   await dispatch(getAllBranches(authUser));
-    //   await dispatch(getAllDepartments(authUser));
     await dispatch(getAllRoles(authUser));
   };
 

@@ -13,7 +13,7 @@ import {toast} from "react-toastify";
 import {useAuth} from "../../../hooks/use-auth";
 
 const title = 'Customer Details';
-const CustomerDetailsPage = (props) => {
+const CustomerDetailsPage = () => {
     const [ customer, setCustomer] = useState(null);
     const [ customerAccounts, setCustomerAccounts] = useState([]);
     const authUser = useAuth();
