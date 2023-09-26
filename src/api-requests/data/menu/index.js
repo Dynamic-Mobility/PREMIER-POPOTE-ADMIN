@@ -24,7 +24,7 @@ export const getMenuItems = () => [
           {
             name: "Existing Customers",
             enabled: true,
-            link: "/dashboard/customers/",
+            link: "/dashboard/customers/all",
             icon: 'groups',
           },
           {
@@ -54,19 +54,19 @@ export const getMenuItems = () => [
             icon: 'people',
           },
           {
-            name: "Approve New Users",
+            name: "New Users List",
             enabled: true,
             link: "/dashboard/users/unapproved-users",
             icon: 'verified_user',
           },
           {
-            name: "Approve Edited Users",
+            name: "Updated Users List",
             enabled: true,
             link: "/dashboard/users/edited-users",
             icon: 'verified_user',
           },
           {
-            name: "Approve Password Resets",
+            name: "Password Resets",
             enabled: true,
             link: "/dashboard/users/password-resets",
             icon: 'verified_user',
