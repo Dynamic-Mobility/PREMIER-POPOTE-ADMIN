@@ -5,6 +5,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import React from "react";
 import CustomerResetPin from "../customer-reset-pin";
 import {Collapse} from "@mui/material";
+import AddCustomerDialog from "./add-customer-dialog";
 
 const CustomerActions = props => {
     const {customer, onAddUpdate, onReset} = props;
@@ -14,14 +15,19 @@ const CustomerActions = props => {
                 Actions
             </MKTypography>
             <MKBox sx={{ display: "grid", gap:1, mb:3 }}>
-                <MKButton
-                    onClick={onAddUpdate}
+                <AddCustomerDialog
+                    customer={customer}
                     disabled={Boolean(customer?.custExist)}
-                    variant="contained"
-                    color="primary"
-                >
-                    Add New
-                </MKButton>
+                    onAddUpdate={onAddUpdate}
+                />
+                {/*<MKButton*/}
+                {/*    onClick={onAddUpdate}*/}
+                {/*    disabled={Boolean(customer?.custExist)}*/}
+                {/*    variant="contained"*/}
+                {/*    color="primary"*/}
+                {/*>*/}
+                {/*    Add New*/}
+                {/*</MKButton>*/}
                 <MKButton
                     onClick={onAddUpdate}
                     disabled={Boolean(!customer?.custExist)}

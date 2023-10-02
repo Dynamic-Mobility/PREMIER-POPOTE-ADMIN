@@ -12,6 +12,7 @@ import {useAuth} from "../../../../hooks/use-auth";
 const CustomerDetails = props => {
     const {
         customer,
+        existingCustomer,
         customerAccounts,
         onReset
     } = props;

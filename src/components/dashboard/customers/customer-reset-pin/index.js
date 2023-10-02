@@ -1,5 +1,4 @@
 import {useState} from "react";
-import Dialog from "@mui/material/Dialog";
 import MKButton from "../../../@mui-components/button";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -15,6 +14,7 @@ import InitializationStep from "./initialization-step";
 import OtpForm from "./otp-form";
 import {customersApis} from "../../../../api-requests/customers-api";
 import {useAuth} from "../../../../hooks/use-auth";
+import DMTDialog from "../../../@dmt-components/dialog";
 
 const steps = [
     {
@@ -99,11 +99,9 @@ const CustomerResetPin = props => {
             >
                 {"Reset Pin"}
             </MKButton>
-            <Dialog
+            <DMTDialog
                 open={openDialog}
                 onClose={handleOnCloseDialog}
-                maxWidth={'sm'}
-                fullWidth
             >
                 <DialogTitle>
                     {"Reset Customer Pin"}
@@ -144,7 +142,7 @@ const CustomerResetPin = props => {
                         )}
                     </MKBox>
                 </DialogContent>
-            </Dialog>
+            </DMTDialog>
         </>
     )
 }
