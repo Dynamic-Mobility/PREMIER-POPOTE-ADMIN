@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { MoreHoriz } from "@mui/icons-material";
 import ApproveEditedCustomer from "./approve-edited-customer";
 import RejectEditedCustomer from "./reject-edited-customer";
+import Watermark from "../../watermark";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -63,7 +64,8 @@ const EditedCustomersDataGrid = (props) => {
   };
 
   return (
-    <>
+    <div>
+      <Watermark/>
       <DataGrid
         dataSource={data}
         allowColumnReordering={true}
@@ -92,7 +94,7 @@ const EditedCustomersDataGrid = (props) => {
               cellRender={actionLink}
           />
       </DataGrid>
-    </>
+    </div>
   );
 };
 

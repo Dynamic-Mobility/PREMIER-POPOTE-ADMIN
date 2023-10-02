@@ -8,6 +8,7 @@ import ApproveRegistration from "./approve-registration";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import RejectRegistration from "./reject-approval";
+import Watermark from "../../watermark";
 
 // import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
@@ -113,13 +114,18 @@ const RegistrationsDatagrid = (props) => {
   };
 
   return (
-    <>
+    <div>
+      <Watermark/>
       <DataGrid
-        dataSource={data}
-        allowColumnReordering={true}
-        rowAlternationEnabled={true}
-        showBorders={true}
-        height={"70vh"}
+          dataSource={data}
+          allowColumnReordering={true}
+          rowAlternationEnabled={true}
+          showBorders={true}
+          remoteOperations={true}
+          showColumnLines={true}
+          showRowLines={true}
+          wordWrapEnabled={true}
+          height={"70vh"}
       >
         <Column  minWidth={250} dataField="name" caption="Name" />
         <Column  minWidth={200} dataField="customerIdNo" caption="ID No" />
@@ -138,7 +144,7 @@ const RegistrationsDatagrid = (props) => {
           cellRender={actionLink}
         />
       </DataGrid>
-    </>
+    </div>
   );
 };
 

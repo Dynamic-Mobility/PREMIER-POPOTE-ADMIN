@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
 import {appName} from "../../../utils/constants";
@@ -11,12 +11,15 @@ import CustomerSearch from "../../../components/dashboard/customers/customer-det
 import {customersApis} from "../../../api-requests/customers-api";
 import {toast} from "react-toastify";
 import {useAuth} from "../../../hooks/use-auth";
+import {useRouter} from "next/router";
 
 const title = 'Customer Details';
 const CustomerDetailsPage = () => {
     const [ customer, setCustomer] = useState(null);
     const [ customerAccounts, setCustomerAccounts] = useState([]);
     const authUser = useAuth();
+    const router = useRouter();
+    const customerId = router.query?.id;
 
     const getCustomerAccounts = async (cifNo) => {
         try{
@@ -48,10 +51,28 @@ const CustomerDetailsPage = () => {
         }
     }
 
+    const getCustomerById = async () => {
+        try{
+           const res = await customersApis.fetchCustomerId(authUser, customerId)
+            setCustomer(res);
+            setCustomerAccounts(res?.accounts)
+           console.log(res);
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+    }
+
     const handleOnReset = () => {
         setCustomer(null);
         setCustomerAccounts([]);
     }
+
+    useEffect(() => {
+        if (customerId){
+            getCustomerById();
+        }
+    },[customerId])
 
   return (
     <>

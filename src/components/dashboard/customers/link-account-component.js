@@ -28,11 +28,10 @@ const LinkAccountComponent = (props) => {
     }
   };
 
-  console.log("CIF_RESPONSE ", cifResponse);
-
   const linkAccount = async () => {
     const formattedData = {
       cif: item?.cif,
+      accountName: item?.longname,
       customerId: cifResponse?.customerId,
       accountNumber: item?.account,
       branchCode: item?.branch,

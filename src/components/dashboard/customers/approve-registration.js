@@ -27,7 +27,9 @@ const ApproveRegistration = props => {
       try{
           const formData = {
               customerId: customer?.id,
+              customerUserId: customer?.customerUserId,
               approvedBy: "",
+              channelType: "USSD",
               ip: ""
           }
          const res =  await customersApis.approveCustomer(authUser, formData );

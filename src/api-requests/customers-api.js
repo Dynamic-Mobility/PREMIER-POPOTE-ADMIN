@@ -35,6 +35,17 @@ class CustomersApis {
             })
         })
     }
+    fetchCustomerId(auth,id){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.FETCH_CUSTOMER_BY_ID,{id: id}).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
 
     addUpdateCustomers(auth,payload){
         return new Promise((resolve, reject) => {

@@ -43,6 +43,7 @@ const CustomerForm = props => {
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
                             //disabled={true}
+                            size={"small"}
                             fullWidth
                             label="First Name"
                             name={"firstName"}
@@ -60,6 +61,7 @@ const CustomerForm = props => {
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
                             fullWidth
+                            size={"small"}
                             label="Middle Name"
                             name={'middleName'}
                             error={Boolean(formik.touched.middlename && formik.errors.middlename)}
@@ -72,6 +74,7 @@ const CustomerForm = props => {
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
                             fullWidth
+                            size={"small"}
                             label="Last Name"
                             name={'lastName'}
                             error={Boolean(formik.touched.lastName && formik.errors.lastName)}
@@ -84,6 +87,7 @@ const CustomerForm = props => {
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
                             fullWidth
+                            size={"small"}
                             label="CIF Number"
                             name={"cif_no"}
                             error={Boolean(
@@ -100,6 +104,7 @@ const CustomerForm = props => {
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
                             fullWidth
+                            size={"small"}
                             label="ID Number"
                             name={"idNumber"}
                             error={Boolean(
@@ -116,6 +121,7 @@ const CustomerForm = props => {
                     <Grid item md={4} xs={12}>
                         <DMTTextInput
                             fullWidth
+                            size={"small"}
                             label="KRA Pin"
                             name={"kraPin"}
                             error={Boolean(
@@ -130,6 +136,7 @@ const CustomerForm = props => {
                     <Grid item md={6} xs={12}>
                         <DMTTextInput
                             fullWidth
+                            size={"small"}
                             label="Email Address"
                             name={"email"}
                             error={Boolean(
@@ -141,9 +148,11 @@ const CustomerForm = props => {
                             value={formik.values.email}
                         />
                     </Grid>
-                    <Grid item md={6} xs={12}>
+                    <Grid className={"wrapper-disabled"} item md={6} xs={12}>
                         <DMTTextInput
                             fullWidth
+                            className={"disabled-field"}
+                            size={"small"}
                             name={"phoneNumber"}
                             error={Boolean(
                                 formik.touched.mobile && formik.errors.mobile

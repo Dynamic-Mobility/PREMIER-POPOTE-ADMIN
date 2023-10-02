@@ -16,7 +16,7 @@ export const getMenuItems = () => [
         icon: 'groups',
         child: [
           {
-            name: "Add Customer",
+            name: "Customer Details",
             enabled: true,
             link: "/dashboard/customers/customer-details",
             icon: 'add',

@@ -65,7 +65,7 @@ const CustomerDetails = props => {
                     <CustomerForm customer={customer}/>
                     <Divider />
                     <MKBox sx={{ my: 2 }}>
-                        <CustomerDetailsDataGrid data={customerAccounts} />
+                        <CustomerDetailsDataGrid data={customerAccounts} cifResponse={customer} />
                     </MKBox>
              </Grid>
              <Grid item md={3} xs={12}>

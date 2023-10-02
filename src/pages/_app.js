@@ -9,6 +9,7 @@ import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import 'devextreme/dist/css/dx.material.blue.light.css';
 import '../theme/dx.material.custom-scheme.css'
+import '../theme/watermark.css'
 // import '../theme/globals.css'
 import {AuthConsumer, AuthProvider} from "../contexts/auth-context"
 import {SplashScreen} from "../components/splash-screen";
