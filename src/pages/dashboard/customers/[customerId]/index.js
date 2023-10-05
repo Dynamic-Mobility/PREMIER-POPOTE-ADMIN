@@ -35,7 +35,6 @@ const ViewCustomerPage = () => {
         try{
             const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
             if (res?.cif_no !== ''){
-                console.log(res);
                 setCustomer(res);
                 toast.success("Customer Found!");
                 // if customer is found get their accounts
