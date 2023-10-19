@@ -71,19 +71,15 @@ export const MenuDots = ({ data }) => {
   );
 };
 
+const filterAccounts = (options) => {
+    return options?.filter((option) =>  option.exists ) ?? [];
+}
+
+
 const CustomerDetailsDataGrid = (props) => {
-  const { data, handleOnAdd, cifResponse } = props;
-  const [open, setOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  //   const { users } = useSelector(({ users }) => users)
+  const { data, cifResponse } = props;
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const linkedAccounts = filterAccounts(data);
 
     const formatStatus = ({ data, displayValue }) => {
         let color = displayValue === 'A' ? 'success' :  'error';
@@ -108,41 +104,36 @@ const CustomerDetailsDataGrid = (props) => {
 
   return (
     <>
-      <MKBox
-        size="small"
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          my: 1,
-        }}
-      >
-        <MKTypography fontWeight="bold">Account Details</MKTypography>
-        <LinkAccountModal data={data} cifResponse={cifResponse} />
-      </MKBox>
-      <DataGrid
-        dataSource={data}
-        allowColumnReordering={true}
-        rowAlternationEnabled={true}
-        showBorders={true}
-        remoteOperations={true}
-        showColumnLines={true}
-        showRowLines={true}
-        wordWrapEnabled={true}
-        // height={"70vh"}
-      >
-        <Column dataField="account" caption="A/C Number" />
-        <Column minWidth={250} dataField="longname" caption="A/C Name" />
-        <Column dataField="currencyCode" caption="Currency Code" />
-        <Column cellRender={formatStatus} dataField="status" caption="Status" />
-        <Column
-          caption="Action"
-          width={120}
-          alignment={"center"}
-          allowFiltering={false}
-          cellRender={actionLink}
-        />
-      </DataGrid>
+        <MKBox sx={{ my:1, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <MKTypography fontWeight="bold">{"Linked Accounts"}</MKTypography>
+            <LinkAccountModal data={data} cifResponse={cifResponse} />
+        </MKBox>
+
+          <DataGrid
+            dataSource={linkedAccounts}
+            allowColumnReordering={true}
+            rowAlternationEnabled={true}
+            showBorders={true}
+            remoteOperations={true}
+            showColumnLines={true}
+            showRowLines={true}
+            wordWrapEnabled={true}
+            // height={"70vh"}
+          >
+            <Column dataField="account" caption="A/C Number" />
+            <Column minWidth={250} dataField="longname" caption="A/C Name" />
+            <Column dataField="currencyCode" caption="Currency Code" />
+            <Column cellRender={formatStatus} dataField="status" caption="Status" />
+            <Column
+              caption="Action"
+              width={120}
+              alignment={"center"}
+              allowFiltering={false}
+              cellRender={actionLink}
+            />
+          </DataGrid>
+
+
     </>
   );
 };

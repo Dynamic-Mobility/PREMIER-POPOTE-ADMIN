@@ -8,7 +8,7 @@ import MKTypography from "../../../@mui-components/typography";
 import MKBox from "../../../@mui-components/box";
 import MKButton from "../../../@mui-components/button";
 
-const OTP_LENGTH = 5;
+const OTP_LENGTH = 4;
 
 const OtpForm = (props) => {
     const { onCancel, onSuccess, message = ""} = props;
@@ -68,7 +68,7 @@ const OtpForm = (props) => {
                                 outline: "1px solid red",
                                 background: alpha(theme.palette.error.main, 0.1),
                             }}
-                            placeholder={"-----"}
+                            placeholder={"----"}
                             focusStyle={{
                                 outline: `1px solid ${theme.palette.primary.main}`,
                             }}

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
-import {appName} from "../../../utils/constants";
+import {appName, CHANNEL_TYPES} from "../../../utils/constants";
 import MKBox from "../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
 import MKTypography from "../../../components/@mui-components/typography";
@@ -17,6 +17,7 @@ const title = 'Customer Details';
 const CustomerDetailsPage = () => {
     const [ customer, setCustomer] = useState(null);
     const [ customerAccounts, setCustomerAccounts] = useState([]);
+    const [existingCustomer, setExistingCustomer] = useState(null);
     const authUser = useAuth();
     const router = useRouter();
     const customerId = router.query?.id;
@@ -32,12 +33,16 @@ const CustomerDetailsPage = () => {
     };
 
     const handleOnSearch = async (cifNumber) => {
+        setExistingCustomer(null);
+        setCustomer(null);
         try{
             const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
             if (res?.cif_no !== ''){
-                console.log(res);
                 setCustomer(res);
                 toast.success("Customer Found!");
+                if (res?.customerId){
+                    await getCustomerById(res?.customerId);
+                }
                 // if customer is found get their accounts
                 await getCustomerAccounts(res?.cif_no);
             }
@@ -51,28 +56,73 @@ const CustomerDetailsPage = () => {
         }
     }
 
-    const getCustomerById = async () => {
+    const getCustomerById = async (customerId) => {
         try{
            const res = await customersApis.fetchCustomerId(authUser, customerId)
-            setCustomer(res);
-            setCustomerAccounts(res?.accounts)
-           console.log(res);
+            setExistingCustomer(res);
         }
         catch (e) {
             console.log(e.message);
         }
     }
 
+    const handleOnAddUpdate = async (channelTypes) => {
+        const formattedData = {
+            firstName: customer?.firstName,
+            lastName: customer?.lastName,
+            cif: customer?.cif_no,
+            dob: customer?.dateofBirth,
+            alias: customer?.name,
+            address: customer?.postalAddress,
+            phone: '254701824145',//customer?.tel,
+            kraPin: customer?.krapin,
+            email: customer?.email,
+            customerTypeId: null,
+            secondaryPhone: '254701824145', //customer?.mobile,
+            pobox: customer?.postalAddress,
+            industry: customer?.industry,
+            industryCategory: customer?.category,
+            location: customer?.physicalAddress,
+            town: customer?.physicalAddress,
+            geoLocation: null,
+            name: customer?.name,
+            secondaryEmail: customer?.email,
+            actionDesc: customer?.accountDescription,
+            idnumber: customer?.idno,
+            ip: null,
+            registeredForApp: channelTypes?.includes(CHANNEL_TYPES[0].value),
+            registeredForUSSD: channelTypes?.includes(CHANNEL_TYPES[1].value)
+        };
+        try {
+            const res = await customersApis.addUpdateCustomers(
+                authUser,
+                formattedData
+            );
+            const action = Boolean(customer?.custExist) ? 'updated' : 'created';
+            if(res.success){
+                toast.success(`Customer details ${action} successfully`);
+                setCustomer({
+                    ...customer,
+                    customerId: res.id,
+                    custExist: true,
+                })
+                await getCustomerById(res.id);
+            }
+            else{
+                toast.error('Unable to process request. Try again!');
+            }
+        } catch (err) {
+            console.log("ADD_UPDATE_ERROR ",err)
+        }
+    }
+
+
     const handleOnReset = () => {
         setCustomer(null);
         setCustomerAccounts([]);
+        setExistingCustomer(null);
     }
 
-    useEffect(() => {
-        if (customerId){
-            getCustomerById();
-        }
-    },[customerId])
 
   return (
     <>
@@ -102,6 +152,8 @@ const CustomerDetailsPage = () => {
           <Card sx={{ minHeight: '78vh', p:2 }}>
                 <CustomerDetails
                     customer={customer}
+                    handleOnAddUpdate={handleOnAddUpdate}
+                    existingCustomer={existingCustomer}
                     customerAccounts={customerAccounts}
                     onReset={handleOnReset}
                 />

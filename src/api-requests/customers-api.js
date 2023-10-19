@@ -108,7 +108,19 @@ class CustomersApis {
     validateResetOTP(auth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(auth);
-            axiosInstance.post(APP_API_URL.RESET_CUSTOMER_PIN, values).then( response => {
+            axiosInstance.post(APP_API_URL.VALIDATE_RESET_PIN_OTP, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    blockUnblockCustomer(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.BLOCK_UNBLOCK_CUSTOMER, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))

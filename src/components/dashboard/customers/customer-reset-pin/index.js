@@ -15,6 +15,7 @@ import OtpForm from "./otp-form";
 import {customersApis} from "../../../../api-requests/customers-api";
 import {useAuth} from "../../../../hooks/use-auth";
 import DMTDialog from "../../../@dmt-components/dialog";
+import {toast} from "react-toastify";
 
 const steps = [
     {
@@ -28,14 +29,14 @@ const steps = [
     }
     ];
 const CustomerResetPin = props => {
-    const { customer } = props;
+    const { customer, existingCustomer } = props;
     const [openDialog, setOpenDialog] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [channelType, setChannelType] = useState('USSD');
     const authUser = useAuth();
     const [message, setMessage] = useState("");
 
-
+    console.log(existingCustomer);
     const handleOnChangeChannelType = value => {
         setChannelType(value);
     }
@@ -56,7 +57,7 @@ const CustomerResetPin = props => {
         try{
             const formData = {
                 customerId: customer?.customerId,
-                customerUserId: "",
+                customerUserId: existingCustomer?.customerUserId,
                 attachedCopy: "",
                 channelType: channelType,
                 ip: "",
@@ -76,14 +77,20 @@ const CustomerResetPin = props => {
         try{
             const formData = {
                 customerId: customer?.customerId,
-                customerUserId: "",
+                customerUserId: existingCustomer?.customerUserId,
                 attachedCopy: "",
                 channelType: channelType,
                 ip: "",
                 otp: otp,
             }
             const res = await customersApis.validateResetOTP(authUser, formData);
-            console.log(res);
+            if(res?.success){
+                toast.success(res?.errorMessage ?? "Pin reset was successful!");
+                handleOnCloseDialog();
+            }
+            else{
+                toast.error(res?.errorMessage ?? "Failed to reset pin, try again!");
+            }
         }
         catch (e){
            console.log(e.message);

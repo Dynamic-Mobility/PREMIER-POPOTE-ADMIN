@@ -11,17 +11,17 @@ import * as React from "react";
 import {CheckBox, CheckBoxOutlineBlank} from "@mui/icons-material";
 import {LoaderIcon} from "react-hot-toast";
 
-const AddCustomerDialog = props => {
+const UpdateCustomerDialog = props => {
     const { customer, disabled, onAddUpdate } = props;
     const [openDialog, setOpenDialog] = useState(false);
     const [channelTypes, setChannelTypes] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading,setIsLoading] = useState(false);
 
     const handleOnProceed = async () => {
-        setIsLoading(true);
+        setIsLoading(true)
         await onAddUpdate(channelTypes);
-        handleOnClose();
         setIsLoading(false);
+        handleOnClose();
     }
 
     const handleOnOpen = () => {
@@ -42,7 +42,7 @@ const AddCustomerDialog = props => {
                 onClick={handleOnOpen}
                 disabled={disabled}
             >
-                {"Add New"}
+                {"Update Changes"}
             </MKButton>
             <DMTDialog
                 open={openDialog}
@@ -51,25 +51,28 @@ const AddCustomerDialog = props => {
                 <DialogContent>
                     <MKBox sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
                         <MKTypography sx={{ mb: 2}} color={'primary'} variant={'h5'} align={'center'} gutterBottom>
-                            {"New Customer Alert"}
+                            {"Customer Update Alert"}
                         </MKTypography>
                         <MKTypography sx={{ mb: 2 }} align={'center'} gutterBottom>
-                            {`Please choose the channel type(s) you are registering `}
-                            <b>{customer?.name}</b>
+                            {`Are you sure you want to update details for `}
+                            <b>{customer?.name} ?</b>
                         </MKTypography>
-                        <ChannelTypesOptions
-                            selectedMode={channelTypes}
-                            handleOnChange={handleOnChannelChange}
-                        />
-                        <MKBox sx={{ mt:2 }}>
+                        {/*<ChannelTypesOptions*/}
+                        {/*    selectedMode={channelTypes}*/}
+                        {/*    handleOnChange={handleOnChannelChange}*/}
+                        {/*/>*/}
+                        <MKBox sx={{ display: 'flex', gap: 2, mt:2 }}>
+                            <MKButton disabled={isLoading} onClick={handleOnClose} color={'error'} variant={'outlined'}>
+                                {"No, Dismiss"}
+                            </MKButton>
                             <MKButton
-                                onClick={handleOnProceed}
-                                disabled={isLoading || !Boolean(channelTypes.length > 0)}
+                                disabled={isLoading}
                                 endIcon={isLoading && <LoaderIcon/>}
+                                onClick={handleOnProceed}
                                 variant={'contained'}
                                 color={'success'}
                             >
-                                {"Proceed"}
+                                {"Yes, Proceed"}
                             </MKButton>
                         </MKBox>
                     </MKBox>
@@ -123,4 +126,4 @@ const AddCustomerDialog = props => {
     )
 }
 
-export default AddCustomerDialog;
+export default UpdateCustomerDialog;

@@ -13,6 +13,7 @@ const DMTDialog = props => {
                 TransitionComponent={Transition}
                 fullWidth
                 maxWidth={'sm'}
+                scroll={'body'}
                 {...props}
             >
                 {children}

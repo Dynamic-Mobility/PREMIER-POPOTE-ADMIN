@@ -28,17 +28,17 @@ export const getMenuItems = () => [
             icon: 'groups',
           },
           {
-            name: "New Customers List",
+            name: "Approve Customers",
             enabled: true,
             link: "/dashboard/customers/new-customers",
             icon: 'verified_user',
           },
-          {
-            name: "Updated Customers List",
-            enabled: true,
-            link: "/dashboard/customers/edited-customers",
-            icon: 'edit',
-          },
+          // {
+          //   name: "Updated Customers List",
+          //   enabled: true,
+          //   link: "/dashboard/customers/edited-customers",
+          //   icon: 'edit',
+          // },
         ],
       },
       {

@@ -20,8 +20,6 @@ const CustomerForm = props => {
         }
     });
 
-    console.log(customer);
-
     useEffect(() => {
         formik.setValues({
             cif_no: customer?.cif_no ?? "",

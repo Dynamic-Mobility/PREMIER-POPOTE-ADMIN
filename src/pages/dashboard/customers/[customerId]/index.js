@@ -11,6 +11,8 @@ import {customersApis} from "../../../../api-requests/customers-api";
 import {toast} from "react-toastify";
 import {useAuth} from "../../../../hooks/use-auth";
 import {useRouter} from "next/router";
+import RefreshButton from "../../../../components/@dmt-components/refresh-button";
+import BackButtonLink from "../../../../components/@dmt-components/back-button-link";
 
 const title = 'View Customer';
 const ViewCustomerPage = () => {
@@ -19,12 +21,22 @@ const ViewCustomerPage = () => {
     const [ customerAccounts, setCustomerAccounts] = useState([]);
     const authUser = useAuth();
     const router = useRouter();
-    const customerId = router.query?.id;
+    const customerId = router.query?.customerId;
 
     const getCustomerAccounts = async (cifNo) => {
         try{
             const res = await customersApis.getAccountSwitchByCif(authUser,cifNo)
-            setCustomerAccounts(res.data);
+            if (res.data){
+                setCustomerAccounts(res.data);
+                if (res?.data?.length > 0){
+                    await handleOnSearch(res.data[0]?.account);
+                }
+
+            }
+            else{
+                setCustomerAccounts([]);
+            }
+
         }
         catch (e) {
             console.log(e.message);
@@ -36,13 +48,13 @@ const ViewCustomerPage = () => {
             const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
             if (res?.cif_no !== ''){
                 setCustomer(res);
-                toast.success("Customer Found!");
+                //toast.success("Customer Found!");
                 // if customer is found get their accounts
-                await getCustomerAccounts(res?.cif_no);
+                //await getCustomerAccounts(res?.cif_no);
             }
             else{
-                handleOnReset();
-                toast.error(res?.errorMessage ?? "Oops! An error occurred. Try again");
+                // handleOnReset();
+                // toast.error(res?.errorMessage ?? "Oops! An error occurred. Try again");
             }
         }
         catch (e) {
@@ -54,6 +66,7 @@ const ViewCustomerPage = () => {
         try{
            const res = await customersApis.fetchCustomerId(authUser, customerId);
             setExistingCustomer(res);
+            await getCustomerAccounts(res?.cif);
         }
         catch (e) {
             console.log(e.message);
@@ -87,13 +100,12 @@ const ViewCustomerPage = () => {
           <MKBox sx={{ mb: 2 }}>
             <Grid container justifyContent="space-between" alignItems="center" spacing={3}>
               <Grid item>
-                <MKTypography variant="h4">{title}</MKTypography>
+                  <BackButtonLink label={title}/>
+                {/*<MKTypography variant="h5">{title}</MKTypography>*/}
               </Grid>
-                {/*<Grid item>*/}
-                {/*    <CustomerSearch*/}
-                {/*        onSearch={handleOnSearch}*/}
-                {/*    />*/}
-                {/*</Grid>*/}
+                <Grid item>
+                    <RefreshButton onRefresh={getCustomerById}/>
+                </Grid>
             </Grid>
           </MKBox>
           <Card sx={{ minHeight: '78vh', p:2 }}>

@@ -5,7 +5,6 @@ import Watermark from "../../watermark";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import {useRouter} from "next/router";
-import NextLink from "next/link";
 import MKTypography from "../../@mui-components/typography";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
@@ -17,10 +16,10 @@ const CustomersDataGrid = (props) => {
   const actionLink = ({ data, rowIndex }) => {
     const handleOnView = () => {
         router.push({
-            pathname: '/dashboard/customers/customer-details',
-            query: {
-                id: data?.id
-            }
+            pathname: `/dashboard/customers/${data?.id}`,
+            // query: {
+            //     id: data?.id
+            // }
         })
     }
     return (
@@ -35,10 +34,11 @@ const CustomersDataGrid = (props) => {
         const handleOnClick= e => {
             e.preventDefault();
             router.push({
-                pathname: '/dashboard/customers/customer-details',
-                query: {
-                    id: data?.id
-                }
+                pathname: `/dashboard/customers/${data?.id}`,
+                // pathname: '/dashboard/customers/customer-details',
+                // query: {
+                //     id: data?.id
+                // }
             })
         }
         return (
