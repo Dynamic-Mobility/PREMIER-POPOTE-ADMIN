@@ -20,6 +20,7 @@ import MKBox from "../../@mui-components/box";
 import { validateOtp } from "../../../redux/services/otp";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
+import OtpForm from "./otp-form";
 
 
 
@@ -27,6 +28,36 @@ export const LoginForm = (props) => {
   const [activeStep, setActiveStep] = useState(0);
   const [userDetail, setUserDetail] = useState(null);
   const isMounted = useMounted();
+
+  const { login } = useAuth();
+  const router = useRouter();
+  const [message, setMessage] = useState('');
+
+  const [showPassword, toggleShowPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    toggleShowPassword(!showPassword);
+  };
+
+  const handleOnOTPValidate = async (values) => {
+        try {
+          const res = await validateOtp(values, userDetail);
+          if (res.success) {
+            await login(userDetail);
+            const returnUrl = router.query.returnUrl || "/dashboard";
+            router.push(returnUrl).catch(console.error);
+          } else {
+            toast.error(res.errordesc);
+          }
+        } catch (error) {
+          toast.error(error);
+        }
+  }
+
+  const handleOnResendOTP = () => {
+    //TODO: Implement Resend OTP functionality
+  }
+
   const formik = useFormik({
     initialValues: {
       Username: "",
@@ -40,6 +71,7 @@ export const LoginForm = (props) => {
       try {
         const userDetails = await authApi.Login(values);
         setUserDetail(userDetails);
+        setMessage("OTP sent to your phone number")
         if (isMounted()) {
           // const returnUrl = router.query.returnUrl || "/dashboard";
           setActiveStep(1);
@@ -55,13 +87,6 @@ export const LoginForm = (props) => {
       }
     },
   });
-
-  const [showPassword, toggleShowPassword] = useState(false);
-
-  const handleShowPassword = () => {
-    toggleShowPassword(!showPassword);
-  };
-
   return (
     <>
       {activeStep === 0 && (
@@ -117,7 +142,7 @@ export const LoginForm = (props) => {
                 ),
               }}
             />
-            <Box sx={{ mt: 2 }}>
+            <MKBox sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, }}>
               <MKButton
                 mb={4}
                 disabled={formik.isSubmitting}
@@ -129,95 +154,12 @@ export const LoginForm = (props) => {
               >
                 Log In
               </MKButton>
-            </Box>
+            </MKBox>
           </form>
         </>
       )}
-      {activeStep === 1 && <Otp {...{ userDetail }} />}
+      {activeStep === 1 && <OtpForm message={message} onSuccess={handleOnOTPValidate} onResendOTP={handleOnResendOTP} />}
     </>
   );
 };
 
-const Otp = ({ userDetail }) => {
-  const { login } = useAuth();
-  const router = useRouter();
-
-
-  const decodedToken = jwtDecode(userDetail?.token)
-
-
-  const validationSchema = Yup.object({
-    Otp: Yup.number("Enter Otp").required("Otp is required"),
-  });
-
-  const formik = useFormik({
-    initialValues: {
-      Otp: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: async (values, helpers) => {
-      console.log("OTP VALUE ", values);
-      try {
-        const res = await validateOtp(values, userDetail);
-        if (res.success) {
-          await login(userDetail);
-          const returnUrl = router.query.returnUrl || "/dashboard";
-          router.push(returnUrl).catch(console.error);
-          //toast.success(res.errordesc);
-          helpers.resetForm();
-        } else {
-          toast.error(res.errordesc);
-        }
-      } catch (error) {
-        toast.error(error);
-      }
-    },
-  });
-  return (
-    <MKBox sx={{ p: 2 }}>
-      <MKTypography
-        fontSize="18px"
-        sx={{ color: "#054F97", textAlign: "center" }}
-      >
-        One Time Password
-      </MKTypography>
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
-          sx={{ my: 2 }}
-          fullWidth
-          name="Otp"
-          label="One Time Password"
-          value={formik.values.Otp}
-          onChange={formik.handleChange}
-          error={formik.touched.Otp && Boolean(formik.errors.Otp)}
-          helperText={formik.touched.Otp && formik.errors.Otp}
-        />
-        <MKTypography fontSize="14px" sx={{ my: 2, textAlign: "center" }}>
-          The OTP has been sent {decodedToken?.phonenumber}
-        </MKTypography>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2,
-            alignItems: "center",
-            justifyContent: "center",
-            my: 2,
-          }}
-        >
-          <MKButton size="small" color="primary" variant="outlined">
-            Resend OTP
-          </MKButton>
-          <MKButton
-            disabled={formik.isSubmitting}
-            type="submit"
-            size="small"
-            variant="contained"
-            color="primary"
-          >
-            Continue
-          </MKButton>
-        </Box>
-      </form>
-    </MKBox>
-  );
-};

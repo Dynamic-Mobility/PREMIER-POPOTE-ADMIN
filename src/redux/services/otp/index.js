@@ -10,7 +10,7 @@ export const validateOtp = (values,userDetails) =>{
                 Authorization: userDetails?.token
             },
             params:{
-                otp: values.Otp
+                otp: values.otp
             }
         }
         axios.post(APP_API_URL.VALIDATE_OTP,{},config)

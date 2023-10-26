@@ -64,10 +64,10 @@ const CustomersDataGrid = (props) => {
             wordWrapEnabled={true}
             height={"70vh"}
           >
-            <Column  minWidth={100} dataField="cif" caption="CIF No" />
-              <Column cellRender={actionDisplay}  minWidth={250} dataField="name" caption=" Customer Name" />
-            <Column  minWidth={200} dataField="customerIdNo" caption="ID No" />
-            <Column  minWidth={200} dataField="phoneNumber" caption="Phone Number" />
+            <Column minWidth={100} dataField="cif" caption="CIF No" />
+            <Column cellRender={actionDisplay}  minWidth={250} dataField="name" caption=" Customer Name" />
+            <Column minWidth={200} dataField="customerIdNo" caption="ID No" />
+            <Column minWidth={200} dataField="phoneNumber" caption="Phone Number" />
             <Column
               dataField="email"
               caption="Email"

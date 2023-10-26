@@ -74,11 +74,11 @@ const CustomerDetailsPage = () => {
             dob: customer?.dateofBirth,
             alias: customer?.name,
             address: customer?.postalAddress,
-            phone: '254701824145',//customer?.tel,
+            phone: '254786156749',//customer?.tel,
             kraPin: customer?.krapin,
             email: customer?.email,
             customerTypeId: null,
-            secondaryPhone: '254701824145', //customer?.mobile,
+            secondaryPhone: '254786156749', //customer?.mobile,
             pobox: customer?.postalAddress,
             industry: customer?.industry,
             industryCategory: customer?.category,
@@ -99,7 +99,7 @@ const CustomerDetailsPage = () => {
                 formattedData
             );
             const action = Boolean(customer?.custExist) ? 'updated' : 'created';
-            if(res.success){
+            if(res?.success){
                 toast.success(`Customer details ${action} successfully`);
                 setCustomer({
                     ...customer,
@@ -109,7 +109,7 @@ const CustomerDetailsPage = () => {
                 await getCustomerById(res.id);
             }
             else{
-                toast.error('Unable to process request. Try again!');
+                toast.error(res?.errorMessage ?? 'Unable to process request. Try again!');
             }
         } catch (err) {
             console.log("ADD_UPDATE_ERROR ",err)

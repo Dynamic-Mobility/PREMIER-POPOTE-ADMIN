@@ -11,6 +11,8 @@ import {customersApis} from "../../../../api-requests/customers-api";
 import {useAuth} from "../../../../hooks/use-auth";
 import DMTTextInput from "../../../@dmt-components/form/text-input";
 import {toast} from "react-toastify";
+import {getBrowserDetails, getIPAddress} from "../../../../utils/helper-functions";
+import MenuItem from "@mui/material/MenuItem";
 
 const BlockUnblockUnlinkAccount = props => {
     const {
@@ -18,30 +20,57 @@ const BlockUnblockUnlinkAccount = props => {
         disabled = false,
         action= BLOCK_ACTION_TYPES.BLOCK,
         account,
+        label = "Block Customer",
+        type = "button",
+        blockType= BLOCK_TYPES.CUSTOMER,
+        onClose
     } = props;
     const [openDialog, setOpenDialog] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
     const [reason, setReason] = useState("");
     const authUser = useAuth();
 
+    const getMessage = () => {
+        let message;
+        if (Boolean(existingCustomer)){
+            message = (
+                <MKTypography align={'center'} gutterBottom>
+                    {`Are you sure you want to block customer - `}
+                    <b>{existingCustomer?.name} ?</b>
+                </MKTypography>
+            )
+        }
+        if (Boolean(account)){
+            message = (
+                <MKTypography align={'center'} gutterBottom>
+                    {`Are you sure you want to block account - `}
+                    <b>{account?.accountName} ?</b>
+                </MKTypography>
+            )
+        }
+        return message;
+    }
+
     const handleOnChange = e => {
         setReason(e.target.value);
     }
 
     const handleOnProceed = async () => {
+        setIsLoading(true)
+        const ipAddress = await getIPAddress();
+        const browser = await getBrowserDetails();
         const formData = {
             userId: "",
             branchCode: "",
-            customerId: existingCustomer?.id,
-            customerUserId: existingCustomer?.customerUserId,
+            customerId: Boolean(existingCustomer) ? existingCustomer?.id : "",
+            customerUserId: Boolean(existingCustomer) ? existingCustomer?.customerUserId : "",
             reason: reason,
             actionType: action,
-            accountId: "",
-            blockType: BLOCK_TYPES.ACCOUNT,
-            ip: "",
-            browser: ""
+            accountId: Boolean(account) ? account?.id : "",
+            blockType: blockType,
+            ip: ipAddress,
+            browser: browser
         }
-        setIsLoading(true)
         try{
             const res = await customersApis.blockUnblockCustomer(authUser, formData)
             if (res.success){
@@ -60,6 +89,7 @@ const BlockUnblockUnlinkAccount = props => {
 
     const handleOnOpen = () => {
         setOpenDialog(true);
+        onClose?.();
     }
     const handleOnClose = () => {
         setOpenDialog(false);
@@ -67,14 +97,26 @@ const BlockUnblockUnlinkAccount = props => {
 
     return (
         <>
-            <MKButton
-                color={'primary'}
-                variant={'outlined'}
-                onClick={handleOnOpen}
-                disabled={disabled}
-            >
-                {"Block Customer"}
-            </MKButton>
+            {type === "button" && (
+                <MKButton
+                    color={'primary'}
+                    variant={'outlined'}
+                    onClick={handleOnOpen}
+                    disabled={disabled}
+                >
+                    {label}
+                </MKButton>
+            )}
+            {type === "menu" && (
+                <MenuItem
+                    color={'primary'}
+                    variant={'outlined'}
+                    onClick={handleOnOpen}
+                    disabled={disabled}
+                >
+                    {label}
+                </MenuItem>
+            )}
             <DMTDialog
                 open={openDialog}
                 onClose={handleOnClose}
@@ -85,18 +127,13 @@ const BlockUnblockUnlinkAccount = props => {
                             <MKTypography sx={{ mb: 2}} color={'primary'} variant={'h5'} align={'center'} gutterBottom>
                                 {"Block Customer"}
                             </MKTypography>
-                            <MKTypography align={'center'} gutterBottom>
-                                {`Are you sure you want to block customer - `}
-                                <b>{existingCustomer?.name} ?</b>
-                            </MKTypography>
+                            {getMessage()}
                             <MKBox sx={{ width: '100%'}}>
                                 <DMTTextInput
                                     multiline={true}
                                     minRows={3}
                                     fullWidth={true}
                                     required={true}
-                                    // error={Boolean(!reason)}
-                                    // helperText={Boolean(!reason) && "Reason is required!"}
                                     value={reason}
                                     placeholder={'Write reason here...'}
                                     onChange={handleOnChange}

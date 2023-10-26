@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import DialogContent from "@mui/material/DialogContent";
-import MKButton from "../../@mui-components/button";
+import MKButton from "../../../@mui-components/button";
 import List from "@mui/material/List";
-import LinkAccountComponent from "./link-account-component";
-import {customersApis} from "../../../api-requests/customers-api";
+import LinkAccountComponent from "../link-account-component";
+import {customersApis} from "../../../../api-requests/customers-api";
 import {toast} from "react-toastify";
-import {useAuth} from "../../../hooks/use-auth";
-import MKBox from "../../@mui-components/box";
+import {useAuth} from "../../../../hooks/use-auth";
+import MKBox from "../../../@mui-components/box";
 import SaveIcon from "@mui/icons-material/Save";
 import DialogTitle from "@mui/material/DialogTitle";
-import DMTDialog from "../../@dmt-components/dialog";
+import DMTDialog from "../../../@dmt-components/dialog";
 import {LoaderIcon} from "react-hot-toast";
 
 const LinkAccountModal = (props) => {
@@ -22,6 +22,7 @@ const LinkAccountModal = (props) => {
   const onLinkAccounts = async () => {
       const formData = selectedAccounts.map((item) => {
           return {
+              id:"",
               cif: item?.cif,
               accountName: item?.longname,
               customerId: cifResponse?.customerId,
@@ -42,9 +43,9 @@ const LinkAccountModal = (props) => {
         try {
             const res = await customersApis.linkAccounts(authUser, formData);
             if (res.success) {
-                toast.success(res.errorMessage ?? "Account(s) linked successfully!");
+                toast.success(Boolean(res?.errorMessage) ? res?.errorMessage : "Account(s) linked successfully!");
             } else {
-                toast.error(res.errorMessage);
+                toast.error(res?.errorMessage ?? "An error occurred while processing request!");
             }
         } catch (err) {
             console.log("LINK_ACCOUNT_ERROR ", err);
@@ -55,7 +56,7 @@ const LinkAccountModal = (props) => {
       let data = [...selectedAccounts];
       const exists = data.some(datum => datum?.account === values.account)
       if (exists){
-          data = data.filter((datum) => data.account === values.account )
+          data = data.filter((datum) => datum.account !== values.account )
       }
       else{
           data.push(values);

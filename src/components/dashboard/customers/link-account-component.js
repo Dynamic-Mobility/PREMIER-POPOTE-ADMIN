@@ -1,22 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MKTypography from "../../@mui-components/typography";
 import MKBox from "../../@mui-components/box";
-import { customersApis } from "../../../api-requests/customers-api";
-import { useAuth } from "../../../hooks/use-auth";
-import { toast } from "react-toastify";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import MKButton from "../../@mui-components/button";
 import {ListItemIcon} from "@mui/material";
 
 const LinkAccountComponent = (props) => {
-  const { item, selectedAccounts, onSelect } = props;
-  const labelId = `checkbox-list-label-${item?.account}`;
+  const { item, selectedAccounts, onSelect, field= 'account' } = props;
+  const labelId = `checkbox-list-label-${item?.[field]}`;
 
-  const isSelected = selectedAccounts.some((selectedAccount) => selectedAccount?.account === item?.account )
+  const isSelected = selectedAccounts.some((selectedAccount) => selectedAccount?.[field] === item?.[field])
 
   return (
     <>
@@ -31,7 +25,7 @@ const LinkAccountComponent = (props) => {
             />
           </ListItemIcon>
           <ListItemText
-            primary={item?.account}
+            primary={item?.account ?? item?.accountNumber}
             secondary={
               <>
                 <MKBox sx={{ display: 'flex', justifyContent:'space-between', alignItems:'center'}}>
@@ -40,14 +34,14 @@ const LinkAccountComponent = (props) => {
                       variant="body2"
                       color="primary"
                   >
-                    {item?.longname}
+                    {item?.longname ?? item?.accountName}
                   </MKTypography>
                   <MKTypography
                       sx={{ display: "inline" }}
                       variant="body2"
                       color="primary"
                   >
-                    {"Currency: "}{item?.currencyCode}
+                    {"Currency: "}{item?.currencyCode ?? item?.currency}
                   </MKTypography>
                 </MKBox>
 

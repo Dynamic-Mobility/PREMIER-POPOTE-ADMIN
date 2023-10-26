@@ -4,7 +4,7 @@ import ModernNavbar from "./modern-navbar";
 import ModernSidebar from "./modern-sidebar";
 import Box from "@mui/material/Box";
 
-export const drawerWidth = 260;
+export const drawerWidth = 290;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({

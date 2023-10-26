@@ -1,7 +1,7 @@
 import {Grid} from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MKBox from "../../../@mui-components/box";
-import CustomerDetailsDataGrid from "../customer-details-datagrid";
+import AccountDetailsDatagrid from "./account-details-datagrid";
 import React from "react";
 import CustomerActions from "./customer-actions";
 import {useAuth} from "../../../../hooks/use-auth";
@@ -25,7 +25,7 @@ const CustomerDetails = props => {
                     <CustomerViewDetails customer={customer} existingCustomer={existingCustomer}/>
                     <Divider />
                     <MKBox sx={{ my: 2 }}>
-                        <CustomerDetailsDataGrid data={customerAccounts} cifResponse={customer} />
+                        <AccountDetailsDatagrid data={customerAccounts} cifResponse={customer} />
                     </MKBox>
              </Grid>
              <Grid item md={3} xs={12}>

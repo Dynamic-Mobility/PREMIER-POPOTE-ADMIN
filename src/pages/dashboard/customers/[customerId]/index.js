@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ModernLayout from "../../../../components/layouts/modern";
 import Head from "next/head";
-import {appName} from "../../../../utils/constants";
+import {appName, CHANNEL_TYPES} from "../../../../utils/constants";
 import MKBox from "../../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
 import MKTypography from "../../../../components/@mui-components/typography";
@@ -48,9 +48,6 @@ const ViewCustomerPage = () => {
             const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
             if (res?.cif_no !== ''){
                 setCustomer(res);
-                //toast.success("Customer Found!");
-                // if customer is found get their accounts
-                //await getCustomerAccounts(res?.cif_no);
             }
             else{
                 // handleOnReset();
@@ -59,6 +56,56 @@ const ViewCustomerPage = () => {
         }
         catch (e) {
            toast.error(e.message);
+        }
+    }
+
+    const handleOnAddUpdate = async (channelTypes) => {
+        const formattedData = {
+            firstName: customer?.firstName,
+            lastName: customer?.lastName,
+            cif: customer?.cif_no,
+            dob: customer?.dateofBirth,
+            alias: customer?.name,
+            address: customer?.postalAddress,
+            phone: '254786156749',//customer?.tel,
+            kraPin: customer?.krapin,
+            email: customer?.email,
+            customerTypeId: null,
+            secondaryPhone: '254786156749', //customer?.mobile,
+            pobox: customer?.postalAddress,
+            industry: customer?.industry,
+            industryCategory: customer?.category,
+            location: customer?.physicalAddress,
+            town: customer?.physicalAddress,
+            geoLocation: null,
+            name: customer?.name,
+            secondaryEmail: customer?.email,
+            actionDesc: customer?.accountDescription,
+            idnumber: customer?.idno,
+            ip: null,
+            registeredForApp: channelTypes?.includes(CHANNEL_TYPES[0].value),
+            registeredForUSSD: channelTypes?.includes(CHANNEL_TYPES[1].value)
+        };
+        try {
+            const res = await customersApis.addUpdateCustomers(
+                authUser,
+                formattedData
+            );
+            const action = Boolean(customer?.custExist) ? 'updated' : 'created';
+            if(res?.success){
+                toast.success(`Customer details ${action} successfully`);
+                setCustomer({
+                    ...customer,
+                    customerId: res.id,
+                    custExist: true,
+                })
+                await getCustomerById(res.id);
+            }
+            else{
+                toast.error(res?.errorMessage ?? 'Unable to process request. Try again!');
+            }
+        } catch (err) {
+            console.log("ADD_UPDATE_ERROR ",err)
         }
     }
 
@@ -82,7 +129,7 @@ const ViewCustomerPage = () => {
         if (customerId){
             getCustomerById();
         }
-    },[customerId])
+    },[customerId]);
 
   return (
     <>
@@ -114,6 +161,7 @@ const ViewCustomerPage = () => {
                     existingCustomer={existingCustomer}
                     customerAccounts={customerAccounts}
                     onReset={handleOnReset}
+                    handleOnAddUpdate={handleOnAddUpdate}
                 />
           </Card>
       </Container>

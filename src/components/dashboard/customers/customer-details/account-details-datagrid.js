@@ -7,17 +7,19 @@ import MenuItem from "@mui/material/MenuItem";
 import { TextField, Typography } from "@mui/material";
 import { MoreHoriz } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import MKBox from "../../@mui-components/box";
+import MKBox from "../../../@mui-components/box";
 import { Add } from "@mui/icons-material";
-import MKButton from "../../@mui-components/button";
+import MKButton from "../../../@mui-components/button";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../../hooks/use-auth";
+import { useAuth } from "../../../../hooks/use-auth";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
-import MKTypography from "../../@mui-components/typography";
+import MKTypography from "../../../@mui-components/typography";
 import LinkAccountModal from "./link-account-modal";
-import DMTChip from "../../@dmt-components/chip";
+import DMTChip from "../../../@dmt-components/chip";
+import BlockUnblockUnlinkAccount from "./block-unblock-unlink-account";
+import {BLOCK_ACTION_TYPES, BLOCK_TYPES} from "../../../../utils/constants";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -34,11 +36,6 @@ export const MenuDots = ({ data }) => {
     setAnchorEl(null);
   };
 
-  const handleRedirect = (data) => {
-    router.push("/popote/customers/add-new-customer", {
-      query: { state: data },
-    });
-  };
 
   return (
     <div>
@@ -60,12 +57,28 @@ export const MenuDots = ({ data }) => {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
-          <MKTypography>Block Account</MKTypography>
-        </MenuItem>
-        <MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>
-          <MKTypography>Unlink Account</MKTypography>
-        </MenuItem>
+          <BlockUnblockUnlinkAccount
+              label={"Block Account"}
+              type={"menu"}
+              account={data}
+              action={BLOCK_ACTION_TYPES.BLOCK}
+              blockType = {BLOCK_TYPES.ACCOUNT}
+              onClose={handleClose}
+          />
+          <BlockUnblockUnlinkAccount
+              label={"Unlink Account"}
+              type={"menu"}
+              account={data}
+              action={BLOCK_ACTION_TYPES.UNLINK}
+              blockType = {BLOCK_TYPES.ACCOUNT}
+              onClose={handleClose}
+          />
+        {/*<MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>*/}
+        {/*  <MKTypography></MKTypography>*/}
+        {/*</MenuItem>*/}
+        {/*<MenuItem onClick={() => handleRedirect(data)} sx={{ py: 1 }}>*/}
+        {/*  <MKTypography>Unlink Account</MKTypography>*/}
+        {/*</MenuItem>*/}
       </Menu>
     </div>
   );
@@ -76,7 +89,7 @@ const filterAccounts = (options) => {
 }
 
 
-const CustomerDetailsDataGrid = (props) => {
+const AccountDetailsDatagrid = (props) => {
   const { data, cifResponse } = props;
 
   const linkedAccounts = filterAccounts(data);
@@ -97,7 +110,7 @@ const CustomerDetailsDataGrid = (props) => {
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
-        <MenuDots />
+        <MenuDots data={data} />
       </div>
     );
   };
@@ -138,4 +151,4 @@ const CustomerDetailsDataGrid = (props) => {
   );
 };
 
-export default CustomerDetailsDataGrid;
+export default AccountDetailsDatagrid;

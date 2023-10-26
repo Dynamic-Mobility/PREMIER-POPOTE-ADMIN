@@ -5,6 +5,10 @@ const initialState = {
     customers : [],
     unapprovedCustomers: [],
     updatedCustomers: [],
+    pendingAccounts: [],
+    blockedAccounts: [],
+    blockedCustomers: [],
+    unblockedCustomers: [],
     totalCount: 0,
     pageSize: 50,
     currentPage: 1,
@@ -16,6 +20,21 @@ const customerSlice = createSlice({
     reducers:{
         setCustomers: (state,action) =>{
             state.customers = action.payload;
+        },
+        setPendingAccounts: (state,action) =>{
+            state.pendingAccounts = action.payload;
+        },
+        setBlockedAccounts: (state,action) =>{
+            state.blockedAccounts = action.payload;
+        },
+        setBlockedCustomers: (state,action) =>{
+            state.blockedCustomers = action.payload;
+        },
+        setUnBlockedCustomers: (state,action) =>{
+            state.blockedUnCustomers = action.payload;
+        },
+        setUnBlockedAccounts: (state,action) =>{
+            state.blockedUnAccounts = action.payload;
         },
         setUpdatedCustomers: (state,action) =>{
             state.updatedCustomers = action.payload;
@@ -37,6 +56,11 @@ const customerSlice = createSlice({
 
 export const {
     setUnapprovedCustomers,
+    setUnBlockedCustomers,
+    setBlockedAccounts,
+    setPendingAccounts,
+    setBlockedCustomers,
+    setUnBlockedAccounts,
     setCustomers,
     setTotalCount,
     setCurrentPage,

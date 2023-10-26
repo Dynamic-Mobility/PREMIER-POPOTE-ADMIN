@@ -150,6 +150,52 @@ class CustomersApis {
             })
         })
     }
+
+    fetchUnapprovedAccounts (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_UNAPPROVED_ACCOUNTS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    fetchBlockedCustomers (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_BLOCKED_CUSTOMERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    fetchUnBlockedCustomers (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_UNBLOCKED_CUSTOMERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    approveAccounts(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.APPROVE_ACCOUNTS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
    
 }
 
