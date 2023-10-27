@@ -1,20 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import { Column, Item, SearchPanel, Toolbar } from "devextreme-react/data-grid";
-import Button from "@mui/material/Button";
+import { Column } from "devextreme-react/data-grid";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { TextField, Typography } from "@mui/material";
 import { MoreHoriz } from "@mui/icons-material";
-import { useRouter } from "next/router";
 import MKBox from "../../../@mui-components/box";
-import { Add } from "@mui/icons-material";
-import MKButton from "../../../@mui-components/button";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../../../hooks/use-auth";
-import EditIcon from "@mui/icons-material/Edit";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import Link from "next/link";
 import MKTypography from "../../../@mui-components/typography";
 import LinkAccountModal from "./link-account-modal";
 import DMTChip from "../../../@dmt-components/chip";
@@ -27,7 +16,6 @@ const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
 
 export const MenuDots = ({ data }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const router = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

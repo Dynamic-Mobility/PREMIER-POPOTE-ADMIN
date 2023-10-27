@@ -43,8 +43,8 @@ const BlockUnblockUnlinkAccount = props => {
         if (Boolean(account)){
             message = (
                 <MKTypography align={'center'} gutterBottom>
-                    {`Are you sure you want to block account - `}
-                    <b>{account?.accountName} ?</b>
+                    {`Are you sure you want to ${action} account - `}
+                    <b>{account?.account} ?</b>
                 </MKTypography>
             )
         }
@@ -76,6 +76,7 @@ const BlockUnblockUnlinkAccount = props => {
             if (res.success){
                 toast.success(res?.errorMessage ?? "Operation is successful!");
                 handleOnClose();
+                onClose?.();
             }
             else{
                 toast.error(res?.errorMessage ?? "An error occurred! Try again Later")
@@ -89,7 +90,6 @@ const BlockUnblockUnlinkAccount = props => {
 
     const handleOnOpen = () => {
         setOpenDialog(true);
-        onClose?.();
     }
     const handleOnClose = () => {
         setOpenDialog(false);
@@ -125,7 +125,7 @@ const BlockUnblockUnlinkAccount = props => {
                     <form onSubmit={e => { e.preventDefault(); handleOnProceed()} }>
                         <MKBox sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
                             <MKTypography sx={{ mb: 2}} color={'primary'} variant={'h5'} align={'center'} gutterBottom>
-                                {"Block Customer"}
+                                {label}
                             </MKTypography>
                             {getMessage()}
                             <MKBox sx={{ width: '100%'}}>
