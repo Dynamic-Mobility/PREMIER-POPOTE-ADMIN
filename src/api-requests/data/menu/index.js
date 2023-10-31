@@ -201,6 +201,32 @@ export const getMenuItems = () => [
             link: "/dashboard/parameters/personalized-limits",
             icon: 'verified_user',
           },
+          {
+            name: "Approve Limits",
+            enabled: true,
+            link: "/dashboard/parameters/approve-limits",
+            icon: 'verified_user',
+          },
+        ],
+      },
+      {
+        name: "Transaction Charges",
+        link: "/dashboard/parameters/charges",
+        enabled: true,
+        icon: 'smartphone',
+        child: [
+          {
+            name: "Global Charges",
+            enabled: true,
+            link: "/dashboard/parameters/charges/global",
+            icon: 'smartphone',
+          },
+          {
+            name: "Approve Charges",
+            enabled: true,
+            link: "/dashboard/parameters/charges/approve-charges",
+            icon: 'verified_user',
+          },
         ],
       },
     ],

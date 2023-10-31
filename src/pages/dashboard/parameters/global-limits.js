@@ -7,11 +7,27 @@ import Grid from "@mui/material/Grid";
 import {Card} from "@mui/material";
 import ModernLayout from "../../../components/layouts/modern";
 import GlobalLimits from "../../../components/dashboard/limits/global-limits";
+import {useDispatch} from "../../../store";
+import {useCallback, useEffect} from "react";
+import {getTransactionTypes} from "../../../slices/popote/settings";
+import {useAuth} from "../../../hooks/use-auth";
 
 
 const title = "Global Limits";
 
 const GlobalLimitsPage = () => {
+    const dispatch = useDispatch();
+    const authUser = useAuth();
+
+    const fetchTransactionTypes = useCallback(async () => {
+        await dispatch(getTransactionTypes(authUser));
+    },[]);
+
+    useEffect(() => {
+        fetchTransactionTypes();
+    },[]);
+
+
   return (
     <>
       <Head>

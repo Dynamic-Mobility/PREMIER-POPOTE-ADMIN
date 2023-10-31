@@ -7,11 +7,13 @@ import userReducer from './dashboard/users'
 import roleReducer from './dashboard/roles'
 import allTransactionsReducer from './popote/all-transactions';
 import customersReducer from './popote/customers';
+import settingsReducer from './popote/settings';
 
 
 const reducers = {
     allTransactions: allTransactionsReducer,
     customers: customersReducer,
+    settings : settingsReducer,
 
     users: userReducer,
     role: roleReducer,

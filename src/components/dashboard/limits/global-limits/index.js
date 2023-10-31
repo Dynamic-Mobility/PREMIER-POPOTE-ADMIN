@@ -7,9 +7,13 @@ import MKTypography from "../../../@mui-components/typography";
 import LimitsLottie from "../../../lottie-files/limits-lottie";
 
 const GlobalLimits = () => {
-    const [selectedProduct, setSelectedProduct] = useState(dummyProducts[0]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const handleOnProductSelect = product => {
         setSelectedProduct(product);
+    }
+
+    const handleOnClose = () => {
+        setSelectedProduct(null)
     }
 
     return (
@@ -21,13 +25,6 @@ const GlobalLimits = () => {
                             selectedProduct={selectedProduct}
                             onProductSelect={handleOnProductSelect}
                         />
-                        <MKBox sx={{ display: {sm: 'none', md:'flex'}, justifyContent: 'center', flexDirection:'column', my:5}}>
-                            <LimitsLottie/>
-                            <MKTypography sx={{ mt:2}} align={'center'} variant={'caption'}>
-                                {"You can set per transaction and daily limits."}
-                            </MKTypography>
-                        </MKBox>
-
                     </Grid>
                     <Grid item sm={12} md={6} xs={12}>
                         <Collapse in={Boolean(selectedProduct)}>
@@ -38,9 +35,19 @@ const GlobalLimits = () => {
                                 <MKTypography variant={'caption'} align={'center'}>
                                     {"Adjust the limits from here."}
                                 </MKTypography>
-                                <LimitsForm product={selectedProduct} key={selectedProduct.id}/>
+                                <LimitsForm
+                                    product={selectedProduct}
+                                    key={selectedProduct?.id}
+                                    onClose={handleOnClose}
+                                />
                             </MKBox>
                         </Collapse>
+                        <MKBox sx={{ display: {sm: 'none', md:'flex'}, justifyContent: 'center', flexDirection:'column', my:5}}>
+                            <LimitsLottie/>
+                            <MKTypography sx={{ mt:2}} align={'center'} variant={'caption'}>
+                                {"You can set per transaction and daily limits."}
+                            </MKTypography>
+                        </MKBox>
                     </Grid>
                 </Grid>
             </MKBox>

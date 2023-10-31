@@ -72,6 +72,14 @@ export const API_URL = {
     FETCH_BLOCKED_CUSTOMERS: '/api/v1/customer/getblockedcustomer',
     APPROVE_ACCOUNTS: '/api/v1/customer/approvelinkedaccount',
 
+    /************************ SETTINGS ****************************/
+
+    FETCH_TRANSACTION_TYPES: '/api/v1/settings/gettransactiontype',
+    ADD_TRANSACTION_LIMIT: '/api/v1/settings/createlimit',
+    FETCH_UNAPPROVED_LIMITS: '/api/v1/settings/getunapprovedlimit',
+    APPROVE_UNAPPROVED_LIMITS: '/api/v1/settings/approvelimit',
+
+
 }
 
 
@@ -143,6 +151,13 @@ export const APP_API_URL = {
     FETCH_UNBLOCKED_CUSTOMERS: '/api/admin/customers/get-unblocked-customers',
     FETCH_BLOCKED_CUSTOMERS: '/api/admin/customers/get-blocked-customers',
     APPROVE_ACCOUNTS: '/api/admin/customers/accounts/approve',
+
+    /************************ SETTINGS ****************************/
+
+    FETCH_TRANSACTION_TYPES: '/api/admin/settings/fetch-txn-types',
+    ADD_TRANSACTION_LIMIT: '/api/admin/settings/add-limit',
+    FETCH_UNAPPROVED_LIMITS: '/api/admin/settings/unapproved-limits',
+    APPROVE_UNAPPROVED_LIMITS: '/api/admin/settings/approve-limit',
 
 
 

@@ -13,7 +13,6 @@ const ProductItem = props => {
             <ListItem  alignItems="flex-start">
                 <ListItemButton
                     role={undefined}
-                    //dense
                     selected={product?.id === selectedProduct?.id}
                     onClick={(event) => onSelect(product)}
                 >
