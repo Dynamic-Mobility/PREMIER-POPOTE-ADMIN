@@ -33,3 +33,28 @@ export const BLOCK_ACTION_TYPES = {
     UNLINK: 'Unlink',
 }
 
+
+export const CHARGES = {
+    FLAT: 'Flat',
+    PERCENTAGE: 'Percentage',
+    RANGE: 'Range'
+}
+
+export const CHARGES_TYPES = [
+    {
+        value: CHARGES.FLAT,
+        icon: "local_atm",
+        name: "Flat"
+    },
+    {
+        value: CHARGES.PERCENTAGE,
+        icon: "percentage",
+        name: "Percentage"
+    },
+    {
+        value: CHARGES.RANGE,
+        icon: "width",
+        name: "Range"
+    }
+];
+

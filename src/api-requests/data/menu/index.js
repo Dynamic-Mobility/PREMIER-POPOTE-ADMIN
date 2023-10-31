@@ -218,12 +218,12 @@ export const getMenuItems = () => [
           {
             name: "Global Charges",
             enabled: true,
-            link: "/dashboard/parameters/charges/global",
+            link: "/dashboard/parameters/charges",
             icon: 'smartphone',
           },
           {
             name: "Approve Charges",
-            enabled: true,
+            enabled: false,
             link: "/dashboard/parameters/charges/approve-charges",
             icon: 'verified_user',
           },

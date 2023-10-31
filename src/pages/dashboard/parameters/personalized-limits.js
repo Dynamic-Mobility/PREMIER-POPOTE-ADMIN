@@ -6,37 +6,51 @@ import Grid from "@mui/material/Grid";
 import {Card} from "@mui/material";
 import ModernLayout from "../../../components/layouts/modern";
 import PersonalizedLimits from "../../../components/dashboard/limits/personalized-limits";
+import {useDispatch} from "../../../store";
+import {useAuth} from "../../../hooks/use-auth";
+import {useCallback, useEffect} from "react";
+import {getTransactionTypes} from "../../../slices/popote/settings";
 
 
 const title = "Personalized Limits";
 
 const PersonalizedLimitsPage = () => {
-  return (
-    <>
-      <Head>
-        <title>{title} | {appName}</title>
-      </Head>
-      <MKBox
-        //component="main"
-        sx={{
-          flexGrow: 1,
-          pt: 2,
-            px:2,
-        }}
-      >
-          <MKBox sx={{ mb: 2 }}>
-              <Grid container justifyContent="space-between" spacing={3}>
-                  <Grid item>
-                      <MKTypography variant="h5">{title}</MKTypography>
+    const dispatch = useDispatch();
+    const authUser = useAuth();
+
+    const fetchTransactionTypes = useCallback(async () => {
+        await dispatch(getTransactionTypes(authUser));
+    },[]);
+
+    useEffect(() => {
+        fetchTransactionTypes();
+    },[]);
+      return (
+        <>
+          <Head>
+            <title>{title} | {appName}</title>
+          </Head>
+          <MKBox
+            //component="main"
+            sx={{
+              flexGrow: 1,
+              pt: 2,
+                px:2,
+            }}
+          >
+              <MKBox sx={{ mb: 2 }}>
+                  <Grid container justifyContent="space-between" spacing={3}>
+                      <Grid item>
+                          <MKTypography variant="h5">{title}</MKTypography>
+                      </Grid>
                   </Grid>
-              </Grid>
+              </MKBox>
+              <Card sx={{p:1, minHeight: '50vh'}}>
+                  <PersonalizedLimits/>
+              </Card>
           </MKBox>
-          <Card sx={{p:1, minHeight: '50vh'}}>
-              <PersonalizedLimits/>
-          </Card>
-      </MKBox>
-    </>
-  );
+        </>
+      );
 };
 
 PersonalizedLimitsPage.getLayout = (page) => (
