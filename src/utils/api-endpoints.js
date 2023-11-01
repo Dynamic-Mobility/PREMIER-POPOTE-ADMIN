@@ -78,7 +78,7 @@ export const API_URL = {
     ADD_TRANSACTION_LIMIT: '/api/v1/settings/createlimit',
     FETCH_UNAPPROVED_LIMITS: '/api/v1/settings/getunapprovedlimit',
     APPROVE_UNAPPROVED_LIMITS: '/api/v1/settings/approvelimit',
-
+    FETCH_LIMIT: '/api/v1/settings/getlimit',
 
 }
 
@@ -157,6 +157,7 @@ export const APP_API_URL = {
     FETCH_TRANSACTION_TYPES: '/api/admin/settings/fetch-txn-types',
     ADD_TRANSACTION_LIMIT: '/api/admin/settings/add-limit',
     FETCH_UNAPPROVED_LIMITS: '/api/admin/settings/unapproved-limits',
+    FETCH_LIMIT: '/api/admin/settings/fetch-limit',
     APPROVE_UNAPPROVED_LIMITS: '/api/admin/settings/approve-limit',
 
 

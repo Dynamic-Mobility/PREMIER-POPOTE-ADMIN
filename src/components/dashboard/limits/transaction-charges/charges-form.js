@@ -5,9 +5,12 @@ import {CHARGES, CHARGES_TYPES} from "../../../../utils/constants";
 import DMTCurrencyInput from "../../../@dmt-components/form/currency-input";
 import React, {useState} from "react";
 import ChargeRange from "./charge-range";
+import MKBox from "../../../@mui-components/box";
+import MKButton from "../../../@mui-components/button";
+import {LoaderIcon} from "react-hot-toast";
 
 const ChargesForm  = props => {
-    const { charge } = props;
+    const { charge, onClose } = props;
     const [isEditable, setIsEditable] = useState(false);
     const formik = useFormik({
         initialValues: {
@@ -29,6 +32,10 @@ const ChargesForm  = props => {
     });
     const wrapperClass = !isEditable ? "wrapper-disabled" : "";
     const pointerClass =  !isEditable ? "disabled-field" : "";
+
+    const handleOnEdit = () => {
+        setIsEditable(true);
+    }
 
 
     return (
@@ -95,6 +102,29 @@ const ChargesForm  = props => {
 
                     </Grid>
                 </Grid>
+                <Collapse in={Boolean(isEditable)}>
+                    <MKBox sx={{ mt:2, display: 'flex', gap:1, alignItems: 'center', justifyContent: 'flex-end'}}>
+                        <MKButton disabled={formik.isSubmitting} onClick={onClose} color={'error'} variant={'contained'}>
+                            {"Cancel"}
+                        </MKButton>
+                        <MKButton
+                            disabled={formik.isSubmitting}
+                            type={'submit'}
+                            color={'success'}
+                            variant={'contained'}
+                            startIcon={formik.isSubmitting && <LoaderIcon/>}
+                        >
+                            {"Save"}
+                        </MKButton>
+                    </MKBox>
+                </Collapse>
+                <Collapse  in={!Boolean(isEditable)}>
+                    <MKBox sx={{ mt:2, display: 'flex', gap:1, alignItems: 'center', justifyContent: 'flex-end'}}>
+                        <MKButton disabled={formik.isSubmitting} onClick={handleOnEdit} color={'primary'} variant={'contained'}>
+                            {"Edit Limits"}
+                        </MKButton>
+                    </MKBox>
+                </Collapse>
             </form>
         </>
     )

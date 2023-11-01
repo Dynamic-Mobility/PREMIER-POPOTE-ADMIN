@@ -9,9 +9,10 @@ import ConfirmationDialog from "../../../@dmt-components/confirmation-dialog";
 import {settingsApis} from "../../../../api-requests/settings-apis";
 import {useAuth} from "../../../../hooks/use-auth";
 import {getBrowserDetails, getIPAddress} from "../../../../utils/helper-functions";
+import {toast} from "react-toastify";
 
 const ApprovalLimitsActions = props => {
-    const { limit } = props;
+    const { limit, onRefresh } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const authUser = useAuth();
@@ -66,9 +67,15 @@ const ApprovalLimitsActions = props => {
         }
         try{
             const res = await settingsApis?.approveUnapprovedLimits(authUser, formData);
-            console.log(res);
-            handleCloseDialog();
-            handleClose();
+            if(res?.success){
+                toast.success("Limit approved successfully!");
+                handleCloseDialog();
+                handleClose();
+                await onRefresh();
+            }
+            else{
+                toast.error(res?.error ?? "An error occurred while processing request. Try again later.");
+            }
         }
         catch (e) {
             console.log(e?.message)

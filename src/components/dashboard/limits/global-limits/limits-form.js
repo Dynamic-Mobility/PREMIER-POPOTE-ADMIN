@@ -15,15 +15,15 @@ import {LoaderIcon} from "react-hot-toast";
 const LimitsForm = props => {
     //TODO: make  api request to update limits
     const authUser = useAuth();
-    const { product, accountId, onClose } = props;
+    const { product, accountId, onClose, existingLimit } = props;
     const [isEditable, setIsEditable] = useState(false);
     const formik = useFormik({
         initialValues: {
-            dailyLimit: '',
-            transactionLimit: '',
-            startDate: '',
-            endDate: '',
-            showDate: false,
+            dailyLimit: existingLimit?.dailyAmtLimit ?? '',
+            transactionLimit: existingLimit?.transactionAmtLimit ??'',
+            startDate: existingLimit?.startDate ??  '',
+            endDate:  existingLimit?.endDate ??  '',
+            showDate: Boolean(existingLimit?.startDate && existingLimit?.endDate) ?? false,
         },
         validationSchema: Yup.object().shape({
             dailyLimit: Yup.string().required('Daily Limit is required!'),

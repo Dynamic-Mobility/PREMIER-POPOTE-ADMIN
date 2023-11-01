@@ -46,6 +46,7 @@ const  LimitsApprovalPage = () => {
                 <Card sx={{ p: 1 }}>
                     <ApprovalLimitsDatagrid
                         data={unapprovedLimits}
+                        onRefresh={fetchPendingLimits}
                     />
                 </Card>
             </MKBox>

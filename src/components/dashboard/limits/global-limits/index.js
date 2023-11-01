@@ -5,16 +5,44 @@ import {useState} from "react";
 import LimitsForm from "./limits-form";
 import MKTypography from "../../../@mui-components/typography";
 import LimitsLottie from "../../../lottie-files/limits-lottie";
+import {settingsApis} from "../../../../api-requests/settings-apis";
+import {useAuth} from "../../../../hooks/use-auth";
 
 const GlobalLimits = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const handleOnProductSelect = product => {
+    const [existingLimit, setExistingLimit] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const authUser = useAuth();
+    const handleOnProductSelect = async product => {
+        await fetchLimitByTxn(product);
         setSelectedProduct(product);
     }
 
     const handleOnClose = () => {
         setSelectedProduct(null)
     }
+
+    const fetchLimitByTxn = async (product) => {
+        setIsLoading(true);
+        const formData = {
+            trnId: product?.id,
+            accountId: ""
+        }
+        try{
+            const res = await settingsApis.fetchLimit(authUser, formData);
+            if (res.id){
+                setExistingLimit(res);
+            }
+            else{
+                setExistingLimit(null);
+            }
+
+        }
+        catch (e){
+            console.log(e.message)
+        }
+    }
+
 
     return (
         <>
@@ -36,6 +64,7 @@ const GlobalLimits = () => {
                                     {"Adjust the limits from here."}
                                 </MKTypography>
                                 <LimitsForm
+                                    existingLimit={existingLimit}
                                     product={selectedProduct}
                                     key={selectedProduct?.id}
                                     onClose={handleOnClose}

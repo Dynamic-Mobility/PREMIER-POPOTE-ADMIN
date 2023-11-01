@@ -34,9 +34,10 @@ const TransactionCharges = () => {
                                 <MKTypography variant={'caption'} align={'center'}>
                                     {"Adjust the charges from here."}
                                 </MKTypography>
-                                <ChargesForm/>
+                                <ChargesForm key={setSelectedProduct?.id} onClose={handleOnClose}/>
                             </MKBox>
                         </Collapse>
+
                         {/*<MKBox sx={{ display: {sm: 'none', md:'flex'}, justifyContent: 'center', flexDirection:'column', my:5}}>*/}
                         {/*    <LimitsLottie/>*/}
                         {/*    <MKTypography sx={{ mt:2}} align={'center'} variant={'caption'}>*/}

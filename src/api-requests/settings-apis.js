@@ -48,6 +48,18 @@ class SettingsApis {
             })
         })
     }
+
+    fetchLimit(useAuth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(useAuth);
+            axiosInstance.post(APP_API_URL.FETCH_LIMIT, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
 }
 
 export const settingsApis = new SettingsApis();
