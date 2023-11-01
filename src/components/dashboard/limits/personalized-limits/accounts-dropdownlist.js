@@ -40,7 +40,7 @@ const AccountsDropdownlist = (props) => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                {selected?.account ? `A/C No: ${selected?.account}` : "-- No account --"}
+                {selected?.account ? `A/C No: ${selected?.account}` : "-- Select A/C --"}
             </MKButton>
             <Menu
                 id="basic-menu"

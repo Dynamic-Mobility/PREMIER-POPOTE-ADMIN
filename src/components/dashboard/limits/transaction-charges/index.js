@@ -3,16 +3,41 @@ import {Collapse, Grid} from "@mui/material";
 import ProductList from "../global-limits/product-list";
 import MKTypography from "../../../@mui-components/typography";
 import {useState} from "react";
-import ChargesType from "./charges-type";
 import ChargesForm from "./charges-form";
+import {settingsApis} from "../../../../api-requests/settings-apis";
+import {useAuth} from "../../../../hooks/use-auth";
 const TransactionCharges = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const handleOnProductSelect = product => {
+    const [existingCharge, setExistingCharge] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const authUser = useAuth();
+    const handleOnProductSelect = async product => {
+        await fetchChargeByTxn(product);
         setSelectedProduct(product);
     }
 
     const handleOnClose = () => {
         setSelectedProduct(null)
+    }
+
+    const fetchChargeByTxn = async (product) => {
+        setIsLoading(true);
+        const formData = {
+            id: product?.id,
+        }
+        try{
+            const res = await settingsApis.fetchCharge(authUser, formData);
+            if (res.id){
+                setExistingCharge(res);
+            }
+            else{
+                setExistingCharge(null);
+            }
+
+        }
+        catch (e){
+            console.log(e.message)
+        }
     }
 
     return (
@@ -34,16 +59,15 @@ const TransactionCharges = () => {
                                 <MKTypography variant={'caption'} align={'center'}>
                                     {"Adjust the charges from here."}
                                 </MKTypography>
-                                <ChargesForm key={setSelectedProduct?.id} onClose={handleOnClose}/>
+                                <ChargesForm
+                                    existingCharge={existingCharge}
+                                    product = {selectedProduct}
+                                    key={selectedProduct?.id}
+                                    onClose={handleOnClose}
+                                    onRefresh={fetchChargeByTxn}
+                                />
                             </MKBox>
                         </Collapse>
-
-                        {/*<MKBox sx={{ display: {sm: 'none', md:'flex'}, justifyContent: 'center', flexDirection:'column', my:5}}>*/}
-                        {/*    <LimitsLottie/>*/}
-                        {/*    <MKTypography sx={{ mt:2}} align={'center'} variant={'caption'}>*/}
-                        {/*        {"You can set per transaction and daily limits."}*/}
-                        {/*    </MKTypography>*/}
-                        {/*</MKBox>*/}
                     </Grid>
                 </Grid>
             </MKBox>

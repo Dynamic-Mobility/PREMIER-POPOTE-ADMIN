@@ -13,6 +13,9 @@ import IconButton from "@mui/material/IconButton";
 import AccountsDropdownlist from "./accounts-dropdownlist";
 import {customersApis} from "../../../../api-requests/customers-api";
 import {useAuth} from "../../../../hooks/use-auth";
+import {settingsApis} from "../../../../api-requests/settings-apis";
+import {toast} from "react-toastify";
+import Watermark from "../../../watermark";
 
 const PersonalizedLimits = () => {
     const router = useRouter();
@@ -22,6 +25,8 @@ const PersonalizedLimits = () => {
     const [customerAccounts, setCustomerAccounts] = useState([]);
     const [selectedAccount, setSelectedAccount] = useState(null);
     const authUser  = useAuth();
+    const [existingLimit, setExistingLimit] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleOnFoundCustomer = async customer => {
         setCustomerFound(customer);
@@ -30,18 +35,27 @@ const PersonalizedLimits = () => {
     const handleOnBack = () => {
         setCustomerFound(null);
         setSelectedAccount(null);
+        setSelectedProduct(null);
         setCustomerAccounts([]);
     }
 
     const handleOnClose = () => {
         setSelectedProduct(null)
     }
-    const handleOnProductSelect = product => {
+    const handleOnProductSelect = async product => {
+        if (!selectedAccount){
+            toast.error("Please select account first!");
+            return;
+        }
+        await fetchLimitByTxn(product, selectedAccount);
         setSelectedProduct(product);
     }
 
-    const handleOnSelectAccount = account => {
+    const handleOnSelectAccount = async account => {
         setSelectedAccount(account);
+        if(selectedProduct){
+            await fetchLimitByTxn(selectedProduct, account);
+        }
     }
 
     const fetchAccounts = async (cif) => {
@@ -54,6 +68,27 @@ const PersonalizedLimits = () => {
         }
     };
 
+    const fetchLimitByTxn = async (product, selectedAccount) => {
+        setIsLoading(true);
+        const formData = {
+            trnId: product?.id,
+            accountId: selectedAccount,
+        }
+        try{
+            const res = await settingsApis.fetchLimit(authUser, formData);
+            if (res.id){
+                setExistingLimit(res);
+            }
+            else{
+                setExistingLimit(null);
+            }
+
+        }
+        catch (e){
+            console.log(e.message)
+        }
+    }
+
     // useEffect(() => {
     //     if (cifNo){
     //         handleOnFoundCustomer({ id: cifNo})
@@ -63,6 +98,7 @@ const PersonalizedLimits = () => {
 
     return (
         <>
+            <Watermark/>
             <MKBox>
                 <Collapse in={Boolean(!customerFound)}>
                 <Grid container spacing={2}>
@@ -119,6 +155,7 @@ const PersonalizedLimits = () => {
                                             {"Adjust the limits from here."}
                                         </MKTypography>
                                         <LimitsForm
+                                            existingLimit={existingLimit}
                                             product={selectedProduct}
                                             key={selectedProduct?.id}
                                             accountId={selectedAccount}

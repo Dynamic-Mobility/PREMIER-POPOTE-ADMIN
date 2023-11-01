@@ -25,6 +25,18 @@ class SettingsApis {
         })
     }
 
+    createTransactionCharge(useAuth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(useAuth);
+            axiosInstance.post(APP_API_URL.ADD_TRANSACTION_CHARGE, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
     fetchUnapprovedLimits(useAuth){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(useAuth);
@@ -60,6 +72,19 @@ class SettingsApis {
             })
         })
     }
+
+    fetchCharge(useAuth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(useAuth);
+            axiosInstance.post(APP_API_URL.FETCH_CHARGES, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
 }
 
 export const settingsApis = new SettingsApis();

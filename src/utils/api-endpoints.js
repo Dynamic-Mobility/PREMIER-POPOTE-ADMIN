@@ -80,6 +80,10 @@ export const API_URL = {
     APPROVE_UNAPPROVED_LIMITS: '/api/v1/settings/approvelimit',
     FETCH_LIMIT: '/api/v1/settings/getlimit',
 
+    ADD_TRANSACTION_CHARGE: '/api/v1/settings/createcharges',
+    FETCH_CHARGES: '/api/v1/settings/getcharges',
+
+
 }
 
 
@@ -159,6 +163,9 @@ export const APP_API_URL = {
     FETCH_UNAPPROVED_LIMITS: '/api/admin/settings/unapproved-limits',
     FETCH_LIMIT: '/api/admin/settings/fetch-limit',
     APPROVE_UNAPPROVED_LIMITS: '/api/admin/settings/approve-limit',
+
+    ADD_TRANSACTION_CHARGE: '/api/admin/settings/add-charge',
+    FETCH_CHARGES: '/api/admin/settings/fetch-charge',
 
 
 

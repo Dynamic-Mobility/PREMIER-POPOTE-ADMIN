@@ -23,8 +23,8 @@ const ProductList = props => {
     const [query, setQuery] = useState('');
 
     const products = filterSearch(transactionTypes, query);
-    const handleOnSelect = (product) => {
-        onProductSelect(product)
+    const handleOnSelect = async (product) => {
+        await onProductSelect(product)
     }
 
     const handleOnChange = e => {
@@ -41,6 +41,7 @@ const ProductList = props => {
                     placeholder="Search..."
                     size={'small'}
                     label={"Search"}
+                    type={"search"}
                     value={query}
                     onChange={handleOnChange}
                 />
@@ -48,7 +49,7 @@ const ProductList = props => {
             {isLoadingTypes ? (
                 <>
                     <MKTypography sx={{p:2}} align={'center'}>
-                      <LoaderIcon/>  {"Loading..."}
+                        {"Loading..."}
                     </MKTypography>
                 </>
             ) : (
@@ -65,7 +66,7 @@ const ProductList = props => {
                                 // },
                             }}
                         >
-                            <List  aria-label="product list">
+                            <List sx={{ px:1 }}  aria-label="product list">
                                 {products.map((product, index) => (
                                     <ProductItem key={ index} {...{selectedProduct,  product, onSelect: handleOnSelect}}/>
                                 ))}

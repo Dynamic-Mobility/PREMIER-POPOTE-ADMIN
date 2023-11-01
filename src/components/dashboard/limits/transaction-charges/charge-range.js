@@ -7,7 +7,7 @@ import MKButton from "../../../@mui-components/button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const ChargeRange = props => {
-    const { values, onChange } = props;
+    const { values, onChange, isEditable } = props;
     const initialValues = {
         id: null,
         minValue: '',
@@ -49,6 +49,8 @@ const ChargeRange = props => {
     }
 
 
+
+
     return (
         <>
             <TableContainer>
@@ -72,6 +74,7 @@ const ChargeRange = props => {
                     <TableBody>
                         {values.map((value, index) => (
                             <ChargeRangeForm
+                                isEditable={isEditable}
                                 value={value}
                                 key={index}
                                 onChange={handleOnChange(index)}
@@ -81,6 +84,7 @@ const ChargeRange = props => {
                         <TableRow>
                             <TableCell colSpan={4} align={'right'}>
                                 <MKButton
+                                    disabled={!isEditable}
                                     size={'small'}
                                     color={'primary'}
                                     variant={'text'}
@@ -99,12 +103,15 @@ const ChargeRange = props => {
 }
 
 const ChargeRangeForm = props => {
-    const { value, onChange, onRemove } = props;
+    const { value, onChange, onRemove, isEditable } = props;
+    const wrapperClass = !isEditable ? "wrapper-disabled" : "";
+    const pointerClass =  !isEditable ? "disabled-field" : "";
 
     return (
         <TableRow>
-            <TableCell>
+            <TableCell className={wrapperClass}>
                 <DMTCurrencyInput
+                    className={pointerClass}
                     fullWidth
                     label={'Min Value'}
                     size={'small'}
@@ -117,6 +124,7 @@ const ChargeRangeForm = props => {
             </TableCell>
             <TableCell>
                 <DMTCurrencyInput
+                    className={pointerClass}
                     fullWidth
                     label={'Max Value'}
                     placeholder={'Max Value'}
@@ -127,8 +135,9 @@ const ChargeRangeForm = props => {
                     prefix = ''
                 />
             </TableCell>
-            <TableCell>
+            <TableCell className={wrapperClass}>
                 <DMTCurrencyInput
+                    className={pointerClass}
                     fullWidth
                     label={'Charge'}
                     placeholder = {'Charge'}
@@ -139,7 +148,7 @@ const ChargeRangeForm = props => {
                 />
             </TableCell>
             <TableCell>
-                <IconButton onClick={onRemove} color={'error'}>
+                <IconButton disabled={!isEditable} onClick={onRemove} color={'error'}>
                     <DeleteIcon/>
                 </IconButton>
             </TableCell>

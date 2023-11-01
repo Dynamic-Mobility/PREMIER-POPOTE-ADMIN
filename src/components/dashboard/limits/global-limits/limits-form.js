@@ -5,7 +5,7 @@ import MKBox from "../../../@mui-components/box";
 import MKButton from "../../../@mui-components/button";
 import Grid from "@mui/material/Grid";
 import DMTDatePicker from "../../../@dmt-components/form/datepicker";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Collapse, FormControlLabel, Switch} from "@mui/material";
 import {settingsApis} from "../../../../api-requests/settings-apis";
 import {useAuth} from "../../../../hooks/use-auth";
@@ -32,6 +32,7 @@ const LimitsForm = props => {
         onSubmit: async (values) => {
             try {
                 const formData = {
+                    id: existingLimit?.id ?? 0,
                     name: product?.name,
                     dailyAmtLimit: Number(values?.dailyLimit),
                     transactionAmtLimit: Number(values?.transactionLimit),
@@ -85,6 +86,18 @@ const LimitsForm = props => {
         }
         handleOnFilterChange('endDate', value);
     }
+
+    useEffect(() => {
+        if(existingLimit){
+            formik.setFieldValue({
+                dailyLimit: existingLimit?.dailyAmtLimit ?? '',
+                transactionLimit: existingLimit?.transactionAmtLimit ??'',
+                startDate: existingLimit?.startDate ??  '',
+                endDate:  existingLimit?.endDate ??  '',
+                showDate: Boolean(existingLimit?.startDate && existingLimit?.endDate) ?? false,
+            })
+        }
+    },[product, existingLimit])
 
 
 
