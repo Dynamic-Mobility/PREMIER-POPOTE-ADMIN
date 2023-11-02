@@ -1,6 +1,6 @@
 import MKBox from "../../../@mui-components/box";
 import {Collapse, Grid} from "@mui/material";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import MKTypography from "../../../@mui-components/typography";
 import LimitsLottie from "../../../lottie-files/limits-lottie";
 import ProductList from "../global-limits/product-list";
