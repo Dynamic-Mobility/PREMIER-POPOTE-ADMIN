@@ -5,9 +5,10 @@ import MKButtonRoot from "./button-root";
 const MKButton = forwardRef(
   ({ color, variant, size, circular, iconOnly, children, ...rest }, ref) => (
     <MKButtonRoot
+        sx={{width: 'auto'}}
       {...rest}
       ref={ref}
-      sx={{width: 'auto'}}
+
       color="primary"
       variant={variant === "gradient" ? "contained" : variant}
       size={size}

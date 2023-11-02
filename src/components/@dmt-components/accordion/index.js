@@ -22,25 +22,26 @@ const DMTAccordion = props => {
                     display:'flex',
                     justifyContent:'space-between',
                     alignItems: 'center',
+                    cursor: 'pointer',
                 }}>
-                    <MKTypography  color={color} variant={'h6'}  sx={{ fontWeight: 'light'}}>
+                    <MKTypography  color={color} variant={'inherit'}  sx={{ fontWeight: 'bold'}}>
                         {/*<Icon fontSize={'medium'}>family_restroom</Icon> */}
                         {title}
                     </MKTypography>
-                    <IconButton color={color} size={'small'} onClick={handleOnExpand}>
-                        {isOpened ? <ExpandLessOutlined fontSize={'large'}/> : <ExpandMoreOutlined fontSize={'large'}/> }
+                    <IconButton color={color}  onClick={handleOnExpand}>
+                        {isOpened ? <ExpandLessOutlined /> : <ExpandMoreOutlined /> }
                     </IconButton>
                 </MKBox>
-                {
-                    isOpened && (
-                        <Collapse in={Boolean(isOpened)}  unmountOnExit>
-                            <MKBox py={2}>
+                <Collapse in={isOpened}>
+                    {
+                        isOpened && (
+                            <>
                                 { children }
-                            </MKBox>
-                        </Collapse>
-                    )
-                }
-                <Divider />
+                            </>
+                        )
+                    }
+                </Collapse>
+
             </MKBox>
         </>
 

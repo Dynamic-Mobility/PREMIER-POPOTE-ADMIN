@@ -8,12 +8,14 @@ import roleReducer from './dashboard/roles'
 import allTransactionsReducer from './popote/all-transactions';
 import customersReducer from './popote/customers';
 import settingsReducer from './popote/settings';
+import rolesReducer from './popote/roles';
 
 
 const reducers = {
     allTransactions: allTransactionsReducer,
     customers: customersReducer,
     settings : settingsReducer,
+    roles: rolesReducer,
 
     users: userReducer,
     role: roleReducer,

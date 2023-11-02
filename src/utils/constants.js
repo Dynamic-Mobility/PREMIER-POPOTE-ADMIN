@@ -17,7 +17,7 @@ export const CHANNEL_TYPES = [
     {
         id: 2,
         label: 'Mobile App',
-        icon: 'mobile',
+        icon: 'smartphone',
         value: 'APP'
     }
 ];

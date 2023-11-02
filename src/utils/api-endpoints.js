@@ -84,6 +84,12 @@ export const API_URL = {
     FETCH_CHARGES: '/api/v1/settings/getcharges',
 
 
+    /************************ ROLES ****************************/
+
+    FETCH_ROLES: '/api/admin/roles/fetch-roles',
+    FETCH_MENUS: '/api/admin/roles/fetch-menus',
+    ADD_ROLE: '/api/admin/roles/add-role',
+
 }
 
 
@@ -166,6 +172,13 @@ export const APP_API_URL = {
 
     ADD_TRANSACTION_CHARGE: '/api/admin/settings/add-charge',
     FETCH_CHARGES: '/api/admin/settings/fetch-charge',
+
+
+    /************************ ROLES ****************************/
+
+    FETCH_ROLES: '/api/admin/roles/fetch-roles',
+    FETCH_MENUS: '/api/admin/roles/fetch-menus',
+    ADD_ROLE: '/api/admin/roles/add-role',
 
 
 

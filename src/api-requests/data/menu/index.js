@@ -181,10 +181,11 @@ export const getMenuItems = () => [
     ]
   },
   {
-    name: 'Parameters Management',
+    name: 'Settings',
+    icon: 'cog',
     child: [
       {
-        name: "Transaction Limits",
+        name: "Limits & Charges",
         link: "/dashboard/parameters/",
         enabled: true,
         icon: 'smartphone',
@@ -207,25 +208,25 @@ export const getMenuItems = () => [
             link: "/dashboard/parameters/approve-limits",
             icon: 'verified_user',
           },
-        ],
-      },
-      {
-        name: "Transaction Charges",
-        link: "/dashboard/parameters/charges",
-        enabled: true,
-        icon: 'smartphone',
-        child: [
           {
-            name: "Global Charges",
+            name: "Transaction Charges",
             enabled: true,
             link: "/dashboard/parameters/charges",
             icon: 'smartphone',
           },
+        ],
+      },
+      {
+        name: "Roles & Permissions",
+        link: "/dashboard/roles/",
+        enabled: true,
+        icon: 'engineering',
+        child: [
           {
-            name: "Approve Charges",
-            enabled: false,
-            link: "/dashboard/parameters/charges/approve-charges",
-            icon: 'verified_user',
+            name: "User Roles",
+            enabled: true,
+            link: "/dashboard/roles/user-roles",
+            icon: 'manage_accounts',
           },
         ],
       },
