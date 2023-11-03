@@ -1,14 +1,8 @@
-import dashboardReducer from "./dashboard";
-import requestReducer from './dashboard/transactions/request'
-import transactionReducer from './dashboard/transactions/all-transactions'
-import esbReducer from './dashboard/transactions/esb-report'
-import atmReducer from './dashboard/transactions/atm-report'
-import userReducer from './dashboard/users'
-import roleReducer from './dashboard/roles'
-import allTransactionsReducer from './popote/all-transactions';
-import customersReducer from './popote/customers';
-import settingsReducer from './popote/settings';
-import rolesReducer from './popote/roles';
+import allTransactionsReducer from './dashboard/transactions';
+import customersReducer from './dashboard/customers';
+import settingsReducer from './dashboard/settings';
+import rolesReducer from './dashboard/roles';
+import usersReducer from './dashboard/users'
 
 
 const reducers = {
@@ -16,14 +10,7 @@ const reducers = {
     customers: customersReducer,
     settings : settingsReducer,
     roles: rolesReducer,
-
-    users: userReducer,
-    role: roleReducer,
-    dashboard: dashboardReducer,
-    request: requestReducer,
-    transaction: transactionReducer,
-    esbReport: esbReducer,
-    atmReport: atmReducer
+    users: usersReducer,
 }
 
 export default reducers;

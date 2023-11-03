@@ -6,7 +6,7 @@ import MKBox from "../../../components/@mui-components/box";
 import Head from "next/head";
 import {useDispatch, useSelector} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
-import {getUpdatedCustomers} from "../../../slices/popote/customers";
+import {getUpdatedCustomers} from "../../../slices/dashboard/customers";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
 import EditedCustomersDataGrid from "../../../components/dashboard/customers/edited-customers-datagrid";
 

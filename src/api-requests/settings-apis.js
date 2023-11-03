@@ -48,6 +48,17 @@ class SettingsApis {
             })
         })
     }
+    fetchEditedUnapprovedLimits(useAuth){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(useAuth);
+            axiosInstance.post(APP_API_URL.FETCH_EDITED_UNAPPROVED_LIMITS, {}).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
 
     approveUnapprovedLimits(useAuth, values){
         return new Promise((resolve, reject) => {
@@ -60,6 +71,19 @@ class SettingsApis {
             })
         })
     }
+
+    approveEditedUnapprovedLimits(useAuth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(useAuth);
+            axiosInstance.post(APP_API_URL.APPROVE_EDITED_UNAPPROVED_LIMITS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
 
     fetchLimit(useAuth, values){
         return new Promise((resolve, reject) => {

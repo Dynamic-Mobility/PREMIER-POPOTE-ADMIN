@@ -5,7 +5,7 @@ import DMTChip from "../../../@dmt-components/chip";
 import ApprovalLimitsActions from "./approval-limits-actions";
 
 const ApprovalLimitsDatagrid = props => {
-    const { data, onRefresh } = props;
+    const { data, onRefresh, edited } = props;
 
     const actionAmount = ({ displayValue, data}) => {
         const color =  'success';
@@ -21,7 +21,7 @@ const ApprovalLimitsDatagrid = props => {
     }
 
     const actionOptions = ({ data }) => {
-        return <ApprovalLimitsActions limit={data} onRefresh={onRefresh}/>
+        return <ApprovalLimitsActions edited={edited} limit={data} onRefresh={onRefresh}/>
     }
 
 

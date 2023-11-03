@@ -7,7 +7,7 @@ import Head from "next/head";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
 import MKBox from "../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../store";
-import {getAllCustomers, setPendingAccounts} from "../../../slices/popote/customers";
+import {getAllCustomers, setPendingAccounts} from "../../../slices/dashboard/customers";
 import {useAuth} from "../../../hooks/use-auth";
 import ApprovalAccountsDatagrid
   from "../../../components/dashboard/customers/customer-accounts/approval-accounts-datagrid";

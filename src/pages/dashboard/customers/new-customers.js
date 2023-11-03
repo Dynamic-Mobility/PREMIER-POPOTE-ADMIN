@@ -7,7 +7,7 @@ import MKBox from "../../../components/@mui-components/box";
 import Head from "next/head";
 import {useDispatch, useSelector} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
-import {getUnapprovedCustomers} from "../../../slices/popote/customers";
+import {getUnapprovedCustomers} from "../../../slices/dashboard/customers";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
 
 const title = "Approve Customers";

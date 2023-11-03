@@ -9,7 +9,7 @@ import ModernLayout from "../../../../components/layouts/modern";
 import GlobalLimits from "../../../../components/dashboard/limits/global-limits";
 import {useDispatch} from "../../../../store";
 import {useCallback, useEffect} from "react";
-import {getTransactionTypes} from "../../../../slices/popote/settings";
+import {getTransactionTypes} from "../../../../slices/dashboard/settings";
 import {useAuth} from "../../../../hooks/use-auth";
 import TransactionCharges from "../../../../components/dashboard/limits/transaction-charges";
 

@@ -9,7 +9,7 @@ import PersonalizedLimits from "../../../components/dashboard/limits/personalize
 import {useDispatch} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
 import {useCallback, useEffect} from "react";
-import {getTransactionTypes} from "../../../slices/popote/settings";
+import {getTransactionTypes} from "../../../slices/dashboard/settings";
 
 
 const title = "Personalized Limits";

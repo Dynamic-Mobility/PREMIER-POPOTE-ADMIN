@@ -12,7 +12,7 @@ import {getBrowserDetails, getIPAddress} from "../../../../utils/helper-function
 import {toast} from "react-toastify";
 
 const ApprovalLimitsActions = props => {
-    const { limit, onRefresh } = props;
+    const { limit, onRefresh, edited } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const authUser = useAuth();
@@ -66,7 +66,14 @@ const ApprovalLimitsActions = props => {
             ip: ipAddress
         }
         try{
-            const res = await settingsApis?.approveUnapprovedLimits(authUser, formData);
+            let res;
+            if (edited){
+                res = await settingsApis.approveEditedUnapprovedLimits(authUser, formData);
+            }
+            else{
+                res = await settingsApis.approveUnapprovedLimits(authUser, formData);
+            }
+
             if(res?.success){
                 toast.success("Limit approved successfully!");
                 handleCloseDialog();

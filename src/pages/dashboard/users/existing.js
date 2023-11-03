@@ -12,13 +12,13 @@ import UserRoles from "../../../components/dashboard/roles";
 import {getAllRoles} from "../../../slices/dashboard/roles";
 
 
-const title = "User Roles";
+const title = "Manage Users";
 
-const RolesPage = () => {
+const ExistingUsersPage = () => {
     const dispatch = useDispatch();
     const authUser = useAuth();
 
-    const fetchAllRoles= useCallback(async () => {
+    const fetchAllRoles = useCallback(async () => {
         await dispatch(getAllRoles(authUser));
     },[]);
 
@@ -53,7 +53,7 @@ const RolesPage = () => {
       );
 };
 
-RolesPage.getLayout = (page) => (
+ExistingUsersPage.getLayout = (page) => (
   // <AuthGuard>
     <ModernLayout>
         {page}
@@ -61,4 +61,4 @@ RolesPage.getLayout = (page) => (
   // </AuthGuard>
 );
 
-export default RolesPage;
+export default ExistingUsersPage;

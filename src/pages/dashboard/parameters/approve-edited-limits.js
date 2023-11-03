@@ -7,17 +7,18 @@ import MKBox from "../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
 import ApprovalLimitsDatagrid from "../../../components/dashboard/limits/limit-approvals/approval-limits-datagrid";
-import { getUnapprovedLimits } from "../../../slices/dashboard/settings";
+import {getEditedUnapprovedLimits, getUnapprovedLimits} from "../../../slices/dashboard/settings";
+import RefreshButton from "../../../components/@dmt-components/refresh-button";
 
-const title = "Transaction Limits Approval";
+const title = "Edited Limits Approval";
 
-const  LimitsApprovalPage = () => {
+const  EditedLimitsPage = () => {
     const dispatch = useDispatch();
-    const { unapprovedLimits } = useSelector(( { settings }) => settings);
+    const { unapprovedEditedLimits } = useSelector(( { settings }) => settings);
     const authUser = useAuth();
     
     const fetchPendingLimits = async () => {
-        await dispatch(getUnapprovedLimits(authUser));
+        await dispatch(getEditedUnapprovedLimits(authUser));
     }
 
 
@@ -41,12 +42,16 @@ const  LimitsApprovalPage = () => {
                         <Grid item>
                             <MKTypography variant="h5">{title}</MKTypography>
                         </Grid>
+                        <Grid item>
+                            <RefreshButton onRefresh={fetchPendingLimits}/>
+                        </Grid>
                     </Grid>
                 </MKBox>
                 <Card sx={{ p: 1 }}>
                     <ApprovalLimitsDatagrid
-                        data={unapprovedLimits}
+                        data={unapprovedEditedLimits}
                         onRefresh={fetchPendingLimits}
+                        edited={true}
                     />
                 </Card>
             </MKBox>
@@ -55,7 +60,7 @@ const  LimitsApprovalPage = () => {
     );
 };
 
-LimitsApprovalPage.getLayout = (page) => {
+EditedLimitsPage.getLayout = (page) => {
     return (
         <>
             {/* <AuthGuard> */}
@@ -65,4 +70,4 @@ LimitsApprovalPage.getLayout = (page) => {
     );
 };
 
-export default LimitsApprovalPage;
+export default EditedLimitsPage;

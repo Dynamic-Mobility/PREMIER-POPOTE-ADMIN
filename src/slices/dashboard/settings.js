@@ -4,6 +4,7 @@ import {settingsApis} from "../../api-requests/settings-apis";
 const initialState = {
     transactionTypes : [],
     unapprovedLimits: [],
+    unapprovedEditedLimits: [],
     isLoadingTypes: false,
 }
 
@@ -20,13 +21,17 @@ const settingsSlice = createSlice({
         setUnapprovedLimits: (state,action) =>{
             state.unapprovedLimits = action.payload;
         },
+        setEditedUnapprovedLimits: (state,action) =>{
+            state.unapprovedEditedLimits = action.payload;
+        },
     }
 });
 
 export const {
     setTransactionTypes,
     setUnapprovedLimits,
-    setIsLoadingTypes
+    setIsLoadingTypes,
+    setEditedUnapprovedLimits
 } = settingsSlice.actions;
 
 export const getTransactionTypes = (authUser) => async dispatch => {
@@ -50,6 +55,18 @@ export const getUnapprovedLimits = (authUser) => async dispatch => {
         console.log(e.message);
     }
 }
+
+export const getEditedUnapprovedLimits = (authUser) => async dispatch => {
+    try {
+        const res = await settingsApis.fetchEditedUnapprovedLimits(authUser);
+        dispatch(setEditedUnapprovedLimits(res));
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
+
 
 export default settingsSlice.reducer;
 

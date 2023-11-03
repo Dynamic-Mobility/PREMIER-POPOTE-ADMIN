@@ -8,7 +8,6 @@ export const getMenuItems = () => [
         enabled: true,
         icon: 'home',
       },
-
       {
         name: "Customer Management",
         enabled: true,
@@ -37,58 +36,21 @@ export const getMenuItems = () => [
             name: "Approve Updated Customers",
             enabled: true,
             link: "/dashboard/customers/edited-customers",
-            icon: 'edit',
+            icon: 'verified_user',
           },
           {
             name: "Approve Customer Accounts",
             enabled: true,
             link: "/dashboard/customers/accounts-approval",
-            icon: 'edit',
-          },
-        ],
-      },
-      {
-        name: "User Management",
-        link: "/dashboard/users",
-        enabled: true,
-        icon: 'group',
-        child: [
-          {
-            name: "Existing Users",
-            enabled: true,
-            link: "/dashboard/users/",
-            icon: 'people',
-          },
-          {
-            name: "New Users List",
-            enabled: true,
-            link: "/dashboard/users/unapproved-users",
-            icon: 'verified_user',
-          },
-          {
-            name: "Updated Users List",
-            enabled: true,
-            link: "/dashboard/users/edited-users",
-            icon: 'verified_user',
-          },
-          {
-            name: "Password Resets",
-            enabled: true,
-            link: "/dashboard/users/password-resets",
             icon: 'verified_user',
           },
         ],
       },
-    ],
-  },
-  {
-    name: 'Reports',
-    child:[
       {
         name: "Transaction Reports",
         enabled: true,
         link: "/dashboard/reports/",
-        icon: 'book',
+        icon: 'monitoring',
         child: [
           {
             name: "All Transactions",
@@ -97,15 +59,15 @@ export const getMenuItems = () => [
             icon: 'receipt_long',
           },
           {
-            name: "B2C",
+            name: "MPESA B2C",
             enabled: true,
             link: "/dashboard/reports/transactions/b2c",
-            icon: 'add',
+            icon: 'smartphone',
           },
           {
-            name: "Pesa Link",
+            name: "PesaLink",
             enabled: true,
-            link: "/dashboard/reports/transactions/pesa-link",
+            link: "/dashboard/reports/transactions/pesalink",
             icon: 'link',
           },
           {
@@ -126,7 +88,7 @@ export const getMenuItems = () => [
         name: "System Reports",
         enabled: true,
         link: "/dashboard/reports/system-reports",
-        icon: 'book',
+        icon: 'system_update',
         child:[
           {
             name: "Registered Customers",
@@ -178,12 +140,26 @@ export const getMenuItems = () => [
           },
         ]
       },
-    ]
-  },
-  {
-    name: 'Settings',
-    icon: 'cog',
-    child: [
+      {
+        name: "System Users",
+        link: "/dashboard/users/",
+        enabled: true,
+        icon: 'people',
+        child: [
+          {
+            name: "Manage Users",
+            enabled: true,
+            link: "/dashboard/users/existing",
+            icon: 'people',
+          },
+          {
+            name: "Approve Users",
+            enabled: true,
+            link: "/dashboard/users/approve",
+            icon: 'verified_user',
+          },
+        ],
+      },
       {
         name: "Limits & Charges",
         link: "/dashboard/parameters/",
@@ -200,12 +176,18 @@ export const getMenuItems = () => [
             name: "Personalized Limits",
             enabled: true,
             link: "/dashboard/parameters/personalized-limits",
+            icon: 'person_add',
+          },
+          {
+            name: "Approve New Limits",
+            enabled: true,
+            link: "/dashboard/parameters/approve-limits",
             icon: 'verified_user',
           },
           {
-            name: "Approve Limits",
+            name: "Approve Edited Limits",
             enabled: true,
-            link: "/dashboard/parameters/approve-limits",
+            link: "/dashboard/parameters/approve-edited-limits",
             icon: 'verified_user',
           },
           {
@@ -231,5 +213,5 @@ export const getMenuItems = () => [
         ],
       },
     ],
-  }
+  },
 ];

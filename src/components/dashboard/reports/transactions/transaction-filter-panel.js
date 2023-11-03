@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "../../../../store";
-import {resetFilters, setFilters} from "../../../../slices/popote/all-transactions";
+import {resetFilters, setFilters} from "../../../../slices/dashboard/transactions";
 import MKButton from "../../../@mui-components/button";
 import {Search} from "@mui/icons-material";
 import {Checkbox, FormControlLabel, Popover, TextField} from "@mui/material";

@@ -6,7 +6,7 @@ import Head from "next/head";
 import PesaLinkTransactionDatagrid from "../../../../components/dashboard/reports/transactions/pesa-link-transaction-datagrid";
 
 const title = "Pesa Link Transaction Report";
-const PesaLink = () => {
+const Pesalink = () => {
   return (
     <>
       <Head>{title}</Head>
@@ -20,6 +20,6 @@ const PesaLink = () => {
   );
 };
 
-PesaLink.getLayout = (page) => <ModernLayout>{page}</ModernLayout>;
+Pesalink.getLayout = (page) => <ModernLayout>{page}</ModernLayout>;
 
-export default PesaLink;
+export default Pesalink;

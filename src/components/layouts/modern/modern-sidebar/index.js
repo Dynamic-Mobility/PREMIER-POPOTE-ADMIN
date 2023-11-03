@@ -1,10 +1,7 @@
-import {Box, Button, ButtonGroup, Divider, Drawer, Typography, useMediaQuery} from "@mui/material";
+import {Box, Divider, Drawer, Typography, useMediaQuery} from "@mui/material";
 import {drawerWidth} from "../index";
 import {useTheme} from "@mui/styles";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {styled} from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
 import NextLink from "next/link";
 import {Logo} from "../../../logo";
 import {Scrollbar} from "../../../@mui-components/scrollbar";
@@ -14,8 +11,6 @@ import {useSelector} from "../../../../store";
 import {useEffect, useMemo} from "react";
 import {getMenuItems} from "../../../../api-requests/data/menu";
 import ModernSidebarSection from "./modern-sidebar-section";
-import {Logout, Person, Settings} from "@mui/icons-material";
-import MKButton from "../../../@mui-components/button";
 import moment from "moment";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -36,7 +31,7 @@ const ModernSidebar = props => {
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"), {
         noSsr: true,
     });
-    const { menus } = useSelector(({ role }) => role);
+    const { menus } = useSelector(({ roles }) => roles);
     const sections = useMemo(() => getSections(t), [t]);
     //const sections = [{child:menus}];
 

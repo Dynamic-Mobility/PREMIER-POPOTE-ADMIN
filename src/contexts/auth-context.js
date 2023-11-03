@@ -5,7 +5,6 @@ import {AUTH_REFRESH_TOKEN_KEY, AUTH_TOKEN_KEY} from "../utils/constants";
 import {authApi} from "../api-requests/auth-apis";
 import {useRouter} from "next/router";
 import {useDispatch} from "../store";
-import {getUserMenus} from "../slices/dashboard/roles";
 
 
 let ActionType;
@@ -86,7 +85,7 @@ export const AuthProvider = (props) => {
                             user,
                         },
                     });
-                    await reduxDispatch(getUserMenus({ logout, user}));
+                    //await reduxDispatch(getUserMenus({ logout, user}));
                 } else {
                     dispatch({
                         type: ActionType.INITIALIZE,
@@ -122,7 +121,7 @@ export const AuthProvider = (props) => {
            // refreshToken: userDetails.refreshToken,
         }
 
-        await reduxDispatch(getUserMenus({ logout, user}));
+        //await reduxDispatch(getUserMenus({ logout, user}));
         localStorage.setItem(AUTH_TOKEN_KEY, userDetails.token);
         //localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, userDetails.refreshToken);
         dispatch({
