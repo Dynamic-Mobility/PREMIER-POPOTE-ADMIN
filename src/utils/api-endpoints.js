@@ -34,7 +34,6 @@ export const API_URL = {
 
     ADD_TRANSACTION_CHARGE: '/api/v1/settings/createcharges',
     FETCH_CHARGES: '/api/v1/settings/getcharges',
-    FETCH_DEPARTMENTS: '/api/v1/settings/',
 
 
     /************************ ROLES ****************************/
@@ -42,6 +41,13 @@ export const API_URL = {
     FETCH_ROLES: '/api/admin/roles/fetch-roles',
     FETCH_MENUS: '/api/admin/roles/fetch-menus',
     ADD_ROLE: '/api/admin/roles/add-role',
+
+    /************************ UTILITIES ****************************/
+
+    FETCH_BRANCHES: '/api/v1/settings/getbranches',
+    FETCH_DEPARTMENTS: '/api/v1/settings/getdepartments',
+    ADD_BRANCH: '/api/v1/settings/createbranches',
+    ADD_DEPARTMENT: '/api/admin/utilities/add-department',
 
 
 
@@ -104,6 +110,12 @@ export const APP_API_URL = {
     ADD_ROLE: '/api/admin/roles/add-role',
 
 
+    /************************ UTILITIES ****************************/
+
+    FETCH_BRANCHES: '/api/admin/utilities/fetch-branches',
+    FETCH_DEPARTMENTS: '/api/admin/utilities/fetch-departments',
+    ADD_BRANCH: '/api/admin/utilities/add-branch',
+    ADD_DEPARTMENT: '/api/admin/utilities/add-department',
 
 }
 

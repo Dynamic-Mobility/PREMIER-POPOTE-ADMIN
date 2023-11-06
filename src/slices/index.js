@@ -2,7 +2,8 @@ import allTransactionsReducer from './dashboard/transactions';
 import customersReducer from './dashboard/customers';
 import settingsReducer from './dashboard/settings';
 import rolesReducer from './dashboard/roles';
-import usersReducer from './dashboard/users'
+import usersReducer from './dashboard/users';
+import utilsReducer from './dashboard/utils';
 
 
 const reducers = {
@@ -11,6 +12,7 @@ const reducers = {
     settings : settingsReducer,
     roles: rolesReducer,
     users: usersReducer,
+    utils: utilsReducer
 }
 
 export default reducers;

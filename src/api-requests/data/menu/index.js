@@ -212,6 +212,26 @@ export const getMenuItems = () => [
           },
         ],
       },
+      {
+        name: "Branches & Departments",
+        link: "/dashboard/utility/",
+        enabled: true,
+        icon: 'domain_add',
+        child: [
+          {
+            name: "Manage Branches",
+            enabled: true,
+            link: "/dashboard/utility/branches",
+            icon: 'manage_accounts',
+          },
+          {
+            name: "Manage Departments",
+            enabled: true,
+            link: "/dashboard/utility/departments",
+            icon: 'manage_accounts',
+          },
+        ],
+      },
     ],
   },
 ];
