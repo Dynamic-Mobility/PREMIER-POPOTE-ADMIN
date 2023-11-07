@@ -35,6 +35,13 @@ const RolesList = props => {
     return(
         <>
             <MKBox sx={{ display: 'flex', p:1, gap:2, flexDirection: 'column',}}>
+
+                  <MKButton sx={{ width: '100%'}} onClick={onAdd} variant={'contained'} color={'primary'}>
+                      {"Add New Role"}
+                  </MKButton>
+                <MKTypography variant={'caption'} sx={{ mt:2,}}>
+                    {"EXISTING PROFILES"}
+                </MKTypography>
                 <DMTTextInput
                     fullWidth={true}
                     placeholder="Search..."
@@ -44,13 +51,6 @@ const RolesList = props => {
                     value={query}
                     onChange={handleOnChange}
                 />
-              <MKButton sx={{ width: '100%'}} onClick={onAdd} variant={'contained'} color={'primary'}>
-                  {"Add New Role"}
-              </MKButton>
-
-                <MKTypography variant={'caption'} sx={{ mt:2,}}>
-                    {"EXISTING PROFILES"}
-                </MKTypography>
             </MKBox>
 
 

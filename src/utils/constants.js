@@ -58,3 +58,22 @@ export const CHARGES_TYPES = [
     }
 ];
 
+
+export const PERMISSIONS = [
+    {
+        name: 'View',
+        value: 0
+    },
+    {
+        name: 'Create',
+        value: 2
+    },
+    {
+        name: 'Edit',
+        value: 1
+    },
+    {
+        name: 'Export',
+        value: 3
+    }
+]

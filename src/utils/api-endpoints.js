@@ -38,9 +38,10 @@ export const API_URL = {
 
     /************************ ROLES ****************************/
 
-    FETCH_ROLES: '/api/admin/roles/fetch-roles',
-    FETCH_MENUS: '/api/admin/roles/fetch-menus',
-    ADD_ROLE: '/api/admin/roles/add-role',
+    FETCH_ROLES: '/api/v1/account/getroles',
+    FETCH_ROLES_PERMISSIONS: '/api/v1/account/getpermissionbyrole',
+    FETCH_MENUS: '/api/v1/account/getallpermissions',
+    ADD_ROLE: '/api/v1/account/addrolesandpermissions',
 
     /************************ UTILITIES ****************************/
 
@@ -49,7 +50,11 @@ export const API_URL = {
     ADD_BRANCH: '/api/v1/settings/createbranches',
     ADD_DEPARTMENT: '/api/admin/utilities/add-department',
 
+    /************************ USERS ****************************/
 
+    FETCH_USERS: '/api/v1/account/getcreateunapproved',
+    FETCH_UNAPPROVED_USERS: '/api/v1/account/getcreateunapproved',
+    ADD_USERS: '/api/v1/account/adduser',
 
 
 }
@@ -106,6 +111,7 @@ export const APP_API_URL = {
     /************************ ROLES ****************************/
 
     FETCH_ROLES: '/api/admin/roles/fetch-roles',
+    FETCH_ROLES_PERMISSIONS: '/api/admin/roles/fetch-roles-perms',
     FETCH_MENUS: '/api/admin/roles/fetch-menus',
     ADD_ROLE: '/api/admin/roles/add-role',
 
@@ -116,6 +122,12 @@ export const APP_API_URL = {
     FETCH_DEPARTMENTS: '/api/admin/utilities/fetch-departments',
     ADD_BRANCH: '/api/admin/utilities/add-branch',
     ADD_DEPARTMENT: '/api/admin/utilities/add-department',
+
+    /************************ USERS ****************************/
+
+    FETCH_USERS: '/api/admin/users/fetch-users',
+    FETCH_UNAPPROVED_USERS: '/api/admin/users/fetch-unapproved-users',
+    ADD_USERS: '/api/admin/users/add-user',
 
 }
 

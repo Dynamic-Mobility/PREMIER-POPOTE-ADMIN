@@ -9,7 +9,9 @@ import {useDispatch} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
 import {useCallback, useEffect} from "react";
 import UserRoles from "../../../components/dashboard/roles";
-import {getAllRoles} from "../../../slices/dashboard/roles";
+import {getAllMenus, getAllRoles} from "../../../slices/dashboard/roles";
+import {useMounted} from "../../../hooks/use-mounted";
+import RefreshButton from "../../../components/@dmt-components/refresh-button";
 
 
 const title = "User Roles";
@@ -17,14 +19,27 @@ const title = "User Roles";
 const RolesPage = () => {
     const dispatch = useDispatch();
     const authUser = useAuth();
+    const isMounted = useMounted();
 
-    const fetchAllRoles= useCallback(async () => {
-        await dispatch(getAllRoles(authUser));
-    },[]);
+    const fetchAllRoles = useCallback(async () => {
+        if (isMounted()){
+            await dispatch(getAllRoles(authUser));
+        }
+
+    },[isMounted]);
+
+    const fetchAllMenus = useCallback(async () => {
+        if (isMounted()){
+            await dispatch(getAllMenus(authUser));
+        }
+
+    },[isMounted]);
+
 
     useEffect(() => {
         fetchAllRoles();
-    },[]);
+        fetchAllMenus();
+    },[isMounted]);
       return (
         <>
           <Head>
@@ -42,6 +57,9 @@ const RolesPage = () => {
                   <Grid container justifyContent="space-between" spacing={3}>
                       <Grid item>
                           <MKTypography variant="h5">{title}</MKTypography>
+                      </Grid>
+                      <Grid item>
+                          <RefreshButton onRefresh={fetchAllRoles}/>
                       </Grid>
                   </Grid>
               </MKBox>

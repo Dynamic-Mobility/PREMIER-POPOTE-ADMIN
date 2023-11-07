@@ -66,7 +66,6 @@ const RoleItem = props => {
                                 sx={{ display: 'inline' }}
                                 component="span"
                                 variant="h6"
-                                color="text.primary"
                             >
                                 {role?.name}
                             </MKTypography>

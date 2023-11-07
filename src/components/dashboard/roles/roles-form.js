@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useFormik} from "formik";
 import DMTTextInput from "../../@dmt-components/form/text-input";
 import {Collapse, Grid} from "@mui/material";
@@ -9,48 +9,110 @@ import MKTypography from "../../@mui-components/typography";
 import PermissionsForm from "./permissions-form";
 import {rolesApis} from "../../../api-requests/roles-apis";
 import {useAuth} from "../../../hooks/use-auth";
+import {useSelector} from "../../../store";
 
 const RolesForm = props => {
     const { role } = props;
     const authUser = useAuth();
     const [isEditable, setIsEditable] = useState(false);
+    const [rolePermissions, setRolePermissions] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const formik = useFormik({
        initialValues: {
            name: role?.name ?? "",
            description: role?.description ?? "",
-           permissions: role?.permissions ?? [],
+           rolePermission: role?.rolePermission ?? [],
        },
         onSubmit: async (values, helpers) => {
            try{
-               console.log("VALUES", values);
-               const res = await rolesApis.createRole(authUser, values);
+               const formData = {
+                   id: role?.id,
+                   profilename: values?.name,
+                   profileDesc: values?.description,
+                   rolePermissions: rolePermissions
+               }
+               const res = await rolesApis.createRole(authUser, formData);
+               console.log(res);
            }
            catch (e) {
-               
+               console.log(e.message);
            }
         }
     });
+    const { isLoadingMenus } = useSelector(( {roles }) => roles);
+
+    const wrapperClass = !isEditable ? "wrapper-disabled" : "";
+    const pointerClass =  !isEditable ? "disabled-field" : "";
+
+
+    const handleOnPermissionChange = useCallback(values => {
+        setRolePermissions(values);
+    },[])
+
     const handleOnEdit = () => {
         setIsEditable(true);
     }
 
-    const handleOnClose = () => {
+    const handleOnClose = async () => {
         setIsEditable(false);
+        if (role){
+            await fetchPermissions();
+        }
+    }
+
+    const fetchPermissions = async () => {
+        const formData = {
+            id: role?.id
+        }
+        setIsLoading(true);
+        try{
+            const res = await rolesApis.fetchRolePermissions(authUser, formData);
+            let permissions = [];
+            if (Array.isArray(res)){
+                permissions = res.map( p => {
+                    let child = null;
+                    if (p?.child){
+                        child = p.child.map((c => {
+                            const perms  = eval(c.permission).map(str => parseInt(str, 10))
+                            return {
+                                childMenuId: c.id,
+                                permission: perms,
+                            }
+                        }))
+                    }
+                    const perms  = eval(p.permission).map(str => parseInt(str, 10))
+                    return {
+                        mainMenuId: p.id,
+                        childMenu : child,
+                        permission: perms,
+                    }
+                })
+            }
+            setRolePermissions(permissions);
+        }
+        catch (e) {
+           console.log(e.message);
+        }
+        setIsLoading(false);
     }
 
     useEffect(() => {
-        setIsEditable(Boolean(!role))
+        setIsEditable(Boolean(!role));
+        if (role){
+            fetchPermissions();
+        }
     },[role]);
 
     return (
         <>
-            <MKTypography variant={'h5'} gutterBottom>
+            <MKTypography variant={'h5'} gutterBottom sx={{ mb:2}}>
                 {Boolean(role) ? "Update Role" : "Add Role"}
             </MKTypography>
             <form onSubmit={formik.handleSubmit}>
                 <Grid sx={{ mb:2}} container spacing={2}>
-                    <Grid item xs={12} sm={12} md={12} >
+                    <Grid className={wrapperClass} item xs={12} sm={12} md={12} >
                         <DMTTextInput
+                            className={pointerClass}
                             label={'Profile Name'}
                             required
                             fullWidth
@@ -62,9 +124,10 @@ const RolesForm = props => {
                             helperText={formik.touched.name && formik.errors.name}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} >
+                    <Grid className={wrapperClass} item xs={12} sm={12} md={12} >
                         <DMTTextInput
                             label={'Description'}
+                            className={pointerClass}
                             fullWidth
                             multiline
                             minRows={3}
@@ -77,13 +140,25 @@ const RolesForm = props => {
                             helperText={formik.touched.description && formik.errors.description}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} >
-                        <MKTypography variant={'h6'} gutterBottom>
-                            {"Assign Permissions"}
-                        </MKTypography>
+                    <Grid className={wrapperClass} item xs={12} sm={12} md={12}>
+                        <MKBox sx={{ mb:1,  display: 'flex', justifyContent:'space-between', alignItems:'center'}}>
+                            <MKTypography variant={'h6'} gutterBottom>
+                                {"Assign Permissions"}
+                            </MKTypography>
+                            {(isLoading || isLoadingMenus) && (
+                                <MKBox sx={{ display: 'flex', alignItems:'center'}}>
+                                    <LoaderIcon/>
+                                    <MKTypography sx={{ ml: 1}}>
+                                        {"Fetching..."}
+                                    </MKTypography>
+                                </MKBox>
+                            )}
+                        </MKBox>
+
                         <PermissionsForm
-                            selectedPerms ={formik.values.permissions}
-                            onPermsChange = {values => formik.setFieldValue('permissions', values)}
+                            isEditable={isEditable}
+                            selectedPerms ={rolePermissions}
+                            onPermsChange = {handleOnPermissionChange}
                         />
                     </Grid>
                 </Grid>

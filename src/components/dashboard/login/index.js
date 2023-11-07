@@ -17,9 +17,8 @@ import MKButton from "../../@mui-components/button";
 import MKTypography from "../../@mui-components/typography";
 import { useAuth } from "../../../hooks/use-auth";
 import MKBox from "../../@mui-components/box";
-import { validateOtp } from "../../../redux/services/otp";
+
 import { toast } from "react-toastify";
-import jwtDecode from "jwt-decode";
 import OtpForm from "./otp-form";
 
 
@@ -40,18 +39,9 @@ export const LoginForm = (props) => {
   };
 
   const handleOnOTPValidate = async (values) => {
-        try {
-          const res = await validateOtp(values, userDetail);
-          if (res.success) {
-            await login(userDetail);
-            const returnUrl = router.query.returnUrl || "/dashboard";
-            router.push(returnUrl).catch(console.error);
-          } else {
-            toast.error(res.errordesc);
-          }
-        } catch (error) {
-          toast.error(error);
-        }
+    await login(userDetail);
+    const returnUrl = router.query.returnUrl || "/dashboard";
+    router.push(returnUrl).catch(console.error);
   }
 
   const handleOnResendOTP = () => {

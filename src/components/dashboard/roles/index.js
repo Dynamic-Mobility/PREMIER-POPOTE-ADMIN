@@ -1,11 +1,7 @@
 import {useState} from "react";
 import MKBox from "../../@mui-components/box";
-import {Collapse, Grid} from "@mui/material";
-import MKTypography from "../../@mui-components/typography";
-import LimitsLottie from "../../lottie-files/limits-lottie";
+import {Grid} from "@mui/material";
 import RolesList from "./roles-list";
-import MKButton from "../../@mui-components/button";
-import AddIcon from "@mui/icons-material/AddCircle";
 import RolesForm from "./roles-form";
 
 const UserRoles = () => {
@@ -24,7 +20,6 @@ const UserRoles = () => {
             <MKBox>
                 <Grid container spacing={2}>
                     <Grid item sm={12} md={4} xs={12}>
-
                         <RolesList
                             selectedRole={selectedRole}
                             onSelect={handleOnSelect}
