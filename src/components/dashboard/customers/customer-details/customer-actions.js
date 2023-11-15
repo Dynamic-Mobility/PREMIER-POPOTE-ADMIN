@@ -8,6 +8,7 @@ import {Collapse} from "@mui/material";
 import AddCustomerDialog from "./add-customer-dialog";
 import UpdateCustomerDialog from "./update-customer-dialog";
 import BlockUnblockCustomerDialog from "./block-unblock-customer";
+import CustomerSetLimits from "../customer-set-limits";
 
 const CustomerActions = props => {
     const {customer, onAddUpdate, onReset, existingCustomer} = props;
@@ -51,9 +52,8 @@ const CustomerActions = props => {
                         variant="contained"
                         aria-label="vertical outlined button group"
                     >
-                        <MKButton variant="outlined" color="primary">
-                            Update Limits
-                        </MKButton>
+                        <CustomerSetLimits customer={customer} accounts={[]}/>
+
                         {/*<MKButton variant="outlined" color="primary">*/}
                         {/*    Recreate Key*/}
                         {/*</MKButton>*/}

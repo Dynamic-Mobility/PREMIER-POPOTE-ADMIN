@@ -5,12 +5,12 @@ import IconButton from "@mui/material/IconButton";
 import CreateUserDialog from "./create-user-dialog";
 
 const UsersActions = props => {
-    const { branch, onRefresh } = props;
+    const { user, onRefresh } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
-    const labelID = `action_menu_${branch?.id}`;
-    const buttonID = `action_button_${branch?.id}`;
+    const labelID = `action_menu_${user?.id}`;
+    const buttonID = `action_button_${user?.id}`;
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -41,7 +41,7 @@ const UsersActions = props => {
                     'aria-labelledby': buttonID,
                 }}
                 >
-                <CreateUserDialog onRefresh={onRefresh} branch={branch} onClose={handleClose}/>
+                <CreateUserDialog onRefresh={onRefresh} user={user} onClose={handleClose}/>
             </Menu>
         </>
     )

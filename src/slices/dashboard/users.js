@@ -32,6 +32,8 @@ export const getAllUsers = (authUser) => async (dispatch) =>{
     }
 }
 
+
+
 export const getAllUnApprovedUsers = (authUser) => async (dispatch) =>{
     const res = await usersApis.fetchUnapprovedUsers(authUser);
     dispatch(setUsers(res));

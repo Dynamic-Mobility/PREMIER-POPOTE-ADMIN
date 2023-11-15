@@ -1,4 +1,5 @@
 export const appName = 'Premier Bank';
+export const appDesc = 'MB Admin Portal';
 
 export const ALLOWED_PAGE_LIMITS = [ 'all', 25, 50, 100];
 export const AUTH_TOKEN_KEY = 'accessToken';

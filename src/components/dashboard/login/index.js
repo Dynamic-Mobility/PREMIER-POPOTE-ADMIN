@@ -20,6 +20,7 @@ import MKBox from "../../@mui-components/box";
 
 import { toast } from "react-toastify";
 import OtpForm from "./otp-form";
+import {getBrowserDetails, getIPAddress} from "../../../utils/helper-functions";
 
 
 
@@ -39,9 +40,35 @@ export const LoginForm = (props) => {
   };
 
   const handleOnOTPValidate = async (values) => {
-    await login(userDetail);
-    const returnUrl = router.query.returnUrl || "/dashboard";
-    router.push(returnUrl).catch(console.error);
+    try {
+
+      const decodedToken = await authApi.decodeToken(userDetail?.token);
+
+      const formData = {
+        otp: values?.otp,
+        userId: decodedToken?.userid
+      }
+
+      await login(userDetail);
+      const returnUrl = router.query.returnUrl || "/dashboard";
+      router.push(returnUrl).catch(console.error);
+
+      // await authApi.validateOTP(userDetail?.token, formData).then( async res => {
+      //   console.log("OTP_RES",res);
+      //   if (res?.success){
+      //     await login(userDetail);
+      //     const returnUrl = router.query.returnUrl || "/dashboard";
+      //     router.push(returnUrl).catch(console.error);
+      //   }
+      // }).catch(error => {
+      //   toast.error(error?.message ?? "An error occurred while processing request");
+      //   console.log(error.message);
+      // })
+    }
+    catch (e) {
+     console.log(e.message);
+    }
+
   }
 
   const handleOnResendOTP = () => {
@@ -59,7 +86,17 @@ export const LoginForm = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        const userDetails = await authApi.Login(values);
+        const ipAddress = await getIPAddress();
+        const browser = getBrowserDetails();
+        const formData = {
+          username: values.Username,
+          password: values.Password,
+          ip: ipAddress,
+          browser: browser
+        }
+
+
+        const userDetails = await authApi.Login(formData);
         setUserDetail(userDetails);
         setMessage("OTP sent to your phone number")
         if (isMounted()) {

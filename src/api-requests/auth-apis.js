@@ -42,6 +42,40 @@ class AuthApis{
             }
         });
     }
+
+    async validateOTP(token, values){
+        return new Promise((resolve, reject) => {
+            const config = {
+                headers: {
+                    'Authorization': token,
+                }
+            };
+            axiosInstance.post(APP_API_URL.VALIDATE_OTP, values, config).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+
+    async fetchUserMenus(values){
+        return new Promise((resolve, reject) => {
+            axiosInstance.post(APP_API_URL.GET_USER_MENUS, values).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+    async refreshToken(values){
+        return new Promise((resolve, reject) => {
+            axiosInstance.post(APP_API_URL.REFRESH_TOKEN, values).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
 }
 
 export const authApi = new AuthApis();

@@ -115,7 +115,10 @@ export const AccountButton = () => {
                 >
                     <UserCircleIcon />
                 </Avatar>
-                <Typography sx={{ ml: 1, fontSize:'14px'}} variant={'body1'} color={'white.main'} >{user?.fullname}Dennis Njoroge</Typography>
+                <Typography sx={{ ml: 1, fontSize:'16px', fontWeight:'bold' }} variant={'body1'} color={'white.main'} >
+                    {user?.firstname} {user?.lastname}
+                </Typography>
+
             </Box>
             <AccountPopover
                 anchorEl={anchorRef.current}

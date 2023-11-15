@@ -59,11 +59,11 @@ const ProductList = props => {
                             autoHide={false}
                             forceVisible={true}
                             sx={{
-                                height: "80%",
+                                height: "75%",
                                 pr: 2,
-                                // "& .simplebar-content": {
-                                //     height: "60%",
-                                // },
+                                "& .simplebar-content": {
+                                    height: "75%",
+                                },
                             }}
                         >
                             <List sx={{ px:1 }}  aria-label="product list">

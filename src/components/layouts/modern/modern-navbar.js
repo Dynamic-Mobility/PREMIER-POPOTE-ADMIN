@@ -5,7 +5,7 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import {styled} from "@mui/material/styles";
 import {drawerWidth} from "./index";
 import MuiAppBar from '@mui/material/AppBar';
-import {appName} from "../../../utils/constants";
+import {appDesc, appName} from "../../../utils/constants";
 import {AccountButton} from "../dashboard/dashboard-navbar";
 
 const AppBar = styled(MuiAppBar, {
@@ -57,7 +57,7 @@ const ModernNavbar = props => {
                         {open ? <MenuOpenIcon /> : <MenuIcon />}
                     </IconButton>
                     <Typography sx={{ flexGrow: 1 }} color={'inherit'} variant="h6" noWrap component="div">
-                        {appName}
+                        {appName} - {appDesc}
                     </Typography>
                     <AccountButton/>
                 </Toolbar>

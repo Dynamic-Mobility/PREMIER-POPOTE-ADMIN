@@ -5,7 +5,7 @@ class UsersApis {
     fetchAllUsers(useAuth){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(useAuth);
-            axiosInstance.get(APP_API_URL.FETCH_USERS).then( response => {
+            axiosInstance.post(APP_API_URL.FETCH_USERS, {}).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))
@@ -16,7 +16,7 @@ class UsersApis {
     fetchUnapprovedUsers(useAuth){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(useAuth);
-            axiosInstance.get(APP_API_URL.FETCH_UNAPPROVED_USERS).then( response => {
+            axiosInstance.post(APP_API_URL.FETCH_UNAPPROVED_USERS, {}).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))
@@ -35,6 +35,20 @@ class UsersApis {
             })
         })
     }
+
+    approveUsers(useAuth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(useAuth);
+            axiosInstance.post(APP_API_URL.APPROVE_USERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+
 
 
 

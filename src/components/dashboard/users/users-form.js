@@ -7,37 +7,40 @@ import {useAuth} from "../../../hooks/use-auth";
 import MKBox from "../../@mui-components/box";
 import MKButton from "../../@mui-components/button";
 import {toast} from "react-toastify";
+import DMTGenders from "../../@dmt-components/form/genders";
+import DMTSalutations from "../../@dmt-components/form/salutations";
+import DMTRoles from "../../@dmt-components/form/roles-select";
+import DMTBranches from "../../@dmt-components/form/branch-select";
+import DMTDepartments from "../../@dmt-components/form/departments-select";
+import {usersApis} from "../../../api-requests/users-apis";
 
 const UsersForm = props => {
-    const { branch, onClose, onRefresh } = props;
+    const { user, onClose, onRefresh } = props;
     const authUser = useAuth();
     const formik = useFormik({
         initialValues: {
-            branchName: branch?.branchName ?? "",
-            branchCode: branch?.branchCode ?? "",
-            branchAddress: branch?.branchAddress ?? "",
-            branchContacts: branch?.branchContacts ?? "",
+            firstName: user?.firstName ?? "",
+            otherName: user?.otherName ?? "",
+            salutation: user?.salutation ?? "",
+            gender: user?.gender ?? "",
+            phoneNumber: user?.phoneNumber ?? "",
+            extension:  user?.extension ?? "",
+            email: user?.email ?? "",
+            designation: user?.designation ?? "",
+            roleId: user?.roleId ?? null,
+            branchId: user?.branchId ?? null,
+            departmentId: user?.departmentId ?? null
         },
         onSubmit: async (values) => {
-            const browser = getBrowserDetails();
-            const ipAddress = await getIPAddress();
             try {
                 const formData = {
                     ...values,
-                    id: branch?.id ?? 0,
-                    userId: "",
-                    actionType: 0,
-                    active: "True",
-                    branchImageURL: "",
-                    cordinates: "",
-                    approved: true,
-                    browser: browser,
-                    ip: ipAddress
+                    userName: values.email,
+                    id: user?.id ?? "",
                 }
-                
-                const res = await utilitiesApis.createBranch(authUser, formData);
+                const res = await usersApis.createUser(authUser, formData);
                 if (res?.success){
-                    toast.success("Branch created successfully!");
+                    toast.success("User created successfully!");
                     onClose?.();
                     await onRefresh?.();
                 }
@@ -56,77 +59,150 @@ const UsersForm = props => {
         <>
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12} md={12}>
+                    <Grid item xs={12} sm={12} md={6}>
                         <DMTTextInput
-                            error={Boolean(formik.touched.branchName && formik.errors.branchName)}
-                            fullWidth
+                            error={Boolean(formik.touched.firstName && formik.errors.firstName)}
+                            fullWidth={true}
                             required={true}
-                            helperText={formik.touched.branchName && formik.errors.branchName}
-                            label="Branch Name"
-                            name="branchName"
+                            helperText={formik.touched.firstName && formik.errors.firstName}
+                            label="First Name"
+                            name="firstName"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
-                            value={formik.values.branchName}
-                            InputProps={{
-                                form: {
-                                    autocomplete: "off",
-                                },
-                            }}
+                            value={formik.values.firstName}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12}>
+                    <Grid item xs={12} sm={12} md={6}>
                         <DMTTextInput
-                            error={Boolean(formik.touched.branchCode && formik.errors.branchCode)}
-                            fullWidth
+                            error={Boolean(formik.touched.otherName && formik.errors.otherName)}
+                            fullWidth={true}
                             required={true}
-                            helperText={formik.touched.branchCode && formik.errors.branchCode}
-                            label="Branch Code"
-                            name="branchCode"
+                            helperText={formik.touched.otherName && formik.errors.otherName}
+                            label="Other Names"
+                            name="otherName"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
-                            value={formik.values.branchCode}
-                            InputProps={{
-                                form: {
-                                    autocomplete: "off",
-                                },
-                            }}
+                            value={formik.values.otherName}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12}>
+                    <Grid item md={6} sm={12} xs={12}>
                         <DMTTextInput
-                            error={Boolean(formik.touched.branchAddress && formik.errors.branchAddress)}
-                            fullWidth
-                            multiline={true}
-                            minRows={3}
-                            placeholder={"Type the branch address..."}
-                            helperText={formik.touched.branchAddress && formik.errors.branchAddress}
-                            label="Branch Address"
-                            name="branchAddress"
+                            error={Boolean(
+                                formik.touched.phoneNumber && formik.errors.phoneNumber
+                            )}
+                            fullWidth={true}
+                            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                            label="Phone Number"
+                            required={true}
+                            name="phoneNumber"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
-                            value={formik.values.branchAddress}
-                            InputProps={{
-                                form: {
-                                    autocomplete: "off",
-                                },
-                            }}
+                            value={formik.values.phoneNumber}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12}>
+                    <Grid item md={6} sm={12} xs={12}>
                         <DMTTextInput
-                            error={Boolean(formik.touched.branchContacts && formik.errors.branchContacts)}
-                            fullWidth
-                            helperText={formik.touched.branchContacts && formik.errors.branchContacts}
-                            label="Branch Contact"
-                            name="branchContacts"
+                            error={Boolean(
+                                formik.touched.email && formik.errors.email
+                            )}
+                            fullWidth={true}
+                            type={'email'}
+                            helperText={formik.touched.email && formik.errors.email}
+                            label="Email Address"
+                            required={true}
+                            name="email"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
-                            value={formik.values.branchContacts}
-                            InputProps={{
-                                form: {
-                                    autocomplete: "off",
-                                },
-                            }}
+                            value={formik.values.email}
+                        />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <DMTGenders
+                            label={'Gender'}
+                            fullWidth={true}
+                            name={'gender'}
+                            value={formik.values.gender}
+                            onChange={values => formik.setFieldValue('gender', values?.value)}
+                            onBlur={formik.handleBlur}
+                            error={Boolean(formik.errors.gender && formik.touched.gender)}
+                            helperText={formik.touched.gender && formik.errors.gender}
+                        />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <DMTRoles
+                            label={'Role'}
+                            fullWidth={true}
+                            name={'roleId'}
+                            value={formik.values.roleId}
+                            onChange={values => formik.setFieldValue('roleId', values?.id)}
+                            onBlur={formik.handleBlur}
+                            error={Boolean(formik.errors.roleId && formik.touched.roleId)}
+                            helperText={formik.touched.roleId && formik.errors.roleId}
+                        />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <DMTBranches
+                            label={'Branch'}
+                            fullWidth={true}
+                            name={'branchId'}
+                            value={formik.values.branchId}
+                            onChange={values => formik.setFieldValue('branchId', values?.id)}
+                            onBlur={formik.handleBlur}
+                            error={Boolean(formik.errors.branchId && formik.touched.branchId)}
+                            helperText={formik.touched.branchId && formik.errors.branchId}
+                        />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <DMTDepartments
+                            label={'Department'}
+                            fullWidth={true}
+                            name={'departmentId'}
+                            value={formik.values.departmentId}
+                            onChange={values => formik.setFieldValue('departmentId', values?.id)}
+                            onBlur={formik.handleBlur}
+                            error={Boolean(formik.errors.departmentId && formik.touched.departmentId)}
+                            helperText={formik.touched.departmentId && formik.errors.departmentId}
+                        />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <DMTSalutations
+                            label={'Salutation'}
+                            fullWidth={true}
+                            name={'salutation'}
+                            value={formik.values.salutation}
+                            onChange={values => formik.setFieldValue('salutation', values?.value)}
+                            onBlur={formik.handleBlur}
+                            error={Boolean(formik.errors.salutation && formik.touched.salutation)}
+                            helperText={formik.touched.salutation && formik.errors.salutation}
+                        />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <DMTTextInput
+                            error={Boolean(
+                                formik.touched.designation && formik.errors.designation
+                            )}
+                            fullWidth={true}
+                            helperText={formik.touched.designation && formik.errors.designation}
+                            label="Designation"
+                            name="designation"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.designation}
+                        />
+                    </Grid>
+
+                    <Grid item md={6} sm={12} xs={12}>
+                        <DMTTextInput
+                            error={Boolean(
+                                formik.touched.extension && formik.errors.extension
+                            )}
+                            fullWidth={true}
+                            helperText={formik.touched.extension && formik.errors.extension}
+                            label="Telephone Ext"
+                            name="extension"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.extension}
                         />
                     </Grid>
                 </Grid>

@@ -72,26 +72,7 @@ const ProductItem = props => {
                             </MKTypography>
                         </>
                     }
-                    // secondary={
-                    //     <>
-                    //         <MKTypography
-                    //             sx={{ display: 'inline' }}
-                    //             component="span"
-                    //             variant="body2"
-                    //             color="text.primary"
-                    //         >
-                    //             {searchResults?.company_registration_no}
-                    //         </MKTypography>
-                    //     </>
-                    // }
                 />
-                {/*<ListItemButton*/}
-                {/*    role={undefined}*/}
-                {/*    selected={product?.id === selectedProduct?.id}*/}
-                {/*    onClick={(event) => onSelect(product)}*/}
-                {/*>*/}
-                {/*   */}
-                {/*</ListItemButton>*/}
             </ListItem>
             <Divider sx={{ my: 0.2}}/>
         </>

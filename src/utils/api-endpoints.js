@@ -1,5 +1,12 @@
 //------------------------ Backend APIs ----------------------//
 export const API_URL = {
+    /***************** AUTH **********************/
+    LOGIN: '/api/v1/auth/login',
+    REFRESH_TOKEN: '/api/v1/auth/refresh',
+    GET_USER_MENUS: '/api/v1/account/getmenus',
+    VALIDATE_OTP: '/api/v1/account/validateotp',
+
+
     /***************** CUSTOMERS **********************/
 
     FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
@@ -55,6 +62,7 @@ export const API_URL = {
     FETCH_USERS: '/api/v1/account/getcreateunapproved',
     FETCH_UNAPPROVED_USERS: '/api/v1/account/getcreateunapproved',
     ADD_USERS: '/api/v1/account/adduser',
+    APPROVE_USERS: '/api/admin/users/approve-users',
 
 
 }
@@ -66,8 +74,8 @@ export const APP_API_URL = {
     /***************** AUTH **********************/
     LOGIN: '/api/login',
     REFRESH_TOKEN: '/api/admin/refresh-token',
-    GET_USER_MENUS: '/api/current-user/menus',
-    VALIDATE_OTP: '/api/Otp',
+    GET_USER_MENUS: '/api/admin/account/fetch-user-menu',
+    VALIDATE_OTP: '/api/admin/account/validate-otp',
 
 
 
@@ -128,6 +136,7 @@ export const APP_API_URL = {
     FETCH_USERS: '/api/admin/users/fetch-users',
     FETCH_UNAPPROVED_USERS: '/api/admin/users/fetch-unapproved-users',
     ADD_USERS: '/api/admin/users/add-user',
+    APPROVE_USERS: '/api/admin/users/approve-users',
 
 }
 

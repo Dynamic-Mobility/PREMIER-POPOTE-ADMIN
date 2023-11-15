@@ -1,21 +1,80 @@
 import {Column} from "devextreme-react/data-grid";
 import DMTDatagrid from "../../@dmt-components/data-grid";
-import React from "react";
+import React, {useState} from "react";
 import UsersActions from "./users-actions";
 import MKBox from "../../@mui-components/box";
 import MKTypography from "../../@mui-components/typography";
-import {alpha, Avatar, IconButton, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
+import {alpha, Avatar, Collapse, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
 import {getInitials} from "../../../utils/helper-functions";
+import MKButton from "../../@mui-components/button";
+import Check from "@mui/icons-material/Check";
+import Cancel from "@mui/icons-material/Cancel";
+import {useAuth} from "../../../hooks/use-auth";
+import {toast} from "react-toastify";
+import {usersApis} from "../../../api-requests/users-apis";
+import ConfirmationDialog from "../../@dmt-components/confirmation-dialog";
 
-const UsersDatagrid = props => {
+const UsersApprovalDatagrid = props => {
     const { data, onRefresh } = props;
+    const authUser = useAuth();
+    const [selectedRecords, setSelectedRecords] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [confirmationDialog, setConfirmationDialog] = useState({
+        open: false,
+        message: null,
+        action: null
+    });
+
     const actionOptions = ({ data }) => {
         return (
             <>
                 <UsersActions user={data} onRefresh={onRefresh}/>
             </>
         )
+    };
+
+    const handleOnApprove = () => {
+        setConfirmationDialog({
+            message: 'Do you want to approve the selected records?',
+            open: true,
+            action: 'approve'
+        })
     }
+    const handleOnReject = () => {
+        setConfirmationDialog({
+            ...confirmationDialog,
+            open: true,
+            message: 'Do you want to reject the selected records?',
+            action: 'decline'
+        })
+    }
+
+    const handleOnCloseDialog = () => {
+        setConfirmationDialog({
+            ...confirmationDialog,
+            open: false,
+            action: null
+        })
+        setSelectedRecords([])
+    }
+
+    const onApprove = async () => {
+        try {
+            const values = {
+                id: selectedRecords,
+                user_id: authUser?.user?.userid,
+                status: confirmationDialog?.action === 'approve' ? 2 : 999
+            }
+            await usersApis.approveUsers(authUser, values)
+            const message = confirmationDialog.action === 'approve' ? 'Merchants Approved' : 'Merchants Rejected';
+            await toast.success(message);
+            handleOnCloseDialog?.();
+            await onRefresh?.();
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
 
     const renderProfile = ({ data }) => {
         const fname = Boolean(data?.firstName) ? data?.firstName : "";
@@ -72,14 +131,6 @@ const UsersDatagrid = props => {
                             {data?.phoneNumber}
                         </MKTypography>
                     </MKBox>
-                    {/*<MKBox sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>*/}
-                    {/*    <MKTypography variant={'h6'} fontSize={'inherit'}>*/}
-                    {/*        {"Ext : "}*/}
-                    {/*    </MKTypography>*/}
-                    {/*    <MKTypography  fontSize={'inherit'}>*/}
-                    {/*        {data?.extension}*/}
-                    {/*    </MKTypography>*/}
-                    {/*</MKBox>*/}
                 </MKBox>
             </>
         )
@@ -87,6 +138,24 @@ const UsersDatagrid = props => {
 
     return(
         <>
+            <Collapse in={Boolean(selectedRecords.length > 0)}>
+                <MKBox sx={{ display: 'flex', mb:2, alignItems: 'center', justifyContent: 'space-between'}}>
+                    <MKBox>
+                        <MKTypography>
+                            {`${selectedRecords.length} record(s) selected`}
+                        </MKTypography>
+                    </MKBox>
+                    <MKBox>
+                        <MKButton startIcon={<Check/>} sx={{ mr:1}} size={'small'} onClick={handleOnApprove} color={'success'} variant={'outlined'}>
+                            Bulk Approve
+                        </MKButton>
+                        <MKButton startIcon={<Cancel/>} size={'small'} onClick={handleOnReject} color={'error'} variant={'outlined'}>
+                            Bulk Reject
+                        </MKButton>
+                    </MKBox>
+
+                </MKBox>
+            </Collapse>
             <DMTDatagrid
                 data={data}
                 height={'80vh'}
@@ -105,8 +174,17 @@ const UsersDatagrid = props => {
                     cellRender={actionOptions}
                 />
             </DMTDatagrid>
+            <ConfirmationDialog
+                {...{
+                    onOk: onApprove,
+                    isLoading,
+                    onClose: handleOnCloseDialog,
+                    message: confirmationDialog.message,
+                    open: confirmationDialog.open
+                }}
+            />
         </>
     )
 }
 
-export default UsersDatagrid;
+export default UsersApprovalDatagrid;

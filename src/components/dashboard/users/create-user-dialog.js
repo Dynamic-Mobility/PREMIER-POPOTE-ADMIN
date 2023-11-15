@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 const CreateUserDialog = props => {
     const [openDialog, setOpenDialog] = useState(false);
-    const { onRefresh, branch, onClose } = props;
+    const { onRefresh, user, onClose } = props;
     const handleOnOpen = () => {
         setOpenDialog(true);
     }
@@ -19,27 +19,27 @@ const CreateUserDialog = props => {
 
     return(
         <>
-            {Boolean(branch) ? (
+            {Boolean(user) ? (
                 <MenuItem onClick={handleOnOpen}>
                     <EditIcon sx={{mr: 1}} />
                     {" "}
-                    {" Edit"}
+                    {" Edit User"}
                 </MenuItem>
             ): (
                 <MKButton onClick={handleOnOpen} variant={'contained'} color={'primary'}>
-                    {"Create Branch"}
+                    {"Create User"}
                 </MKButton>
             )}
 
             <DMTDialog
                 open={openDialog}
-                onClose={handleOnClose}
+                //onClose={handleOnClose}
             >
                 <DialogTitle>
-                    {Boolean(branch) ?"Update Branch" : "Create Branch"}
+                    {Boolean(user) ?"Update User" : "Create User"}
                 </DialogTitle>
                 <DialogContent>
-                    <UsersForm branch={branch} onClose={handleOnClose} onRefresh={onRefresh}/>
+                    <UsersForm user={user} onClose={handleOnClose} onRefresh={onRefresh}/>
                 </DialogContent>
             </DMTDialog>
         </>
