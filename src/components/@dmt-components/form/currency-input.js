@@ -17,7 +17,7 @@ const DMTCurrencyInput = props => {
                 customInput={RedditTextField}
                 variant="filled"
                 error={error}
-                onBlur={onBlur}
+                // onBlur={onBlur}
                 placeholder={placeholder}
                 autoFocus={autoFocus}
 

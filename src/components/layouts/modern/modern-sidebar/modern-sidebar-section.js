@@ -4,14 +4,18 @@ import ModernSidebarItem from "./modern-sidebar-item";
 
 const renderNavItems = ({ depth = 0, child, path }) => (
     <List disablePadding>
-        {child?.reduce((acc, item) => reduceChildRoutes({ acc, depth, item, path }), [])}
+        {(Array.isArray(child)  && child?.length !== 0) && (
+            <>
+                {child?.reduce((acc, item) => reduceChildRoutes({ acc, depth, item, path }), [])}
+            </>
+        )}
     </List>
 );
 
 const reduceChildRoutes = ({ acc, depth, item, path }) => {
-    const key = `${item.name}-${depth}`;
-    const partialMatch = item.link ? path?.includes(item.link) : false;
-    const exactMatch = path?.split('?')[0] === item.link; // We don't compare query params
+    const key = `${item.pageName}-${depth}`;
+    const partialMatch = item.route ? path?.includes(item.route) : false;
+    const exactMatch = path?.split('?')[0] === item.route; // We don't compare query params
 
     //console.log('CHILDREN', item.child);
 
@@ -25,12 +29,12 @@ const reduceChildRoutes = ({ acc, depth, item, path }) => {
                     chip={item.chip}
                     depth={depth}
                     bold={true}
-                    icon={item.icon}
+                    icon={item.pageIcon}
                     info={item.info}
                     key={key}
                     open={partialMatch}
                     path={item?.link ?? ""}
-                    title={item.name}
+                    title={item.pageName}
                 >
                     {renderNavItems({
                         depth: depth + 1,
@@ -48,11 +52,11 @@ const reduceChildRoutes = ({ acc, depth, item, path }) => {
                     active={exactMatch}
                     chip={item.chip}
                     depth={depth}
-                    icon={item.icon}
+                    icon={item.pageIcon}
                     info={item.info}
                     key={key}
-                    path={item?.link ?? ""}
-                    title={item.name}
+                    path={item?.route ?? ""}
+                    title={item?.pageName}
                 />
             );
         }
@@ -64,11 +68,11 @@ const reduceChildRoutes = ({ acc, depth, item, path }) => {
                 chip={item.chip}
                 bold={true}
                 depth={depth}
-                icon={item.icon}
+                icon={item.pageIcon}
                 info={item.info}
                 key={key}
-                path={item.link}
-                title={item.name}
+                path={item.route}
+                title={item?.pageName}
             />
         );
     }
@@ -109,7 +113,7 @@ const ModernSidebarSection = (props) => {
 
 ModernSidebarSection.propTypes = {
     // items: PropTypes.array.isRequired,
-    link: PropTypes.string.isRequired,
+    //link: PropTypes.string.isRequired,
     // title: PropTypes.string.isRequired
 };
 export default ModernSidebarSection;

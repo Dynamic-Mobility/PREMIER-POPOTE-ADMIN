@@ -3,6 +3,7 @@ import {axiosInstance} from "./axios-instance";
 import {APP_API_URL} from "../utils/api-endpoints";
 
 import SimpleCrypto from  'simple-crypto-js'
+import useAxios from "../hooks/use-axios";
 
 const secretKey = new SimpleCrypto(process.env.NEXT_PUBLIC_ENCRYPTION_KEY);
 
@@ -42,6 +43,32 @@ class AuthApis{
             }
         });
     }
+
+    async validateOTP(token, values){
+        return new Promise((resolve, reject) => {
+            const config = {
+                headers: {
+                    'Authorization':  `Bearer ${token}`,
+                }
+            };
+            axiosInstance.post(APP_API_URL.VALIDATE_OTP, values, config).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+
+    async fetchUserMenus(values){
+        return new Promise((resolve, reject) => {
+            axiosInstance.post(APP_API_URL.GET_USER_MENUS, values).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+
 }
 
 export const authApi = new AuthApis();

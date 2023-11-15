@@ -8,21 +8,30 @@ const useAxios = useAuth => {
         headers: { Authorization: `bearer ${user?.accessToken}` },
     });
 
+    console.log(user.exp);
+
     axiosInstance.interceptors.request.use(async req => {
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
-        return req;
 
         if (!isExpired) {
             return req;
         }
         //refresh auth token
+
+        const config = {
+            headers: {
+                'Authorization': user.accessToken,
+            }
+        };
+
         const response = await axios.post(`${APP_API_URL.REFRESH_TOKEN}`, {
             token: user.accessToken,
             refreshToken: user.refreshToken,
-        });
+        }, config);
 
         if (response.statusCode !== 200) {
             await logout();
+            return;
         }
         const { data} = response;
         await refreshToken(data.token, data.refreshToken);
@@ -42,9 +51,9 @@ const useAxios = useAuth => {
                 if (err.response?.status === 401) {
                     await logout();
                 }
-                if (err.response?.status === 403 && err.response.data) {
-                    return Promise.reject(err.response.data);
-                }
+                // if (err.response?.status === 403 && err.response.data) {
+                //     return Promise.reject(err.response.data);
+                // }
             }
             return Promise.reject(err);
         },

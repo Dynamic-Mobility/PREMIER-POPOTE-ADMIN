@@ -1,8 +1,6 @@
 import Grid from "@mui/material/Grid";
 import FilledInfoCard from "../@dmt-components/cards/info-cards/filled-info-card";
-import { useSelector } from "../../store";
 import CurrencyFormat from "react-currency-format";
-import OutlinedCards from "../@dmt-components/cards/outlined-cards";
 import OutlinedCard from "../@dmt-components/cards/outlined-cards";
 
 const summaries = [
@@ -36,32 +34,12 @@ const summaries = [
     id: 4,
     color: "secondary",
     icon: "feedback",
-    title: "Failed Registrations",
+    title: "Failed NewCustomers",
     type: "customersCount",
     description:'0'
   },
 ];
-const getCount = (customers, applications, type) => {
-  if (type === "customersCount") {
-    return customers.length;
-  } else {
-    const applicationCount = applications.filter((application) => {
-      if (type === "applicationCount") {
-        return true;
-      }
-      if (type === "applicationCompleted") {
-        return application.complete;
-      }
-      if (type === "applicationInComplete") {
-        return !application.complete;
-      }
-      return true;
-    });
-    return applicationCount.length;
-  }
-};
 const DashboardCards = () => {
-  const { data } = useSelector(({ dashboard }) => dashboard);
   return (
     <>
       <Grid container spacing={2}>

@@ -5,12 +5,13 @@ import {AUTH_REFRESH_TOKEN_KEY, AUTH_TOKEN_KEY} from "../utils/constants";
 import {authApi} from "../api-requests/auth-apis";
 import {useRouter} from "next/router";
 import {useDispatch} from "../store";
-import {getUserMenus} from "../slices/dashboard/roles";
+import {toast} from "react-toastify";
 
 
 let ActionType;
 (function (ActionType) {
     ActionType["INITIALIZE"] = "INITIALIZE";
+    ActionType["GET_MENUS"] = "GET_MENUS";
     ActionType["LOGIN"] = "LOGIN";
     ActionType["LOGOUT"] = "LOGOUT";
 })(ActionType || (ActionType = {}));
@@ -19,6 +20,7 @@ const initialState = {
     isAuthenticated: false,
     isInitialized: false,
     user: null,
+    userMenus: [],
 };
 
 const handlers = {
@@ -46,6 +48,11 @@ const handlers = {
         isAuthenticated: false,
         user: null,
     }),
+    GET_MENUS: (state, action) => ({
+        ...state,
+        userMenus: action.payload.userMenus,
+    })
+
 };
 
 const reducer = (state, action) =>
@@ -56,14 +63,13 @@ export const AuthContext = createContext({
     login: () => Promise.resolve(),
     refreshToken : () => Promise.resolve(),
     logout: () => Promise.resolve(),
+    fetchUserMenus: () => Promise.resolve()
 });
 
 export const AuthProvider = (props) => {
     const { children } = props;
     const [state, dispatch] = useReducer(reducer, initialState);
     const router = useRouter();
-
-    const reduxDispatch = useDispatch();
 
     useEffect(() => {
         const initialize = async () => {
@@ -86,7 +92,7 @@ export const AuthProvider = (props) => {
                             user,
                         },
                     });
-                    await reduxDispatch(getUserMenus({ logout, user}));
+                    await fetchUserMenus(user?.userid);
                 } else {
                     dispatch({
                         type: ActionType.INITIALIZE,
@@ -112,47 +118,43 @@ export const AuthProvider = (props) => {
     }, []);
 
     const login = async (userDetails) => {
-        //const userDetails = await authApi.Login(values);
-        console.log("OBJECT ",userDetails)
         const decodedToken = await authApi.decodeToken(userDetails.token);
-        console.log(decodedToken)
         const user = {
             ...decodedToken,
             accessToken: userDetails?.token,
-           // refreshToken: userDetails.refreshToken,
+            refreshToken: userDetails?.refreshToken,
         }
 
-        await reduxDispatch(getUserMenus({ logout, user}));
+        //await reduxDispatch(getUserMenus({ logout, user}));
         localStorage.setItem(AUTH_TOKEN_KEY, userDetails.token);
-        //localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, userDetails.refreshToken);
+        localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, userDetails.refreshToken);
         dispatch({
             type: ActionType.LOGIN,
             payload: {
                 user,
             },
         });
+        await fetchUserMenus(user?.userid);
     };
-    // const login = async (values) => {
-    //     const userDetails = await authApi.Login(values);
-    //     console.log("OBJECT ",userDetails)
-    //     const decodedToken = await authApi.decodeToken(userDetails.token);
-    //     console.log(decodedToken)
-    //     const user = {
-    //         ...decodedToken,
-    //         accessToken: userDetails?.token,
-    //        // refreshToken: userDetails.refreshToken,
-    //     }
 
-    //     await reduxDispatch(getUserMenus({ logout, user}));
-    //     localStorage.setItem(AUTH_TOKEN_KEY, userDetails.token);
-    //     //localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, userDetails.refreshToken);
-    //     dispatch({
-    //         type: ActionType.LOGIN,
-    //         payload: {
-    //             user,
-    //         },
-    //     });
-    // };
+
+    const fetchUserMenus = async (userId) => {
+        try {
+            await authApi.fetchUserMenus({ id: userId}).
+                then(res => {
+                dispatch({
+                    type: ActionType.GET_MENUS,
+                    payload: {
+                       userMenus: res,
+                    },
+                });
+            })
+        }
+        catch (e) {
+            toast.error("Could not fetch menus. Refresh page");
+        }
+    }
+
 
     const refreshToken = async (newToken, newRefreshToken) => {
         const decodedToken = await authApi.decodeToken(newToken);
@@ -191,7 +193,7 @@ export const AuthProvider = (props) => {
                 platform: "AD",
                 login,
                 logout,
-                refreshToken
+                refreshToken,
             }}
         >
             {children}

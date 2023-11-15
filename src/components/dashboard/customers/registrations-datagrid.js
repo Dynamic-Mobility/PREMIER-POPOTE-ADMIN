@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import { Column, Item, SearchPanel, Toolbar } from "devextreme-react/data-grid";
-import Button from "@mui/material/Button";
-import { Typography } from "@mui/material";
+import { Column} from "devextreme-react/data-grid";
 import { MoreHoriz } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import MKBox from "../../@mui-components/box";
-import { Add } from "@mui/icons-material";
-import MKButton from "../../@mui-components/button";
-import MKTypography from "../../@mui-components/typography";
-import { getAllUsers } from "../../../slices/dashboard/users";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../../hooks/use-auth";
 import DoneIcon from "@mui/icons-material/Done";
 import ApproveRegistration from "./approve-registration";
 import Menu from "@mui/material/Menu";
-import EditIcon from "@mui/icons-material/Edit";
 import MenuItem from "@mui/material/MenuItem";
 import RejectRegistration from "./reject-approval";
+import Watermark from "../../watermark";
 
 // import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
@@ -70,21 +61,10 @@ export const MenuDots = ({ data }) => {
 };
 
 const RegistrationsDatagrid = (props) => {
-  const { data, handleOnAdd, onRefresh } = props;
-  const [open, setOpen] = React.useState(false);
-  //   const { users } = useSelector(({ users }) => users)
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { data, onRefresh } = props;
 
   const MenuDots = ({ data }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const router = useRouter();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -93,11 +73,6 @@ const RegistrationsDatagrid = (props) => {
       setAnchorEl(null);
     };
 
-    const handleRedirect = (data) => {
-      router.push("/popote/customers/add-new-customer", {
-        query: { state: data },
-      });
-    };
 
     return (
       <div>
@@ -130,7 +105,7 @@ const RegistrationsDatagrid = (props) => {
     );
   };
 
-  const actionLink = ({ data, rowIndex }) => {
+  const actionLink = ({ data }) => {
     return (
       <div>
         <MenuDots {...{data}} />
@@ -139,14 +114,18 @@ const RegistrationsDatagrid = (props) => {
   };
 
   return (
-    <>
+    <div>
+      <Watermark/>
       <DataGrid
-        dataSource={data}
-        allowColumnReordering={true}
-        rowAlternationEnabled={true}
-        showBorders={true}
-        height={"70vh"}
-        // height={"70vh"}
+          dataSource={data}
+          allowColumnReordering={true}
+          rowAlternationEnabled={true}
+          showBorders={true}
+          remoteOperations={true}
+          showColumnLines={true}
+          showRowLines={true}
+          wordWrapEnabled={true}
+          height={"70vh"}
       >
         <Column  minWidth={250} dataField="name" caption="Name" />
         <Column  minWidth={200} dataField="customerIdNo" caption="ID No" />
@@ -165,7 +144,7 @@ const RegistrationsDatagrid = (props) => {
           cellRender={actionLink}
         />
       </DataGrid>
-    </>
+    </div>
   );
 };
 

@@ -1,10 +1,7 @@
-import {Box, Button, ButtonGroup, Divider, Drawer, Typography, useMediaQuery} from "@mui/material";
+import {Box, Divider, Drawer, Typography, useMediaQuery} from "@mui/material";
 import {drawerWidth} from "../index";
 import {useTheme} from "@mui/styles";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {styled} from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
 import NextLink from "next/link";
 import {Logo} from "../../../logo";
 import {Scrollbar} from "../../../@mui-components/scrollbar";
@@ -14,9 +11,8 @@ import {useSelector} from "../../../../store";
 import {useEffect, useMemo} from "react";
 import {getMenuItems} from "../../../../api-requests/data/menu";
 import ModernSidebarSection from "./modern-sidebar-section";
-import {Logout, Person, Settings} from "@mui/icons-material";
-import MKButton from "../../../@mui-components/button";
 import moment from "moment";
+import {useAuth} from "../../../../hooks/use-auth";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -36,9 +32,11 @@ const ModernSidebar = props => {
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"), {
         noSsr: true,
     });
-    const { menus } = useSelector(({ role }) => role);
-    const sections = useMemo(() => getSections(t), [t]);
-    //const sections = [{child:menus}];
+    const { userMenus } = useAuth();
+
+    // const sections = useMemo(() => getSections(t), [t]);
+    const sections = [{child: userMenus }];
+
 
     const handlePathChange = () => {
         if (!router.isReady) {
@@ -118,17 +116,6 @@ const ModernSidebar = props => {
                 </Scrollbar>
                 <Box sx={{ px:2, backgroundColor:'neutral.100', pb:1, display: 'fixed', width: 'inherit', bottom: 0}}>
                     <Box sx={{ display: 'flex', mt:1, flexDirection: 'column', justifyContent:'center'}}>
-                        {/*<ButtonGroup variant={'outlined'} color={'primary'} fullWidth size="small" aria-label="small button group">*/}
-                        {/*    <IconButton variant={'outlined'} color={'primary'}>*/}
-                        {/*        <Person/>*/}
-                        {/*    </IconButton >*/}
-                        {/*    <IconButton variant={'outlined'} color={'primary'}>*/}
-                        {/*        <Settings/>*/}
-                        {/*    </IconButton>*/}
-                        {/*    <IconButton variant={'outlined'} color={'primary'}>*/}
-                        {/*        <Logout/>*/}
-                        {/*    </IconButton>*/}
-                        {/*</ButtonGroup>*/}
                         <Typography variant={'caption'} >
                             {'Last Logon: '+ moment().format('DD/MM/YYYY H:m ')}
                         </Typography>

@@ -11,6 +11,7 @@ import DMTTextInput from "../../../@dmt-components/form/text-input";
 const CustomerFilterPanel = props => {
     const { filters, onChangeFilters, onResetFilters, onSearch} = props;
     const [anchorEl, setAnchorEl] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -21,8 +22,10 @@ const CustomerFilterPanel = props => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const handleOnReset = () => {
-        onResetFilters();
+    const handleOnReset = async () => {
+        setIsLoading(true);
+        await onResetFilters();
+        setIsLoading(false);
     }
     const handleOnFilterChange = (name, value) => {
         onChangeFilters({
@@ -33,11 +36,15 @@ const CustomerFilterPanel = props => {
 
     const handleOnSearch = async e => {
         e.preventDefault();
+        setIsLoading(true);
         try{
             await onSearch();
         }
         catch (e) {
             console.log(e.message);
+        }
+        finally {
+            setIsLoading(false);
         }
 
     }
@@ -115,19 +122,19 @@ const CustomerFilterPanel = props => {
                             </Grid>
                         </Grid>
                           <MKBox sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
-                            <MKButton type={'reset'} onClick={handleOnReset} variant={'text'} color={'primary'}>
+                            <MKButton type={'reset'} disabled={isLoading} onClick={handleOnReset} variant={'text'} color={'primary'}>
                                 Reset
                             </MKButton>
                             <LoadingButton
                                 type={'submit'}
                                 size={'small'}
-                               // loading={isLoading}
+                                loading={isLoading}
                                 variant={'contained'}
                                 color={'primary'}
                                 startIcon={<Search />}
                                 loadingPosition="start"
                             >
-                               Search
+                                {isLoading? 'Searching' : 'Search' }
                             </LoadingButton>
                         </MKBox>
                     </MKBox>

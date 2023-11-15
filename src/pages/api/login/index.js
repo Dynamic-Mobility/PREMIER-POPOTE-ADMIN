@@ -19,29 +19,23 @@ export default async function handler(req, res) {
             try {
                 const formData = secretKey.decrypt(body.data);
                 console.log(formData);
-                const config = {
-                    params: {
-                        Username: formData?.Username,
-                        Password: formData?.Password
-                    }
-                }
-                const responseData = {
-                    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGaXJzdE5hbWUiOiJEZW5uaXMiLCJMYXN0TmFtZSI6Ik11bWlyYSIsInBob25lbnVtYmVyIjoiMDcwMTgyNDE0NSIsImVtYWlsIjoibmpvcm9kZW5vMjBAZ21haWwuY29tIiwiUGFydG5lclNlY3JldCI6InN0cmluZyIsIlBhcnRuZXJJZCI6InN0cmluZyIsImp0aSI6ImY3OTlmM2QxLWExYWMtNDVhZC05ZDVhLTMzNWFjNjQ2OTMwNyIsImV4cCI6MTY5NDAyODc1NSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.HND7ZE6TAWswsdRhNmzOvQgM444vnQThMR-w1e5cRR0'
-                }
 
-                if (formData?.Username === 'njorodeno20@gmail.com' && formData?.Password === 'njoroge123'){
-                    res.status(200).json(secretKey.encrypt(responseData));
-                }
-                else {
-                    res.status(400).json('Wrong Credentials Provided');
-                }
+                // const responseData = {
+                   // token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGaXJzdE5hbWUiOiJEZW5uaXMiLCJMYXN0TmFtZSI6Ik11bWlyYSIsInBob25lbnVtYmVyIjoiMDcwMTgyNDE0NSIsImVtYWlsIjoibmpvcm9kZW5vMjBAZ21haWwuY29tIiwiUGFydG5lclNlY3JldCI6InN0cmluZyIsIlBhcnRuZXJJZCI6InN0cmluZyIsImp0aSI6ImY3OTlmM2QxLWExYWMtNDVhZC05ZDVhLTMzNWFjNjQ2OTMwNyIsImV4cCI6MTY5NDAyODc1NSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.HND7ZE6TAWswsdRhNmzOvQgM444vnQThMR-w1e5cRR0'
+                // }
 
+                // if (formData?.Username === 'njorodeno20@gmail.com' && formData?.Password === 'njoroge123'){
+                //     res.status(200).json(secretKey.encrypt(responseData));
+                // }
+                // else {
+                //     res.status(400).json('Wrong Credentials Provided');
+                // }
 
-                // await backendAxiosInstance.post(API_URL.LOGIN,{}, config).then(response => {
-                //     res.status(response.status).json(secretKey.encrypt(response.data));
-                //
-                //     console.log(response.data);
-                // }).catch(e => res.status(e?.response?.status ?? 500).json(e.response?.data))
+                await backendAxiosInstance.post(API_URL.LOGIN, formData).then(response => {
+                    res.status(response.status).json(secretKey.encrypt(response.data));
+
+                    console.log(response.data);
+                }).catch(e => res.status(e?.response?.status ?? 500).json(e.response?.data))
 
             } catch (e) {
                 res.status(500).json(e.message);

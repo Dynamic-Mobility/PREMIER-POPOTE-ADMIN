@@ -76,4 +76,48 @@ export const toUpperCase = string => {
   return null;
 }
 
+export const formatDate = (date, format = 'DD MMM YYYY') => {
+    if(date){
+        return moment(date).format(format);
+    }
+    return null;
+}
+
+export const getBrowserDetails = () =>{
+    return navigator.userAgent;
+}
+
+export const getIPAddress = async () => {
+    const ipAddressURL = 'https://ipapi.co/json/';
+    let ipAddress = "";
+    await fetch(ipAddressURL)
+        .then(response => response.json())
+        .then(data => {
+            ipAddress = data.ip;
+        })
+        .catch(error => {
+            console.error("Error fetching IP address: " + error);
+        });
+    return ipAddress;
+}
+
+export const getLocalIPAddress = async ()  => {
+  return  new Promise((resolve, reject) => {
+        const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+        const pc = new RTCPeerConnection({ iceServers: [] });
+        pc.createDataChannel('');
+
+        pc.createOffer()
+            .then((offer) => {
+                const localIPRegex = /((2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)\.){3}(2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)/;
+                const localIP = offer.sdp.match(localIPRegex)[0];
+                resolve(localIP);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
+
 

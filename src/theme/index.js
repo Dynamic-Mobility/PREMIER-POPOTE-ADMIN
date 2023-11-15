@@ -39,11 +39,6 @@ import tooltip from "./components/tooltip";
 import appBar from "./components/appBar";
 import tabs from "./components/tabs";
 import tab from "./components/tabs/tab";
-import stepper from "./components/stepper";
-import step from "./components/stepper/step";
-import stepConnector from "./components/stepper/stepConnector";
-import stepLabel from "./components/stepper/stepLabel";
-import stepIcon from "./components/stepper/stepIcon";
 import select from "./components/form/select";
 import formControlLabel from "./components/form/formControlLabel";
 import formLabel from "./components/form/formLabel";
@@ -101,9 +96,9 @@ export default createTheme({
     MuiMenuItem: { ...menuItem },
     MuiSwitch: { ...switchButton },
     MuiDivider: { ...divider },
-    MuiTableContainer: { ...tableContainer },
-    MuiTableHead: { ...tableHead },
-    MuiTableCell: { ...tableCell },
+    // MuiTableContainer: { ...tableContainer },
+    // MuiTableHead: { ...tableHead },
+    // MuiTableCell: { ...tableCell },
     MuiLinearProgress: { ...linearProgress },
     MuiBreadcrumbs: { ...breadcrumbs },
     MuiSlider: { ...slider },
@@ -112,11 +107,11 @@ export default createTheme({
     MuiAppBar: { ...appBar },
     MuiTabs: { ...tabs },
     MuiTab: { ...tab },
-    MuiStepper: { ...stepper },
-    MuiStep: { ...step },
-    MuiStepConnector: { ...stepConnector },
-    MuiStepLabel: { ...stepLabel },
-    MuiStepIcon: { ...stepIcon },
+    // MuiStepper: { ...stepper },
+    // MuiStep: { ...step },
+    // MuiStepConnector: { ...stepConnector },
+    // MuiStepLabel: { ...stepLabel },
+    // MuiStepIcon: { ...stepIcon },
     MuiSelect: { ...select },
     MuiFormControlLabel: { ...formControlLabel },
     MuiFormLabel: { ...formLabel },

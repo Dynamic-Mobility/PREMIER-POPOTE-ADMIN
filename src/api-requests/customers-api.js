@@ -35,6 +35,17 @@ class CustomersApis {
             })
         })
     }
+    fetchCustomerId(auth,id){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.FETCH_CUSTOMER_BY_ID,{id: id}).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
 
     addUpdateCustomers(auth,payload){
         return new Promise((resolve, reject) => {
@@ -76,6 +87,108 @@ class CustomersApis {
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(auth);
             axiosInstance.post(APP_API_URL.APPROVE_CUSTOMER, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    resetCustomerPin(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.RESET_CUSTOMER_PIN, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    validateResetOTP(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.VALIDATE_RESET_PIN_OTP, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    blockUnblockCustomer(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.BLOCK_UNBLOCK_CUSTOMER, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    fetchUpdatedCustomers(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.FETCH_UPDATED_CUSTOMERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    approveUpdatedCustomer(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.APPROVE_UPDATED_CUSTOMER, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    fetchUnapprovedAccounts (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_UNAPPROVED_ACCOUNTS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    fetchBlockedCustomers (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_BLOCKED_CUSTOMERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    fetchUnBlockedCustomers (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_UNBLOCKED_CUSTOMERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    approveAccounts(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.APPROVE_ACCOUNTS, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))

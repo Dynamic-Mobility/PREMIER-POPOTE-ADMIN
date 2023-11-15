@@ -1,0 +1,17 @@
+/* Watermark.css */
+
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    opacity: 0.1; /* Adjust the opacity as needed */
+    /* You can add additional image-specific styles here */
+}
+.wrapper-disabled {
+    cursor: not-allowed;
+}
+.disabled-field{
+    pointer-events: none;
+}
