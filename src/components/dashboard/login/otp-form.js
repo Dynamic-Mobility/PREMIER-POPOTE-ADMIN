@@ -9,7 +9,7 @@ import MKButton from "../../@mui-components/button";
 import OTPInput from "react-otp-input";
 import { alpha } from '@mui/material'
 
-const OTP_LENGTH = 5;
+const OTP_LENGTH = 4;
 
 const OtpForm = (props) => {
     const { onSuccess, message = "", onResendOTP} = props;
@@ -91,7 +91,7 @@ const OtpForm = (props) => {
                                 outline: "1px solid red",
                                 background: alpha(theme.palette.error.main, 0.1),
                             }}
-                            placeholder={"-----"}
+                            placeholder={"----"}
                             focusStyle={{
                                 outline: `1px solid ${theme.palette.primary.main}`,
                             }}

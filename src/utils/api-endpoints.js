@@ -73,7 +73,7 @@ export const APP_API_URL = {
 
     /***************** AUTH **********************/
     LOGIN: '/api/login',
-    REFRESH_TOKEN: '/api/admin/refresh-token',
+    REFRESH_TOKEN: '/api/admin/account/refresh-token',
     GET_USER_MENUS: '/api/admin/account/fetch-user-menu',
     VALIDATE_OTP: '/api/admin/account/validate-otp',
 
