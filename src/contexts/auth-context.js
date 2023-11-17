@@ -19,6 +19,7 @@ let ActionType;
 const initialState = {
     isAuthenticated: false,
     isInitialized: false,
+    isFetchingMenus: true,
     user: null,
     userMenus: [],
 };
@@ -48,11 +49,15 @@ const handlers = {
         isAuthenticated: false,
         user: null,
     }),
-    GET_MENUS: (state, action) => ({
-        ...state,
-        userMenus: action.payload.userMenus,
-    })
+    GET_MENUS: (state, action) => {
+        const {isFetchingMenus, userMenus} = action.payload;
 
+        return {
+            ...state,
+            isFetchingMenus,
+            userMenus
+        };
+    }
 };
 
 const reducer = (state, action) =>
@@ -139,6 +144,13 @@ export const AuthProvider = (props) => {
 
 
     const fetchUserMenus = async (userId) => {
+        dispatch({
+            type: ActionType.GET_MENUS,
+            payload: {
+                userMenus: [],
+                isFetchingMenus: true,
+            },
+        });
         try {
             await authApi.fetchUserMenus({ id: userId}).
                 then(res => {
@@ -146,6 +158,7 @@ export const AuthProvider = (props) => {
                     type: ActionType.GET_MENUS,
                     payload: {
                        userMenus: res,
+                        isFetchingMenus: false,
                     },
                 });
             })

@@ -1,4 +1,4 @@
-import { appName } from "../../utils/constants";
+import {appName, PAGE_PERMISSIONS, PAGES_PATHS} from "../../utils/constants";
 import MKTypography from "../../components/@mui-components/typography";
 import Head from "next/head";
 import MKBox from "../../components/@mui-components/box";
@@ -6,6 +6,8 @@ import Grid from "@mui/material/Grid";
 import ModernLayout from '../../components/layouts/modern';
 import DashboardCards from "../../components/dashboard/dashboard-cards";
 import DashboardSummary from "../../components/dashboard/dashboard-summary";
+import {AuthGuard} from "../../hocs/auth-guard";
+import RoleBasedGuard from "../../hocs/role-based-guard";
 
 const DashboardPage = () => {
 
@@ -44,9 +46,13 @@ const DashboardPage = () => {
 };
 
 DashboardPage.getLayout = (page) => (
-  // <AuthGuard>
-    <ModernLayout>{page}</ModernLayout>
-  // </AuthGuard>
+  <AuthGuard>
+      <ModernLayout>
+          <RoleBasedGuard path={PAGES_PATHS.DASHBOARD} page={true}>
+              {page}
+          </RoleBasedGuard>
+      </ModernLayout>
+  </AuthGuard>
 );
 
 export default DashboardPage;

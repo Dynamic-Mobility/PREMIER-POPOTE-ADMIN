@@ -43,7 +43,6 @@ const ModernSidebarItem = (props) => {
     // Branch
     if (children) {
         return (
-            <RoleBasedGuard role={role}>
                  <ListItem
                 disableGutters
                 sx={{
@@ -101,14 +100,14 @@ const ModernSidebarItem = (props) => {
                     </Box>
                 </Collapse>
             </ListItem>
-            </RoleBasedGuard>
+
            
         );
     }
 
     // Leaf
     return (
-        <RoleBasedGuard role={role}>
+
  <ListItem
             disableGutters
             sx={{
@@ -157,7 +156,6 @@ const ModernSidebarItem = (props) => {
                 </Button>
             </NextLink>
         </ListItem>
-        </RoleBasedGuard>
        
     );
 };
