@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {settingsApis} from "../../api-requests/settings-apis";
 import {rolesApis} from "../../api-requests/roles-apis";
 import {PERMISSIONS} from "../../utils/constants";
 

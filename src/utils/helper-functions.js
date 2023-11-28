@@ -22,17 +22,28 @@ export const formatPermissions = (permissions) => {
 export const checkPermission = (menus, permission, path, page = false) => {
     let newMenus = formatMenuArray(menus);
     const activeMenu = newMenus.find(menu => menu.route === path);
-
-    console.log('New Menus', newMenus);
-    console.log('Active Menu', activeMenu);
     if (page){
         return activeMenu !== undefined;
     }
     if (activeMenu){
         const formattedPerms = formatPermissions(activeMenu.permission);
-        return formattedPerms.includes(permission?.toString());
+        console.log('FORMATTED PERMS', formattedPerms);
+        return formattedPerms.includes(permission);
     }
     return false;
+}
+
+export const removeQuotes = (stringWithQuotes) => {
+    if (!stringWithQuotes){
+        return;
+    }
+    return stringWithQuotes.replace(/^"|"$/g, '');
+}
+
+export const splitString = (string, separator = ',') => {
+    if (string){
+        return string.trim().split(',').map(Number);
+    }
 }
 export const getInitials = (name = '') => name
     ?.replace(/\s+/, ' ')

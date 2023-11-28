@@ -2,7 +2,7 @@ export const appName = 'Premier Bank';
 export const appDesc = 'MB Admin Portal';
 export const AUTH_TOKEN_KEY = 'accessToken';
 export const AUTH_REFRESH_TOKEN_KEY = 'refreshToken';
-export const ALLOWED_PAGE_SIZES = [1, 25, 50, 100];
+export const ALLOWED_PAGE_SIZES = [10, 25, 50, 100, 200];
 export const CHANNEL_TYPES = [
     {
         id: 1,

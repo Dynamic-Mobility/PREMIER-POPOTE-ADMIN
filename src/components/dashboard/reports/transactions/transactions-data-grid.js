@@ -9,6 +9,7 @@ import {
 import dynamic from "next/dynamic";
 import {ALLOWED_PAGE_SIZES} from "../../../../utils/constants";
 import DMTChip from "../../../@dmt-components/chip";
+import DMTDatagrid from "../../../@dmt-components/data-grid";
 const DataGrid = dynamic(
     () => import('devextreme-react/data-grid'),
     {
@@ -60,9 +61,16 @@ const dummyData = [
 ]
 
 const TransactionDataGrid = props => {
-    const { data,  limit, activePage, onPageSizeChange, onPageChange } = props;
+    const {
+        data,
+        limit,
+        activePage,
+        onPageSizeChange,
+        onPageChange,
+        totalRecords
+    } = props;
     const actionAmount = ({ displayValue, data}) => {
-        const color =  'success';
+        const color =  data?.completed ?  'success' : 'error';
         return (
             <>
                 <DMTChip
@@ -73,6 +81,13 @@ const TransactionDataGrid = props => {
             </>
         )
     }
+
+    const renderValue = ({ displayValue }) => {
+        if (!displayValue){
+            return '-'
+        }
+        return displayValue;
+    }
     const handlePageChange = (value) => {
         onPageChange(value);
     }
@@ -80,39 +95,47 @@ const TransactionDataGrid = props => {
     const handlePageSizeChange = (value) => {
         onPageSizeChange(value);
     }
+
     return (
         <>
-            <DataGrid
+            <DMTDatagrid
                 keyExpr="id"
-                dataSource={dummyData}
-                showBorders={true}
-                remoteOperations={true}
-                loadPanel={true}
-                height={'78vh'}
-                showColumnLines={true}
-                showRowLines={true}
-                allowColumnReordering={true}
-                rowAlternationEnabled={true}
-                wordWrapEnabled={true}
+                data={data}
+                pageSize = {limit}
+                activePage ={ activePage}
+                totalRecords ={ totalRecords }
+                onChangePage = {handlePageChange}
+                onChangeSize={handlePageSizeChange}
             >
                 <SearchPanel visible={false} />
                 <HeaderFilter visible={true} allowSearch={true} />
                 <Column
-                    dataField="mobile_no"
-                    minWidth={150}
-                    caption="Mobile No"
+                    dataField="customerName"
+                    minWidth={140}
+                    caption="Customer Name"
                     allowHeaderFiltering={false}
                     allowSearch={true}
                     allowFiltering={false}
                 />
                 <Column
-                    dataField="ref_no"
-                    minWidth={160}
-                    caption="Ref No"
-                    allowHeaderFiltering={true}
+                    dataField="accountFrom"
+                    minWidth={150}
+                    caption="Account From"
+                    allowHeaderFiltering={false}
                     allowSearch={true}
-                    allowFiltering={true}
+                    allowFiltering={false}
+                    cellRender={renderValue}
                 />
+                <Column
+                    dataField="accountTo"
+                    minWidth={150}
+                    caption="Account To"
+                    allowHeaderFiltering={false}
+                    allowSearch={true}
+                    allowFiltering={false}
+                    cellRender={renderValue}
+                />
+
                 <Column
                     dataField="narration"
                     minWidth={200}
@@ -120,6 +143,7 @@ const TransactionDataGrid = props => {
                     allowHeaderFiltering={true}
                     allowSearch={true}
                     allowFiltering={true}
+                    cellRender={renderValue}
                 />
                 <Column
                     dataField="amount"
@@ -131,44 +155,60 @@ const TransactionDataGrid = props => {
                     allowFiltering={false}
                 />
                 <Column
+                    dataField="refence"
+                    minWidth={160}
+                    caption="Ref No"
+                    allowHeaderFiltering={true}
+                    allowSearch={true}
+                    allowFiltering={true}
+                    cellRender={renderValue}
+                />
+                <Column
                     dataField="currency"
                     minWidth={100}
                     caption="Currency"
                     allowHeaderFiltering={false}
                     allowSearch={true}
                     allowFiltering={false}
+                    cellRender={renderValue}
                 />
                 <Column
-                    dataField="txn_type"
+                    dataField="channel"
+                    minWidth={160}
+                    caption="Channel"
+                    allowHeaderFiltering={false}
+                    allowSearch={true}
+                    allowFiltering={false}
+                    cellRender={renderValue}
+                />
+                <Column
+                    dataField="phone"
+                    minWidth={150}
+                    caption="Mobile No"
+                    allowHeaderFiltering={false}
+                    allowSearch={true}
+                    allowFiltering={false}
+                    cellRender={renderValue}
+                />
+
+                <Column
+                    dataField="transactionTypeDesc"
                     minWidth={160}
                     caption="Txn Type"
                     allowHeaderFiltering={false}
                     allowSearch={true}
                     allowFiltering={false}
+                    cellRender={renderValue}
                 />
+
                 <Column
-                    dataField="dr_account"
-                    minWidth={140}
-                    caption="Dr Account"
-                    allowHeaderFiltering={false}
-                    allowSearch={true}
-                    allowFiltering={false}
-                />
-                <Column
-                    dataField="cr_account"
-                    minWidth={140}
-                    caption="Cr Account"
-                    allowHeaderFiltering={false}
-                    allowSearch={true}
-                    allowFiltering={false}
-                />
-                <Column
-                    dataField="txn_date"
-                    minWidth={100}
+                    dataField="transactionDate"
+                    minWidth={180}
                     caption="Txn Date"
                     allowHeaderFiltering={false}
                     allowSearch={true}
                     allowFiltering={false}
+                    cellRender={renderValue}
                 />
                 <Paging
                     pageIndex={activePage - 1}
@@ -178,14 +218,14 @@ const TransactionDataGrid = props => {
                     onPageIndexChange={handlePageChange}
                 />
                 <Pager
-                    visible={true}
+                    visible={false}
                     allowedPageSizes={ALLOWED_PAGE_SIZES}
                     showPageSizeSelector={true}
                     showNavigationButtons={true}
 
                 />
                 <Export enabled={false} allowExportSelectedData={false} />
-            </DataGrid>
+            </DMTDatagrid>
         </>
     )
 }

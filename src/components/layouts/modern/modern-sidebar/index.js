@@ -117,7 +117,7 @@ const ModernSidebar = props => {
                 <Box sx={{ px:2, backgroundColor:'neutral.100', pb:1, display: 'fixed', width: 'inherit', bottom: 0}}>
                     <Box sx={{ display: 'flex', mt:1, flexDirection: 'column', justifyContent:'center'}}>
                         <Typography variant={'caption'} >
-                            {'Last Logon: '+ moment().format('DD/MM/YYYY H:m ')}
+                            {'Last Logon: '+ moment().format('DD/MM/YYYY hh:mm a ')}
                         </Typography>
                     </Box>
                 </Box>
