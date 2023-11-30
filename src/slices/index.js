@@ -1,13 +1,13 @@
-import allTransactionsReducer from './dashboard/transactions';
 import customersReducer from './dashboard/customers';
 import settingsReducer from './dashboard/settings';
 import rolesReducer from './dashboard/roles';
 import usersReducer from './dashboard/users';
 import utilsReducer from './dashboard/utils';
+import transactionsReducers from "./dashboard/transactions";
 
 
 const reducers = {
-    allTransactions: allTransactionsReducer,
+    ...transactionsReducers,
     customers: customersReducer,
     settings : settingsReducer,
     roles: rolesReducer,

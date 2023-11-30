@@ -10,21 +10,21 @@ const transactionCardsOpts = [
     {
         id:1,
         title: 'Total Transactions',
-        value: 10000,
+        value: 0,
         icon: 'paid',
         color: 'primary',
     },
     {
         id:2,
         title: 'Successful Transactions',
-        value: 9000,
+        value: 0,
         icon: 'published_with_changes',
         color: 'success',
     },
     {
         id:3,
         title: 'Failed Transactions',
-        value: 1000,
+        value: 0,
         icon: 'unpublished',
         color: 'error',
     }

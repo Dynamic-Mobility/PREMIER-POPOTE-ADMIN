@@ -10,7 +10,7 @@ const initialState = {
     blockedCustomers: [],
     unblockedCustomers: [],
     totalCount: 0,
-    pageSize: 50,
+    pageSize: 250,
     currentPage: 1,
 }
 

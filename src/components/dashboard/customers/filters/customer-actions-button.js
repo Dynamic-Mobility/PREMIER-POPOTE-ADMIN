@@ -8,7 +8,7 @@ const CustomerActionButtons = (props) => {
     return (
         <>
             <ButtonGroup color={'primary'} aria-label="action buttons">
-                <MKButton variant={'contained'} color={'primary'}>
+                <MKButton disabled={true} variant={'contained'} color={'primary'}>
                     {"Export"}
                 </MKButton>
                <CustomerFilterPanel {...{filters, onChangeFilters, onResetFilters, onSearch}} />

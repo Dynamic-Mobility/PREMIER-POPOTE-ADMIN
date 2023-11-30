@@ -64,7 +64,7 @@ export default {
       alignItems: "center",
       height: "auto",
       padding: pxToRem(4),
-      backgroundColor: gradients.dark.state,
+      backgroundColor: gradients.success.state,
       color: white.main,
 
       "& .MuiChip-label": {

@@ -74,37 +74,6 @@ const SystemUsersDataGrid = (props) => {
     setOpen(false);
   };
 
-  //   users dummy data
-  const users = [
-    {
-      name: "Marcos Ochieng",
-      profile_name: "Marcos",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-      status: 'Active',
-    },
-    {
-      name: "Derrick Ochieng",
-      profile_name: "Marcos",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-      status: 'Inactive',
-    },
-    {
-      name: "Jane Ochieng",
-      profile_name: "Marcos",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-      status: 'Active',
-    },
-    {
-      name: "Ann Ochieng",
-      profile_name: "Marcos",
-      phoneNumber: "073242432",
-      email: "marcos@gmail.com",
-      status: 'Inactive',
-    },
-  ];
 
   const actionLink = ({ data, rowIndex }) => {
     return (
@@ -119,7 +88,7 @@ const SystemUsersDataGrid = (props) => {
   return (
     <>
       <DataGrid
-        dataSource={users}
+        dataSource={[]}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}

@@ -7,11 +7,18 @@ import { useDispatch, useSelector } from "../../../../store";
 import TransactionDataGrid from "../../../../components/dashboard/reports/transactions/transactions-data-grid";
 import {Card} from "@mui/material";
 import TransactionsActionButtons from "../../../../components/dashboard/reports/transactions/transactions-action-buttons";
-import {setPageSize, setActivePage, fetchAllTransaction} from "../../../../slices/dashboard/transactions";
+import {
+    setPageSize,
+    setActivePage,
+    fetchAllTransaction,
+    resetFilters
+} from "../../../../slices/dashboard/transactions/all";
 import ModernLayout from "../../../../components/layouts/modern";
 import {useCallback, useEffect} from "react";
 import {useAuth} from "../../../../hooks/use-auth";
-import { splitString} from "../../../../utils/helper-functions";
+import {formatDate, splitString} from "../../../../utils/helper-functions";
+import {setFilters} from "../../../../slices/dashboard/transactions/bill-transactions";
+import {AuthGuard} from "../../../../hocs/auth-guard";
 
 
 const title = "All Transactions";
@@ -40,16 +47,32 @@ const TransactionsPage = () => {
       dispatch(setActivePage(value));
   }
 
+    const handleOnReset = () => {
+        dispatch(resetFilters());
+    }
+
+    const handleOnSetFilters = filters => {
+        dispatch(setFilters(filters));
+    }
+    const handleSetActivePage= value => {
+        dispatch(setActivePage(filters));
+    }
+
 
 
   const getAllTransactions = useCallback(async (filters, pageSize, activePage) => {
       const values = {
+          transactionType: filters.txnType,
           customerId: filters.customerId,
           accountFrom: filters.accountFrom,
           phoneNumber: filters.mobileNo,
           amount: Boolean(filters.amount) ? splitString(filters.amount) : null,
           channel: Boolean(filters.channel) ? filters.channel?.toLowerCase() : "",
-          dateRange: filters.startDate && filters.endDate ? [filters.startDate, filters.endDate] : null,
+          dateRange: filters.startDate && filters.endDate ?
+              [
+                  formatDate(filters.startDate, "DD MMM YYYY HH:mm"),
+                  formatDate(filters.endDate, "DD MMM YYYY HH:mm")
+              ] : null,
           processed: filters.isProcessed ? "Yes" : "",
           pageNumber: activePage,
           pageSize: pageSize
@@ -81,7 +104,16 @@ const TransactionsPage = () => {
                       <MKTypography variant="h5">{title}</MKTypography>
                   </Grid>
                   <Grid item>
-                      <TransactionsActionButtons onFilter = {getAllTransactions}/>
+                      <TransactionsActionButtons
+                          {...{
+                              setFilters: handleOnSetFilters,
+                              setActivePage: handleSetActivePage,
+                              onFilter: getAllTransactions,
+                              onResetFilters: handleOnReset,
+                              filters,
+                              pageSize,
+                              activePage
+                          }}/>
                   </Grid>
               </Grid>
           </MKBox>
@@ -101,11 +133,11 @@ const TransactionsPage = () => {
 };
 
 TransactionsPage.getLayout = (page) => (
-  // <AuthGuard>
-    <ModernLayout>
-        {page}
-    </ModernLayout>
-  // </AuthGuard>
+   <AuthGuard>
+        <ModernLayout>
+            {page}
+        </ModernLayout>
+  </AuthGuard>
 );
 
 export default TransactionsPage;

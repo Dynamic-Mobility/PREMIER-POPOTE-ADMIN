@@ -67,6 +67,11 @@ export const API_URL = {
     /************************ TRANSACTIONS ****************************/
 
     FETCH_ALL_TRANSACTIONS: '/api/v1/transactions/getalltransaction',
+    FETCH_MPESA_TRANSACTIONS: '/api/v1/transactions/getmpesatransaction',
+    FETCH_PESALINK_TRANSACTIONS: '/api/v1/transactions/getpesalinktransaction',
+    FETCH_AIRTIME_TRANSACTIONS: '/api/v1/transactions/getairtimepurchases',
+    FETCH_BILLS_TRANSACTIONS: '/api/v1/transactions/getbillpayments',
+    FETCH_TRANSFERS_TRANSACTIONS: '/api/v1/transactions/gettransferstransaction',
 
 
 }
@@ -145,6 +150,11 @@ export const APP_API_URL = {
     /************************ TRANSACTIONS ****************************/
 
     FETCH_ALL_TRANSACTIONS: '/api/admin/transactions/fetch-all',
+    FETCH_MPESA_TRANSACTIONS: '/api/admin/transactions/fetch-mpesa',
+    FETCH_PESALINK_TRANSACTIONS: '/api/admin/transactions/fetch-pesalink',
+    FETCH_AIRTIME_TRANSACTIONS: '/api/admin/transactions/fetch-airtime',
+    FETCH_BILLS_TRANSACTIONS: '/api/admin/transactions/fetch-bills',
+    FETCH_TRANSFERS_TRANSACTIONS: '/api/admin/transactions/fetch-transfers',
 
 }
 

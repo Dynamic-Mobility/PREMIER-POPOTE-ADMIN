@@ -1,37 +1,35 @@
 import {useDispatch, useSelector} from "../../../../store";
-import {resetFilters, setActivePage, setFilters} from "../../../../slices/dashboard/transactions";
+import {resetFilters, setActivePage, setFilters} from "../../../../slices/dashboard/transactions/all";
 import MKButton from "../../../@mui-components/button";
 import {Search} from "@mui/icons-material";
-import {Checkbox, FormControlLabel, Popover} from "@mui/material";
+import {Checkbox, Chip, FormControlLabel, Popover} from "@mui/material";
 import MKBox from "../../../@mui-components/box";
 import MKTypography from "../../../@mui-components/typography";
 import Grid from "@mui/material/Grid";
 import {LoadingButton} from "@mui/lab";
-import React, {useCallback, useEffect, useRef, useState} from "react";
-import {useRouter} from "next/router";
+import React, {useCallback, useEffect, useState} from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import DMTTextInput from "../../../@dmt-components/form/text-input";
-import DMTDatePicker from "../../../@dmt-components/form/datepicker";
 import {getTransactionTypes} from "../../../../slices/dashboard/settings";
 import {useAuth} from "../../../../hooks/use-auth";
 import {CHANNEL_TYPES} from "../../../../utils/constants";
 import {getAutoCompleteValue} from "../../../../utils/helper-functions";
+import {getAutocompleteMultipleValues} from "../../../../utils/fileHelper";
+import {DateTimePicker} from "@mui/x-date-pickers";
 
 const TransactionFilterPanel = props => {
-    const { onFilter } = props;
-    const dispatch = useDispatch();
     const {
+        onFilter,
+        setFilters,
+        setActivePage,
+        onResetFilters,
         filters,
         pageSize,
-        activePage
-    } = useSelector(({ allTransactions }) => allTransactions);
+    } = props;
+    const dispatch = useDispatch();
+    const { transactionTypes } = useSelector(({ settings }) => settings );
 
     const [anchorEl, setAnchorEl] = useState(null);
-
-    const router = useRouter();
-
-
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -45,19 +43,19 @@ const TransactionFilterPanel = props => {
     const authUser = useAuth();
 
     const handleOnReset = () => {
-        dispatch(resetFilters());
+        onResetFilters();
     }
     const handleOnFilterChange = (name, value) => {
-        dispatch(setFilters({
+       setFilters({
             ...filters,
             [name]: value,
-        }))
+        })
     }
 
     const handleOnSearch = async e => {
         e.preventDefault();
         await onFilter(filters, pageSize, 1);
-        dispatch(setActivePage(1));
+        setActivePage(1);
     }
 
     const handleOnStartDate = value => {
@@ -78,13 +76,20 @@ const TransactionFilterPanel = props => {
         handleOnFilterChange('endDate', value);
     }
 
+    const handleOnTransactionTypes = (values) => {
+        let types = [];
+        values.map(val => types.push(val?.slug));
+        handleOnFilterChange("txnType", types);
+    }
+
+
     const fetchTransactionTypes = useCallback(async () => {
         await dispatch(getTransactionTypes(authUser));
     },[]);
 
-    // useEffect(() => {
-    //     //fetchTransactionTypes();
-    // },[])
+    useEffect(() => {
+        fetchTransactionTypes();
+    },[])
 
     return (
         <>
@@ -111,28 +116,71 @@ const TransactionFilterPanel = props => {
                     <MKBox sx={{ width: '500px', p: 2, minHeight: '100px' }}>
                         <MKTypography variant={'h6'} gutterBottom>Search Panel</MKTypography>
                         <Grid container spacing={1} alignItems={'center'}>
-                            {/*<Grid item xs={12} md={12}>*/}
-                            {/*    <Autocomplete*/}
-                            {/*        options={transactionTypes}*/}
-                            {/*        autoHighlight*/}
-                            {/*        onChange={(e, value) => setFilters({...filters, memberType:  value?.id })}*/}
-                            {/*        //multiple*/}
-                            {/*        value={filters?.txnType}*/}
-                            {/*        getOptionLabel={(option) => option?.name?.toUpperCase()}*/}
-                            {/*        renderInput={(params) => (*/}
-                            {/*            <DMTTextInput*/}
-                            {/*                {...params}*/}
-                            {/*                label={'Transaction Types'}*/}
-                            {/*                placeholder={'-- All Transactions --'}*/}
-                            {/*                fullWidth={true}*/}
-                            {/*                inputProps={{*/}
-                            {/*                    ...params.inputProps,*/}
-                            {/*                    autoComplete: 'off', // disable autocomplete and autofill*/}
-                            {/*                }}*/}
-                            {/*            />*/}
-                            {/*        )}*/}
-                            {/*    />*/}
-                            {/*</Grid>*/}
+                            <Grid item xs={12} md={12}>
+                                <Autocomplete
+                                    options={transactionTypes}
+                                    autoHighlight
+                                    onChange={(e, values) => handleOnTransactionTypes(values)}
+                                    multiple
+                                    value={getAutocompleteMultipleValues(filters?.txnType,transactionTypes, "slug")}
+                                    getOptionLabel={(option) => option?.name?.toUpperCase()}
+                                    renderInput={(params) => (
+                                        <DMTTextInput
+                                            {...params}
+                                            label={'Transaction Types'}
+                                            fullWidth={true}
+                                            inputProps={{
+                                                ...params.inputProps,
+                                                autoComplete: 'off', // disable autocomplete and autofill
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <DateTimePicker
+                                    disableFuture
+                                    label="Start Date"
+                                    required
+                                    inputFormat="dd-MMM-yyyy hh:mm a"
+                                    fullWidth
+                                    value={filters.startDate}
+                                    onChange={handleOnStartDate}
+                                    renderInput={(params) => <DMTTextInput {...params} />}
+                                />
+                                {/*<DMTDatePicker*/}
+                                {/*    label={'Start Date'}*/}
+                                {/*    fullWidth*/}
+                                {/*    type={'search'}*/}
+                                {/*    inputFormat="dd-MMM-yyyy"*/}
+                                {/*    disableFuture = {true}*/}
+                                {/*    name={''}*/}
+                                {/*    value={filters.startDate}*/}
+                                {/*    onChange={handleOnStartDate}*/}
+                                {/*/>*/}
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <DateTimePicker
+                                    disableFuture
+                                    label="End Date"
+                                    required
+                                    inputFormat="dd-MMM-yyyy hh:mm a"
+                                    fullWidth
+                                    value={filters.endDate}
+                                    onChange={handleOnEndDate}
+                                    renderInput={(params) => <DMTTextInput {...params} />}
+                                    />
+                                {/*<DMTDatePicker*/}
+                                {/*    label={'End Date'}*/}
+                                {/*    type={'search'}*/}
+                                {/*    inputFormat="dd-MMM-yyyy"*/}
+                                {/*    fullWidth*/}
+                                {/*    disableFuture = {true}*/}
+                                {/*    name={'endDate'}*/}
+                                {/*    value={filters.endDate}*/}
+                                {/*    onChange={handleOnEndDate}*/}
+                                {/*/>*/}
+                            </Grid>
                             <Grid item xs={12} md={12}>
                                 <Autocomplete
                                     options={CHANNEL_TYPES}
@@ -155,30 +203,7 @@ const TransactionFilterPanel = props => {
                                     )}
                                 />
                             </Grid>
-                            <Grid item xs={12} md={6}>
-                                <DMTDatePicker
-                                    label={'Start Date'}
-                                    fullWidth
-                                    type={'search'}
-                                    inputFormat="dd-MMM-yyyy"
-                                    disableFuture = {true}
-                                    name={''}
-                                    value={filters.startDate}
-                                    onChange={handleOnStartDate}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <DMTDatePicker
-                                    label={'End Date'}
-                                    type={'search'}
-                                    inputFormat="dd-MMM-yyyy"
-                                    fullWidth
-                                    disableFuture = {true}
-                                    name={'endDate'}
-                                    value={filters.endDate}
-                                    onChange={handleOnEndDate}
-                                />
-                            </Grid>
+
                             <Grid item xs={12} md={12}>
                                 <DMTTextInput
                                     label={'Amount'}

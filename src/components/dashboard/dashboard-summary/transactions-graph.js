@@ -34,7 +34,7 @@ const TransactionsGraph = () =>{
         },
         exporting: { enabled: false },
         xAxis: {
-            categories: ['All Transactions', 'B2C', 'Pesalink', 'Bill Payments', 'Airtime Purchase']
+            categories: ['All Transactions', 'Mpesa B2C', 'Pesalink', 'Bill Payments', 'Airtime Purchase']
         },
         yAxis: {
             title: {
@@ -53,7 +53,7 @@ const TransactionsGraph = () =>{
            // background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
             {
                 name: 'Total Transactions',
-                data: [10000, 3350, 4300, 1700, 650],
+                data: [0, 0, 0, 0, 0],
                 stack:'Total',
                 color: {
                     linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -65,7 +65,7 @@ const TransactionsGraph = () =>{
             },
             {
                 name: 'Successful Transactions',
-                data: [9000, 3000, 4000, 1500 , 500],
+                data: [0, 0, 0, 0, 0],
                 stack:'Successful',
                 color: {
                     linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -78,7 +78,7 @@ const TransactionsGraph = () =>{
             {
                 name: 'Failed Transactions',
                 stack:'Failed',
-                data: [1000, 350, 300, 200, 150],
+                data: [0, 0, 0, 0, 0],
                 color: {
                     linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                     stops: [

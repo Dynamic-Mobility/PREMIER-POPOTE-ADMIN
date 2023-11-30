@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     Column,
     Export,
@@ -6,59 +6,11 @@ import {
     Pager, Paging,
     SearchPanel
 } from "devextreme-react/data-grid";
-import dynamic from "next/dynamic";
 import {ALLOWED_PAGE_SIZES} from "../../../../utils/constants";
 import DMTChip from "../../../@dmt-components/chip";
 import DMTDatagrid from "../../../@dmt-components/data-grid";
-const DataGrid = dynamic(
-    () => import('devextreme-react/data-grid'),
-    {
-        ssr: false,
-    }
-);
-
-
-const dummyData = [
-    {
-        id:1,
-        ref_no: 'K204LLBYGRWQ',
-        narration: 'MB- Balance inquiry for 85000324516 - Ref K204LLBYGRWQ',
-        mobile_no: '254712345678',
-        amount: 1000,
-        currency: 'KES',
-        txn_type: 'MINISTATEMENT',
-        dr_account: '85000324516',
-        cr_account: '',
-        txn_date: 'Aug 15 2023'
-
-    },
-    {
-        id:2,
-        ref_no: 'K204LLBYGRWQ',
-        narration: 'MB- Balance inquiry for 85000324516 - Ref K204LLBYGRWQ',
-        mobile_no: '254712345678',
-        amount: 1000,
-        currency: 'KES',
-        txn_type: 'MINISTATEMENT',
-        dr_account: '85000324516',
-        cr_account: '',
-        txn_date: 'Aug 15 2023'
-
-    },
-    {
-        id:3,
-        ref_no: 'K204LLBYGRWQ',
-        narration: 'MB- Balance inquiry for 85000324516 - Ref K204LLBYGRWQ',
-        mobile_no: '254712345678',
-        amount: 100000,
-        currency: 'KES',
-        txn_type: 'MINISTATEMENT',
-        dr_account: '85000324516',
-        cr_account: '',
-        txn_date: 'Aug 15 2023'
-
-    }
-]
+import MKTypography from "../../../@mui-components/typography";
+import TransactionDetailsDrawer from "./transaction-details-drawer";
 
 const TransactionDataGrid = props => {
     const {
@@ -69,15 +21,47 @@ const TransactionDataGrid = props => {
         onPageChange,
         totalRecords
     } = props;
+
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
+    const [openDialog, setOpenDialog] = useState(false);
+
     const actionAmount = ({ displayValue, data}) => {
         const color =  data?.completed ?  'success' : 'error';
+        const handleOnSelect = () => {
+            setSelectedTransaction(data);
+            setOpenDialog(true);
+        }
+
         return (
             <>
                 <DMTChip
                     numeral = {true}
                     label={displayValue}
                     color={color}
+                    onClick={handleOnSelect}
                 />
+            </>
+        )
+    }
+
+    const handleOnClose = () => {
+        setOpenDialog(false);
+    }
+
+    const actionLink = ( { displayValue, data}) => {
+        const handleOnSelect = () => {
+            setSelectedTransaction(data);
+            setOpenDialog(true);
+        }
+
+        if (!displayValue){
+            return '-'
+        }
+        return (
+            <>
+                <MKTypography fontSize={"inherit"} sx={{ cursor: 'pointer' }} onClick={handleOnSelect} color={'info'}>
+                    {displayValue }
+                </MKTypography>
             </>
         )
     }
@@ -113,6 +97,7 @@ const TransactionDataGrid = props => {
                     dataField="customerName"
                     minWidth={140}
                     caption="Customer Name"
+                    cellRender={actionLink}
                     allowHeaderFiltering={false}
                     allowSearch={true}
                     allowFiltering={false}
@@ -121,10 +106,10 @@ const TransactionDataGrid = props => {
                     dataField="accountFrom"
                     minWidth={150}
                     caption="Account From"
+                    cellRender={actionLink}
                     allowHeaderFiltering={false}
                     allowSearch={true}
                     allowFiltering={false}
-                    cellRender={renderValue}
                 />
                 <Column
                     dataField="accountTo"
@@ -133,7 +118,7 @@ const TransactionDataGrid = props => {
                     allowHeaderFiltering={false}
                     allowSearch={true}
                     allowFiltering={false}
-                    cellRender={renderValue}
+                    cellRender={actionLink}
                 />
 
                 <Column
@@ -226,6 +211,11 @@ const TransactionDataGrid = props => {
                 />
                 <Export enabled={false} allowExportSelectedData={false} />
             </DMTDatagrid>
+            <TransactionDetailsDrawer
+                open={openDialog}
+                transaction={selectedTransaction}
+                onClose={handleOnClose}
+            />
         </>
     )
 }

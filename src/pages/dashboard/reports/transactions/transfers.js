@@ -10,44 +10,40 @@ import TransactionsActionButtons from "../../../../components/dashboard/reports/
 import {
     setPageSize,
     setActivePage,
-    fetchMpesaTransactions,
+    fetchTransferTransactions,
     resetFilters,
-    setFilters,
-} from "../../../../slices/dashboard/transactions/mpesa-transactions";
+    setFilters
+} from "../../../../slices/dashboard/transactions/transfers-transactions";
 import ModernLayout from "../../../../components/layouts/modern";
 import {useCallback, useEffect} from "react";
 import {useAuth} from "../../../../hooks/use-auth";
 import {formatDate, splitString} from "../../../../utils/helper-functions";
-
 import {AuthGuard} from "../../../../hocs/auth-guard";
 
 
-const title = "Mpesa Transactions";
 
-const MpesaTransactionsPage = () => {
+const title = "Transfers";
+
+const TransfersPage = () => {
     const dispatch = useDispatch();
     const authUser = useAuth();
-
     const {
-        mpesaTransactions,
+        transferTransactions,
         filters,
         pageSize,
         activePage,
         totalRecords
-    } = useSelector(({ mpesaTransactions }) => mpesaTransactions);
-
+    } = useSelector(({ transferTransactions }) => transferTransactions);
 
     const handleOnPageSizeChange = async value => {
         await getTransactions(filters, value, 1);
         dispatch(setPageSize(value));
         dispatch(setActivePage(1));
     }
-
     const handleOnPageChange = async value => {
         await getTransactions(filters, pageSize, value);
         dispatch(setActivePage(value));
     }
-
     const handleOnReset = () => {
         dispatch(resetFilters());
     }
@@ -58,8 +54,6 @@ const MpesaTransactionsPage = () => {
     const handleSetActivePage= value => {
         dispatch(setActivePage(value));
     }
-
-
 
     const getTransactions = useCallback(async (filters, pageSize, activePage) => {
         const values = {
@@ -78,7 +72,7 @@ const MpesaTransactionsPage = () => {
             pageNumber: activePage,
             pageSize: pageSize
         }
-        await dispatch(fetchMpesaTransactions(authUser, values))
+        await dispatch(fetchTransferTransactions(authUser, values))
     },[]);
 
 
@@ -120,7 +114,7 @@ const MpesaTransactionsPage = () => {
                 </MKBox>
                 <Card sx={{p:1}}>
                     <TransactionDataGrid
-                        data={mpesaTransactions}
+                        data={transferTransactions}
                         limit={pageSize}
                         totalRecords={totalRecords}
                         activePage={activePage}
@@ -133,7 +127,7 @@ const MpesaTransactionsPage = () => {
     );
 };
 
-MpesaTransactionsPage.getLayout = (page) => (
+TransfersPage.getLayout = (page) => (
     <AuthGuard>
         <ModernLayout>
             {page}
@@ -141,4 +135,4 @@ MpesaTransactionsPage.getLayout = (page) => (
     </AuthGuard>
 );
 
-export default MpesaTransactionsPage;
+export default TransfersPage;

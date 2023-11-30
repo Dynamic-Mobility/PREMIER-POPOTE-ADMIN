@@ -56,8 +56,12 @@ export const getAutoCompleteValue = (options, value, filterField = 'id') => {
     return Array.isArray(options) ? options.find(option => option[filterField] === value) ?? null : null;
 };
 
-
-
+export const formatMultipleQuery = (options, field) => {
+    if (!options && !field){
+        return;
+    }
+    return options.map(item => `${field}=${encodeURIComponent(item)}`).join('&');
+}
 
 export const formatDate = (date, format = 'DD MMM YYYY') => {
     if(date){

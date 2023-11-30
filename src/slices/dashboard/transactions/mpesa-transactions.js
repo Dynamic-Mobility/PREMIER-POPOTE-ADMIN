@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {transactionsApis} from "../../api-requests/transactions-apis";
+import {transactionsApis} from "../../../api-requests/transactions-apis";
 
 const initialState = {
-    allTransactions : [],
+    mpesaTransactions : [],
     pageSize: 100,
     totalRecords: 0,
     activePage: 1,
@@ -15,19 +15,18 @@ const initialState = {
         refNo: null,
         mobileNo: "",
         amount: "",
-        txnType: null,
+        txnType: [],
         accountFrom: "",
         isProcessed: false,
-
     },
 }
 
 const transactionSlice = createSlice({
-    name: 'all-transactions',
+    name: 'mpesa-transactions',
     initialState,
     reducers:{
         setTransactions: (state,action) =>{
-            state.allTransactions = action.payload;
+            state.mpesaTransactions = action.payload;
         },
         setActivePage: (state, action) => {
             state.activePage = action.payload;
@@ -55,9 +54,9 @@ export const {
 export const resetFilters = () => dispatch => {
     dispatch(setFilters(initialState.filters))
 }
-export const fetchAllTransaction = (authUser, filters) => async dispatch => {
+export const fetchMpesaTransactions = (authUser, filters) => async dispatch => {
     try{
-        const res = await transactionsApis.fetchAllTransactions(authUser, filters);
+        const res = await transactionsApis.fetchMpesaTransactions(authUser, filters);
         dispatch(setTransactions(res?.data));
         dispatch(setTotalRecords(res?.totalPages))
     }
