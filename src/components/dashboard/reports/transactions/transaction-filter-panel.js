@@ -25,6 +25,7 @@ const TransactionFilterPanel = props => {
         onResetFilters,
         filters,
         pageSize,
+        transactionType,
     } = props;
     const dispatch = useDispatch();
     const { transactionTypes } = useSelector(({ settings }) => settings );
@@ -116,27 +117,30 @@ const TransactionFilterPanel = props => {
                     <MKBox sx={{ width: '500px', p: 2, minHeight: '100px' }}>
                         <MKTypography variant={'h6'} gutterBottom>Search Panel</MKTypography>
                         <Grid container spacing={1} alignItems={'center'}>
-                            <Grid item xs={12} md={12}>
-                                <Autocomplete
-                                    options={transactionTypes}
-                                    autoHighlight
-                                    onChange={(e, values) => handleOnTransactionTypes(values)}
-                                    multiple
-                                    value={getAutocompleteMultipleValues(filters?.txnType,transactionTypes, "slug")}
-                                    getOptionLabel={(option) => option?.name?.toUpperCase()}
-                                    renderInput={(params) => (
-                                        <DMTTextInput
-                                            {...params}
-                                            label={'Transaction Types'}
-                                            fullWidth={true}
-                                            inputProps={{
-                                                ...params.inputProps,
-                                                autoComplete: 'off', // disable autocomplete and autofill
-                                            }}
-                                        />
-                                    )}
-                                />
-                            </Grid>
+                            {transactionType === 'all' && (
+                                <Grid item xs={12} md={12}>
+                                    <Autocomplete
+                                        options={transactionTypes}
+                                        autoHighlight
+                                        onChange={(e, values) => handleOnTransactionTypes(values)}
+                                        multiple
+                                        value={getAutocompleteMultipleValues(filters?.txnType,transactionTypes, "slug")}
+                                        getOptionLabel={(option) => option?.name?.toUpperCase()}
+                                        renderInput={(params) => (
+                                            <DMTTextInput
+                                                {...params}
+                                                label={'Transaction Types'}
+                                                fullWidth={true}
+                                                inputProps={{
+                                                    ...params.inputProps,
+                                                    autoComplete: 'off', // disable autocomplete and autofill
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                            )}
+
                             <Grid item xs={12} md={6}>
                                 <DateTimePicker
                                     disableFuture

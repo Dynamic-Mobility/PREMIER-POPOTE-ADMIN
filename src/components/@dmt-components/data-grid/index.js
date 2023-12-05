@@ -33,7 +33,7 @@ const DMTDatagrid = props => {
             <DataGrid
                 dataSource={data}
                 allowColumnReordering={true}
-                rowAlternationEnabled={true}
+                //rowAlternationEnabled={true}
                 showBorders={true}
                 remoteOperations={true}
                 showColumnLines={true}

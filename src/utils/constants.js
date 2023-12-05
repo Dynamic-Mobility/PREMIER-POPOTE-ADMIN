@@ -1,5 +1,7 @@
 export const appName = 'Premier Bank';
 export const appDesc = 'MB Admin Portal';
+
+export const GOOGLE_MAP_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
 export const AUTH_TOKEN_KEY = 'accessToken';
 export const AUTH_REFRESH_TOKEN_KEY = 'refreshToken';
 export const ALLOWED_PAGE_SIZES = [10, 25, 50, 100, 200];

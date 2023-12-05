@@ -26,10 +26,17 @@ const TransactionDataGrid = props => {
     const [openDialog, setOpenDialog] = useState(false);
 
     const actionAmount = ({ displayValue, data}) => {
-        const color =  data?.completed ?  'success' : 'error';
+        const color = data?.completed && data?.processed
+            ? "success"  :
+            data?.processed ? 'warning' : "error";
+
         const handleOnSelect = () => {
             setSelectedTransaction(data);
             setOpenDialog(true);
+        }
+
+        if (!displayValue){
+            return  "-"
         }
 
         return (
@@ -139,10 +146,19 @@ const TransactionDataGrid = props => {
                     allowSearch={true}
                     allowFiltering={false}
                 />
+                {/*<Column*/}
+                {/*    dataField="refence"*/}
+                {/*    minWidth={160}*/}
+                {/*    caption="Ref No"*/}
+                {/*    allowHeaderFiltering={true}*/}
+                {/*    allowSearch={true}*/}
+                {/*    allowFiltering={true}*/}
+                {/*    cellRender={renderValue}*/}
+                {/*/>*/}
                 <Column
-                    dataField="refence"
+                    dataField="transactionReference"
                     minWidth={160}
-                    caption="Ref No"
+                    caption="Txn Ref"
                     allowHeaderFiltering={true}
                     allowSearch={true}
                     allowFiltering={true}

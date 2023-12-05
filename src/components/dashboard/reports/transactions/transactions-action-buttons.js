@@ -5,6 +5,7 @@ import MKButton from "../../../@mui-components/button";
 
 const TransactionsActionButtons = (props) => {
     const {
+        transactionType,
         onFilter,
         setFilters,
         setActivePage,
@@ -19,6 +20,7 @@ const TransactionsActionButtons = (props) => {
                     {"Export"}
                 </MKButton>
                <TransactionFilterPanel {...{
+                   transactionType,
                    onFilter,
                    setFilters,
                    setActivePage,

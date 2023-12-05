@@ -51,7 +51,7 @@ const BillPaymentPage = () => {
         dispatch(setFilters(filters));
     }
     const handleSetActivePage= value => {
-        dispatch(setActivePage(filters));
+        dispatch(setActivePage(value));
     }
 
     const getBillTransactions = useCallback(async (filters, pageSize, activePage) => {

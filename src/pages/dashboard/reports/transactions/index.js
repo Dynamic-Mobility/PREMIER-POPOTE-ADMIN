@@ -10,6 +10,7 @@ import TransactionsActionButtons from "../../../../components/dashboard/reports/
 import {
     setPageSize,
     setActivePage,
+    setFilters,
     fetchAllTransaction,
     resetFilters
 } from "../../../../slices/dashboard/transactions/all";
@@ -17,7 +18,6 @@ import ModernLayout from "../../../../components/layouts/modern";
 import {useCallback, useEffect} from "react";
 import {useAuth} from "../../../../hooks/use-auth";
 import {formatDate, splitString} from "../../../../utils/helper-functions";
-import {setFilters} from "../../../../slices/dashboard/transactions/bill-transactions";
 import {AuthGuard} from "../../../../hocs/auth-guard";
 
 
@@ -55,7 +55,7 @@ const TransactionsPage = () => {
         dispatch(setFilters(filters));
     }
     const handleSetActivePage= value => {
-        dispatch(setActivePage(filters));
+        dispatch(setActivePage(value));
     }
 
 
@@ -106,6 +106,7 @@ const TransactionsPage = () => {
                   <Grid item>
                       <TransactionsActionButtons
                           {...{
+                              transactionType: 'all',
                               setFilters: handleOnSetFilters,
                               setActivePage: handleSetActivePage,
                               onFilter: getAllTransactions,
