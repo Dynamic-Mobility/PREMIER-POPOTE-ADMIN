@@ -1,7 +1,7 @@
 import { useMounted } from "../../../hooks/use-mounted";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { authApi } from "../../../api-requests/auth-apis";
 import {
   Alert,
@@ -21,13 +21,27 @@ import MKBox from "../../@mui-components/box";
 import { toast } from "react-toastify";
 import OtpForm from "./otp-form";
 import {getBrowserDetails, getIPAddress} from "../../../utils/helper-functions";
+import io from "socket.io-client";
+import AlreadyLoggedIn from "./already-logged-in";
 
 
-
+let socket;
 export const LoginForm = (props) => {
   const [activeStep, setActiveStep] = useState(0);
   const [userDetail, setUserDetail] = useState(null);
   const isMounted = useMounted();
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleOnOpen = () => {
+    setOpenAlert(true);
+  }
+
+  const handleOnClose = () => {
+    setOpenAlert(false);
+  }
+
+
+
 
   const { login } = useAuth();
   const router = useRouter();
@@ -66,6 +80,8 @@ export const LoginForm = (props) => {
       // })
     }
     catch (e) {
+
+
      console.log(e.message);
     }
 
@@ -74,6 +90,20 @@ export const LoginForm = (props) => {
   const handleOnResendOTP = () => {
     //TODO: Implement Resend OTP functionality
   }
+
+  const handleOtherLogouts = async () => {
+    const decodedToken = await authApi.decodeToken(userDetail.token);
+    const dataToSend = {
+      message: {
+        userId: decodedToken?.userid,
+        sessionId: userDetail?.sessionId,
+      },
+      // Include any other necessary data
+    };
+    socket.emit('outgoing-message', JSON.stringify(dataToSend));
+    setActiveStep(1);
+    handleOnClose();
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -106,6 +136,11 @@ export const LoginForm = (props) => {
         }
       } catch (err) {
         if (isMounted()) {
+          if(typeof err === 'object') {
+            setOpenAlert(true);
+            setUserDetail(err);
+            return;
+          }
           console.log(err.message);
           helpers.setStatus({ success: false });
           helpers.setErrors({ submit: err.message });
@@ -114,6 +149,21 @@ export const LoginForm = (props) => {
       }
     },
   });
+
+
+  useEffect(() => {
+    socketInitializer();
+    return () => {
+      socket?.disconnect();
+    };
+  }, [])
+
+
+  const socketInitializer = async () => {
+    await fetch('/api/websocket');
+    socket = io()
+  }
+
   return (
     <>
       {activeStep === 0 && (
@@ -186,6 +236,11 @@ export const LoginForm = (props) => {
         </>
       )}
       {activeStep === 1 && <OtpForm message={message} onSuccess={handleOnOTPValidate} onResendOTP={handleOnResendOTP} />}
+      <AlreadyLoggedIn
+          openDialog={openAlert}
+          onClose={handleOnClose}
+          onOk={handleOtherLogouts}
+      />
     </>
   );
 };

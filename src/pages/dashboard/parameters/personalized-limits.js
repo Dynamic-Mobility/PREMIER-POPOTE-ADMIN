@@ -20,7 +20,7 @@ const PersonalizedLimitsPage = () => {
 
     const fetchTransactionTypes = useCallback(async () => {
         await dispatch(getTransactionTypes(authUser));
-    },[]);
+    },[authUser?.user]);
 
     useEffect(() => {
         fetchTransactionTypes();

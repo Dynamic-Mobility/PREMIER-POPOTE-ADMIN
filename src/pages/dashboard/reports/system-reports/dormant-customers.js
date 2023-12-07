@@ -1,24 +1,106 @@
-import React from "react";
-import { Container, Card } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
-import DormantCustomersDataGrid from "../../../../components/dashboard/reports/system-reports/dormant-customers-datagrid";
+import CustomersDataGrid from "../../../../components/dashboard/customers/customers-data-grid";
 import ModernLayout from "../../../../components/layouts/modern";
+import Head from "next/head";
+import CustomerActionsButton from "../../../../components/dashboard/customers/filters/customer-actions-button";
+import MKBox from "../../../../components/@mui-components/box";
+import {useDispatch, useSelector} from "../../../../store";
+import {getAllCustomers} from "../../../../slices/dashboard/customers";
+import {useAuth} from "../../../../hooks/use-auth";
+import {AuthGuard} from "../../../../hocs/auth-guard";
 
-const DormantCustomers = () => {
-  return (
-    <Container maxWidth="xl" sx={{ my: 2 }}>
-      <MKTypography fontWeight={"bold"} fontSize={"20px"}>
-        Dormant Customers
-      </MKTypography>
-      <Card sx={{ p: 2 }}>
-        <DormantCustomersDataGrid />
-      </Card>
-    </Container>
-  );
+const title = "Dormant Customers";
+
+const DormantCustomersPage  = () => {
+    const initialFilters = {
+        name: "",
+        idnumber: "",
+        phonenumber: "",
+        cifNumber: "",
+        email: "",
+    }
+    const [filters, setFilters] = useState(initialFilters);
+    const dispatch = useDispatch();
+    const { customers, pageSize, currentPage} = useSelector(( { customers }) => customers);
+    const authUser = useAuth();
+
+    const handleOnChangeFilters = values => {
+        setFilters(values);
+    }
+
+    const handleOnResetFilters = async () => {
+        setFilters(initialFilters);
+        const values = {
+            ...initialFilters,
+            pageSize,
+            pageNumber: currentPage,
+        }
+        await dispatch(getAllCustomers(authUser,values ))
+    }
+
+    const handleOnSearch = async () => {
+        await fetchAllCustomers();
+    }
+
+    const fetchAllCustomers = async () => {
+        const values = {
+            ...filters,
+            pageSize,
+            pageNumber: currentPage,
+        }
+        await dispatch(getAllCustomers(authUser,values ))
+    }
+
+
+    useEffect(() => {
+        fetchAllCustomers();
+    }, [])
+
+    return (
+        <>
+            <Head>{title}</Head>
+            <MKBox
+                component={'main'}
+                sx={{
+                    flexGrow: 1,
+                    pt: 2,
+                    px:2,
+                }}
+            >
+                <MKBox sx={{ mb: 2 }}>
+                    <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
+                        <Grid item>
+                            <MKTypography variant="h5">{title}</MKTypography>
+                        </Grid>
+                        <Grid item>
+                            <CustomerActionsButton {...{
+                                filters,
+                                onChangeFilters: handleOnChangeFilters,
+                                onResetFilters: handleOnResetFilters,
+                                onSearch: handleOnSearch
+                            }} />
+                        </Grid>
+                    </Grid>
+                </MKBox>
+                <Card sx={{ p: 1 }}>
+                    <CustomersDataGrid data={[]} />
+                </Card>
+            </MKBox>
+
+        </>
+    );
 };
 
-DormantCustomers.getLayout = (page) => (
-  <ModernLayout>{page}</ModernLayout>
-);
+DormantCustomersPage.getLayout = (page) => {
+    return (
+        <>
+            <AuthGuard>
+                <ModernLayout>{page}</ModernLayout>
+            </AuthGuard>
+        </>
+    );
+};
 
-export default DormantCustomers;
+export default DormantCustomersPage;

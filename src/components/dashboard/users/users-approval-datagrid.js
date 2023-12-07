@@ -1,11 +1,11 @@
-import {Column} from "devextreme-react/data-grid";
+import {Column, Selection} from "devextreme-react/data-grid";
 import DMTDatagrid from "../../@dmt-components/data-grid";
 import React, {useState} from "react";
 import UsersActions from "./users-actions";
 import MKBox from "../../@mui-components/box";
 import MKTypography from "../../@mui-components/typography";
 import {alpha, Avatar, Collapse, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
-import {getInitials} from "../../../utils/helper-functions";
+import {getBrowserDetails, getInitials, getIPAddress} from "../../../utils/helper-functions";
 import MKButton from "../../@mui-components/button";
 import Check from "@mui/icons-material/Check";
 import Cancel from "@mui/icons-material/Cancel";
@@ -26,9 +26,23 @@ const UsersApprovalDatagrid = props => {
     });
 
     const actionOptions = ({ data }) => {
+        const onApprove = ()  => {
+            setSelectedRecords([data?.id])
+            handleOnApprove();
+        }
+        const onReject = () => {
+            setSelectedRecords([data?.id])
+            handleOnApprove();
+        }
         return (
             <>
-                <UsersActions user={data} onRefresh={onRefresh}/>
+                <UsersActions
+                    user={data}
+                    onApprove={onApprove}
+                    onReject={onReject}
+                    onRefresh={onRefresh}
+                    approval={true}
+                />
             </>
         )
     };
@@ -49,6 +63,11 @@ const UsersApprovalDatagrid = props => {
         })
     }
 
+    const onSelectionChanged = props => {
+        const {selectedRowKeys, selectedRowsData} = props;
+        setSelectedRecords(selectedRowKeys);
+    }
+
     const handleOnCloseDialog = () => {
         setConfirmationDialog({
             ...confirmationDialog,
@@ -59,14 +78,19 @@ const UsersApprovalDatagrid = props => {
     }
 
     const onApprove = async () => {
+        const ipAddress = await getIPAddress();
+        const browser = getBrowserDetails();
         try {
-            const values = {
-                id: selectedRecords,
-                user_id: authUser?.user?.userid,
-                status: confirmationDialog?.action === 'approve' ? 2 : 999
-            }
-            await usersApis.approveUsers(authUser, values)
-            const message = confirmationDialog.action === 'approve' ? 'Merchants Approved' : 'Merchants Rejected';
+            const data = selectedRecords.map((selected) => {
+                return {
+                    actionType: 0,
+                    userId: selected,
+                    browser: browser,
+                    ip: ipAddress
+                }
+            })
+            await usersApis.approveUsers(authUser, data)
+            const message = confirmationDialog.action === 'approve' ? 'Users approved successfully' : 'Users rejected successfully';
             await toast.success(message);
             handleOnCloseDialog?.();
             await onRefresh?.();
@@ -159,13 +183,20 @@ const UsersApprovalDatagrid = props => {
             <DMTDatagrid
                 data={data}
                 height={'80vh'}
+                keyExpr="merchant_id"
+                onSelectionChanged={onSelectionChanged}
+                selectedRowKeys={selectedRecords}
             >
+                <Selection
+                    mode="multiple"
+                    selectAllMode={'allMode'}
+                    //showCheckBoxesMode={checkBoxesMode}
+                />
                 <Column minWidth={220} dataField="firstName" caption="Name" cellRender={renderProfile} />
-                <Column minWidth={250}  caption="Contact" cellRender={renderContacts} />
+                <Column minWidth={300}  caption="Contact" cellRender={renderContacts} />
                 <Column minWidth={150} dataField="roleName" caption="Role" />
-                <Column minWidth={180} dataField="departmentName" caption="Department" />
-                <Column minWidth={180} dataField="branchName" caption="Branch" />
-
+                <Column minWidth={150} dataField="branchName" caption="Branch" />
+                <Column minWidth={150} dataField="departmentName" caption="Department" />
                 <Column
                     caption="Actions"
                     minWidth={130}

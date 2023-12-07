@@ -4,24 +4,30 @@ import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import {useAuth} from "../hooks/use-auth";
 import {SplashScreen} from "../components/splash-screen";
+import {useMounted} from "../hooks/use-mounted";
 
 export const GuestGuard = (props) => {
     const { children } = props;
     const auth = useAuth();
     const router = useRouter();
     const [checked, setChecked] = useState(false);
+    const isMounted  = useMounted();
+
+    const initialize = () => {
+        if (!router.isReady) {
+            return(  <SplashScreen/> );
+        }
+
+        if (auth.isAuthenticated) {
+            router.push("/dashboard").catch(console.error);
+        } else {
+            setChecked(true);
+        }
+    }
 
     useEffect(
         () => {
-            if (!router.isReady) {
-                return(  <SplashScreen/> );
-            }
-
-            if (auth.isAuthenticated) {
-                router.push("/dashboard").catch(console.error);
-            } else {
-                setChecked(true);
-            }
+          initialize();
         },
         [router.isReady]
     );

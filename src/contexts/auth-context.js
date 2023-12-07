@@ -1,11 +1,11 @@
 import { createContext, useEffect, useReducer } from "react";
 
 import PropTypes from "prop-types";
-import {AUTH_REFRESH_TOKEN_KEY, AUTH_TOKEN_KEY} from "../utils/constants";
+import {AUTH_REFRESH_TOKEN_KEY, AUTH_SESSION_KEY, AUTH_TOKEN_KEY} from "../utils/constants";
 import {authApi} from "../api-requests/auth-apis";
 import {useRouter} from "next/router";
-import {useDispatch} from "../store";
 import {toast} from "react-toastify";
+import {getFromSessionLocally, removeFromSessionLocally, saveSessionLocally} from "../utils/helper-functions";
 
 
 let ActionType;
@@ -19,6 +19,7 @@ let ActionType;
 const initialState = {
     isAuthenticated: false,
     isInitialized: false,
+    isFetchingMenus: true,
     user: null,
     userMenus: [],
 };
@@ -48,11 +49,15 @@ const handlers = {
         isAuthenticated: false,
         user: null,
     }),
-    GET_MENUS: (state, action) => ({
-        ...state,
-        userMenus: action.payload.userMenus,
-    })
+    GET_MENUS: (state, action) => {
+        const {isFetchingMenus, userMenus} = action.payload;
 
+        return {
+            ...state,
+            isFetchingMenus,
+            userMenus
+        };
+    }
 };
 
 const reducer = (state, action) =>
@@ -75,8 +80,9 @@ export const AuthProvider = (props) => {
         const initialize = async () => {
 
             try {
-                const accessToken = globalThis.localStorage.getItem(AUTH_TOKEN_KEY)
-                const refreshToken = globalThis.localStorage.getItem(AUTH_REFRESH_TOKEN_KEY)
+                const accessToken = getFromSessionLocally(AUTH_TOKEN_KEY);
+                const refreshToken =  getFromSessionLocally(AUTH_REFRESH_TOKEN_KEY);
+                const sessionId =  getFromSessionLocally(AUTH_SESSION_KEY);
 
                 if (accessToken) {
                     const decodedToken = await authApi.decodeToken(accessToken);
@@ -84,6 +90,7 @@ export const AuthProvider = (props) => {
                         ...decodedToken,
                         accessToken,
                         refreshToken,
+                        sessionId
                     }
                     dispatch({
                         type: ActionType.INITIALIZE,
@@ -92,7 +99,7 @@ export const AuthProvider = (props) => {
                             user,
                         },
                     });
-                    await fetchUserMenus(user?.userid);
+                    await fetchUserMenus(accessToken, user?.userid);
                 } else {
                     dispatch({
                         type: ActionType.INITIALIZE,
@@ -123,29 +130,38 @@ export const AuthProvider = (props) => {
             ...decodedToken,
             accessToken: userDetails?.token,
             refreshToken: userDetails?.refreshToken,
+            sessionId: userDetails?.sessionId,
         }
+        saveSessionLocally(AUTH_TOKEN_KEY, userDetails?.token);
+        saveSessionLocally(AUTH_REFRESH_TOKEN_KEY, userDetails?.refreshToken);
+        saveSessionLocally(AUTH_SESSION_KEY, userDetails?.sessionId);
 
-        //await reduxDispatch(getUserMenus({ logout, user}));
-        localStorage.setItem(AUTH_TOKEN_KEY, userDetails.token);
-        localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, userDetails.refreshToken);
         dispatch({
             type: ActionType.LOGIN,
             payload: {
                 user,
             },
         });
-        await fetchUserMenus(user?.userid);
+        await fetchUserMenus(user?.accessToken, user?.userid);
     };
 
 
-    const fetchUserMenus = async (userId) => {
+    const fetchUserMenus = async (token, userId) => {
+        dispatch({
+            type: ActionType.GET_MENUS,
+            payload: {
+                userMenus: [],
+                isFetchingMenus: true,
+            },
+        });
         try {
-            await authApi.fetchUserMenus({ id: userId}).
-                then(res => {
+            await authApi.fetchUserMenus(token, { id: userId})
+                .then(res => {
                 dispatch({
                     type: ActionType.GET_MENUS,
                     payload: {
                        userMenus: res,
+                        isFetchingMenus: false,
                     },
                 });
             })
@@ -156,15 +172,18 @@ export const AuthProvider = (props) => {
     }
 
 
-    const refreshToken = async (newToken, newRefreshToken) => {
+    const refreshToken = async (newToken, newRefreshToken, newSessionId) => {
         const decodedToken = await authApi.decodeToken(newToken);
         const user = {
             ...decodedToken,
             accessToken: newToken,
             refreshToken: newRefreshToken,
+            sessionId: newSessionId,
         }
-        localStorage.setItem(AUTH_TOKEN_KEY, newToken);
-        localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, newRefreshToken);
+        saveSessionLocally(AUTH_TOKEN_KEY, newToken);
+        saveSessionLocally(AUTH_REFRESH_TOKEN_KEY, newRefreshToken);
+        saveSessionLocally(AUTH_SESSION_KEY, newSessionId);
+
         dispatch({
             type: ActionType.LOGIN,
             payload: {
@@ -173,9 +192,31 @@ export const AuthProvider = (props) => {
         });
     }
 
-    const logout = async () => {
-        localStorage.removeItem(AUTH_TOKEN_KEY);
-        localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY);
+    const logout = async (serverLogout = true) => {
+        try{
+            const accessToken = getFromSessionLocally(AUTH_TOKEN_KEY);
+            const refreshToken =  getFromSessionLocally(AUTH_REFRESH_TOKEN_KEY);
+            const sessionId =  getFromSessionLocally(AUTH_SESSION_KEY);
+
+            const formData = {
+                token:accessToken,
+                refreshToken,
+                sessionId,
+            }
+            if (serverLogout){
+                const res = await authApi.logoutUser(formData);
+            }
+
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+
+        removeFromSessionLocally(AUTH_TOKEN_KEY);
+        removeFromSessionLocally(AUTH_REFRESH_TOKEN_KEY);
+        removeFromSessionLocally(AUTH_SESSION_KEY);
+
+
         await dispatch({ type: ActionType.LOGOUT });
         router
             .push({
@@ -184,6 +225,8 @@ export const AuthProvider = (props) => {
             })
             .catch(console.error);
     };
+
+
 
 
     return (

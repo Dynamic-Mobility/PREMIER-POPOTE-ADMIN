@@ -4,8 +4,8 @@ import NextLink from "next/link";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import {alpha} from "@mui/material/styles";
-import {ChevronRight, ExpandMore} from "@mui/icons-material";
-import RoleBasedGuard from "../../../../hocs/role-based-guard";
+import ChevronRight  from "@mui/icons-material/ChevronRight"
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
 
 const ModernSidebarItem = (props) => {
@@ -43,7 +43,6 @@ const ModernSidebarItem = (props) => {
     // Branch
     if (children) {
         return (
-            <RoleBasedGuard role={role}>
                  <ListItem
                 disableGutters
                 sx={{
@@ -101,14 +100,14 @@ const ModernSidebarItem = (props) => {
                     </Box>
                 </Collapse>
             </ListItem>
-            </RoleBasedGuard>
+
            
         );
     }
 
     // Leaf
     return (
-        <RoleBasedGuard role={role}>
+
  <ListItem
             disableGutters
             sx={{
@@ -157,7 +156,6 @@ const ModernSidebarItem = (props) => {
                 </Button>
             </NextLink>
         </ListItem>
-        </RoleBasedGuard>
        
     );
 };

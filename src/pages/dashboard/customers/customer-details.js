@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
-import {appName, CHANNEL_TYPES} from "../../../utils/constants";
+import {appName, CHANNEL_TYPES, PAGES_PATHS} from "../../../utils/constants";
 import MKBox from "../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
 import MKTypography from "../../../components/@mui-components/typography";
@@ -12,6 +12,8 @@ import {customersApis} from "../../../api-requests/customers-api";
 import {toast} from "react-toastify";
 import {useAuth} from "../../../hooks/use-auth";
 import {useRouter} from "next/router";
+import {AuthGuard} from "../../../hocs/auth-guard";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
 
 const title = 'Customer Details';
 const CustomerDetailsPage = () => {
@@ -74,11 +76,11 @@ const CustomerDetailsPage = () => {
             dob: customer?.dateofBirth,
             alias: customer?.name,
             address: customer?.postalAddress,
-            phone: '254786156749',//customer?.tel,
+            phone: customer?.tel,
             kraPin: customer?.krapin,
             email: customer?.email,
             customerTypeId: null,
-            secondaryPhone: '254786156749', //customer?.mobile,
+            secondaryPhone: customer?.mobile,
             pobox: customer?.postalAddress,
             industry: customer?.industry,
             industryCategory: customer?.category,
@@ -165,9 +167,15 @@ const CustomerDetailsPage = () => {
 };
 
 CustomerDetailsPage.getLayout = (page) => (
-    <ModernLayout>
-      {page}
-    </ModernLayout>
+    <AuthGuard>
+        <ModernLayout>
+            <RoleBasedGuard path={PAGES_PATHS.CUSTOMER_DETAILS} page={true}>
+                {page}
+            </RoleBasedGuard>
+
+        </ModernLayout>
+    </AuthGuard>
+
 );
 
 export default CustomerDetailsPage;

@@ -1,25 +1,26 @@
-import React, { useEffect} from 'react'
-import { useState } from 'react'
-import { useAuth } from '../hooks/use-auth';
-import { USER_DETAILS } from '../utils/constants'
-
-const RoleBasedGuard = ({ children, role}) => {
-    // const { user} = useAuth();
+import {useAuth} from "../hooks/use-auth";
+import {checkPermission} from "../utils/helper-functions";
+import Forbidden from "../components/403-forbidden";
 
 
-    // if(!user){
-    //   return null;
-    // }
+const RoleBasedGuard = ({ children, permission, path, page= false }) => {
+    const { userMenus, isFetchingMenus } = useAuth();
 
+    if (isFetchingMenus){
+        return null
+    }
 
-
-    // if( user?.sponsorRole !== role && user?.sponsorRole !== 'principal' ){
-    //   return null;
-    // }
-
+    if (!checkPermission(userMenus, permission, path, page)){
+        if (page){
+            return <Forbidden/>
+        }
+        return null;
+    }
     return (
-      <>{children}</>
+        <>
+            {children}
+        </>
     )
 }
 
-export default RoleBasedGuard
+export default RoleBasedGuard;

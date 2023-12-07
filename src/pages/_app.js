@@ -43,6 +43,7 @@ function MyApp({ Component, pageProps }) {
                               !auth.isInitialized ? (
                                   <SplashScreen/>
                               ) : (
+
                                   getLayout(<Component {...pageProps} />)
                               )
                           }

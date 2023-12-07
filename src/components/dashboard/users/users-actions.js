@@ -3,9 +3,17 @@ import React from "react";
 import Menu from "@mui/material/Menu";
 import IconButton from "@mui/material/IconButton";
 import CreateUserDialog from "./create-user-dialog";
+import MenuItem from "@mui/material/MenuItem";
+import EditIcon from "@mui/icons-material/Edit";
 
 const UsersActions = props => {
-    const { user, onRefresh } = props;
+    const {
+        user,
+        onRefresh,
+        approval = false,
+        onApprove,
+        onReject
+    } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -18,6 +26,14 @@ const UsersActions = props => {
         setAnchorEl(null);
     };
 
+    const handleOnApprove = () => {
+        onApprove();
+        handleClose();
+    }
+    const handleOnReject = () => {
+        onReject();
+        handleClose();
+    }
 
 
 
@@ -41,7 +57,23 @@ const UsersActions = props => {
                     'aria-labelledby': buttonID,
                 }}
                 >
-                <CreateUserDialog onRefresh={onRefresh} user={user} onClose={handleClose}/>
+                {Boolean(!approval) ? (
+                    <CreateUserDialog onRefresh={onRefresh} user={user} onClose={handleClose}/>
+                ) : (
+                    <>
+                        <MenuItem onClick={handleOnApprove}>
+                            <EditIcon sx={{mr: 1}} />
+                            {" "}
+                            {" Approve User"}
+                        </MenuItem>
+                        <MenuItem onClick={handleOnReject}>
+                            <EditIcon sx={{mr: 1}} />
+                            {" "}
+                            {" Reject User"}
+                        </MenuItem>
+                    </>
+                )}
+
             </Menu>
         </>
     )

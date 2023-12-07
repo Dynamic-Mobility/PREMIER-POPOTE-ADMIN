@@ -14,12 +14,12 @@ export const getFileName = (fileUrl, removeExt = false) => {
   return filename;
 };
 
-export const downloadFile = fileUrl => {
+export const downloadFile = (fileUrl, fileName = 'download') => {
   const downloadFileName = getFileName(fileUrl);
   const link = document.createElement('a');
   link.href = fileUrl;
   link.target = '_blank';
-  link.setAttribute('download', downloadFileName); //or any other extension
+  link.setAttribute(fileName, downloadFileName); //or any other extension
   document.body.appendChild(link);
   link.click();
   link.parentNode.removeChild(link);

@@ -152,7 +152,7 @@ const AuditTrailDataGrid = (props) => {
   return (
     <>
       <DataGrid
-        dataSource={users}
+        dataSource={[]}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}

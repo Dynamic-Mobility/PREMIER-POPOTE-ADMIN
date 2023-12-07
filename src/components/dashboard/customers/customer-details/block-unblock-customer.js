@@ -11,30 +11,36 @@ import {customersApis} from "../../../../api-requests/customers-api";
 import {useAuth} from "../../../../hooks/use-auth";
 import DMTTextInput from "../../../@dmt-components/form/text-input";
 import {toast} from "react-toastify";
+import {getBrowserDetails, getIPAddress} from "../../../../utils/helper-functions";
 
 const BlockUnblockCustomerDialog = props => {
-    const { existingCustomer, disabled = false, } = props;
+    const { existingCustomer, disabled = false, customer } = props;
     const [openDialog, setOpenDialog] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
     const [reason, setReason] = useState("");
     const authUser = useAuth();
+
+
+    const action =  customer?.active ? "Block Customer" : "Unblock Customer";
 
     const handleOnChange = e => {
         setReason(e.target.value);
     }
 
     const handleOnProceed = async () => {
+        const ipAddress = await getIPAddress();
+        const browser = getBrowserDetails();
         const formData = {
-            userId: "",
+            userId: authUser.user?.userid,
             branchCode: "",
             customerId: existingCustomer?.id,
             customerUserId: existingCustomer?.customerUserId,
             reason: reason,
-            actionType: BLOCK_ACTION_TYPES.BLOCK,
+            actionType: customer?.active ?  BLOCK_ACTION_TYPES.BLOCK : BLOCK_ACTION_TYPES.UNBLOCK ,
             accountId: "",
             blockType: BLOCK_TYPES.CUSTOMER,
-            ip: "",
-            browser: ""
+            ip: ipAddress,
+            browser: browser
         }
         setIsLoading(true)
         try{
@@ -68,7 +74,7 @@ const BlockUnblockCustomerDialog = props => {
                 onClick={handleOnOpen}
                 disabled={disabled}
             >
-                {"Block Customer"}
+                {action}
             </MKButton>
             <DMTDialog
                 open={openDialog}
@@ -78,10 +84,10 @@ const BlockUnblockCustomerDialog = props => {
                     <form onSubmit={e => { e.preventDefault(); handleOnProceed()} }>
                         <MKBox sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
                             <MKTypography sx={{ mb: 2}} color={'primary'} variant={'h5'} align={'center'} gutterBottom>
-                                {"Block Customer"}
+                                {action}
                             </MKTypography>
                             <MKTypography align={'center'} gutterBottom>
-                                {`Are you sure you want to block customer - `}
+                                {`Are you sure you want to ${action.toLowerCase()} - `}
                                 <b>{existingCustomer?.name} ?</b>
                             </MKTypography>
                             <MKBox sx={{ width: '100%'}}>

@@ -16,13 +16,13 @@ const PropertyItem = (props) => {
                     justifyContent: "space-between",
                 }}
             >
-                <MKTypography variant={"body"}>
+                <MKTypography sx={{ flex: 1}}  color={'primary'} variant={"body"} fontWeight={"bold"}>
                     {label}
                 </MKTypography>
                 {isLoading ? (
                     <Skeleton animation="wave" height={20} width="40%" />
                 ) : (
-                    <MKTypography variant={"body1"}>{value !== null && value!=="" ? value : '-'}</MKTypography>
+                    <MKTypography sx={{ flex: 2}} variant={"body1"}>: { Boolean(value) ? value : '-'}</MKTypography>
                 )}
             </MKBox>
             <Divider />

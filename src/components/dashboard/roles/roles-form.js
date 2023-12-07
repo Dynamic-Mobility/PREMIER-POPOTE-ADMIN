@@ -10,6 +10,7 @@ import PermissionsForm from "./permissions-form";
 import {rolesApis} from "../../../api-requests/roles-apis";
 import {useAuth} from "../../../hooks/use-auth";
 import {useSelector} from "../../../store";
+import {formatPermissions} from "../../../utils/helper-functions";
 
 const RolesForm = props => {
     const { role } = props;
@@ -73,14 +74,14 @@ const RolesForm = props => {
                     let child = null;
                     if (p?.child){
                         child = p.child.map((c => {
-                            const perms  = eval(c.permission).map(str => parseInt(str, 10))
+                            const perms  = formatPermissions(c.permission);
                             return {
                                 childMenuId: c.id,
                                 permission: perms,
                             }
                         }))
                     }
-                    const perms  = eval(p.permission).map(str => parseInt(str, 10))
+                    const perms  = formatPermissions(p.permission);
                     return {
                         mainMenuId: p.id,
                         childMenu : child,

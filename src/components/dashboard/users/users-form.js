@@ -13,6 +13,7 @@ import DMTRoles from "../../@dmt-components/form/roles-select";
 import DMTBranches from "../../@dmt-components/form/branch-select";
 import DMTDepartments from "../../@dmt-components/form/departments-select";
 import {usersApis} from "../../../api-requests/users-apis";
+import {LoaderIcon} from "react-hot-toast";
 
 const UsersForm = props => {
     const { user, onClose, onRefresh } = props;
@@ -45,7 +46,7 @@ const UsersForm = props => {
                     await onRefresh?.();
                 }
                 else{
-                    toast.error("An error occurred while processing request!")
+                    toast.error(res?.errorMessage ?? "An error occurred while processing request!");
                 }
                 
             }
@@ -207,10 +208,12 @@ const UsersForm = props => {
                     </Grid>
                 </Grid>
                 <MKBox sx={{ display: 'flex', gap:1, mt:2, justifyContent: 'flex-end',}}>
-                    <MKButton onClick={onClose} variant={"contained"} color={"error"}>
+                    <MKButton disabled={formik.isSubmitting} onClick={onClose} variant={"contained"} color={"error"}>
                         {"Cancel"}
                     </MKButton>
                     <MKButton
+                        disabled={formik.isSubmitting}
+                        startIcon={formik.isSubmitting && <LoaderIcon/>}
                         variant={"contained"}
                         color={"success"}
                         type={"submit"}>

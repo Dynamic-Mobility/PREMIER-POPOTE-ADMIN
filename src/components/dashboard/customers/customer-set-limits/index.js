@@ -1,12 +1,17 @@
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import DMTDialog from "../../../@dmt-components/dialog";
 import {DialogContent} from "@mui/material";
 import PersonalizedLimits from "../../limits/personalized-limits";
 import MKButton from "../../../@mui-components/button";
+import {useDispatch} from "../../../../store";
+import {useAuth} from "../../../../hooks/use-auth";
+import {getTransactionTypes} from "../../../../slices/dashboard/settings";
 
 const CustomerSetLimits = props => {
     const { customer , accounts } = props;
     const [openDialog, setOpenDialog] = useState(false);
+    const dispatch = useDispatch();
+    const authUser = useAuth();
     const handleOnOpen = () => {
         setOpenDialog(true);
     }
@@ -14,6 +19,13 @@ const CustomerSetLimits = props => {
     const handleOnClose = () => {
         setOpenDialog(false);
     }
+    const fetchTransactionTypes = useCallback(async () => {
+        await dispatch(getTransactionTypes(authUser));
+    },[]);
+
+    useEffect(() => {
+        fetchTransactionTypes();
+    },[])
 
     return (
         <>

@@ -1,14 +1,31 @@
 import axios from 'axios';
 import dayjs from 'moment';
-import {APP_API_URL} from "../utils/api-endpoints";
+import { APP_API_URL } from "../utils/api-endpoints";
 
+
+let isRefreshing = false;
+let refreshQueue = [];
 const useAxios = useAuth => {
-    const {user, logout, refreshToken} = useAuth;
+    const { user, logout, refreshToken } = useAuth;
+
+
     const axiosInstance = axios.create({
-        headers: { Authorization: `bearer ${user?.accessToken}` },
+        headers: { Authorization: `Bearer ${user?.accessToken}` },
     });
 
-    console.log(user.exp);
+
+
+    const processQueue = (error, token = null) => {
+        refreshQueue.forEach((promResolve, index) => {
+            if (error) {
+                promResolve(Promise.reject(error));
+            } else {
+                promResolve(token);
+            }
+            delete refreshQueue[index];
+        });
+        refreshQueue = [];
+    };
 
     axiosInstance.interceptors.request.use(async req => {
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
@@ -16,28 +33,53 @@ const useAxios = useAuth => {
         if (!isExpired) {
             return req;
         }
-        //refresh auth token
 
-        const config = {
-            headers: {
-                'Authorization': user.accessToken,
+        if (!isRefreshing) {
+            isRefreshing = true;
+
+            try {
+                const config = {
+                    headers: {
+                        'Authorization': `Bearer ${user?.accessToken}`,
+                    }
+                };
+
+                const response = await axios.post(`${APP_API_URL.REFRESH_TOKEN}`, {
+                    token: user.accessToken,
+                    refreshToken: user.refreshToken,
+                    sessionId: user.sessionId,
+                }, config);
+
+                if (response.status !== 200) {
+                    throw new Error('Token refresh failed');
+                }
+
+                const { data } = response;
+                await refreshToken(data.token, data.refreshToken, data.sessionId);
+                axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+
+                isRefreshing = false;
+                processQueue(null, data.token);
+
+                return req;
+            } catch (error) {
+                isRefreshing = false;
+                await logout();
+                processQueue(error);
+                return Promise.reject(error);
             }
-        };
-
-        const response = await axios.post(`${APP_API_URL.REFRESH_TOKEN}`, {
-            token: user.accessToken,
-            refreshToken: user.refreshToken,
-        }, config);
-
-        if (response.statusCode !== 200) {
-            await logout();
-            return;
+        } else {
+            return new Promise((resolve, reject) => {
+                refreshQueue.push((token) => {
+                    if (token) {
+                        req.headers.Authorization = `Bearer ${token}`;
+                        resolve(req);
+                    } else {
+                        reject(new Error('Token refresh failed'));
+                    }
+                });
+            });
         }
-        const { data} = response;
-        await refreshToken(data.token, data.refreshToken);
-        req.headers.Authorization = `Bearer ${data.token}`;
-
-        return req;
     });
 
     axiosInstance.interceptors.response.use(

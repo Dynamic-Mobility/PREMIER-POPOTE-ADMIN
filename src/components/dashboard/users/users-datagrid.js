@@ -92,10 +92,11 @@ const UsersDatagrid = props => {
                 height={'80vh'}
             >
                 <Column minWidth={220} dataField="firstName" caption="Name" cellRender={renderProfile} />
-                <Column minWidth={250}  caption="Contact" cellRender={renderContacts} />
+                <Column minWidth={300}  caption="Contact" cellRender={renderContacts} />
                 <Column minWidth={150} dataField="roleName" caption="Role" />
-                <Column minWidth={180} dataField="departmentName" caption="Department" />
-                <Column minWidth={180} dataField="branchName" caption="Branch" />
+                <Column minWidth={150} dataField="branchName" caption="Branch" />
+                <Column minWidth={150} dataField="departmentName" caption="Department" />
+
 
                 <Column
                     caption="Actions"
