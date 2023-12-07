@@ -2,14 +2,18 @@ import axios from 'axios';
 import dayjs from 'moment';
 import { APP_API_URL } from "../utils/api-endpoints";
 
+
+let isRefreshing = false;
+let refreshQueue = [];
 const useAxios = useAuth => {
     const { user, logout, refreshToken } = useAuth;
+
+
     const axiosInstance = axios.create({
         headers: { Authorization: `Bearer ${user?.accessToken}` },
     });
 
-    let isRefreshing = false;
-    let refreshQueue = [];
+
 
     const processQueue = (error, token = null) => {
         refreshQueue.forEach((promResolve, index) => {

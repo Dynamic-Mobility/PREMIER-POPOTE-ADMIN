@@ -79,7 +79,7 @@ const TransactionsPage = () => {
           pageSize: pageSize
       }
       await dispatch(fetchAllTransaction(authUser, values))
-  },[]);
+  },[authUser?.user]);
 
     const getAllTransactionsReports = useCallback(async (filters, reportType) => {
         const values = {
@@ -98,7 +98,7 @@ const TransactionsPage = () => {
             processed: filters.isProcessed ? "Yes" : "",
         }
         return await  transactionsApis.downloadAllTransactionReport(authUser, values);
-    },[]);
+    },[authUser?.user]);
 
 
   useEffect(() => {

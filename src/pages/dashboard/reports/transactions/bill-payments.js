@@ -73,7 +73,7 @@ const BillPaymentPage = () => {
             pageSize: pageSize
         }
         await dispatch(fetchBillTransactions(authUser, values))
-    },[]);
+    },[authUser?.user]);
 
     const getTransactionsReport = useCallback(async (filters, reportType) => {
         const values = {
@@ -92,7 +92,7 @@ const BillPaymentPage = () => {
             processed: filters.isProcessed ? "Yes" : "",
         }
         return await transactionsApis.downloadBillTransactionReport(authUser, values);
-    },[]);
+    },[authUser?.user]);
 
 
     useEffect(() => {

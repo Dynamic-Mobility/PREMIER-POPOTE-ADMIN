@@ -74,7 +74,7 @@ const TransfersPage = () => {
             pageSize: pageSize
         }
         await dispatch(fetchTransferTransactions(authUser, values))
-    },[]);
+    },[authUser?.user]);
 
     const getTransactionsReport = useCallback(async (filters, reportType) => {
         const values = {
@@ -93,7 +93,7 @@ const TransfersPage = () => {
             processed: filters.isProcessed ? "Yes" : "",
         }
         return await transactionsApis.downloadTransferTransactionReport(authUser, values);
-    },[]);
+    },[authUser?.user]);
 
 
     useEffect(() => {

@@ -80,7 +80,7 @@ const MpesaTransactionsPage = () => {
             pageSize: pageSize
         }
         await dispatch(fetchMpesaTransactions(authUser, values))
-    },[]);
+    },[authUser?.user]);
 
     const getTransactionsReport = useCallback(async (filters, reportType) => {
         const values = {
@@ -99,7 +99,7 @@ const MpesaTransactionsPage = () => {
             processed: filters.isProcessed ? "Yes" : "",
         }
         return await transactionsApis.downloadMpesaTransactionReport(authUser, values);
-    },[]);
+    },[authUser?.user]);
 
 
     useEffect(() => {

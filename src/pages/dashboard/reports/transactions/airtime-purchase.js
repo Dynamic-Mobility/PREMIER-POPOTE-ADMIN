@@ -80,7 +80,7 @@ const AirtimeTransactionPage = () => {
             pageSize: pageSize
         }
         await dispatch(fetchAirtimeTransactions(authUser, values))
-    },[]);
+    },[authUser?.user]);
 
     const getTransactionsReport = useCallback(async (filters, reportType) => {
         const values = {
@@ -99,7 +99,7 @@ const AirtimeTransactionPage = () => {
             processed: filters.isProcessed ? "Yes" : "",
         }
         return await transactionsApis.downloadAirtimeTransactionReport(authUser, values);
-    },[]);
+    },[authUser?.user]);
 
 
     useEffect(() => {

@@ -80,7 +80,7 @@ const PesalinkTransactionPage = () => {
             pageSize: pageSize
         }
         await dispatch(fetchPesalinkTransactions(authUser, values))
-    },[]);
+    },[authUser?.user]);
 
     const getTransactionsReport = useCallback(async (filters, reportType) => {
         const values = {
@@ -99,7 +99,7 @@ const PesalinkTransactionPage = () => {
             processed: filters.isProcessed ? "Yes" : "",
         }
         return await transactionsApis.downloadPesalinkTransactionReport(authUser, values);
-    },[]);
+    },[authUser?.user]);
 
 
     useEffect(() => {
