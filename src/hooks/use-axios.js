@@ -8,7 +8,7 @@ const useAxios = useAuth => {
         headers: { Authorization: `bearer ${user?.accessToken}` },
     });
 
-    console.log(user.exp);
+    // console.log(user.exp);
 
     axiosInstance.interceptors.request.use(async req => {
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
@@ -27,6 +27,7 @@ const useAxios = useAuth => {
         const response = await axios.post(`${APP_API_URL.REFRESH_TOKEN}`, {
             token: user.accessToken,
             refreshToken: user.refreshToken,
+            sessionId: user.sessionId,
         }, config);
 
         if (response.statusCode !== 200) {

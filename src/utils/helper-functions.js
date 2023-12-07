@@ -89,4 +89,16 @@ export const getIPAddress = async () => {
 }
 
 
+export const saveSessionLocally = (key, value) => {
+    globalThis.sessionStorage.setItem(key, value);
+}
+export const getFromSessionLocally = (key) => {
+    return globalThis.sessionStorage.getItem(key);
+}
+
+export const removeFromSessionLocally = (key) => {
+    globalThis.sessionStorage.removeItem(key);
+}
+
+
 

@@ -1,7 +1,5 @@
 import {
-  Avatar,
   Box,
-  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -9,30 +7,66 @@ import {
   Typography,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import NextLink from "next/link";
 import PropTypes from "prop-types";
-import { Person as UserCircleIcon } from "@mui/icons-material";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useAuth } from "../../hooks/use-auth";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
+import io from "socket.io-client";
+import {useMounted} from "../../hooks/use-mounted";
+let socket;
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const router = useRouter();
-  const { logout } = useAuth();
+  const isMounted = useMounted();
   // To get the user from the authContext, you can use
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+
+
 
   const handleLogout = async () => {
     try {
       onClose?.();
+      // await handleButtonClick()
       await logout();
-      router.push("/").catch(console.error);
+      // router.push("/").catch(console.error);
     } catch (err) {
       console.error(err);
       toast.error("Unable to logout.");
     }
   };
+
+  useEffect(() => {
+    if (isMounted()){
+      socketInitializer();
+      return () => {
+        socket?.disconnect();
+      };
+    }
+
+  }, [isMounted])
+
+
+  const socketInitializer = async () => {
+    await fetch('/api/websocket');
+    socket = io()
+
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+
+    socket.on('incoming-message', async msg => {
+      const { message } = JSON.parse(msg);
+      if (message?.sessionId === user?.sessionId && message?.userId === user?.userid){
+        await logout(false);
+        toast.success("Oops! You have been logged out!");
+
+      }
+
+    })
+  }
 
   return (
     <Popover

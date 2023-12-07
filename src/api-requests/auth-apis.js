@@ -25,6 +25,9 @@ class AuthApis{
                 if (e.response.status === 400){
                     reject(new Error(e.response?.data ?? "Invalid credentials"))
                 }
+                if (e.response.status === 401){
+                    reject(e.response?.data ?? "Invalid credentials")
+                }
                 else{
                     reject(new Error(e.message))
                 }
@@ -59,9 +62,26 @@ class AuthApis{
         });
     }
 
-    async fetchUserMenus(values){
+    async fetchUserMenus(token, values){
         return new Promise((resolve, reject) => {
-            axiosInstance.post(APP_API_URL.GET_USER_MENUS, values).then( response => {
+            const config = {
+                headers: {
+                    'Authorization':  `Bearer ${token}`,
+                }
+            };
+            axiosInstance.post(APP_API_URL.GET_USER_MENUS, values, config).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+    async logoutUser(values){
+        const encryptedData = {
+            data: secretKey.encrypt(values)
+        }
+        return new Promise((resolve, reject) => {
+            axiosInstance.post(APP_API_URL.LOGOUT, encryptedData).then( response => {
                 resolve(response.data);
             }).catch(e => {
                 reject(new Error(e.message))

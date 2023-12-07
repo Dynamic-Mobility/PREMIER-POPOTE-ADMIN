@@ -2,6 +2,7 @@
 export const API_URL = {
     /***************** AUTH **********************/
     LOGIN: '/api/v1/auth/login',
+    LOGOUT: '/api/v1/auth/logout',
     REFRESH_TOKEN: '/api/v1/auth/refresh',
     GET_USER_MENUS: '/api/v1/account/getmenus',
     VALIDATE_OTP: '/api/v1/account/validateotp',
@@ -82,6 +83,7 @@ export const APP_API_URL = {
 
     /***************** AUTH **********************/
     LOGIN: '/api/login',
+    LOGOUT: '/api/logout',
     REFRESH_TOKEN: '/api/admin/account/refresh-token',
     GET_USER_MENUS: '/api/admin/account/fetch-user-menu',
     VALIDATE_OTP: '/api/admin/account/validate-otp',
