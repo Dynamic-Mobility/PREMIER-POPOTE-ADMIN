@@ -19,6 +19,7 @@ import {useCallback, useEffect} from "react";
 import {useAuth} from "../../../../hooks/use-auth";
 import {formatDate, splitString} from "../../../../utils/helper-functions";
 import {AuthGuard} from "../../../../hocs/auth-guard";
+import {transactionsApis} from "../../../../api-requests/transactions-apis";
 
 
 const title = "All Transactions";
@@ -80,6 +81,25 @@ const TransactionsPage = () => {
       await dispatch(fetchAllTransaction(authUser, values))
   },[]);
 
+    const getAllTransactionsReports = useCallback(async (filters, reportType) => {
+        const values = {
+            transactionType: filters.txnType,
+            customerId: filters.customerId,
+            reportType: reportType,
+            accountFrom: filters.accountFrom,
+            phoneNumber: filters.mobileNo,
+            amount: Boolean(filters.amount) ? splitString(filters.amount) : null,
+            channel: Boolean(filters.channel) ? filters.channel?.toLowerCase() : "",
+            dateRange: filters.startDate && filters.endDate ?
+                [
+                    formatDate(filters.startDate, "DD MMM YYYY HH:mm"),
+                    formatDate(filters.endDate, "DD MMM YYYY HH:mm")
+                ] : null,
+            processed: filters.isProcessed ? "Yes" : "",
+        }
+        return await  transactionsApis.downloadAllTransactionReport(authUser, values);
+    },[]);
+
 
   useEffect(() => {
       getAllTransactions(filters, pageSize, activePage);
@@ -110,6 +130,7 @@ const TransactionsPage = () => {
                               setFilters: handleOnSetFilters,
                               setActivePage: handleSetActivePage,
                               onFilter: getAllTransactions,
+                              onExport: reportType => getAllTransactionsReports(filters, reportType),
                               onResetFilters: handleOnReset,
                               filters,
                               pageSize,

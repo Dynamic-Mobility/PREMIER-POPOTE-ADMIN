@@ -68,11 +68,22 @@ export const API_URL = {
     /************************ TRANSACTIONS ****************************/
 
     FETCH_ALL_TRANSACTIONS: '/api/v1/transactions/getalltransaction',
+    FETCH_ALL_TRANSACTIONS_REPORT: '/api/v1/reports/alltransactionreports',
+
     FETCH_MPESA_TRANSACTIONS: '/api/v1/transactions/getmpesatransaction',
+    FETCH_MPESA_TRANSACTIONS_REPORT: '/api/v1/reports/getmpesatransactionreport',
+
     FETCH_PESALINK_TRANSACTIONS: '/api/v1/transactions/getpesalinktransaction',
+    FETCH_PESALINK_TRANSACTIONS_REPORT: '/api/v1/reports/getpesalinktransactionreport',
+
     FETCH_AIRTIME_TRANSACTIONS: '/api/v1/transactions/getairtimepurchases',
+    FETCH_AIRTIME_TRANSACTIONS_REPORT: '/api/v1/reports/getairtimepurchasesreport',
+
     FETCH_BILLS_TRANSACTIONS: '/api/v1/transactions/getbillpayments',
+    FETCH_BILLS_TRANSACTIONS_REPORT: '/api/v1/reports/getbillpaymentsreport',
+
     FETCH_TRANSFERS_TRANSACTIONS: '/api/v1/transactions/gettransferstransaction',
+    FETCH_TRANSFERS_TRANSACTIONS_REPORT: '/api/v1/reports/gettransferstransactionreport',
 
 
 }
@@ -152,11 +163,22 @@ export const APP_API_URL = {
     /************************ TRANSACTIONS ****************************/
 
     FETCH_ALL_TRANSACTIONS: '/api/admin/transactions/fetch-all',
+    FETCH_ALL_TRANSACTIONS_REPORT: '/api/admin/transactions/reports/fetch-all',
+
     FETCH_MPESA_TRANSACTIONS: '/api/admin/transactions/fetch-mpesa',
+    FETCH_MPESA_TRANSACTIONS_REPORT: '/api/admin/transactions/reports/fetch-mpesa',
+
     FETCH_PESALINK_TRANSACTIONS: '/api/admin/transactions/fetch-pesalink',
+    FETCH_PESALINK_TRANSACTIONS_REPORT: '/api/admin/transactions/reports/fetch-pesalink',
+
     FETCH_AIRTIME_TRANSACTIONS: '/api/admin/transactions/fetch-airtime',
+    FETCH_AIRTIME_TRANSACTIONS_REPORT: '/api/admin/transactions/reports/fetch-airtime',
+
     FETCH_BILLS_TRANSACTIONS: '/api/admin/transactions/fetch-bills',
+    FETCH_BILLS_TRANSACTIONS_REPORT: '/api/admin/transactions/reports/fetch-bills',
+
     FETCH_TRANSFERS_TRANSACTIONS: '/api/admin/transactions/fetch-transfers',
+    FETCH_TRANSFERS_TRANSACTIONS_REPORT: '/api/admin/transactions/reports/fetch-transfers',
 
 }
 

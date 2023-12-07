@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "../../../../store";
 import MKButton from "../../../@mui-components/button";
 import {Search} from "@mui/icons-material";
-import {Checkbox, Chip, FormControlLabel, Popover} from "@mui/material";
+import {Checkbox, FormControlLabel, Popover} from "@mui/material";
 import MKBox from "../../../@mui-components/box";
 import MKTypography from "../../../@mui-components/typography";
 import Grid from "@mui/material/Grid";
@@ -14,7 +14,7 @@ import {useAuth} from "../../../../hooks/use-auth";
 import {CHANNEL_TYPES} from "../../../../utils/constants";
 import {getAutoCompleteValue} from "../../../../utils/helper-functions";
 import {getAutocompleteMultipleValues} from "../../../../utils/fileHelper";
-import {DateTimePicker} from "@mui/x-date-pickers";
+
 
 const TransactionFilterPanel = props => {
     const {
@@ -140,16 +140,29 @@ const TransactionFilterPanel = props => {
                         )}
 
                         <Grid item xs={12} md={6}>
-                            <DateTimePicker
-                                disableFuture
-                                label="Start Date"
-                                required
-                                format="dd-MMM-yyyy hh:mm a"
-                                fullWidth
+                            <DMTTextInput
+                                label={'Start Date'}
+                                type={'datetime-local'}
                                 value={filters.startDate}
-                                onChange={handleOnStartDate}
-                                renderInput={(params) => <DMTTextInput {...params} />}
+                                onChange={e => handleOnStartDate( e.target.value)}
+                                fullWidth={true}
+                                inputProps={{
+                                    autoComplete: 'off', // disable autocomplete and autofill
+                                }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
                             />
+                            {/*<DateTimePicker*/}
+                            {/*    disableFuture*/}
+                            {/*    label="Start Date"*/}
+                            {/*    required*/}
+                            {/*    format="dd-MMM-yyyy hh:mm a"*/}
+                            {/*    fullWidth*/}
+                            {/*    value={filters.startDate}*/}
+                            {/*    onChange={handleOnStartDate}*/}
+                            {/*    renderInput={(params) => <DMTTextInput {...params} />}*/}
+                            {/*/>*/}
                             {/*<DMTDatePicker*/}
                             {/*    label={'Start Date'}*/}
                             {/*    fullWidth*/}
@@ -162,16 +175,29 @@ const TransactionFilterPanel = props => {
                             {/*/>*/}
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <DateTimePicker
-                                disableFuture
-                                label="End Date"
-                                required
-                                format="dd-MMM-yyyy hh:mm a"
-                                fullWidth
+                            <DMTTextInput
+                                label={'End Date'}
+                                type={'datetime-local'}
                                 value={filters.endDate}
-                                onChange={handleOnEndDate}
-                                renderInput={(params) => <DMTTextInput {...params} />}
-                                />
+                                onChange={e => handleOnEndDate( e.target.value)}
+                                fullWidth={true}
+                                inputProps={{
+                                    autoComplete: 'off', // disable autocomplete and autofill
+                                }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                            {/*<DateTimePicker*/}
+                            {/*    disableFuture*/}
+                            {/*    label="End Date"*/}
+                            {/*    required*/}
+                            {/*    format="dd-MMM-yyyy hh:mm a"*/}
+                            {/*    fullWidth*/}
+                            {/*    value={filters.endDate}*/}
+                            {/*    onChange={handleOnEndDate}*/}
+                            {/*    renderInput={(params) => <DMTTextInput {...params} />}*/}
+                            {/*    />*/}
                             {/*<DMTDatePicker*/}
                             {/*    label={'End Date'}*/}
                             {/*    type={'search'}*/}

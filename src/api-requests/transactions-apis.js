@@ -13,6 +13,19 @@ class TransactionsApis {
             })
         })
     }
+
+    downloadAllTransactionReport(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_ALL_TRANSACTIONS_REPORT, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
     fetchMpesaTransactions(useAuth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(useAuth);
@@ -24,10 +37,34 @@ class TransactionsApis {
             })
         })
     }
+
+    downloadMpesaTransactionReport(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_MPESA_TRANSACTIONS_REPORT, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
     fetchAirtimeTransactions(useAuth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(useAuth);
             axiosInstance.post(APP_API_URL.FETCH_AIRTIME_TRANSACTIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    downloadAirtimeTransactionReport(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_AIRTIME_TRANSACTIONS_REPORT, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))
@@ -46,6 +83,19 @@ class TransactionsApis {
             })
         })
     }
+
+    downloadBillTransactionReport(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_BILLS_TRANSACTIONS_REPORT, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
     fetchPesalinkTransactions(useAuth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(useAuth);
@@ -57,10 +107,33 @@ class TransactionsApis {
             })
         })
     }
+
+    downloadPesalinkTransactionReport(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_PESALINK_TRANSACTIONS_REPORT, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
     fetchTransferTransactions(useAuth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(useAuth);
             axiosInstance.post(APP_API_URL.FETCH_TRANSFERS_TRANSACTIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    downloadTransferTransactionReport(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_TRANSFERS_TRANSACTIONS_REPORT, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))

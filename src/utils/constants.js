@@ -1,3 +1,4 @@
+import { FaFileExcel, FaFileWord, FaFilePdf  } from "react-icons/fa";
 export const appName = 'Premier Bank';
 export const appDesc = 'MB Admin Portal';
 
@@ -25,6 +26,33 @@ export const BLOCK_TYPES = {
     CUSTOMER: 'Customer',
     ACCOUNT: 'Account'
 }
+
+export const REPORT_TYPES = {
+    PDF: 'Pdf',
+    EXCEL: 'Excel',
+    WORD: 'Word'
+}
+export const REPORT_TYPES_OPTS = [
+    {
+        id: 1,
+        name: "PDF",
+        icon: <FaFilePdf color={'#ff2222'}/>,
+        value: REPORT_TYPES.PDF,
+    },
+    {
+        id: 2,
+        name: "Excel",
+        icon: <FaFileExcel color={'#106b22'}/>,
+        value: REPORT_TYPES.EXCEL,
+    },
+    {
+        id: 3,
+        name: "Word",
+        icon: <FaFileWord color={'#0a66c0'}/>,
+        value: REPORT_TYPES.WORD,
+    }
+];
+
 export const BLOCK_ACTION_TYPES = {
     BLOCK: 'Block',
     UNBLOCK: 'Unblock',

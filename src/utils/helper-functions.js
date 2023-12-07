@@ -27,7 +27,6 @@ export const checkPermission = (menus, permission, path, page = false) => {
     }
     if (activeMenu){
         const formattedPerms = formatPermissions(activeMenu.permission);
-        console.log('FORMATTED PERMS', formattedPerms);
         return formattedPerms.includes(permission);
     }
     return false;

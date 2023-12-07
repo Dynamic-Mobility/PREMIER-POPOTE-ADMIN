@@ -20,6 +20,7 @@ import {useAuth} from "../../../../hooks/use-auth";
 import {formatDate, splitString} from "../../../../utils/helper-functions";
 
 import {AuthGuard} from "../../../../hocs/auth-guard";
+import {transactionsApis} from "../../../../api-requests/transactions-apis";
 
 
 const title = "Mpesa Transactions";
@@ -81,6 +82,25 @@ const MpesaTransactionsPage = () => {
         await dispatch(fetchMpesaTransactions(authUser, values))
     },[]);
 
+    const getTransactionsReport = useCallback(async (filters, reportType) => {
+        const values = {
+            transactionType: filters.txnType,
+            customerId: filters.customerId,
+            reportType: reportType,
+            accountFrom: filters.accountFrom,
+            phoneNumber: filters.mobileNo,
+            amount: Boolean(filters.amount) ? splitString(filters.amount) : null,
+            channel: Boolean(filters.channel) ? filters.channel?.toLowerCase() : "",
+            dateRange: filters.startDate && filters.endDate ?
+                [
+                    formatDate(filters.startDate, "DD MMM YYYY HH:mm"),
+                    formatDate(filters.endDate, "DD MMM YYYY HH:mm")
+                ] : null,
+            processed: filters.isProcessed ? "Yes" : "",
+        }
+        return await transactionsApis.downloadMpesaTransactionReport(authUser, values);
+    },[]);
+
 
     useEffect(() => {
         getTransactions(filters, pageSize, activePage);
@@ -110,6 +130,7 @@ const MpesaTransactionsPage = () => {
                                     setFilters: handleOnSetFilters,
                                     setActivePage: handleSetActivePage,
                                     onFilter: getTransactions,
+                                    onExport: reportType => getTransactionsReport(filters, reportType),
                                     onResetFilters: handleOnReset,
                                     filters,
                                     pageSize,
