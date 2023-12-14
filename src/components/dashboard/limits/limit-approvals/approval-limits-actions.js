@@ -54,12 +54,11 @@ const ApprovalLimitsActions = props => {
 
     const onApprove = async (reason) => {
         setIsLoading(true);
-        //TODO: Add User ID
         const browser = getBrowserDetails();
         const ipAddress = await getIPAddress();
         const formData = {
             id: limit?.id,
-            userId: "",
+            userId: authUser?.user?.userid ?? "",
             browser: browser,
             rejectReason: reason,
             reject: dialogProps?.reject,

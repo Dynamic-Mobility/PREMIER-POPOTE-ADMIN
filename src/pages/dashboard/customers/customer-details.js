@@ -39,7 +39,7 @@ const CustomerDetailsPage = () => {
         setCustomer(null);
         try{
             const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
-            if (res?.cif_no !== ''){
+            if (Boolean(res?.cif_no)){
                 setCustomer(res);
                 toast.success("Customer Found!");
                 if (res?.customerId){

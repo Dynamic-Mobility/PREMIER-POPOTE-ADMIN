@@ -13,7 +13,6 @@ import {toast} from "react-toastify";
 import {LoaderIcon} from "react-hot-toast";
 
 const LimitsForm = props => {
-    //TODO: make  api request to update limits
     const authUser = useAuth();
     const { product, accountId, onClose, existingLimit } = props;
     const [isEditable, setIsEditable] = useState(false);
@@ -40,7 +39,7 @@ const LimitsForm = props => {
                     accountId: Boolean(accountId) ? accountId : "",
                     startDate:  values?.showDate ? values?.startDate : "",
                     endDate:  values?.showDate ? values?.endDate : "",
-                    userId: ""
+                    userId: authUser?.user.userid ?? "",
                 }
                const res = await settingsApis.createTransactionLimit(authUser, formData);
                 if (res.success){

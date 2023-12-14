@@ -6,6 +6,7 @@ import MKBox from "../../@mui-components/box";
 import MKTypography from "../../@mui-components/typography";
 import {alpha, Avatar, IconButton, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
 import {getInitials} from "../../../utils/helper-functions";
+import DMTChip from "../../@dmt-components/chip";
 
 const UsersDatagrid = props => {
     const { data, onRefresh } = props;
@@ -46,6 +47,11 @@ const UsersDatagrid = props => {
                                 </MKTypography>
                             </>
                         }
+                        secondary={
+                            <MKTypography variant={'caption'}  fontSize={'inherit'}>
+                                {data?.roleName}
+                            </MKTypography>
+                        }
                     />
                 </ListItem>
             </>
@@ -85,6 +91,18 @@ const UsersDatagrid = props => {
         )
     }
 
+    const renderStatus = ({ displayValue}) => {
+        const color = displayValue === 'Active' ? "success" : "error";
+        return (
+            <>
+                <DMTChip
+                    label={displayValue}
+                    color={color}
+                />
+            </>
+        )
+    }
+
     return(
         <>
             <DMTDatagrid
@@ -93,11 +111,10 @@ const UsersDatagrid = props => {
             >
                 <Column minWidth={220} dataField="firstName" caption="Name" cellRender={renderProfile} />
                 <Column minWidth={300}  caption="Contact" cellRender={renderContacts} />
-                <Column minWidth={150} dataField="roleName" caption="Role" />
+                <Column minWidth={150} dataField="roleName" caption="Role" visible={false} />
                 <Column minWidth={150} dataField="branchName" caption="Branch" />
                 <Column minWidth={150} dataField="departmentName" caption="Department" />
-
-
+                <Column minWidth={150} dataField="status" caption="Status" cellRender={renderStatus} />
                 <Column
                     caption="Actions"
                     minWidth={130}

@@ -13,6 +13,7 @@ import {useAuth} from "../../../hooks/use-auth";
 import {toast} from "react-toastify";
 import {usersApis} from "../../../api-requests/users-apis";
 import ConfirmationDialog from "../../@dmt-components/confirmation-dialog";
+import DMTChip from "../../@dmt-components/chip";
 
 const UsersApprovalDatagrid = props => {
     const { data, onRefresh } = props;
@@ -99,6 +100,18 @@ const UsersApprovalDatagrid = props => {
         }
     }
 
+    const actionStatus = ({ displayValue}) => {
+        const color = displayValue === 'Active' ? "success" : "error";
+        return (
+            <>
+                <DMTChip
+                    label={displayValue}
+                    color={color}
+                />
+            </>
+        )
+    }
+
 
     const renderProfile = ({ data }) => {
         const fname = Boolean(data?.firstName) ? data?.firstName : "";
@@ -183,7 +196,7 @@ const UsersApprovalDatagrid = props => {
             <DMTDatagrid
                 data={data}
                 height={'80vh'}
-                keyExpr="merchant_id"
+                keyExpr="id"
                 onSelectionChanged={onSelectionChanged}
                 selectedRowKeys={selectedRecords}
             >
@@ -197,6 +210,7 @@ const UsersApprovalDatagrid = props => {
                 <Column minWidth={150} dataField="roleName" caption="Role" />
                 <Column minWidth={150} dataField="branchName" caption="Branch" />
                 <Column minWidth={150} dataField="departmentName" caption="Department" />
+                {/*<Column minWidth={100} dataField="status" caption="Status" cellRender={actionStatus} />*/}
                 <Column
                     caption="Actions"
                     minWidth={130}

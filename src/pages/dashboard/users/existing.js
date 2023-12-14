@@ -13,6 +13,7 @@ import {getAllUsers} from "../../../slices/dashboard/users";
 import CreateUserDialog from "../../../components/dashboard/users/create-user-dialog";
 import {ButtonGroup} from "@mui/material";
 import RefreshButton from "../../../components/@dmt-components/refresh-button";
+import {AuthGuard} from "../../../hocs/auth-guard";
 
 
 const title = "Manage Users";
@@ -24,7 +25,7 @@ const ExistingUsersPage = () => {
 
     const fetchAllUsers = useCallback(async () => {
         await dispatch(getAllUsers(authUser));
-    },[]);
+    },[authUser?.user]);
 
     useEffect(() => {
         fetchAllUsers();
@@ -67,11 +68,11 @@ const ExistingUsersPage = () => {
 };
 
 ExistingUsersPage.getLayout = (page) => (
-  // <AuthGuard>
-    <ModernLayout>
-        {page}
-    </ModernLayout>
-  // </AuthGuard>
+   <AuthGuard>
+        <ModernLayout>
+            {page}
+        </ModernLayout>
+   </AuthGuard>
 );
 
 export default ExistingUsersPage;

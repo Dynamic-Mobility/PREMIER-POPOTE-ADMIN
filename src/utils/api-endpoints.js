@@ -60,10 +60,11 @@ export const API_URL = {
 
     /************************ USERS ****************************/
 
-    FETCH_USERS: '/api/v1/account/getcreateunapproved',
+    FETCH_USERS: '/api/v1/account/getallusers',
     FETCH_UNAPPROVED_USERS: '/api/v1/account/getcreateunapproved',
     ADD_USERS: '/api/v1/account/adduser',
     APPROVE_USERS: '/api/v1/account/approveusers',
+    ENABLE_DISABLE_USERS: '/api/v1/account/toggleuser',
 
     /************************ TRANSACTIONS ****************************/
 
@@ -159,6 +160,7 @@ export const APP_API_URL = {
     FETCH_UNAPPROVED_USERS: '/api/admin/users/fetch-unapproved-users',
     ADD_USERS: '/api/admin/users/add-user',
     APPROVE_USERS: '/api/admin/users/approve-users',
+    ENABLE_DISABLE_USERS: '/api/admin/users/enable-disable-user',
 
     /************************ TRANSACTIONS ****************************/
 

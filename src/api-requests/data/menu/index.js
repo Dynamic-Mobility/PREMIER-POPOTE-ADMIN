@@ -82,6 +82,12 @@ export const getMenuItems = () => [
             link: "/dashboard/reports/transactions/bill-payments",
             icon: 'payments',
           },
+          {
+            name: "Transfers",
+            enabled: true,
+            link: "/dashboard/reports/transactions/transfers",
+            icon: 'swap_horiz',
+          },
         ],
       },
       {

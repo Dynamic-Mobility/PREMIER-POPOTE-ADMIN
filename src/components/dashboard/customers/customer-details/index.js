@@ -15,8 +15,6 @@ const CustomerDetails = props => {
         onReset,
         handleOnAddUpdate
     } = props;
-    const authUser = useAuth();
-
 
     return (
         <>

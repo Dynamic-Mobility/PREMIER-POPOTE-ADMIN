@@ -26,7 +26,7 @@ class AuthApis{
                     reject(new Error(e.response?.data ?? "Invalid credentials"))
                 }
                 if (e.response.status === 401){
-                    reject(e.response?.data ?? "Invalid credentials")
+                    reject(e.response?.data)
                 }
                 else{
                     reject(new Error(e.message))
@@ -82,6 +82,16 @@ class AuthApis{
         }
         return new Promise((resolve, reject) => {
             axiosInstance.post(APP_API_URL.LOGOUT, encryptedData).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+
+    async refreshUserToken (values) {
+        return new Promise((resolve, reject) => {
+            axiosInstance.post(APP_API_URL.REFRESH_TOKEN, values).then( response => {
                 resolve(response.data);
             }).catch(e => {
                 reject(new Error(e.message))

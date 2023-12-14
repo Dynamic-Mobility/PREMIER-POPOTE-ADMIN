@@ -5,6 +5,9 @@ import IconButton from "@mui/material/IconButton";
 import CreateUserDialog from "./create-user-dialog";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
+import UpdateUserStatus from "./update-user-status";
+import CheckIcon from "@mui/icons-material/CheckRounded";
+import CloseIcon from "@mui/icons-material/Close";
 
 const UsersActions = props => {
     const {
@@ -58,16 +61,19 @@ const UsersActions = props => {
                 }}
                 >
                 {Boolean(!approval) ? (
-                    <CreateUserDialog onRefresh={onRefresh} user={user} onClose={handleClose}/>
+                    <>
+                        <CreateUserDialog onRefresh={onRefresh} user={user} onClose={handleClose}/>
+                        <UpdateUserStatus onRefresh={onRefresh} user={user} onClose={handleClose} />
+                    </>
                 ) : (
                     <>
                         <MenuItem onClick={handleOnApprove}>
-                            <EditIcon sx={{mr: 1}} />
+                            <CheckIcon sx={{mr: 1}}  color={'success'}/>
                             {" "}
                             {" Approve User"}
                         </MenuItem>
                         <MenuItem onClick={handleOnReject}>
-                            <EditIcon sx={{mr: 1}} />
+                            <CloseIcon sx={{mr: 1}} color={'error'}/>
                             {" "}
                             {" Reject User"}
                         </MenuItem>

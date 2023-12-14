@@ -4,10 +4,10 @@
   "private": true,
   "author": "dynamic-mobility-technology",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3030",
     "build": "next build",
     "export": "next build && next export",
-    "start": "next start",
+    "start": "next start -p 3030",
     "lint": "next lint"
   },
   "dependencies": {

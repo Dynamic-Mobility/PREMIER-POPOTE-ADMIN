@@ -28,6 +28,9 @@ const useAxios = useAuth => {
     };
 
     axiosInstance.interceptors.request.use(async req => {
+
+        return req;
+
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
 
         if (!isExpired) {

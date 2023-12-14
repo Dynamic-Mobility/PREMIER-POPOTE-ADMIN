@@ -29,7 +29,7 @@ const CustomerSearch = props => {
                     fullWidth
                     maxWidth="sm"
                     size="small"
-                    label="Search By CIF"
+                    label="Search By A/C No"
                     //variant={'outlined'}
                     name="cif_number"
                     value={formik.values.cif_number}

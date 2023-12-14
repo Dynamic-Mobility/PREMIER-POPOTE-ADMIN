@@ -12,6 +12,7 @@ import {getAllUnApprovedUsers} from "../../../slices/dashboard/users";
 import {ButtonGroup} from "@mui/material";
 import RefreshButton from "../../../components/@dmt-components/refresh-button";
 import UsersApprovalDatagrid from "../../../components/dashboard/users/users-approval-datagrid";
+import {AuthGuard} from "../../../hocs/auth-guard";
 
 
 const title = "Approve Users";
@@ -19,14 +20,14 @@ const title = "Approve Users";
 const ApproveUsersPage = () => {
     const dispatch = useDispatch();
     const authUser = useAuth();
-    const { users } = useSelector(({ users }) => users);
+    const {unapprovedUsers } = useSelector(({ users }) => users);
 
-    const fetchAllUsers = useCallback(async () => {
+    const fetchUsers = useCallback(async () => {
         await dispatch(getAllUnApprovedUsers(authUser));
-    },[]);
+    },[authUser?.user]);
 
     useEffect(() => {
-        fetchAllUsers();
+        fetchUsers();
     },[]);
       return (
         <>
@@ -51,14 +52,13 @@ const ApproveUsersPage = () => {
                               variant="contained"
                               aria-label="vertical outlined button group"
                           >
-                              {/*<CreateUserDialog onRefresh={fetchAllUsers}/>*/}
-                              <RefreshButton onRefresh={fetchAllUsers}/>
+                              <RefreshButton onRefresh={fetchUsers}/>
                           </ButtonGroup>
                       </Grid>
                   </Grid>
               </MKBox>
               <Card sx={{p:1, minHeight: '80vh'}}>
-                  <UsersApprovalDatagrid data={users} onRefresh={fetchAllUsers}/>
+                  <UsersApprovalDatagrid data={unapprovedUsers} onRefresh={fetchUsers}/>
               </Card>
           </MKBox>
         </>
@@ -66,11 +66,11 @@ const ApproveUsersPage = () => {
 };
 
 ApproveUsersPage.getLayout = (page) => (
-  // <AuthGuard>
+  <AuthGuard>
     <ModernLayout>
         {page}
     </ModernLayout>
-  // </AuthGuard>
+  </AuthGuard>
 );
 
 export default ApproveUsersPage;
