@@ -1,10 +1,11 @@
-import {alpha, Drawer} from "@mui/material";
+import {alpha, Drawer, IconButton} from "@mui/material";
 import MKBox from "../../../@mui-components/box";
 import MKTypography from "../../../@mui-components/typography";
 import PropertyItem from "../../../@dmt-components/PropertyItem";
 import DMTChip from "../../../@dmt-components/chip";
 import React from "react";
 import GoogleMapComponent from "../../../@dmt-components/google-map";
+import CloseIcon from "@mui/icons-material/Close";
 
 const TransactionDetailsDrawer = props => {
     const { transaction, open, onClose } = props;
@@ -25,7 +26,13 @@ const TransactionDetailsDrawer = props => {
                 onClose={onClose}
                 elevation={3}
             >
-                <MKBox sx={{ p: 2, width: "400px", backgroundColor: theme => alpha(theme.palette.primary.main, 0.05)}}>
+                <MKBox sx={{ p: 2, width: "400px", backgroundColor: theme => alpha(theme.palette.primary.main, 0.02)}}>
+                    <MKBox sx={{ mb:1, display: 'flex', justifyContent: 'flex-start'}}>
+                        <IconButton onClick={onClose}>
+                            <CloseIcon/>
+                        </IconButton>
+                    </MKBox>
+
                     <MKTypography color={'primary'} variant={"h6"} align={"center"} gutterBottom>
                         {"Transaction Details"}
                     </MKTypography>

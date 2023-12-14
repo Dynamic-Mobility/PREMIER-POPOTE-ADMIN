@@ -4,15 +4,16 @@ import Menu from "@mui/material/Menu";
 import IconButton from "@mui/material/IconButton";
 import CreateUserDialog from "./create-user-dialog";
 import MenuItem from "@mui/material/MenuItem";
-import EditIcon from "@mui/icons-material/Edit";
 import UpdateUserStatus from "./update-user-status";
 import CheckIcon from "@mui/icons-material/CheckRounded";
 import CloseIcon from "@mui/icons-material/Close";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const UsersActions = props => {
     const {
         user,
         onRefresh,
+        onView,
         approval = false,
         onApprove,
         onReject
@@ -35,6 +36,11 @@ const UsersActions = props => {
     }
     const handleOnReject = () => {
         onReject();
+        handleClose();
+    }
+
+    const handleOnView = () => {
+        onView();
         handleClose();
     }
 
@@ -62,6 +68,11 @@ const UsersActions = props => {
                 >
                 {Boolean(!approval) ? (
                     <>
+                        <MenuItem onClick={handleOnView}>
+                            <VisibilityIcon sx={{mr: 1}}/>
+                            {" "}
+                            {" View User"}
+                        </MenuItem>
                         <CreateUserDialog onRefresh={onRefresh} user={user} onClose={handleClose}/>
                         <UpdateUserStatus onRefresh={onRefresh} user={user} onClose={handleClose} />
                     </>

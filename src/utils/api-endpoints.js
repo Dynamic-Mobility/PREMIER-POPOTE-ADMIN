@@ -63,6 +63,7 @@ export const API_URL = {
     FETCH_USERS: '/api/v1/account/getallusers',
     FETCH_UNAPPROVED_USERS: '/api/v1/account/getcreateunapproved',
     ADD_USERS: '/api/v1/account/adduser',
+    UPDATE_USERS: '/api/v1/account/updateuser',
     APPROVE_USERS: '/api/v1/account/approveusers',
     ENABLE_DISABLE_USERS: '/api/v1/account/toggleuser',
 
@@ -100,9 +101,6 @@ export const APP_API_URL = {
     GET_USER_MENUS: '/api/admin/account/fetch-user-menu',
     VALIDATE_OTP: '/api/admin/account/validate-otp',
 
-
-
-    
     /***************** CUSTOMERS **********************/
 
     FETCH_CUSTOMER_CIF: '/api/admin/customers/fetch-by-cif',
@@ -159,6 +157,7 @@ export const APP_API_URL = {
     FETCH_USERS: '/api/admin/users/fetch-users',
     FETCH_UNAPPROVED_USERS: '/api/admin/users/fetch-unapproved-users',
     ADD_USERS: '/api/admin/users/add-user',
+    UPDATE_USERS: '/api/admin/users/update-user',
     APPROVE_USERS: '/api/admin/users/approve-users',
     ENABLE_DISABLE_USERS: '/api/admin/users/enable-disable-user',
 

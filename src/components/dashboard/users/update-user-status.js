@@ -6,8 +6,9 @@ import ConfirmationDialog from "../../@dmt-components/confirmation-dialog";
 import {getBrowserDetails, getIPAddress} from "../../../utils/helper-functions";
 import {useAuth} from "../../../hooks/use-auth";
 import {usersApis} from "../../../api-requests/users-apis";
+import {toast} from "react-toastify";
 const UpdateUserStatus = props => {
-    const { user, onClose } = props;
+    const { user, onClose, onRefresh } = props;
     const [isLoading, setIsLoading] = useState(false);
     const authUser = useAuth();
     const [dialogProps, setDialogProps] = useState({
@@ -15,7 +16,6 @@ const UpdateUserStatus = props => {
         message: "",
         showReason: false,
         reject: false,
-        onOk: null,
     });
 
     const handleCloseDialog = () => {
@@ -31,7 +31,6 @@ const UpdateUserStatus = props => {
         setDialogProps({
             open: true,
             message: `Are you sure you want to ${action} ${user?.firstName} ${user?.otherName}?`,
-            onOk: onApprove,
             reject: reject,
             showReason: false,
         })
@@ -47,8 +46,15 @@ const UpdateUserStatus = props => {
             browser: browser,
         }
         try{
-
             const res = await usersApis.enableDisableUser(authUser, formData);
+            if (res?.success){
+                toast.success(res?.errorMessage ?? "Operation successful!");
+                handleCloseDialog();
+                await onRefresh?.();
+            }
+            else{
+                toast.error('Oops! An error occurred while processing request. Try again later.')
+            }
             console.log(res);
         }
         catch (e) {
@@ -60,16 +66,14 @@ const UpdateUserStatus = props => {
 
     return (
         <>
-            {Boolean(user?.activated) && (
+            {Boolean(user?.approved) && (
                 <>
                     {Boolean(user?.status !== 'Active') ? (
-                        <>
-                            <MenuItem onClick={() => handleOnApprove()}>
-                                <CheckIcon sx={{mr: 1}}  color={'success'}/>
-                                {" "}
-                                {" Activate User"}
-                            </MenuItem>
-                        </>
+                        <MenuItem onClick={() => handleOnApprove()}>
+                            <CheckIcon sx={{mr: 1}}  color={'success'}/>
+                            {" "}
+                            {" Activate User"}
+                        </MenuItem>
                     ) : (
                         <MenuItem onClick={() => handleOnApprove(true)}>
                             <CloseIcon sx={{mr: 1}} color={'error'}/>
@@ -80,7 +84,8 @@ const UpdateUserStatus = props => {
                         {...{
                             ...dialogProps,
                             onClose: handleCloseDialog,
-                            isLoading: isLoading
+                            isLoading: isLoading,
+                            onOk:onApprove,
                         }}
                     />
                 </>

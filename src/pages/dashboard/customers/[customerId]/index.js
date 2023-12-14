@@ -117,7 +117,7 @@ const ViewCustomerPage = () => {
         catch (e) {
             console.log(e.message);
         }
-    },[authUser?.user]);
+    },[authUser?.user, customerId]);
 
     const handleOnReset = () => {
         setCustomer(null);

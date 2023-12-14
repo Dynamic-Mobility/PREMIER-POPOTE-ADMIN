@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import {customersApis} from "../../../api-requests/customers-api";
 import {useAuth} from "../../../hooks/use-auth";
 import {toast} from "react-toastify";
+import {getIPAddress} from "../../../utils/helper-functions";
 
 const ApproveRegistration = props => {
     const { customer, onRefresh } = props;
@@ -23,13 +24,14 @@ const ApproveRegistration = props => {
     setOpen(false);
   };
   const onProceed = async () => {
+      const ipAddress = await getIPAddress();
       try{
           const formData = {
               customerId: customer?.id,
               customerUserId: customer?.customerUserId,
-              approvedBy: "",
+              approvedBy: authUser?.user?.userid,
               channelType: "USSD",
-              ip: ""
+              ip: ipAddress
           }
          const res =  await customersApis.approveCustomer(authUser, formData );
          toast.success('Customer approved successfully!');
