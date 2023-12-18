@@ -11,9 +11,10 @@ import BlockUnblockCustomerDialog from "./block-unblock-customer";
 import CustomerSetLimits from "../customer-set-limits";
 import RoleBasedGuard from "../../../../hocs/role-based-guard";
 import {PAGE_PERMISSIONS, PAGES_PATHS} from "../../../../utils/constants";
+import EnableDisableCustomerDialog from "./enable-disable-customer";
 
 const CustomerActions = props => {
-    const {customer, onAddUpdate, onReset, existingCustomer} = props;
+    const {customer, onAddUpdate, onReset, existingCustomer, onRefresh } = props;
     return (
         <>
             <MKTypography sx={{ textAlign: "center", fontWeight: "bold" }}>
@@ -70,9 +71,15 @@ const CustomerActions = props => {
                             <CustomerResetPin customer={customer} existingCustomer={existingCustomer}>
                                 {"Reset Pin"}
                             </CustomerResetPin>
+                            <EnableDisableCustomerDialog
+                                existingCustomer={existingCustomer}
+                                customer={customer}
+                                onRefresh={onRefresh}
+                            />
                             <BlockUnblockCustomerDialog
                                 existingCustomer={existingCustomer}
                                 customer={customer}
+                                onRefresh={onRefresh}
                             />
                         </ButtonGroup>
 

@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import {useRouter} from "next/router";
 import MKTypography from "../../@mui-components/typography";
+import DMTChip from "../../@dmt-components/chip";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -49,7 +50,39 @@ const CustomersDataGrid = (props) => {
             </>
         );
     };
+    const actionChannel = ({ displayValue, data }) => {
+        if (Boolean(data?.registeredPlatforms) && data?.registeredPlatforms.length > 0){
+            return  (
+                <>
+                    {
+                        data?.registeredPlatforms.map(channel => (
+                            <>
+                                <DMTChip
+                                    color={'secondary'}
+                                    label={channel}
+                                />
+                                {" "}
+                            </>
+                        ))
+                    }
+                </>
 
+            )
+        }
+        return displayValue;
+    }
+
+    const actionStatus = ({ data }) => {
+        const color = data?.status === 'Active' ? 'success' : data.status === 'Locked' ? 'warning' : 'error';
+        return (
+            <>
+                <DMTChip
+                    color={color}
+                    label={data?.status}
+                />
+            </>
+        )
+    }
   return (
     <div>
          <Watermark/>
@@ -74,6 +107,21 @@ const CustomersDataGrid = (props) => {
               minWidth={200}
               allowFiltering={false}
             />
+              <Column
+                  dataField="status"
+                  caption="Status"
+                  minWidth={150}
+                  allowFiltering={false}
+                  cellRender={actionStatus}
+              />
+              <Column
+                  dataField="registeredPlatform"
+                  caption="Registered Channel(s)"
+                  minWidth={200}
+                  allowFiltering={false}
+                  cellRender={actionChannel}
+              />
+
             <Column
               caption="Action"
               minWidth={150}

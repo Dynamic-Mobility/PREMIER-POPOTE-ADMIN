@@ -21,6 +21,7 @@ export const API_URL = {
     RESET_CUSTOMER_PIN: '/api/v1/customer/resetpin',
     VALIDATE_RESET_PIN_OTP: '/api/v1/customer/approveresetpin',
     BLOCK_UNBLOCK_CUSTOMER: '/api/v1/customer/blockaccount',
+    ENABLE_DISABLE_CUSTOMER: '/api/v1/customer/togglecustomeracc',
 
     FETCH_UPDATED_CUSTOMERS: '/api/v1/customer/geteditedcustomers',
     APPROVE_UPDATED_CUSTOMER: '/api/v1/customer/approveedited',
@@ -114,6 +115,8 @@ export const APP_API_URL = {
     RESET_CUSTOMER_PIN: '/api/admin/customers/reset-pin',
     VALIDATE_RESET_PIN_OTP: '/api/admin/customers/reset-pin-otp',
     BLOCK_UNBLOCK_CUSTOMER: '/api/admin/customers/block-unblock-customer',
+
+    ENABLE_DISABLE_CUSTOMER: '/api/admin/customers/enable-disable-customer',
 
     FETCH_UPDATED_CUSTOMERS: '/api/admin/customers/get-updated',
     APPROVE_UPDATED_CUSTOMER: '/api/admin/customers/approve-updated',

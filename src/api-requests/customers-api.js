@@ -139,6 +139,17 @@ class CustomersApis {
             })
         })
     }
+    enableDisableCustomer(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.ENABLE_DISABLE_CUSTOMER, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
     approveUpdatedCustomer(auth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(auth);

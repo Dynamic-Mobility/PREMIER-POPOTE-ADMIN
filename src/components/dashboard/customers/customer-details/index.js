@@ -13,7 +13,8 @@ const CustomerDetails = props => {
         existingCustomer,
         customerAccounts,
         onReset,
-        handleOnAddUpdate
+        handleOnAddUpdate,
+        onRefresh
     } = props;
 
     return (
@@ -29,6 +30,7 @@ const CustomerDetails = props => {
              <Grid item md={3} xs={12}>
                  {Boolean(customer) && (
                      <CustomerActions
+                         onRefresh={onRefresh}
                          customer={customer}
                          onAddUpdate={handleOnAddUpdate}
                          onReset={onReset}

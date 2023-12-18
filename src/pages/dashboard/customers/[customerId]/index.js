@@ -161,6 +161,7 @@ const ViewCustomerPage = () => {
                     customerAccounts={customerAccounts}
                     onReset={handleOnReset}
                     handleOnAddUpdate={handleOnAddUpdate}
+                    onRefresh={getCustomerById}
                 />
           </Card>
       </Container>

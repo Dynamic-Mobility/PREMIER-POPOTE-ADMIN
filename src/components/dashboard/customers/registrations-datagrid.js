@@ -9,6 +9,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import RejectRegistration from "./reject-approval";
 import Watermark from "../../watermark";
+import DMTChip from "../../@dmt-components/chip";
+import MKTypography from "../../@mui-components/typography";
 
 // import PermissionsForm from "./permissions-form";
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
@@ -113,6 +115,59 @@ const RegistrationsDatagrid = (props) => {
     );
   };
 
+  const actionStatus = ({ data }) => {
+      const color = data.status === 'Active' ? 'success' : data.status === 'Inactive' ? 'warning' : 'error';
+      return (
+          <>
+              <DMTChip
+                  color={color}
+                  label={data}
+              />
+          </>
+      )
+  }
+  const actionChannel = ({ displayValue, data }) => {
+      if (data?.registeredPlatforms.length > 0){
+          return  (
+              <>
+                  {
+                      data?.registeredPlatforms.map(channel => (
+                          <>
+                              <DMTChip
+                                  color={'secondary'}
+                                  label={channel}
+                              />
+                              {" "}
+                          </>
+                      ))
+                  }
+              </>
+
+          )
+      }
+      return displayValue;
+  }
+
+    const actionDisplay = ({ data, displayValue}) => {
+        const handleOnClick= e => {
+            e.preventDefault();
+            router.push({
+                pathname: `/dashboard/customers/${data?.id}`,
+                // pathname: '/dashboard/customers/customer-details',
+                // query: {
+                //     id: data?.id
+                // }
+            })
+        }
+        return (
+            <>
+                <MKTypography component={'a'} href={'#'} onClick={handleOnClick} color={'info'} fontWeight={'bold'} fontSize={'inherit'}>
+                    {displayValue}
+                </MKTypography>
+            </>
+        );
+    };
+
   return (
     <div>
       <Watermark/>
@@ -127,7 +182,7 @@ const RegistrationsDatagrid = (props) => {
           wordWrapEnabled={true}
           height={"70vh"}
       >
-        <Column  minWidth={250} dataField="name" caption="Name" />
+        <Column  minWidth={250} dataField="name" caption="Name" cellRender={actionDisplay} />
         <Column  minWidth={200} dataField="customerIdNo" caption="ID No" />
         <Column  minWidth={200} dataField="phoneNumber" caption="Phone Number" />
         <Column
@@ -136,6 +191,20 @@ const RegistrationsDatagrid = (props) => {
             minWidth={200}
             allowFiltering={false}
         />
+        {/*  <Column*/}
+        {/*    dataField="status"*/}
+        {/*    caption="Status"*/}
+        {/*    minWidth={150}*/}
+        {/*    allowFiltering={false}*/}
+        {/*    cellRender={actionStatus}*/}
+        {/*/>*/}
+          <Column
+              dataField="registeredPlatform"
+              caption="Registered Channel(s)"
+              minWidth={200}
+              allowFiltering={false}
+              cellRender={actionChannel}
+          />
         <Column
           caption="Action"
           width={180}

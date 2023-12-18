@@ -2,7 +2,6 @@ import {useState} from "react";
 import MKButton from "../../../@mui-components/button";
 import DMTDialog from "../../../@dmt-components/dialog";
 import DialogContent from "@mui/material/DialogContent";
-import {BLOCK_ACTION_TYPES, BLOCK_TYPES, CHANNEL_TYPES} from "../../../../utils/constants";
 import MKTypography from "../../../@mui-components/typography";
 import MKBox from "../../../@mui-components/box";
 import * as React from "react";
@@ -13,7 +12,7 @@ import DMTTextInput from "../../../@dmt-components/form/text-input";
 import {toast} from "react-toastify";
 import {getBrowserDetails, getIPAddress} from "../../../../utils/helper-functions";
 
-const BlockUnblockCustomerDialog = props => {
+const EnableDisableCustomerDialog = props => {
     const { existingCustomer, disabled = false, customer, onRefresh } = props;
     const [openDialog, setOpenDialog] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
@@ -21,7 +20,7 @@ const BlockUnblockCustomerDialog = props => {
     const authUser = useAuth();
 
 
-    const action =  customer?.active ? "Block Customer" : "Unblock Customer";
+    const action =   existingCustomer?.accountLocked ? "Unlock Pin" : "Lock Pin";
 
     const handleOnChange = e => {
         setReason(e.target.value);
@@ -32,19 +31,15 @@ const BlockUnblockCustomerDialog = props => {
         const browser = getBrowserDetails();
         const formData = {
             userId: authUser.user?.userid,
-            branchCode: "",
             customerId: existingCustomer?.id,
             customerUserId: existingCustomer?.customerUserId,
             reason: reason,
-            actionType: customer?.active ?  BLOCK_ACTION_TYPES.BLOCK : BLOCK_ACTION_TYPES.UNBLOCK ,
-            accountId: "",
-            blockType: BLOCK_TYPES.CUSTOMER,
             ip: ipAddress,
             browser: browser
         }
         setIsLoading(true)
         try{
-            const res = await customersApis.blockUnblockCustomer(authUser, formData)
+            const res = await customersApis.enableDisableCustomer(authUser, formData)
             if (res.success){
                 toast.success(res?.errorMessage ?? "Operation is successful!");
                 handleOnClose();
@@ -121,12 +116,10 @@ const BlockUnblockCustomerDialog = props => {
                             </MKBox>
                         </MKBox>
                     </form>
-
-
                 </DialogContent>
             </DMTDialog>
         </>
     )
 }
 
-export default BlockUnblockCustomerDialog;
+export default EnableDisableCustomerDialog;

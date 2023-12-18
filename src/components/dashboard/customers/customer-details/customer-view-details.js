@@ -1,6 +1,7 @@
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {useState} from "react";
+import React, {useState} from "react";
 import {formatDate} from "../../../../utils/helper-functions";
+import DMTChip from "../../../@dmt-components/chip";
 
 const CustomerViewDetails = props => {
     const { customer, existingCustomer } = props;
@@ -9,6 +10,8 @@ const CustomerViewDetails = props => {
     const handleToggle = () => {
         setShowMore(prevState => !prevState);
     }
+
+    const color = existingCustomer?.status === 'Active' ? 'success' : existingCustomer?.status === 'Locked' ? 'warning' : 'error';
 
     const displayValue = (value) => {
         if (Boolean(value)){
@@ -125,6 +128,31 @@ const CustomerViewDetails = props => {
                             </TableCell>
                             <TableCell>
                                 {displayValue(existingCustomer?.location)}
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell sx={{ fontWeight: 'bold', backgroundColor: 'grey.200'}}>
+                                {"Registered Channels"}
+                            </TableCell>
+                            <TableCell sx={{backgroundColor: 'grey.200'}}>
+                                -- NA --
+                            </TableCell>
+                            <TableCell>
+                                {displayValue(existingCustomer?.registeredPlatform)}
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell sx={{ fontWeight: 'bold', backgroundColor: 'grey.200'}}>
+                                {"Account Status"}
+                            </TableCell>
+                            <TableCell sx={{backgroundColor: 'grey.200'}}>
+                                -- NA --
+                            </TableCell>
+                            <TableCell>
+                                <DMTChip
+                                    color={color}
+                                    label={displayValue(existingCustomer?.status)}
+                                />
                             </TableCell>
                         </TableRow>
                     </TableBody>
