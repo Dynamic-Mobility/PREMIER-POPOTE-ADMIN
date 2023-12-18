@@ -30,6 +30,7 @@ export const API_URL = {
     FETCH_UNBLOCKED_CUSTOMERS: '/api/v1/customer/getunblocked',
     FETCH_BLOCKED_CUSTOMERS: '/api/v1/customer/getblockedcustomer',
     APPROVE_ACCOUNTS: '/api/v1/customer/approvelinkedaccount',
+    APPROVE_UNBLOCKED_CUSTOMERS: '/api/v1/customer/approvelinkedaccount',
 
     /************************ SETTINGS ****************************/
 
@@ -126,6 +127,7 @@ export const APP_API_URL = {
     FETCH_UNBLOCKED_CUSTOMERS: '/api/admin/customers/get-unblocked-customers',
     FETCH_BLOCKED_CUSTOMERS: '/api/admin/customers/get-blocked-customers',
     APPROVE_ACCOUNTS: '/api/admin/customers/accounts/approve',
+    APPROVE_UNBLOCKED_CUSTOMERS: '/api/admin/customers/approve-unblocked-customers',
 
     /************************ SETTINGS ****************************/
 

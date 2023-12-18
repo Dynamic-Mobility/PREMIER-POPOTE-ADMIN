@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {customersApis} from "../../api-requests/customers-api";
+import {BLOCK_TYPES} from "../../utils/constants";
 
 const initialState = {
     customers : [],
@@ -128,6 +129,33 @@ export const getUnapprovedCustomers= (authUser, values) => async dispatch => {
             dispatch(setCurrentPage(1));
             dispatch(setPageSize(50));
         }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
+export const getUnblockedCustomers = (authUser, values) => async dispatch => {
+    try {
+        const formData = {
+            ...values,
+            blockType: BLOCK_TYPES.CUSTOMER
+        }
+        const res = await customersApis.fetchUnBlockedCustomersAccounts(authUser, formData);
+        dispatch(setUnBlockedCustomers(res));
+        // if (res.data){
+        //     dispatch(setUnapprovedCustomers(res.data));
+        //     dispatch(setTotalCount(res.totalCount));
+        //     dispatch(setCurrentPage(res.currentPage));
+        //     dispatch(setPageSize(res.pageSize));
+        // }
+        // else{
+        //     dispatch(setCustomers([]));
+        //     dispatch(setTotalCount(0));
+        //     dispatch(setCurrentPage(1));
+        //     dispatch(setPageSize(50));
+        // }
 
     }
     catch (e) {

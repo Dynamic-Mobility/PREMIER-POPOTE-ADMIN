@@ -22,6 +22,10 @@ export const CHANNEL_TYPES = [
         value: 'APP'
     }
 ];
+export const APPROVAL_ACTION_TYPES = {
+    APPROVE: 'Approve',
+    REJECT: 'Reject'
+};
 export const BLOCK_TYPES = {
     CUSTOMER: 'Customer',
     ACCOUNT: 'Account'
@@ -103,8 +107,13 @@ export const PAGE_PERMISSIONS = {
 
 export const PAGES_PATHS = {
     DASHBOARD: '/dashboard/',
+    EXISTING_CUSTOMERS: '/dashboard/customers/all',
     CUSTOMER_DETAILS: '/dashboard/customers/customer-details',
-    APPROVE_NEW_CUSTOMERS: '/dashboard/customers/customer-details',
+    APPROVE_NEW_CUSTOMERS: '/dashboard/customers/new-customers',
+    APPROVE_UNBLOCKED_CUSTOMERS: '/dashboard/customers/approve-unblocked',
+    APPROVE_EDITED_CUSTOMERS: '/dashboard/customers/edited-customers',
+    APPROVE_CUSTOMER_ACCOUNTS: '/dashboard/customers/accounts-approval'
+
 }
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
 import {appName, CHANNEL_TYPES, PAGES_PATHS} from "../../../utils/constants";
@@ -92,8 +92,8 @@ const CustomerDetailsPage = () => {
             actionDesc: customer?.accountDescription,
             idnumber: customer?.idno,
             ip: null,
-            registeredForApp: channelTypes?.includes(CHANNEL_TYPES[0].value),
-            registeredForUSSD: channelTypes?.includes(CHANNEL_TYPES[1].value)
+            registeredForApp: channelTypes?.includes(CHANNEL_TYPES[1].value),
+            registeredForUSSD: channelTypes?.includes(CHANNEL_TYPES[0].value)
         };
         try {
             const res = await customersApis.addUpdateCustomers(
@@ -129,7 +129,7 @@ const CustomerDetailsPage = () => {
   return (
     <>
       <Head>
-        <title>Dashboard | {appName}</title>
+        <title>{title} | {appName}</title>
       </Head>
       <MKBox
           component="main"
@@ -172,7 +172,6 @@ CustomerDetailsPage.getLayout = (page) => (
             <RoleBasedGuard path={PAGES_PATHS.CUSTOMER_DETAILS} page={true}>
                 {page}
             </RoleBasedGuard>
-
         </ModernLayout>
     </AuthGuard>
 

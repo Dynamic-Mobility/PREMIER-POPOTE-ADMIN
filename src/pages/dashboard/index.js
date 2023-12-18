@@ -9,12 +9,14 @@ import DashboardSummary from "../../components/dashboard/dashboard-summary";
 import {AuthGuard} from "../../hocs/auth-guard";
 import RoleBasedGuard from "../../hocs/role-based-guard";
 
+
+const title = "Dashboard";
 const DashboardPage = () => {
 
   return (
     <>
       <Head>
-        <title>Dashboard | {appName}</title>
+        <title>{title} | {appName}</title>
       </Head>
       <MKBox
         component="main"
@@ -27,7 +29,7 @@ const DashboardPage = () => {
           <MKBox sx={{ mb: 2 }}>
             <Grid container justifyContent="space-between" spacing={3}>
               <Grid item>
-                <MKTypography variant="h4">Dashboard</MKTypography>
+                <MKTypography variant="h4">{title}</MKTypography>
               </Grid>
             </Grid>
           </MKBox>

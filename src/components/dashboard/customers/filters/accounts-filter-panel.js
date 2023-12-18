@@ -8,7 +8,7 @@ import {LoadingButton} from "@mui/lab";
 import React, { useState} from "react";
 import DMTTextInput from "../../../@dmt-components/form/text-input";
 
-const CustomerFilterPanel = props => {
+const AccountFilterPanel = props => {
     const { filters, onChangeFilters, onResetFilters, onSearch} = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -75,45 +75,19 @@ const CustomerFilterPanel = props => {
                         <Grid container spacing={1} alignItems={'center'}>
                             <Grid item xs={12} md={12}>
                                 <DMTTextInput
-                                    label={'Customer Name'}
-                                    value={filters.name}
-                                    onChange={e => handleOnFilterChange('name', e.target.value)}
+                                    size="small"
+                                    label={'Account Name'}
+                                    value={filters.accountName}
+                                    onChange={e => handleOnFilterChange('accountName', e.target.value)}
                                     fullWidth={true}
                                 />
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={12}>
                                 <DMTTextInput
-
-                                    label={'ID Number'}
-                                    type={'number'}
-                                    value={filters.idnumber}
-                                    onChange={e => handleOnFilterChange('idnumber', e.target.value)}
-                                    fullWidth={true}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <DMTTextInput
-                                    label={'Phone Number'}
-                                    value={filters.phonenumber}
-                                    onChange={e => handleOnFilterChange('phonenumber', e.target.value)}
-                                    fullWidth={true}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <DMTTextInput
-
+                                    size="small"
                                     label={'CIF No'}
                                     value={filters.cifNumber}
                                     onChange={e => handleOnFilterChange('cifNumber', e.target.value)}
-                                    fullWidth={true}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <DMTTextInput
-                                    label={'Email'}
-                                    type={'email'}
-                                    value={filters.email}
-                                    onChange={e => handleOnFilterChange('email', e.target.value)}
                                     fullWidth={true}
                                 />
                             </Grid>
@@ -141,4 +115,4 @@ const CustomerFilterPanel = props => {
     )
 }
 
-export default CustomerFilterPanel;
+export default AccountFilterPanel;

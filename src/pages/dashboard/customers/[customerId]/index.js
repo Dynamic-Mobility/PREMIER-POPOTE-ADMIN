@@ -12,6 +12,7 @@ import {useAuth} from "../../../../hooks/use-auth";
 import {useRouter} from "next/router";
 import RefreshButton from "../../../../components/@dmt-components/refresh-button";
 import BackButtonLink from "../../../../components/@dmt-components/back-button-link";
+import {AuthGuard} from "../../../../hocs/auth-guard";
 
 const title = 'View Customer';
 const ViewCustomerPage = () => {
@@ -171,9 +172,11 @@ const ViewCustomerPage = () => {
 };
 
 ViewCustomerPage.getLayout = (page) => (
-    <ModernLayout>
-      {page}
-    </ModernLayout>
+    <AuthGuard>
+        <ModernLayout>
+            {page}
+        </ModernLayout>
+    </AuthGuard>
 );
 
 export default ViewCustomerPage;

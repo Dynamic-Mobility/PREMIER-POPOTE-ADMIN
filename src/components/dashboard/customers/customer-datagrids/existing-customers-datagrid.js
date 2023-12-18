@@ -1,20 +1,17 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import { Column } from "devextreme-react/data-grid";
-import Watermark from "../../watermark";
+import Watermark from "../../../watermark";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import {useRouter} from "next/router";
-import MKTypography from "../../@mui-components/typography";
-import DMTChip from "../../@dmt-components/chip";
+import MKTypography from "../../../@mui-components/typography";
+import DMTChip from "../../../@dmt-components/chip";
+import DMTDatagrid from "../../../@dmt-components/data-grid";
 
-const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
-  ssr: false,
-});
-const CustomersDataGrid = (props) => {
-  const { data, handleOnAdd } = props;
+const ExistingCustomersDatagrid = (props) => {
+  const { data } = props;
   const router = useRouter();
-  const actionLink = ({ data, rowIndex }) => {
+  const actionLink = ({ data }) => {
     const handleOnView = () => {
         router.push({
             pathname: `/dashboard/customers/${data?.id}`,
@@ -80,18 +77,10 @@ const CustomersDataGrid = (props) => {
         )
     }
   return (
-    <div>
+    <>
          <Watermark/>
-          <DataGrid
-            dataSource={data}
-            allowColumnReordering={true}
-            rowAlternationEnabled={true}
-            showBorders={true}
-            remoteOperations={true}
-            showColumnLines={true}
-            showRowLines={true}
-            wordWrapEnabled={true}
-            height={"70vh"}
+          <DMTDatagrid
+            data={data}
           >
             <Column minWidth={100} dataField="cif" caption="CIF No" />
             <Column cellRender={actionDisplay}  minWidth={250} dataField="name" caption=" Customer Name" />
@@ -125,9 +114,9 @@ const CustomersDataGrid = (props) => {
               allowFiltering={false}
               cellRender={actionLink}
             />
-          </DataGrid>
-    </div>
+          </DMTDatagrid>
+    </>
   );
 };
 
-export default CustomersDataGrid;
+export default ExistingCustomersDatagrid;

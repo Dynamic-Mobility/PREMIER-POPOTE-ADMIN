@@ -14,12 +14,17 @@ export default async function handler(req, res) {
             if (!req.headers?.authorization){
                 res.status(401).send('Unauthorized');
             }
+            const body = req.body
+
             const config = {
                 headers: {
                     'Authorization': req.headers.authorization,
+                },
+                params: {
+                    blockType: body?.blockType
                 }
             };
-            const body = req.body
+
 
             await backendAxiosInstance.post(`${API_URL.FETCH_UNBLOCKED_CUSTOMERS}`,body, config)
                 .then(response => {
