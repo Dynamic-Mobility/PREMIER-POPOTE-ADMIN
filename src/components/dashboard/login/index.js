@@ -87,8 +87,18 @@ export const LoginForm = (props) => {
 
   }
 
-  const handleOnResendOTP = () => {
-    //TODO: Implement Resend OTP functionality
+  const handleOnResendOTP = async() => {
+    try{
+      const decodedToken = await authApi.decodeToken(userDetail.token);
+      const formData = {
+        userId: decodedToken?.userid,
+      }
+      const res = await authApi.resendOTP(userDetail.token,formData);
+      console.log(res);
+    }
+    catch (e) {
+      console.log(e.message)
+    }
   }
 
   const handleOtherLogouts = async () => {

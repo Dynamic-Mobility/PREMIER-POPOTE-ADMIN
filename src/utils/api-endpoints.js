@@ -6,7 +6,7 @@ export const API_URL = {
     REFRESH_TOKEN: '/api/v1/auth/refresh',
     GET_USER_MENUS: '/api/v1/account/getmenus',
     VALIDATE_OTP: '/api/v1/account/validateotp',
-
+    RESEND_OTP: '/api/v1/auth/resendotp',
 
     /***************** CUSTOMERS **********************/
 
@@ -101,6 +101,7 @@ export const APP_API_URL = {
     REFRESH_TOKEN: '/api/admin/account/refresh-token',
     GET_USER_MENUS: '/api/admin/account/fetch-user-menu',
     VALIDATE_OTP: '/api/admin/account/validate-otp',
+    RESEND_OTP: '/api/admin/account/resend-otp',
 
     /***************** CUSTOMERS **********************/
 

@@ -36,10 +36,6 @@ const CustomersDataGrid = (props) => {
             e.preventDefault();
             router.push({
                 pathname: `/dashboard/customers/${data?.id}`,
-                // pathname: '/dashboard/customers/customer-details',
-                // query: {
-                //     id: data?.id
-                // }
             })
         }
         return (

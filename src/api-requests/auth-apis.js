@@ -12,15 +12,12 @@ class AuthApis{
         const encryptedData = {
             data: secretKey.encrypt(values)
         }
-
         return new Promise(async (resolve, reject) => {
             axiosInstance.post(APP_API_URL.LOGIN, encryptedData).then( response => {
                 const data = secretKey.decrypt(response.data);
                 if(data.token !== null){
                     resolve(data);
-                    // console.log(data)
                 }
-                //reject(new Error('Wrong Username/Password Combination.'))
             }).catch(e => {
                 if (e.response.status === 400){
                     reject(new Error(e.response?.data ?? "Invalid credentials"))
@@ -55,6 +52,21 @@ class AuthApis{
                 }
             };
             axiosInstance.post(APP_API_URL.VALIDATE_OTP, values, config).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+
+    async resendOTP(token, values){
+        return new Promise((resolve, reject) => {
+            const config = {
+                headers: {
+                    'Authorization':  `Bearer ${token}`,
+                }
+            };
+            axiosInstance.post(APP_API_URL.RESEND_OTP, values, config).then( response => {
                 resolve(response.data);
             }).catch(e => {
                 reject(new Error(e.message))
