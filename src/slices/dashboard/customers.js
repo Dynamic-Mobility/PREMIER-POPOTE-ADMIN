@@ -10,6 +10,7 @@ const initialState = {
     blockedAccounts: [],
     blockedCustomers: [],
     unblockedCustomers: [],
+    unblockedAccounts: [],
     totalCount: 0,
     pageSize: 250,
     currentPage: 1,
@@ -32,10 +33,10 @@ const customerSlice = createSlice({
             state.blockedCustomers = action.payload;
         },
         setUnBlockedCustomers: (state,action) =>{
-            state.blockedUnCustomers = action.payload;
+            state.unblockedCustomers = action.payload;
         },
         setUnBlockedAccounts: (state,action) =>{
-            state.blockedUnAccounts = action.payload;
+            state.unblockedAccounts = action.payload;
         },
         setUpdatedCustomers: (state,action) =>{
             state.updatedCustomers = action.payload;

@@ -30,7 +30,7 @@ export const API_URL = {
     FETCH_UNBLOCKED_CUSTOMERS: '/api/v1/customer/getunblocked',
     FETCH_BLOCKED_CUSTOMERS: '/api/v1/customer/getblockedcustomer',
     APPROVE_ACCOUNTS: '/api/v1/customer/approvelinkedaccount',
-    APPROVE_UNBLOCKED_CUSTOMERS: '/api/v1/customer/approvelinkedaccount',
+    APPROVE_UNBLOCKED_CUSTOMERS: '/api/v1/customer/approveunblocked',
 
     /************************ SETTINGS ****************************/
 

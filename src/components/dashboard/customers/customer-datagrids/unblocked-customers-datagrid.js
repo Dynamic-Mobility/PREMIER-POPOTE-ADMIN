@@ -14,39 +14,12 @@ const UnblockedCustomersDatagrid = (props) => {
           <UnblockedCustomerApproval onRefresh={onRefresh} customer={data}/>
       )
   }
-  const actionChannel = ({ displayValue, data }) => {
-      if (data?.registeredPlatforms.length > 0){
-          return  (
-              <>
-                  {
-                      data?.registeredPlatforms.map(channel => (
-                          <>
-                              <DMTChip
-                                  color={'secondary'}
-                                  label={channel}
-                              />
-                              {" "}
-                          </>
-                      ))
-                  }
-              </>
-
-          )
-      }
-      return displayValue;
-  }
-
-    const actionDisplay = ({ data, displayValue}) => {
-        const handleOnClick= async e => {
-            e.preventDefault();
-            await router.push({
-                pathname: `/dashboard/customers/${data?.id}`,
-            })
-        }
+    const actionDisplay = ({ data }) => {
+      const name = data?.firstName+" "+ data?.lastName;
         return (
             <>
-                <MKTypography component={'a'} href={'#'} onClick={handleOnClick} color={'info'} fontWeight={'bold'} fontSize={'inherit'}>
-                    {displayValue}
+                <MKTypography fontWeight={'bold'} fontSize={'inherit'}>
+                    {name}
                 </MKTypography>
             </>
         );
@@ -57,21 +30,20 @@ const UnblockedCustomersDatagrid = (props) => {
      <DMTDatagrid
          data={data}
      >
-         <Column  minWidth={250} dataField="name" caption="Name" cellRender={actionDisplay} />
-         <Column  minWidth={200} dataField="customerIdNo" caption="ID No" />
-         <Column  minWidth={200} dataField="phoneNumber" caption="Phone Number" />
+         <Column  minWidth={200} dataField="name" caption="Name" cellRender={actionDisplay} />
+         <Column  minWidth={100} dataField="cif" caption="CIF No" />
+         <Column  minWidth={150} dataField="phone" caption="Phone Number" />
          <Column
-             dataField="email"
-             caption="Email"
-             minWidth={200}
+             dataField="blockDate"
+             caption="Block Date"
+             minWidth={150}
              allowFiltering={false}
          />
          <Column
-             dataField="registeredPlatform"
-             caption="Registered Channel(s)"
-             minWidth={200}
+             dataField="blockedBy"
+             caption="Blocked By"
+             minWidth={150}
              allowFiltering={false}
-             cellRender={actionChannel}
          />
          <Column
              caption="Action"

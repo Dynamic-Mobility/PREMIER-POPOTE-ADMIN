@@ -43,11 +43,11 @@ const LimitsForm = props => {
                 }
                const res = await settingsApis.createTransactionLimit(authUser, formData);
                 if (res.success){
-                    toast.success("Limit set successfully");
+                    toast.success(res?.errorMsg ?? "Limit set successfully awaiting approval");
                     setIsEditable(false);
                 }
                 else{
-                    toast.error(res?.error ?? "An error occurred while processing request.")
+                    toast.error(res?.errorMsg ?? "An error occurred while processing request.")
                 }
 
             }
