@@ -69,13 +69,13 @@ const NewCustomerApproval = props => {
         try{
             const res = await customersApis.approveCustomer(authUser, formData);
             if(res?.success){
-                toast.success(res?.error ?? "Operation successful!");
+                toast.success(res?.errorMsg ?? "Operation successful!");
                 handleCloseDialog();
                 handleClose();
                 await onRefresh();
             }
             else{
-                toast.error(res?.error ?? "An error occurred while processing request. Try again later.");
+                toast.error(res?.errorMsg ?? "An error occurred while processing request. Try again later.");
             }
         }
         catch (e) {

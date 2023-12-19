@@ -7,6 +7,8 @@ import {getBrowserDetails, getIPAddress} from "../../../utils/helper-functions";
 import {useAuth} from "../../../hooks/use-auth";
 import {usersApis} from "../../../api-requests/users-apis";
 import {toast} from "react-toastify";
+import {PAGE_PERMISSIONS, PAGES_PATHS} from "../../../utils/constants";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
 const UpdateUserStatus = props => {
     const { user, onClose, onRefresh } = props;
     const [isLoading, setIsLoading] = useState(false);
@@ -66,8 +68,9 @@ const UpdateUserStatus = props => {
 
     return (
         <>
+
             {Boolean(user?.approved) && (
-                <>
+                <RoleBasedGuard path={PAGES_PATHS.MANAGE_USERS} permission={PAGE_PERMISSIONS.EDIT.value}>
                     {Boolean(user?.status !== 'Active') ? (
                         <MenuItem onClick={() => handleOnApprove()}>
                             <CheckIcon sx={{mr: 1}}  color={'success'}/>
@@ -88,7 +91,7 @@ const UpdateUserStatus = props => {
                             onOk:onApprove,
                         }}
                     />
-                </>
+                </RoleBasedGuard>
             )}
         </>
     )

@@ -112,7 +112,15 @@ export const PAGES_PATHS = {
     APPROVE_NEW_CUSTOMERS: '/dashboard/customers/new-customers',
     APPROVE_UNBLOCKED_CUSTOMERS: '/dashboard/customers/approve-unblocked',
     APPROVE_EDITED_CUSTOMERS: '/dashboard/customers/edited-customers',
-    APPROVE_CUSTOMER_ACCOUNTS: '/dashboard/customers/accounts-approval'
+    APPROVE_CUSTOMER_ACCOUNTS: '/dashboard/customers/accounts-approval',
+    GLOBAL_LIMITS: '/dashboard/parameters/global-limits',
+    PERSONALIZED_LIMITS: '/dashboard/parameters/personalized-limits',
+    APPROVE_LIMITS: '/dashboard/parameters/approve-limits',
+    APPROVE_EDITED_LIMITS: '/dashboard/parameters/approve-edited-limits',
+    GLOBAL_CHARGES: '/dashboard/parameters/charges',
+    USER_ROLES: '/dashboard/roles/user-roles',
+    MANAGE_USERS: '/dashboard/users/existing',
+    APPROVE_USERS: '/dashboard/users/approve',
 
 }
 

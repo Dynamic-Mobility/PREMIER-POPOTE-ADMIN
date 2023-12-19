@@ -11,9 +11,9 @@ import CustomerSearch from "../../../components/dashboard/customers/customer-det
 import {customersApis} from "../../../api-requests/customers-api";
 import {toast} from "react-toastify";
 import {useAuth} from "../../../hooks/use-auth";
-import {useRouter} from "next/router";
 import {AuthGuard} from "../../../hocs/auth-guard";
 import RoleBasedGuard from "../../../hocs/role-based-guard";
+import {getIPAddress} from "../../../utils/helper-functions";
 
 const title = 'Customer Details';
 const CustomerDetailsPage = () => {
@@ -21,8 +21,7 @@ const CustomerDetailsPage = () => {
     const [ customerAccounts, setCustomerAccounts] = useState([]);
     const [existingCustomer, setExistingCustomer] = useState(null);
     const authUser = useAuth();
-    const router = useRouter();
-    const customerId = router.query?.id;
+    const [searchAccNo, setSearchAccNo] = useState("");
 
     const getCustomerAccounts = async (cifNo) => {
         try{
@@ -44,6 +43,9 @@ const CustomerDetailsPage = () => {
                 toast.success("Customer Found!");
                 if (res?.customerId){
                     await getCustomerById(res?.customerId);
+                }
+                else{
+                    setSearchAccNo(cifNumber);
                 }
                 // if customer is found get their accounts
                 await getCustomerAccounts(res?.cif_no);
@@ -69,6 +71,7 @@ const CustomerDetailsPage = () => {
     }
 
     const handleOnAddUpdate = async (channelTypes) => {
+        const ipAddress = await getIPAddress();
         const formattedData = {
             firstName: customer?.firstName,
             lastName: customer?.lastName,
@@ -88,10 +91,11 @@ const CustomerDetailsPage = () => {
             town: customer?.physicalAddress,
             geoLocation: null,
             name: customer?.name,
+            defaultAccountNumber: searchAccNo,
             secondaryEmail: customer?.email,
             actionDesc: customer?.accountDescription,
             idnumber: customer?.idno,
-            ip: null,
+            ip: ipAddress,
             registeredForApp: channelTypes?.includes(CHANNEL_TYPES[1].value),
             registeredForUSSD: channelTypes?.includes(CHANNEL_TYPES[0].value)
         };
@@ -109,6 +113,7 @@ const CustomerDetailsPage = () => {
                     custExist: true,
                 })
                 await getCustomerById(res.id);
+                await  getCustomerAccounts(customer.cif_no);
             }
             else{
                 toast.error(res?.errorMessage ?? 'Unable to process request. Try again!');

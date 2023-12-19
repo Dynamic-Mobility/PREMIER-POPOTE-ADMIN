@@ -1,4 +1,4 @@
-import { appName } from "../../../utils/constants";
+import {appName, PAGES_PATHS} from "../../../utils/constants";
 import MKTypography from "../../../components/@mui-components/typography";
 import Head from "next/head";
 import MKBox from "../../../components/@mui-components/box";
@@ -7,13 +7,14 @@ import Card from "@mui/material/Card";
 import ModernLayout from "../../../components/layouts/modern";
 import {useDispatch, useSelector} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
-import {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import UsersDatagrid from "../../../components/dashboard/users/users-datagrid";
 import {getAllUsers} from "../../../slices/dashboard/users";
 import CreateUserDialog from "../../../components/dashboard/users/create-user-dialog";
 import {ButtonGroup} from "@mui/material";
 import RefreshButton from "../../../components/@dmt-components/refresh-button";
 import {AuthGuard} from "../../../hocs/auth-guard";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
 
 
 const title = "Manage Users";
@@ -68,11 +69,13 @@ const ExistingUsersPage = () => {
 };
 
 ExistingUsersPage.getLayout = (page) => (
-   <AuthGuard>
+    <AuthGuard>
         <ModernLayout>
-            {page}
+            <RoleBasedGuard path={PAGES_PATHS.MANAGE_USERS} page={true}>
+                {page}
+            </RoleBasedGuard>
         </ModernLayout>
-   </AuthGuard>
+    </AuthGuard>
 );
 
 export default ExistingUsersPage;

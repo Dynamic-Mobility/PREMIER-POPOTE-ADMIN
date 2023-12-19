@@ -73,6 +73,7 @@ const UsersActions = props => {
                             {" "}
                             {" View User"}
                         </MenuItem>
+
                         <CreateUserDialog onRefresh={onRefresh} user={user} onClose={handleClose}/>
                         <UpdateUserStatus onRefresh={onRefresh} user={user} onClose={handleClose} />
                     </>

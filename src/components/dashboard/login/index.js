@@ -117,12 +117,14 @@ export const LoginForm = (props) => {
         sessionId: userDetail?.sessionId,
       });
 
+      await authApi.resendOTP(res?.token, { userId: decodedToken?.userid })
+
       setUserDetail({
         ...userDetail,
         token: res.token,
         refreshToken: res?.refreshToken,
         sessionId:res?.sessionId,
-      })
+      });
 
       socket.emit('outgoing-message', JSON.stringify(dataToSend));
       setActiveStep(1);

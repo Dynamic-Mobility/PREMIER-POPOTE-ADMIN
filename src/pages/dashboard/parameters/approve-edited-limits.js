@@ -9,6 +9,9 @@ import {useAuth} from "../../../hooks/use-auth";
 import ApprovalLimitsDatagrid from "../../../components/dashboard/limits/limit-approvals/approval-limits-datagrid";
 import {getEditedUnapprovedLimits, getUnapprovedLimits} from "../../../slices/dashboard/settings";
 import RefreshButton from "../../../components/@dmt-components/refresh-button";
+import {AuthGuard} from "../../../hocs/auth-guard";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
+import {PAGES_PATHS} from "../../../utils/constants";
 
 const title = "Edited Limits Approval";
 
@@ -63,9 +66,13 @@ const  EditedLimitsPage = () => {
 EditedLimitsPage.getLayout = (page) => {
     return (
         <>
-            {/* <AuthGuard> */}
-            <ModernLayout>{page}</ModernLayout>
-            {/* </AuthGuard> */}
+            <AuthGuard>
+                <ModernLayout>
+                    <RoleBasedGuard path={PAGES_PATHS.APPROVE_EDITED_LIMITS} page={true}>
+                        {page}
+                    </RoleBasedGuard>
+                </ModernLayout>
+            </AuthGuard>
         </>
     );
 };

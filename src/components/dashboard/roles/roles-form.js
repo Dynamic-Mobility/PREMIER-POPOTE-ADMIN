@@ -11,6 +11,7 @@ import {rolesApis} from "../../../api-requests/roles-apis";
 import {useAuth} from "../../../hooks/use-auth";
 import {useSelector} from "../../../store";
 import {formatPermissions} from "../../../utils/helper-functions";
+import {toast} from "react-toastify";
 
 const RolesForm = props => {
     const { role } = props;
@@ -33,6 +34,12 @@ const RolesForm = props => {
                    rolePermissions: rolePermissions
                }
                const res = await rolesApis.createRole(authUser, formData);
+               if (res.success){
+                   toast.success(res?.errorMsg ?? "Operation successful!")
+               }
+               else{
+                   toast.error(res?.errorMsg ?? "Oops an error occurred while processing request!")
+               }
                console.log(res);
            }
            catch (e) {

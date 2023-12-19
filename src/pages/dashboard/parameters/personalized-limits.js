@@ -1,4 +1,4 @@
-import { appName } from "../../../utils/constants";
+import {appName, PAGES_PATHS} from "../../../utils/constants";
 import MKTypography from "../../../components/@mui-components/typography";
 import Head from "next/head";
 import MKBox from "../../../components/@mui-components/box";
@@ -8,8 +8,10 @@ import ModernLayout from "../../../components/layouts/modern";
 import PersonalizedLimits from "../../../components/dashboard/limits/personalized-limits";
 import {useDispatch} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
-import {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {getTransactionTypes} from "../../../slices/dashboard/settings";
+import {AuthGuard} from "../../../hocs/auth-guard";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
 
 
 const title = "Personalized Limits";
@@ -54,11 +56,13 @@ const PersonalizedLimitsPage = () => {
 };
 
 PersonalizedLimitsPage.getLayout = (page) => (
-  // <AuthGuard>
-    <ModernLayout>
-        {page}
-    </ModernLayout>
-  // </AuthGuard>
+    <AuthGuard>
+        <ModernLayout>
+            <RoleBasedGuard path={PAGES_PATHS.PERSONALIZED_LIMITS} page={true}>
+                {page}
+            </RoleBasedGuard>
+        </ModernLayout>
+    </AuthGuard>
 );
 
 export default PersonalizedLimitsPage;

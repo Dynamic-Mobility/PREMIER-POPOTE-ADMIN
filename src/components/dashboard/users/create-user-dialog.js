@@ -5,6 +5,8 @@ import UsersForm from "./users-form";
 import MKButton from "../../@mui-components/button";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuItem from "@mui/material/MenuItem";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
+import {PAGE_PERMISSIONS, PAGES_PATHS, PERMISSIONS} from "../../../utils/constants";
 
 const CreateUserDialog = props => {
     const [openDialog, setOpenDialog] = useState(false);
@@ -20,15 +22,20 @@ const CreateUserDialog = props => {
     return(
         <>
             {Boolean(user) ? (
-                <MenuItem onClick={handleOnOpen}>
-                    <EditIcon sx={{mr: 1}} />
-                    {" "}
-                    {" Edit User"}
-                </MenuItem>
+                <RoleBasedGuard path={PAGES_PATHS.MANAGE_USERS} permission={PAGE_PERMISSIONS.EDIT.value}>
+                    <MenuItem onClick={handleOnOpen}>
+                        <EditIcon sx={{mr: 1}} />
+                        {" "}
+                        {" Edit User"}
+                    </MenuItem>
+                </RoleBasedGuard>
             ): (
-                <MKButton onClick={handleOnOpen} variant={'contained'} color={'primary'}>
-                    {"Create User"}
-                </MKButton>
+                <RoleBasedGuard path={PAGES_PATHS.MANAGE_USERS} permission={PAGE_PERMISSIONS.CREATE.value}>
+                    <MKButton onClick={handleOnOpen} variant={'contained'} color={'primary'}>
+                        {"Create User"}
+                    </MKButton>
+                </RoleBasedGuard>
+
             )}
 
             <DMTDialog

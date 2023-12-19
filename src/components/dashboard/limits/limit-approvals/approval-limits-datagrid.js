@@ -30,10 +30,12 @@ const ApprovalLimitsDatagrid = props => {
             <DMTDatagrid
                 data={data}
             >
-                <Column minWidth={250} dataField="name" caption="Transaction Type" />
-                <Column minWidth={250} dataField="limitType" caption="Limit Type" />
-                <Column minWidth={200} dataField="dailyAmtLimit" caption="Daily Limit" cellRender={actionAmount} format={'raw'} />
-                <Column minWidth={200} dataField="transactionAmtLimit" caption="Transaction Limit" cellRender={actionAmount} format={'raw'} />
+                <Column minWidth={150} dataField="name" caption="Transaction Type" />
+                <Column minWidth={120} dataField="limitType" caption="Limit Type" />
+                <Column minWidth={180} dataField="dailyAmtLimit" caption="Daily Limit" cellRender={actionAmount} format={'raw'} />
+                <Column minWidth={180} dataField="transactionAmtLimit" caption="Transaction Limit" cellRender={actionAmount} format={'raw'} />
+                <Column minWidth={250} dataField="accountName" caption="A/C Name" />
+                <Column minWidth={150} dataField="accountNumber" caption="A/C No" />
                 <Column
                     dataField="startDate"
                     caption="Start Date"

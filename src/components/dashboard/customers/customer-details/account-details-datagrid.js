@@ -95,6 +95,19 @@ const AccountDetailsDatagrid = (props) => {
 
     }
 
+    const formatApprovalStatus = ({ data, displayValue }) => {
+        let color = displayValue === 'Approved' ? 'success' :  'error';
+        return (
+            <DMTChip
+                //numeral={true}
+                label={displayValue}
+                color={color}
+                variant={"outlined"}
+            />
+        )
+
+    }
+
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
@@ -121,10 +134,11 @@ const AccountDetailsDatagrid = (props) => {
             wordWrapEnabled={true}
             // height={"70vh"}
           >
-            <Column dataField="account" caption="A/C Number" />
+            <Column minWidth={150} dataField="account" caption="A/C Number" />
             <Column minWidth={250} dataField="longname" caption="A/C Name" />
-            <Column dataField="currencyCode" caption="Currency Code" />
-            <Column cellRender={formatStatus} dataField="status" caption="Status" />
+            <Column minWidth={100} dataField="currencyCode" caption="Currency Code" />
+            <Column minWidth={110} cellRender={formatStatus} dataField="status" caption="Status" />
+            <Column minWidth={150} cellRender={formatApprovalStatus} dataField="localStatus" caption="Approval Status" />
             <Column
               caption="Action"
               width={120}

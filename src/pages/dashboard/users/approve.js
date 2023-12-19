@@ -1,4 +1,4 @@
-import { appName } from "../../../utils/constants";
+import {appName, PAGES_PATHS} from "../../../utils/constants";
 import MKTypography from "../../../components/@mui-components/typography";
 import Head from "next/head";
 import MKBox from "../../../components/@mui-components/box";
@@ -7,12 +7,13 @@ import Card from "@mui/material/Card";
 import ModernLayout from "../../../components/layouts/modern";
 import {useDispatch, useSelector} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
-import {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {getAllUnApprovedUsers} from "../../../slices/dashboard/users";
 import {ButtonGroup} from "@mui/material";
 import RefreshButton from "../../../components/@dmt-components/refresh-button";
 import UsersApprovalDatagrid from "../../../components/dashboard/users/users-approval-datagrid";
 import {AuthGuard} from "../../../hocs/auth-guard";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
 
 
 const title = "Approve Users";
@@ -66,11 +67,13 @@ const ApproveUsersPage = () => {
 };
 
 ApproveUsersPage.getLayout = (page) => (
-  <AuthGuard>
-    <ModernLayout>
-        {page}
-    </ModernLayout>
-  </AuthGuard>
+    <AuthGuard>
+        <ModernLayout>
+            <RoleBasedGuard path={PAGES_PATHS.APPROVE_USERS} page={true}>
+                {page}
+            </RoleBasedGuard>
+        </ModernLayout>
+    </AuthGuard>
 );
 
 export default ApproveUsersPage;
