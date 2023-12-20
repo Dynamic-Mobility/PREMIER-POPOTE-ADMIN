@@ -1,17 +1,21 @@
 import React from "react";
 import { Column} from "devextreme-react/data-grid";
 import { useRouter } from "next/router";
-import DMTChip from "../../../@dmt-components/chip";
 import MKTypography from "../../../@mui-components/typography";
 import DMTDatagrid from "../../../@dmt-components/data-grid";
 import UnblockedCustomerApproval from "../customer-approval/unblocked-customer-approval";
+import {BLOCK_TYPES} from "../../../../utils/constants";
 
 const UnblockedCustomersDatagrid = (props) => {
   const { data, onRefresh } = props;
   const router = useRouter();
   const actionApproval = ({ data }) => {
       return (
-          <UnblockedCustomerApproval onRefresh={onRefresh} customer={data}/>
+          <UnblockedCustomerApproval
+              onRefresh={onRefresh}
+              customer={data}
+              blockType={BLOCK_TYPES.CUSTOMER}
+          />
       )
   }
     const actionDisplay = ({ data }) => {
@@ -40,7 +44,7 @@ const UnblockedCustomersDatagrid = (props) => {
              allowFiltering={false}
          />
          <Column
-             dataField="blockedBy"
+             dataField="blockedByName"
              caption="Blocked By"
              minWidth={150}
              allowFiltering={false}

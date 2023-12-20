@@ -196,6 +196,18 @@ class CustomersApis {
             })
         })
     }
+
+    fetchPinRequests (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_PIN_RESETS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
     approveAccounts(authUser, values) {
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(authUser);
@@ -212,6 +224,18 @@ class CustomersApis {
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(authUser);
             axiosInstance.post(APP_API_URL.APPROVE_UNBLOCKED_CUSTOMERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    async approvePinReset(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.APPROVE_PIN_RESETS, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))

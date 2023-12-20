@@ -1,6 +1,5 @@
-import { backendAxiosInstance } from "../../../../../api-requests/backend-axios-instance";
-import { API_METHODS,API_URL } from "../../../../../utils/api-endpoints";
-import {formatMultipleQuery} from "../../../../../utils/helper-functions";
+import { backendAxiosInstance } from "../../../../api-requests/backend-axios-instance";
+import { API_METHODS,API_URL } from "../../../../utils/api-endpoints";
 
 export const config = {
     api: {
@@ -20,10 +19,9 @@ export default async function handler(req, res) {
                     'Authorization': req.headers.authorization,
                 }
             };
-            const body = req.body
-            const queryString = formatMultipleQuery(body.transactionType, 'transactionType');
+            const body = req.body;
 
-            await backendAxiosInstance.post(`${API_URL.FETCH_ALL_TRANSACTIONS_REPORT}/${body.reportType}?${queryString}`,body, config)
+            await backendAxiosInstance.post(`${API_URL.APPROVE_PIN_RESETS}`,body, config)
                 .then(response => {
                     res.status(200).json(response.data);
                 })

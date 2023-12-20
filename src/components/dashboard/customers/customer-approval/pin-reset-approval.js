@@ -6,13 +6,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import ConfirmationDialog from "../../../@dmt-components/confirmation-dialog";
-import {settingsApis} from "../../../../api-requests/settings-apis";
 import {useAuth} from "../../../../hooks/use-auth";
 import {getBrowserDetails, getIPAddress} from "../../../../utils/helper-functions";
 import {toast} from "react-toastify";
+import {customersApis} from "../../../../api-requests/customers-api";
+import {APPROVAL_ACTION_TYPES} from "../../../../utils/constants";
 
-const ApprovalLimitsActions = props => {
-    const { limit, onRefresh, edited } = props;
+const PinResetApproval = props => {
+    const { customer, onRefresh} = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const authUser = useAuth();
@@ -25,8 +26,8 @@ const ApprovalLimitsActions = props => {
         onOk: null,
     });
 
-    const labelID = `action_menu_${limit?.id}`;
-    const buttonID = `action_button_${limit?.id}`;
+    const labelID = `action_menu_${customer?.id}`;
+    const buttonID = `action_button_${customer?.id}`;
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -45,8 +46,7 @@ const ApprovalLimitsActions = props => {
         const action = reject ? "reject" : "approve";
         setDialogProps({
             open: true,
-            message: `Are you sure you want to ${action} ${limit?.name} of limit type ${limit?.limitType}?`,
-            onOk: onApprove,
+            message: `Are you sure you want to ${action} pin reset request for ${customer?.name}?`,
             reject: reject,
             showReason: reject,
         })
@@ -57,30 +57,24 @@ const ApprovalLimitsActions = props => {
         const browser = getBrowserDetails();
         const ipAddress = await getIPAddress();
         const formData = {
-            id: limit?.id,
-            userId: authUser?.user?.userid ?? "",
+            customerId: customer?.id,
+            customerUserId: customer?.customerUserId,
+            approvedBy: authUser?.user?.userid ?? "",
+            actionType: dialogProps?.reject ? APPROVAL_ACTION_TYPES.REJECT : APPROVAL_ACTION_TYPES.APPROVE,
+            reason: reason,
             browser: browser,
-            rejectReason: reason,
-            reject: dialogProps?.reject,
             ip: ipAddress
         }
         try{
-            let res;
-            if (edited){
-                res = await settingsApis.approveEditedUnapprovedLimits(authUser, formData);
-            }
-            else{
-                res = await settingsApis.approveUnapprovedLimits(authUser, formData);
-            }
-
+            const res = await customersApis.approveCustomer(authUser, formData);
             if(res?.success){
-                toast.success(res?.errorMessage ?? "Limit approved successfully!");
+                toast.success(res?.errorMsg ?? "Operation successful!");
                 handleCloseDialog();
                 handleClose();
                 await onRefresh();
             }
             else{
-                toast.error(res?.errorMessage ?? "An error occurred while processing request. Try again later.");
+                toast.error(res?.errorMsg ?? "An error occurred while processing request. Try again later.");
             }
         }
         catch (e) {
@@ -114,16 +108,17 @@ const ApprovalLimitsActions = props => {
                 <MenuItem onClick={() => handleOnApprove()}>
                     <CheckIcon sx={{mr: 1}}  color={'success'}/>
                     {" "}
-                    {" Approve Limit"}
+                    {" Approve"}
                 </MenuItem>
                 <MenuItem onClick={() => handleOnApprove(true)}>
                     <CloseIcon sx={{mr: 1}} color={'error'}/>
-                    {"Reject Limit"}
+                    {"Reject"}
                 </MenuItem>
             </Menu>
             <ConfirmationDialog
                 {...{
                     ...dialogProps,
+                    onOk: onApprove,
                     onClose: handleCloseDialog,
                     isLoading: isLoading
                 }}
@@ -132,4 +127,4 @@ const ApprovalLimitsActions = props => {
     )
 }
 
-export default ApprovalLimitsActions;
+export default PinResetApproval;

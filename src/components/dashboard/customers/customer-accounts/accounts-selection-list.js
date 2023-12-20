@@ -40,7 +40,7 @@ const AccountsSelectionList = props => {
                 }
             });
             const res = await customersApis.approveAccounts(authUser, formData);
-            if (!res?.success){
+            if (res?.success){
                 toast.success(res?.errorMessage ?? "Account(s) approved successfully!");
                 setIsLoading(false);
                 onClose?.();

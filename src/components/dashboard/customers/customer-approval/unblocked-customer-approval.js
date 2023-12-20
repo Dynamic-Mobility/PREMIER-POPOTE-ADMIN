@@ -13,7 +13,7 @@ import {customersApis} from "../../../../api-requests/customers-api";
 import {APPROVAL_ACTION_TYPES} from "../../../../utils/constants";
 
 const UnblockedCustomerApproval = props => {
-    const { customer, onRefresh, accountId = null } = props;
+    const { customer, onRefresh, blockType, accountId = null } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const authUser = useAuth();
@@ -47,7 +47,7 @@ const UnblockedCustomerApproval = props => {
         const action = reject ? "reject" : "approve";
         setDialogProps({
             open: true,
-            message: `Are you sure you want to ${action} unblock request for ${customer?.name}?`,
+            message: `Are you sure you want to ${action} unblock request for ${customer?.firstName} ${customer?.lastName}?`,
             reject: reject,
             showReason: reject,
         })
@@ -58,23 +58,25 @@ const UnblockedCustomerApproval = props => {
         const browser = getBrowserDetails();
         const ipAddress = await getIPAddress();
         const formData = {
-            id: customer?.id,
+            recordId: customer?.id,
             approvedBy: authUser?.user?.userid ?? "",
             actionType: dialogProps?.reject ? APPROVAL_ACTION_TYPES.REJECT : APPROVAL_ACTION_TYPES.APPROVE,
             reason: reason,
             browser: browser,
+            accountId: accountId,
+            blockType: blockType,
             ip: ipAddress
         }
         try{
             const res = await customersApis.approveUnblockedCustomer(authUser, formData);
             if(res?.success){
-                toast.success(res?.errorMsg ?? "Operation successful!");
+                toast.success(res?.errorMessage ?? "Operation successful!");
                 handleCloseDialog();
                 handleClose();
                 await onRefresh();
             }
             else{
-                toast.error(res?.errorMsg ?? "An error occurred while processing request. Try again later.");
+                toast.error(res?.errorMessage ?? "An error occurred while processing request. Try again later.");
             }
         }
         catch (e) {
@@ -104,7 +106,7 @@ const UnblockedCustomerApproval = props => {
                 MenuListProps={{
                     'aria-labelledby': buttonID,
                 }}
-                >
+            >
                 <MenuItem onClick={() => handleOnApprove()}>
                     <CheckIcon sx={{mr: 1}}  color={'success'}/>
                     {" "}

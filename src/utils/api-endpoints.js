@@ -31,6 +31,8 @@ export const API_URL = {
     FETCH_BLOCKED_CUSTOMERS: '/api/v1/customer/getblockedcustomer',
     APPROVE_ACCOUNTS: '/api/v1/customer/approvelinkedaccount',
     APPROVE_UNBLOCKED_CUSTOMERS: '/api/v1/customer/approveunblocked',
+    FETCH_PIN_RESETS: '/api/v1/customer/getresetpinrequests',
+    APPROVE_PIN_RESETS: '/api/v1/customer/approveresetpinrequest',
 
     /************************ SETTINGS ****************************/
 
@@ -125,9 +127,13 @@ export const APP_API_URL = {
 
     FETCH_UNAPPROVED_ACCOUNTS: '/api/admin/customers/accounts/unapproved',
     FETCH_UNBLOCKED_CUSTOMERS: '/api/admin/customers/get-unblocked-customers',
+
     FETCH_BLOCKED_CUSTOMERS: '/api/admin/customers/get-blocked-customers',
     APPROVE_ACCOUNTS: '/api/admin/customers/accounts/approve',
     APPROVE_UNBLOCKED_CUSTOMERS: '/api/admin/customers/approve-unblocked-customers',
+
+    FETCH_PIN_RESETS: '/api/admin/customers/get-pin-resets',
+    APPROVE_PIN_RESETS: 'api/admin/customers/approve-pin-resets',
 
     /************************ SETTINGS ****************************/
 

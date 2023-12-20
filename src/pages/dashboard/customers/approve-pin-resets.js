@@ -1,23 +1,21 @@
 import React, {useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import ExistingCustomersDatagrid from "../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
 import MKBox from "../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../store";
-import {getAllCustomers, getUnblockedCustomers} from "../../../slices/dashboard/customers";
+import {getPinResets} from "../../../slices/dashboard/customers";
 import {useAuth} from "../../../hooks/use-auth";
-import UnblockedCustomersDatagrid
-  from "../../../components/dashboard/customers/customer-datagrids/unblocked-customers-datagrid";
 import {AuthGuard} from "../../../hocs/auth-guard";
 import RoleBasedGuard from "../../../hocs/role-based-guard";
 import {PAGES_PATHS} from "../../../utils/constants";
+import PinResetsDatagrid from "../../../components/dashboard/customers/customer-datagrids/pin-resets-datagrid";
 
-const title = "Approve Unblocked Customers";
+const title = "Approve Pin Reset";
 
-const  UnblockedCustomersPage = () => {
+const  ApprovePinResetsPage = () => {
   const initialFilters = {
     name: "",
     idnumber: "",
@@ -27,7 +25,7 @@ const  UnblockedCustomersPage = () => {
   }
   const [filters, setFilters] = useState(initialFilters);
   const dispatch = useDispatch();
-  const { unblockedCustomers, pageSize, currentPage} = useSelector(( { customers }) => customers);
+  const { pinResets , pageSize, currentPage} = useSelector(( { customers }) => customers);
   const authUser = useAuth();
 
   const handleOnChangeFilters = values => {
@@ -41,26 +39,26 @@ const  UnblockedCustomersPage = () => {
       pageSize,
       pageNumber: currentPage,
     }
-    await dispatch(getUnblockedCustomers(authUser,values ))
+    await dispatch(getPinResets(authUser,values ))
   }
 
   const handleOnSearch = async () => {
-    await fetchCustomers();
+    await fetchPinResets();
   }
 
-  const fetchCustomers = async () => {
+  const fetchPinResets = async () => {
     const values = {
       ...filters,
       pageSize,
       pageNumber: currentPage,
 
    }
-    await dispatch(getUnblockedCustomers(authUser,values ))
+    await dispatch(getPinResets(authUser,values ))
   }
 
 
   useEffect(() => {
-    fetchCustomers();
+    fetchPinResets();
   }, [])
 
   return (
@@ -90,7 +88,7 @@ const  UnblockedCustomersPage = () => {
           </Grid>
           </MKBox>
           <Card sx={{ p: 1 }}>
-            <UnblockedCustomersDatagrid data={unblockedCustomers} onRefresh={fetchCustomers} />
+            <PinResetsDatagrid data={pinResets} onRefresh={fetchPinResets} />
           </Card>
         </MKBox>
 
@@ -98,12 +96,12 @@ const  UnblockedCustomersPage = () => {
   );
 };
 
-UnblockedCustomersPage.getLayout = (page) => {
+ApprovePinResetsPage.getLayout = (page) => {
   return (
     <>
       <AuthGuard>
         <ModernLayout>
-          <RoleBasedGuard path={PAGES_PATHS.APPROVE_UNBLOCKED_CUSTOMERS} page={true}>
+          <RoleBasedGuard path={PAGES_PATHS.APPROVE_PIN_RESETS} page={true}>
             {page}
           </RoleBasedGuard>
         </ModernLayout>
@@ -112,4 +110,4 @@ UnblockedCustomersPage.getLayout = (page) => {
   );
 };
 
-export default UnblockedCustomersPage;
+export default ApprovePinResetsPage;
