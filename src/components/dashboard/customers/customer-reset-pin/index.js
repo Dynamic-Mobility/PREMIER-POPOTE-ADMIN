@@ -104,20 +104,26 @@ const CustomerResetPin = props => {
                 open={openDialog}
                 onClose={handleOnCloseDialog}
             >
-                <DialogTitle>
+                <DialogTitle
+                    sx={{
+                        display: 'flex',
+                        justifyContent:'center',
+                        gap: 2,
+                        alignItems: 'center',
+                        flexDirection: 'column'
+                    }}
+                >
                     {"Reset Customer Pin"}
                 </DialogTitle>
                 <DialogContent>
                     <MKBox>
-                        <>
-                            <InitializationStep
-                                customer={customer}
-                                channelType = {channelType}
-                                onChangeChannelType = {handleOnChangeChannelType}
-                                onInitialize = {handleOnInitialization}
-                                onCancel={handleOnCloseDialog}
-                            />
-                        </>
+                        <InitializationStep
+                            customer={customer}
+                            channelType = {channelType}
+                            onChangeChannelType = {handleOnChangeChannelType}
+                            onInitialize = {handleOnInitialization}
+                            onCancel={handleOnCloseDialog}
+                        />
                         {/*<Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>*/}
                         {/*    {steps.map((step, index) => (*/}
                         {/*        <Step key={index}>*/}

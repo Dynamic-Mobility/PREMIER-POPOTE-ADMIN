@@ -26,7 +26,7 @@ const InitializationStep = props => {
 
      return (
          <>
-             <MKBox sx={{ mt: 2, display: 'flex', justifyContent:'center', gap: 2, alignItems: 'center', flexDirection: 'column'}}>
+             <MKBox sx={{ display: 'flex', justifyContent:'center', gap: 2, alignItems: 'center', flexDirection: 'column'}}>
                  <MKTypography align={'center'} >
                      {"Are you sure you want to reset pin for"}
                      {" "}
