@@ -133,7 +133,7 @@ export const APP_API_URL = {
     APPROVE_UNBLOCKED_CUSTOMERS: '/api/admin/customers/approve-unblocked-customers',
 
     FETCH_PIN_RESETS: '/api/admin/customers/get-pin-resets',
-    APPROVE_PIN_RESETS: 'api/admin/customers/approve-pin-resets',
+    APPROVE_PIN_RESETS: '/api/admin/customers/approve-pin-resets',
 
     /************************ SETTINGS ****************************/
 

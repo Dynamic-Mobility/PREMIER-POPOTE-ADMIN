@@ -42,7 +42,7 @@ const InitializationStep = props => {
                          {"No, Cancel"}
                      </MKButton>
                      <MKButton disabled={isLoading} startIcon={isLoading && <LoaderIcon/>} onClick={handleOnProceed} sx={{ width: 'auto'}} variant={'contained'} color={'success'}>
-                         {isLoading ? "Initializing" : "Yes, Proceed"}
+                         {isLoading ? "Processing" : "Yes, Proceed"}
                      </MKButton>
                  </MKBox>
              </MKBox>

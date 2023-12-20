@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import MKTypography from "../../../@mui-components/typography";
 import DMTDatagrid from "../../../@dmt-components/data-grid";
 import PinResetApproval from "../customer-approval/pin-reset-approval";
+import DMTChip from "../../../@dmt-components/chip";
 
 const PinRequestsDatagrid = (props) => {
   const { data, onRefresh } = props;
@@ -30,18 +31,51 @@ const PinRequestsDatagrid = (props) => {
         );
     };
 
+    const actionChannel = ({ displayValue, data }) => {
+        return (
+            <>
+                <DMTChip
+                    color={'secondary'}
+                    label={displayValue}
+                />
+            </>
+
+        );
+    }
+
   return (
     <>
      <DMTDatagrid
          data={data}
      >
          <Column  minWidth={250} dataField="name" caption="Name" cellRender={actionDisplay} />
-         <Column  minWidth={200} dataField="customerIdNo" caption="ID No" />
-         <Column  minWidth={200} dataField="phoneNumber" caption="Phone Number" />
+         <Column  minWidth={150} dataField="customerIdNo" caption="ID No" />
+         <Column  minWidth={150} dataField="phoneNumber" caption="Phone Number" />
          <Column
              dataField="email"
              caption="Email"
              minWidth={200}
+             visible={false}
+             allowFiltering={false}
+         />
+         <Column
+             dataField="channelType"
+             caption="Channel Type"
+             minWidth={150}
+             allowFiltering={false}
+             cellRender={actionChannel}
+         />
+         <Column
+             dataField="pinResetByName"
+             caption="Initiated By"
+             minWidth={200}
+             allowFiltering={false}
+         />
+         <Column
+             dataField="dateInitiated"
+             caption="Date"
+             minWidth={150}
+             format={'datetime'}
              allowFiltering={false}
          />
          <Column

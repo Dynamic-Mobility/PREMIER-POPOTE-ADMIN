@@ -10,6 +10,7 @@ import {customersApis} from "../../../../api-requests/customers-api";
 import {useAuth} from "../../../../hooks/use-auth";
 import DMTDialog from "../../../@dmt-components/dialog";
 import {getIPAddress} from "../../../../utils/helper-functions";
+import {toast} from "react-toastify";
 
 const steps = [
     {
@@ -58,8 +59,11 @@ const CustomerResetPin = props => {
             }
             const res = await customersApis.resetCustomerPin(authUser, formData);
             if (res?.success){
-                setMessage(res?.error);
+                toast.success(res?.errorMessage ?? "Operation is successful")
                 handleOnCloseDialog();
+            }
+            else {
+                toast.error(res?.errorMessage ?? "Oops! An error occurred.Try again")
             }
         }
         catch (e) {

@@ -62,19 +62,20 @@ const PinResetApproval = props => {
             approvedBy: authUser?.user?.userid ?? "",
             actionType: dialogProps?.reject ? APPROVAL_ACTION_TYPES.REJECT : APPROVAL_ACTION_TYPES.APPROVE,
             reason: reason,
+            channelType: customer?.channelType,
             browser: browser,
             ip: ipAddress
         }
         try{
-            const res = await customersApis.approveCustomer(authUser, formData);
+            const res = await customersApis.approvePinReset(authUser, formData);
             if(res?.success){
-                toast.success(res?.errorMsg ?? "Operation successful!");
+                toast.success(res?.errorMessage ?? "Operation successful!");
                 handleCloseDialog();
                 handleClose();
                 await onRefresh();
             }
             else{
-                toast.error(res?.errorMsg ?? "An error occurred while processing request. Try again later.");
+                toast.error(res?.errorMessage ?? "An error occurred while processing request. Try again later.");
             }
         }
         catch (e) {

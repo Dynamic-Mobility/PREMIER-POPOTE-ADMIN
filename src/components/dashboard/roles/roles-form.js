@@ -80,7 +80,7 @@ const RolesForm = props => {
                 permissions = res.map( p => {
                     let child = null;
                     if (p?.child){
-                        child = p.child.map((c => {
+                        child = p.child?.map((c => {
                             const perms  = formatPermissions(c.permission);
                             return {
                                 childMenuId: c.id,
@@ -88,9 +88,9 @@ const RolesForm = props => {
                             }
                         }))
                     }
-                    const perms  = formatPermissions(p.permission);
+                    const perms  = formatPermissions(p?.permission);
                     return {
-                        mainMenuId: p.id,
+                        mainMenuId: p?.id,
                         childMenu : child,
                         permission: perms,
                     }
