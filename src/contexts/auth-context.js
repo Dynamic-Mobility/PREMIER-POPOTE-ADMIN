@@ -6,6 +6,7 @@ import {authApi} from "../api-requests/auth-apis";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
 import {getFromSessionLocally, removeFromSessionLocally, saveSessionLocally} from "../utils/helper-functions";
+import useRefreshToken from "../hooks/use-refresh-token";
 
 
 let ActionType;
@@ -75,6 +76,8 @@ export const AuthProvider = (props) => {
     const { children } = props;
     const [state, dispatch] = useReducer(reducer, initialState);
     const router = useRouter();
+
+
 
     useEffect(() => {
         const initialize = async () => {
@@ -204,7 +207,7 @@ export const AuthProvider = (props) => {
                 sessionId,
             }
             if (serverLogout){
-                const res = await authApi.logoutUser(formData);
+                await authApi.logoutUser(formData);
             }
 
         }

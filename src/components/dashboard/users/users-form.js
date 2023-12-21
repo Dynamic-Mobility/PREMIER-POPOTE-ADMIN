@@ -39,9 +39,13 @@ const UsersForm = props => {
                     userName: values.email,
                     id: user?.id ?? "",
                 }
-                const res = await usersApis.createUser(authUser, formData);
+                const res =
+                    Boolean(user?.id)
+                        ?  await usersApis.updateUser(authUser, formData)
+                        : await usersApis.createUser(authUser, formData);
+
                 if (res?.success){
-                    toast.success("User created successfully!");
+                    toast.success(Boolean(user?.id) ? "User updated successfully!" : "User created successfully!");
                     onClose?.();
                     await onRefresh?.();
                 }

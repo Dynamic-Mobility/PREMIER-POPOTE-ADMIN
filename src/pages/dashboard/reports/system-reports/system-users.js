@@ -24,7 +24,7 @@ const SystemUsersPage = () => {
 
     const fetchAllUsers = useCallback(async () => {
         await dispatch(getAllUsers(authUser));
-    },[]);
+    },[authUser?.user]);
 
     useEffect(() => {
         fetchAllUsers();

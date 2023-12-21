@@ -36,7 +36,7 @@ const Forbidden = () => {
                         </Box>
                         <NextLink href={'/dashboard'} passHref>
                             <Button
-                                variant={'outlined'}
+                                variant={'contained'}
                                 color={'primary'}
                                 startIcon ={<ArrowBack/>}
                                 sx={{mb:8}}

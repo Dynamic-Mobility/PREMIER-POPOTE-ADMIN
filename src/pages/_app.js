@@ -16,6 +16,9 @@ import {SplashScreen} from "../components/splash-screen";
 import Script from 'next/script';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
+import useRefreshToken from "../hooks/use-refresh-token";
+import RefreshTokenGuard from "../hooks/use-refresh-token";
+
 
 
 config({ ssrFadeout: true });
@@ -23,6 +26,9 @@ config({ ssrFadeout: true });
 
 function MyApp({ Component, pageProps }) {
     const getLayout = Component.getLayout ?? ((page) => page);
+
+
+
   return (
       <>
           <Head>
@@ -43,8 +49,9 @@ function MyApp({ Component, pageProps }) {
                               !auth.isInitialized ? (
                                   <SplashScreen/>
                               ) : (
-
-                                  getLayout(<Component {...pageProps} />)
+                                  <RefreshTokenGuard>
+                                      {getLayout(<Component {...pageProps} />)}
+                                  </RefreshTokenGuard>
                               )
                           }
                       </AuthConsumer>

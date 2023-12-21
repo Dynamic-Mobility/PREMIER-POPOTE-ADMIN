@@ -30,7 +30,7 @@ const PermissionsForm = props => {
             })
         }
         else{
-            const index  = data.findIndex(datum => datum.mainMenuId === perm.id);
+            const index  = data?.findIndex(datum => datum.mainMenuId === perm.id);
             data.splice(index, 1);
         }
         onPermsChange(data);
@@ -38,7 +38,7 @@ const PermissionsForm = props => {
     const handleOnChildChange = (perm, child) => e => {
         let data = [...selectedPerms];
         const { checked } = e.target;
-        const index = data.findIndex(datum => datum.mainMenuId === perm.id);
+        const index = data?.findIndex(datum => datum.mainMenuId === perm.id);
         if (checked){
             if (index !== -1){
                 let childMenu = [...data[index].childMenu];

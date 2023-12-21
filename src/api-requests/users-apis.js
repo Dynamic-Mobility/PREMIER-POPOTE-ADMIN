@@ -35,11 +35,35 @@ class UsersApis {
             })
         })
     }
+    updateUser(useAuth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(useAuth);
+            axiosInstance.post(APP_API_URL.UPDATE_USERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
 
     approveUsers(useAuth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(useAuth);
             axiosInstance.post(APP_API_URL.APPROVE_USERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    enableDisableUser(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.ENABLE_DISABLE_USERS, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))

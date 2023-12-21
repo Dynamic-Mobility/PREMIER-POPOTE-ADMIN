@@ -1,18 +1,23 @@
 import React, {useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import CustomersDataGrid from "../../../components/dashboard/customers/customers-data-grid";
+import ExistingCustomersDatagrid from "../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
 import MKBox from "../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../store";
-import {getAllCustomers} from "../../../slices/dashboard/customers";
+import {getAllCustomers, getUnblockedCustomers} from "../../../slices/dashboard/customers";
 import {useAuth} from "../../../hooks/use-auth";
+import UnblockedCustomersDatagrid
+  from "../../../components/dashboard/customers/customer-datagrids/unblocked-customers-datagrid";
+import {AuthGuard} from "../../../hocs/auth-guard";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
+import {PAGES_PATHS} from "../../../utils/constants";
 
-const title = "Blocked Customers";
+const title = "Approve Unblocked Customers";
 
-const  BlockedCustomersPage = () => {
+const  UnblockedCustomersPage = () => {
   const initialFilters = {
     name: "",
     idnumber: "",
@@ -22,7 +27,7 @@ const  BlockedCustomersPage = () => {
   }
   const [filters, setFilters] = useState(initialFilters);
   const dispatch = useDispatch();
-  const { blockedCustomers, pageSize, currentPage} = useSelector(( { customers }) => customers);
+  const { unblockedCustomers, pageSize, currentPage} = useSelector(( { customers }) => customers);
   const authUser = useAuth();
 
   const handleOnChangeFilters = values => {
@@ -36,25 +41,26 @@ const  BlockedCustomersPage = () => {
       pageSize,
       pageNumber: currentPage,
     }
-    await dispatch(getAllCustomers(authUser,values ))
+    await dispatch(getUnblockedCustomers(authUser,values ))
   }
 
   const handleOnSearch = async () => {
-    await fetchAllCustomers();
+    await fetchCustomers();
   }
 
-  const fetchAllCustomers = async () => {
+  const fetchCustomers = async () => {
     const values = {
       ...filters,
       pageSize,
       pageNumber: currentPage,
+
    }
-    await dispatch(getAllCustomers(authUser,values ))
+    await dispatch(getUnblockedCustomers(authUser,values ))
   }
 
 
   useEffect(() => {
-    fetchAllCustomers();
+    fetchCustomers();
   }, [])
 
   return (
@@ -84,7 +90,7 @@ const  BlockedCustomersPage = () => {
           </Grid>
           </MKBox>
           <Card sx={{ p: 1 }}>
-            <CustomersDataGrid data={blockedCustomers} />
+            <UnblockedCustomersDatagrid data={unblockedCustomers} onRefresh={fetchCustomers} />
           </Card>
         </MKBox>
 
@@ -92,13 +98,18 @@ const  BlockedCustomersPage = () => {
   );
 };
 
-BlockedCustomersPage.getLayout = (page) => {
+UnblockedCustomersPage.getLayout = (page) => {
   return (
     <>
-      {/* <AuthGuard> */}
-      <ModernLayout>{page}</ModernLayout>; // {/* </AuthGuard> */}
+      <AuthGuard>
+        <ModernLayout>
+          <RoleBasedGuard path={PAGES_PATHS.APPROVE_UNBLOCKED_CUSTOMERS} page={true}>
+            {page}
+          </RoleBasedGuard>
+        </ModernLayout>
+      </AuthGuard>
     </>
   );
 };
 
-export default BlockedCustomersPage;
+export default UnblockedCustomersPage;

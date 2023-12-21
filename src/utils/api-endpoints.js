@@ -6,7 +6,7 @@ export const API_URL = {
     REFRESH_TOKEN: '/api/v1/auth/refresh',
     GET_USER_MENUS: '/api/v1/account/getmenus',
     VALIDATE_OTP: '/api/v1/account/validateotp',
-
+    RESEND_OTP: '/api/v1/auth/resendotp',
 
     /***************** CUSTOMERS **********************/
 
@@ -21,6 +21,7 @@ export const API_URL = {
     RESET_CUSTOMER_PIN: '/api/v1/customer/resetpin',
     VALIDATE_RESET_PIN_OTP: '/api/v1/customer/approveresetpin',
     BLOCK_UNBLOCK_CUSTOMER: '/api/v1/customer/blockaccount',
+    ENABLE_DISABLE_CUSTOMER: '/api/v1/customer/togglecustomeracc',
 
     FETCH_UPDATED_CUSTOMERS: '/api/v1/customer/geteditedcustomers',
     APPROVE_UPDATED_CUSTOMER: '/api/v1/customer/approveedited',
@@ -29,6 +30,9 @@ export const API_URL = {
     FETCH_UNBLOCKED_CUSTOMERS: '/api/v1/customer/getunblocked',
     FETCH_BLOCKED_CUSTOMERS: '/api/v1/customer/getblockedcustomer',
     APPROVE_ACCOUNTS: '/api/v1/customer/approvelinkedaccount',
+    APPROVE_UNBLOCKED_CUSTOMERS: '/api/v1/customer/approveunblocked',
+    FETCH_PIN_RESETS: '/api/v1/customer/getresetpinrequests',
+    APPROVE_PIN_RESETS: '/api/v1/customer/approveresetpinrequest',
 
     /************************ SETTINGS ****************************/
 
@@ -60,10 +64,12 @@ export const API_URL = {
 
     /************************ USERS ****************************/
 
-    FETCH_USERS: '/api/v1/account/getcreateunapproved',
+    FETCH_USERS: '/api/v1/account/getallusers',
     FETCH_UNAPPROVED_USERS: '/api/v1/account/getcreateunapproved',
     ADD_USERS: '/api/v1/account/adduser',
+    UPDATE_USERS: '/api/v1/account/updateuser',
     APPROVE_USERS: '/api/v1/account/approveusers',
+    ENABLE_DISABLE_USERS: '/api/v1/account/toggleuser',
 
     /************************ TRANSACTIONS ****************************/
 
@@ -98,10 +104,8 @@ export const APP_API_URL = {
     REFRESH_TOKEN: '/api/admin/account/refresh-token',
     GET_USER_MENUS: '/api/admin/account/fetch-user-menu',
     VALIDATE_OTP: '/api/admin/account/validate-otp',
+    RESEND_OTP: '/api/admin/account/resend-otp',
 
-
-
-    
     /***************** CUSTOMERS **********************/
 
     FETCH_CUSTOMER_CIF: '/api/admin/customers/fetch-by-cif',
@@ -116,13 +120,20 @@ export const APP_API_URL = {
     VALIDATE_RESET_PIN_OTP: '/api/admin/customers/reset-pin-otp',
     BLOCK_UNBLOCK_CUSTOMER: '/api/admin/customers/block-unblock-customer',
 
+    ENABLE_DISABLE_CUSTOMER: '/api/admin/customers/enable-disable-customer',
+
     FETCH_UPDATED_CUSTOMERS: '/api/admin/customers/get-updated',
     APPROVE_UPDATED_CUSTOMER: '/api/admin/customers/approve-updated',
 
     FETCH_UNAPPROVED_ACCOUNTS: '/api/admin/customers/accounts/unapproved',
     FETCH_UNBLOCKED_CUSTOMERS: '/api/admin/customers/get-unblocked-customers',
+
     FETCH_BLOCKED_CUSTOMERS: '/api/admin/customers/get-blocked-customers',
     APPROVE_ACCOUNTS: '/api/admin/customers/accounts/approve',
+    APPROVE_UNBLOCKED_CUSTOMERS: '/api/admin/customers/approve-unblocked-customers',
+
+    FETCH_PIN_RESETS: '/api/admin/customers/get-pin-resets',
+    APPROVE_PIN_RESETS: '/api/admin/customers/approve-pin-resets',
 
     /************************ SETTINGS ****************************/
 
@@ -158,7 +169,9 @@ export const APP_API_URL = {
     FETCH_USERS: '/api/admin/users/fetch-users',
     FETCH_UNAPPROVED_USERS: '/api/admin/users/fetch-unapproved-users',
     ADD_USERS: '/api/admin/users/add-user',
+    UPDATE_USERS: '/api/admin/users/update-user',
     APPROVE_USERS: '/api/admin/users/approve-users',
+    ENABLE_DISABLE_USERS: '/api/admin/users/enable-disable-user',
 
     /************************ TRANSACTIONS ****************************/
 

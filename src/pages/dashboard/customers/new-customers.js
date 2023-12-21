@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Card, Grid} from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import RegistrationsDatagrid from "../../../components/dashboard/customers/registrations-datagrid";
+import NewCustomersDatagrid from "../../../components/dashboard/customers/customer-datagrids/new-customers-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import MKBox from "../../../components/@mui-components/box";
 import Head from "next/head";
@@ -9,9 +9,12 @@ import {useDispatch, useSelector} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
 import {getUnapprovedCustomers} from "../../../slices/dashboard/customers";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
+import {AuthGuard} from "../../../hocs/auth-guard";
+import {PAGES_PATHS} from "../../../utils/constants";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
 
-const title = "Approve Customers";
-const NewCustomers = () => {
+const title = "Approve New Customers";
+const NewCustomersPage = () => {
   const initialFilters = {
     name: "",
     idnumber: "",
@@ -73,7 +76,6 @@ const NewCustomers = () => {
               <MKTypography variant="h5">{title}</MKTypography>
             </Grid>
             <Grid item>
-
               <CustomerActionsButton {...{
                 filters,
                 onChangeFilters: handleOnChangeFilters,
@@ -84,7 +86,10 @@ const NewCustomers = () => {
           </Grid>
         </MKBox>
         <Card sx={{ p: 1 }}>
-          <RegistrationsDatagrid data={unapprovedCustomers} onRefresh={fetchUnapprovedCustomers} />
+          <NewCustomersDatagrid
+              data={unapprovedCustomers} 
+              onRefresh={fetchUnapprovedCustomers} 
+          />
         </Card>
       </MKBox>
 
@@ -92,13 +97,18 @@ const NewCustomers = () => {
   );
 };
 
-NewCustomers.getLayout = (page) => {
+NewCustomersPage.getLayout = (page) => {
   return (
     <>
-      {/* <AuthGuard> */}
-      <ModernLayout>{page}</ModernLayout>;{/* </AuthGuard> */}
+      <AuthGuard>
+        <ModernLayout>
+          <RoleBasedGuard path={PAGES_PATHS.APPROVE_NEW_CUSTOMERS} page={true}>
+            {page}
+          </RoleBasedGuard>
+        </ModernLayout>
+      </AuthGuard> 
     </>
   );
 };
 
-export default NewCustomers;
+export default NewCustomersPage;

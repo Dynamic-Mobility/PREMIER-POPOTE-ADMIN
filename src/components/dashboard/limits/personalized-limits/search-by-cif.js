@@ -41,7 +41,7 @@ const SearchByCif = props => {
         <>
             <SearchLottie/>
             <MKTypography align={'center'} variant={'h6'} gutterBottom>
-                {"Search Customer By CIF"}
+                {"Search Customer By A/C No"}
             </MKTypography>
             <form onSubmit={formik.handleSubmit}>
                 <MKBox sx={{ display: 'flex', flexDirection:'column', justifyContent: 'center'}}>

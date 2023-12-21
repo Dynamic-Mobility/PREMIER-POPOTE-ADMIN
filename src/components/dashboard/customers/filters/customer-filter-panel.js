@@ -75,7 +75,6 @@ const CustomerFilterPanel = props => {
                         <Grid container spacing={1} alignItems={'center'}>
                             <Grid item xs={12} md={12}>
                                 <DMTTextInput
-                                    size="small"
                                     label={'Customer Name'}
                                     value={filters.name}
                                     onChange={e => handleOnFilterChange('name', e.target.value)}
@@ -84,7 +83,7 @@ const CustomerFilterPanel = props => {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <DMTTextInput
-                                    size="small"
+
                                     label={'ID Number'}
                                     type={'number'}
                                     value={filters.idnumber}
@@ -94,7 +93,6 @@ const CustomerFilterPanel = props => {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <DMTTextInput
-                                    size="small"
                                     label={'Phone Number'}
                                     value={filters.phonenumber}
                                     onChange={e => handleOnFilterChange('phonenumber', e.target.value)}
@@ -103,7 +101,7 @@ const CustomerFilterPanel = props => {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <DMTTextInput
-                                    size="small"
+
                                     label={'CIF No'}
                                     value={filters.cifNumber}
                                     onChange={e => handleOnFilterChange('cifNumber', e.target.value)}
@@ -112,7 +110,6 @@ const CustomerFilterPanel = props => {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <DMTTextInput
-                                    size="small"
                                     label={'Email'}
                                     type={'email'}
                                     value={filters.email}

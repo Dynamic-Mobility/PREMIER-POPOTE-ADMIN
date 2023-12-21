@@ -1,18 +1,32 @@
 import {Column} from "devextreme-react/data-grid";
 import DMTDatagrid from "../../@dmt-components/data-grid";
-import React from "react";
+import React, {useState} from "react";
 import UsersActions from "./users-actions";
 import MKBox from "../../@mui-components/box";
 import MKTypography from "../../@mui-components/typography";
 import {alpha, Avatar, IconButton, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
 import {getInitials} from "../../../utils/helper-functions";
+import DMTChip from "../../@dmt-components/chip";
+import UserDetailsDrawer from "./user-details-drawer";
 
 const UsersDatagrid = props => {
     const { data, onRefresh } = props;
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+
+
+    const handleOnClose = () => {
+        setOpenDialog(false);
+    }
+
     const actionOptions = ({ data }) => {
+        const handleOnView = () => {
+            setSelectedUser(data);
+            setOpenDialog(true);
+        }
         return (
             <>
-                <UsersActions user={data} onRefresh={onRefresh}/>
+                <UsersActions user={data} onView={handleOnView} onRefresh={onRefresh}/>
             </>
         )
     }
@@ -21,9 +35,13 @@ const UsersDatagrid = props => {
         const fname = Boolean(data?.firstName) ? data?.firstName : "";
         const lname = Boolean(data?.otherName) ? data?.otherName : "";
         const fullName = fname+' '+ lname;
+        const handleOnView = () => {
+            setSelectedUser(data);
+            setOpenDialog(true);
+        }
         return (
             <>
-                <ListItem sx={{fontSize: 'inherit'}}>
+                <ListItem   onClick={handleOnView} sx={{ cursor:'pointer', fontSize: 'inherit'}}>
                     <ListItemAvatar>
                         <Avatar
                             sx={{
@@ -45,6 +63,11 @@ const UsersDatagrid = props => {
                                     {fullName}
                                 </MKTypography>
                             </>
+                        }
+                        secondary={
+                            <MKTypography variant={'caption'}  fontSize={'inherit'}>
+                                {data?.roleName}
+                            </MKTypography>
                         }
                     />
                 </ListItem>
@@ -72,15 +95,19 @@ const UsersDatagrid = props => {
                             {data?.phoneNumber}
                         </MKTypography>
                     </MKBox>
-                    {/*<MKBox sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>*/}
-                    {/*    <MKTypography variant={'h6'} fontSize={'inherit'}>*/}
-                    {/*        {"Ext : "}*/}
-                    {/*    </MKTypography>*/}
-                    {/*    <MKTypography  fontSize={'inherit'}>*/}
-                    {/*        {data?.extension}*/}
-                    {/*    </MKTypography>*/}
-                    {/*</MKBox>*/}
                 </MKBox>
+            </>
+        )
+    }
+
+    const renderStatus = ({ displayValue}) => {
+        const color = displayValue === 'Active' ? "success" : "error";
+        return (
+            <>
+                <DMTChip
+                    label={displayValue}
+                    color={color}
+                />
             </>
         )
     }
@@ -93,11 +120,10 @@ const UsersDatagrid = props => {
             >
                 <Column minWidth={220} dataField="firstName" caption="Name" cellRender={renderProfile} />
                 <Column minWidth={300}  caption="Contact" cellRender={renderContacts} />
-                <Column minWidth={150} dataField="roleName" caption="Role" />
+                <Column minWidth={150} dataField="roleName" caption="Role" visible={false} />
                 <Column minWidth={150} dataField="branchName" caption="Branch" />
                 <Column minWidth={150} dataField="departmentName" caption="Department" />
-
-
+                <Column minWidth={150} dataField="status" caption="Status" cellRender={renderStatus} />
                 <Column
                     caption="Actions"
                     minWidth={130}
@@ -106,6 +132,11 @@ const UsersDatagrid = props => {
                     cellRender={actionOptions}
                 />
             </DMTDatagrid>
+            <UserDetailsDrawer
+                open={openDialog}
+                user={selectedUser}
+                onClose={handleOnClose}
+            />
         </>
     )
 }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import CustomersDataGrid from "../../../components/dashboard/customers/customers-data-grid";
+import ExistingCustomersDatagrid from "../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
@@ -9,6 +9,9 @@ import MKBox from "../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../store";
 import {getAllCustomers} from "../../../slices/dashboard/customers";
 import {useAuth} from "../../../hooks/use-auth";
+import {AuthGuard} from "../../../hocs/auth-guard";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
+import {PAGES_PATHS} from "../../../utils/constants";
 
 const title = "Existing Customers";
 
@@ -84,7 +87,7 @@ const Customers = () => {
           </Grid>
           </MKBox>
           <Card sx={{ p: 1 }}>
-            <CustomersDataGrid data={customers} />
+            <ExistingCustomersDatagrid data={customers} />
           </Card>
         </MKBox>
 
@@ -95,8 +98,13 @@ const Customers = () => {
 Customers.getLayout = (page) => {
   return (
     <>
-      {/* <AuthGuard> */}
-      <ModernLayout>{page}</ModernLayout>; // {/* </AuthGuard> */}
+       <AuthGuard>
+          <ModernLayout>
+            <RoleBasedGuard path={PAGES_PATHS.EXISTING_CUSTOMERS} page={true}>
+              {page}
+            </RoleBasedGuard>
+          </ModernLayout>
+       </AuthGuard>
     </>
   );
 };

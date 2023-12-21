@@ -87,8 +87,18 @@ export const LoginForm = (props) => {
 
   }
 
-  const handleOnResendOTP = () => {
-    //TODO: Implement Resend OTP functionality
+  const handleOnResendOTP = async() => {
+    try{
+      const decodedToken = await authApi.decodeToken(userDetail.token);
+      const formData = {
+        userId: decodedToken?.userid,
+      }
+      const res = await authApi.resendOTP(userDetail.token,formData);
+      console.log(res);
+    }
+    catch (e) {
+      console.log(e.message)
+    }
   }
 
   const handleOtherLogouts = async () => {
@@ -100,10 +110,32 @@ export const LoginForm = (props) => {
       },
       // Include any other necessary data
     };
-    socket.emit('outgoing-message', JSON.stringify(dataToSend));
-    setActiveStep(1);
-    handleOnClose();
+    try{
+      const res = await authApi.refreshUserToken({
+        token: userDetail?.token,
+        refreshToken: userDetail?.refreshToken,
+        sessionId: userDetail?.sessionId,
+      });
+
+      await authApi.resendOTP(res?.token, { userId: decodedToken?.userid })
+
+      setUserDetail({
+        ...userDetail,
+        token: res.token,
+        refreshToken: res?.refreshToken,
+        sessionId:res?.sessionId,
+      });
+
+      socket.emit('outgoing-message', JSON.stringify(dataToSend));
+      setActiveStep(1);
+      handleOnClose();
+    }
+    catch (e) {
+      toast.error(e.message);
+    }
+
   };
+
 
   const formik = useFormik({
     initialValues: {
@@ -136,15 +168,15 @@ export const LoginForm = (props) => {
         }
       } catch (err) {
         if (isMounted()) {
-          if(typeof err === 'object') {
-            setOpenAlert(true);
-            setUserDetail(err);
+          if(typeof err.message === 'string') {
+            helpers.setStatus({ success: false });
+            helpers.setErrors({ submit: err.message });
+            helpers.setSubmitting(false);
             return;
           }
-          console.log(err.message);
-          helpers.setStatus({ success: false });
-          helpers.setErrors({ submit: err.message });
-          helpers.setSubmitting(false);
+          setOpenAlert(true);
+          setUserDetail(err);
+
         }
       }
     },

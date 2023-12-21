@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import ModernLayout from "../../../../components/layouts/modern";
 import Head from "next/head";
 import {appName, CHANNEL_TYPES} from "../../../../utils/constants";
 import MKBox from "../../../../components/@mui-components/box";
 import Grid from "@mui/material/Grid";
-import MKTypography from "../../../../components/@mui-components/typography";
 import CustomerDetails from "../../../../components/dashboard/customers/customer-details";
 import {Card, Container} from "@mui/material";
 import {customersApis} from "../../../../api-requests/customers-api";
@@ -13,6 +12,7 @@ import {useAuth} from "../../../../hooks/use-auth";
 import {useRouter} from "next/router";
 import RefreshButton from "../../../../components/@dmt-components/refresh-button";
 import BackButtonLink from "../../../../components/@dmt-components/back-button-link";
+import {AuthGuard} from "../../../../hocs/auth-guard";
 
 const title = 'View Customer';
 const ViewCustomerPage = () => {
@@ -23,7 +23,7 @@ const ViewCustomerPage = () => {
     const router = useRouter();
     const customerId = router.query?.customerId;
 
-    const getCustomerAccounts = async (cifNo) => {
+    const getCustomerAccounts = useCallback(async (cifNo) => {
         try{
             const res = await customersApis.getAccountSwitchByCif(authUser,cifNo)
             if (res.data){
@@ -41,12 +41,12 @@ const ViewCustomerPage = () => {
         catch (e) {
             console.log(e.message);
         }
-    };
+    },[authUser?.user]);
 
-    const handleOnSearch = async (cifNumber) => {
+    const handleOnSearch = useCallback (async (cifNumber) => {
         try{
             const res = await customersApis.fetchCustomerCif(authUser, cifNumber);
-            if (res?.cif_no !== ''){
+            if (Boolean(res?.cif_no)){
                 setCustomer(res);
             }
             else{
@@ -57,7 +57,7 @@ const ViewCustomerPage = () => {
         catch (e) {
            toast.error(e.message);
         }
-    }
+    }, [authUser?.user])
 
     const handleOnAddUpdate = async (channelTypes) => {
         const formattedData = {
@@ -109,7 +109,7 @@ const ViewCustomerPage = () => {
         }
     }
 
-    const getCustomerById = async () => {
+    const getCustomerById = useCallback(async () => {
         try{
            const res = await customersApis.fetchCustomerId(authUser, customerId);
             setExistingCustomer(res);
@@ -118,7 +118,7 @@ const ViewCustomerPage = () => {
         catch (e) {
             console.log(e.message);
         }
-    }
+    },[authUser?.user, customerId]);
 
     const handleOnReset = () => {
         setCustomer(null);
@@ -162,6 +162,7 @@ const ViewCustomerPage = () => {
                     customerAccounts={customerAccounts}
                     onReset={handleOnReset}
                     handleOnAddUpdate={handleOnAddUpdate}
+                    onRefresh={getCustomerById}
                 />
           </Card>
       </Container>
@@ -171,9 +172,11 @@ const ViewCustomerPage = () => {
 };
 
 ViewCustomerPage.getLayout = (page) => (
-    <ModernLayout>
-      {page}
-    </ModernLayout>
+    <AuthGuard>
+        <ModernLayout>
+            {page}
+        </ModernLayout>
+    </AuthGuard>
 );
 
 export default ViewCustomerPage;

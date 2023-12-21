@@ -139,6 +139,17 @@ class CustomersApis {
             })
         })
     }
+    enableDisableCustomer(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.ENABLE_DISABLE_CUSTOMER, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
     approveUpdatedCustomer(auth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(auth);
@@ -174,10 +185,22 @@ class CustomersApis {
             })
         })
     }
-    fetchUnBlockedCustomers (authUser, values) {
+    fetchUnBlockedCustomersAccounts (authUser, values) {
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(authUser);
             axiosInstance.post(APP_API_URL.FETCH_UNBLOCKED_CUSTOMERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    fetchPinRequests (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_PIN_RESETS, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))
@@ -196,7 +219,30 @@ class CustomersApis {
             })
         })
     }
-   
+
+    async approveUnblockedCustomer(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.APPROVE_UNBLOCKED_CUSTOMERS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    async approvePinReset(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.APPROVE_PIN_RESETS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
 }
 
 export const customersApis = new CustomersApis();

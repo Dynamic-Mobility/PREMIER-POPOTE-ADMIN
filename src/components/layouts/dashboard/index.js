@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { DashboardNavbar } from './dashboard-navbar';
 import { DashboardSidebar } from './dashboard-sidebar';
 import { Box } from '@mui/material';
+import useRefreshToken from "../../../hooks/use-refresh-token";
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
     display: 'flex',

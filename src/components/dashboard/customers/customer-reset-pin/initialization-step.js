@@ -26,7 +26,7 @@ const InitializationStep = props => {
 
      return (
          <>
-             <MKBox sx={{ mt: 2, display: 'flex', justifyContent:'center', gap: 2, alignItems: 'center', flexDirection: 'column'}}>
+             <MKBox sx={{ display: 'flex', justifyContent:'center', gap: 2, alignItems: 'center', flexDirection: 'column'}}>
                  <MKTypography align={'center'} >
                      {"Are you sure you want to reset pin for"}
                      {" "}
@@ -42,7 +42,7 @@ const InitializationStep = props => {
                          {"No, Cancel"}
                      </MKButton>
                      <MKButton disabled={isLoading} startIcon={isLoading && <LoaderIcon/>} onClick={handleOnProceed} sx={{ width: 'auto'}} variant={'contained'} color={'success'}>
-                         {isLoading ? "Initializing" : "Yes, Proceed"}
+                         {isLoading ? "Processing" : "Yes, Proceed"}
                      </MKButton>
                  </MKBox>
              </MKBox>

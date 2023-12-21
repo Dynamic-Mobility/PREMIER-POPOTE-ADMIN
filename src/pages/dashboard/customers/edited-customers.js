@@ -8,7 +8,10 @@ import {useDispatch, useSelector} from "../../../store";
 import {useAuth} from "../../../hooks/use-auth";
 import {getUpdatedCustomers} from "../../../slices/dashboard/customers";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
-import EditedCustomersDataGrid from "../../../components/dashboard/customers/edited-customers-datagrid";
+import EditedCustomersDataGrid from "../../../components/dashboard/customers/customer-datagrids/edited-customers-datagrid";
+import {AuthGuard} from "../../../hocs/auth-guard";
+import RoleBasedGuard from "../../../hocs/role-based-guard";
+import {PAGES_PATHS} from "../../../utils/constants";
 
 const title = "Updated Customers List";
 const NewCustomers = () => {
@@ -94,8 +97,13 @@ const NewCustomers = () => {
 NewCustomers.getLayout = (page) => {
     return (
         <>
-            {/* <AuthGuard> */}
-            <ModernLayout>{page}</ModernLayout>;{/* </AuthGuard> */}
+            <AuthGuard>
+                <ModernLayout>
+                    <RoleBasedGuard path={PAGES_PATHS.APPROVE_EDITED_CUSTOMERS} page={true}>
+                        {page}
+                    </RoleBasedGuard>
+                </ModernLayout>
+            </AuthGuard>
         </>
     );
 };

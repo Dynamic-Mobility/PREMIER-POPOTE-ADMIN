@@ -21,8 +21,9 @@ export default async function handler(req, res) {
                 }
             };
             const body = req.body
+            const queryString = formatMultipleQuery(body.transactionType, 'transactionType');
 
-            await backendAxiosInstance.post(`${API_URL.FETCH_ALL_TRANSACTIONS_REPORT}/${body.reportType}`,body, config)
+            await backendAxiosInstance.post(`${API_URL.FETCH_ALL_TRANSACTIONS_REPORT}/${body.reportType}?${queryString}`,body, config)
                 .then(response => {
                     res.status(200).json(response.data);
                 })

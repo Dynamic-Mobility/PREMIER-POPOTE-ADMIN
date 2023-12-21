@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
-import CustomersDataGrid from "../../../../components/dashboard/customers/customers-data-grid";
+import ExistingCustomersDatagrid from "../../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
 import ModernLayout from "../../../../components/layouts/modern";
 import Head from "next/head";
 import CustomerActionsButton from "../../../../components/dashboard/customers/filters/customer-actions-button";
@@ -85,7 +85,7 @@ const FailedRegistrationPage = () => {
                     </Grid>
                 </MKBox>
                 <Card sx={{ p: 1 }}>
-                    <CustomersDataGrid data={[]} />
+                    <ExistingCustomersDatagrid data={[]} />
                 </Card>
             </MKBox>
 

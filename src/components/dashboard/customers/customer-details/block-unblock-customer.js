@@ -14,7 +14,7 @@ import {toast} from "react-toastify";
 import {getBrowserDetails, getIPAddress} from "../../../../utils/helper-functions";
 
 const BlockUnblockCustomerDialog = props => {
-    const { existingCustomer, disabled = false, customer } = props;
+    const { existingCustomer, disabled = false, customer, onRefresh } = props;
     const [openDialog, setOpenDialog] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
     const [reason, setReason] = useState("");
@@ -48,6 +48,7 @@ const BlockUnblockCustomerDialog = props => {
             if (res.success){
                 toast.success(res?.errorMessage ?? "Operation is successful!");
                 handleOnClose();
+                onRefresh?.();
             }
             else{
                 toast.error(res?.errorMessage ?? "An error occurred! Try again Later")

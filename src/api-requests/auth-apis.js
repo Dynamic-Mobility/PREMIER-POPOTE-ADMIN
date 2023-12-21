@@ -12,21 +12,18 @@ class AuthApis{
         const encryptedData = {
             data: secretKey.encrypt(values)
         }
-
         return new Promise(async (resolve, reject) => {
             axiosInstance.post(APP_API_URL.LOGIN, encryptedData).then( response => {
                 const data = secretKey.decrypt(response.data);
                 if(data.token !== null){
                     resolve(data);
-                    // console.log(data)
                 }
-                //reject(new Error('Wrong Username/Password Combination.'))
             }).catch(e => {
                 if (e.response.status === 400){
                     reject(new Error(e.response?.data ?? "Invalid credentials"))
                 }
                 if (e.response.status === 401){
-                    reject(e.response?.data ?? "Invalid credentials")
+                    reject(e.response?.data)
                 }
                 else{
                     reject(new Error(e.message))
@@ -62,6 +59,21 @@ class AuthApis{
         });
     }
 
+    async resendOTP(token, values){
+        return new Promise((resolve, reject) => {
+            const config = {
+                headers: {
+                    'Authorization':  `Bearer ${token}`,
+                }
+            };
+            axiosInstance.post(APP_API_URL.RESEND_OTP, values, config).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+
     async fetchUserMenus(token, values){
         return new Promise((resolve, reject) => {
             const config = {
@@ -82,6 +94,16 @@ class AuthApis{
         }
         return new Promise((resolve, reject) => {
             axiosInstance.post(APP_API_URL.LOGOUT, encryptedData).then( response => {
+                resolve(response.data);
+            }).catch(e => {
+                reject(new Error(e.message))
+            })
+        });
+    }
+
+    async refreshUserToken (values) {
+        return new Promise((resolve, reject) => {
+            axiosInstance.post(APP_API_URL.REFRESH_TOKEN, values).then( response => {
                 resolve(response.data);
             }).catch(e => {
                 reject(new Error(e.message))

@@ -54,12 +54,11 @@ const ApprovalLimitsActions = props => {
 
     const onApprove = async (reason) => {
         setIsLoading(true);
-        //TODO: Add User ID
         const browser = getBrowserDetails();
         const ipAddress = await getIPAddress();
         const formData = {
             id: limit?.id,
-            userId: "",
+            userId: authUser?.user?.userid ?? "",
             browser: browser,
             rejectReason: reason,
             reject: dialogProps?.reject,
@@ -75,13 +74,13 @@ const ApprovalLimitsActions = props => {
             }
 
             if(res?.success){
-                toast.success("Limit approved successfully!");
+                toast.success(res?.errorMessage ?? "Limit approved successfully!");
                 handleCloseDialog();
                 handleClose();
                 await onRefresh();
             }
             else{
-                toast.error(res?.error ?? "An error occurred while processing request. Try again later.");
+                toast.error(res?.errorMessage ?? "An error occurred while processing request. Try again later.");
             }
         }
         catch (e) {

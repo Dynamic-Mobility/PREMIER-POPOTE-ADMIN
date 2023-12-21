@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {customersApis} from "../../api-requests/customers-api";
+import {BLOCK_TYPES} from "../../utils/constants";
 
 const initialState = {
     customers : [],
@@ -9,6 +10,8 @@ const initialState = {
     blockedAccounts: [],
     blockedCustomers: [],
     unblockedCustomers: [],
+    unblockedAccounts: [],
+    pinResets: [],
     totalCount: 0,
     pageSize: 250,
     currentPage: 1,
@@ -31,16 +34,19 @@ const customerSlice = createSlice({
             state.blockedCustomers = action.payload;
         },
         setUnBlockedCustomers: (state,action) =>{
-            state.blockedUnCustomers = action.payload;
+            state.unblockedCustomers = action.payload;
         },
         setUnBlockedAccounts: (state,action) =>{
-            state.blockedUnAccounts = action.payload;
+            state.unblockedAccounts = action.payload;
         },
         setUpdatedCustomers: (state,action) =>{
             state.updatedCustomers = action.payload;
         },
         setUnapprovedCustomers: (state,action) =>{
             state.unapprovedCustomers = action.payload;
+        },
+        setPinResets: (state,action) =>{
+            state.pinResets = action.payload;
         },
         setTotalCount: (state, action) => {
             state.totalCount = action.payload;
@@ -66,6 +72,7 @@ export const {
     setCurrentPage,
     setPageSize,
     setUpdatedCustomers,
+    setPinResets,
 } = customerSlice.actions;
 
 export const getAllCustomers = (authUser, values) => async dispatch => {
@@ -124,6 +131,52 @@ export const getUnapprovedCustomers= (authUser, values) => async dispatch => {
         }
         else{
             dispatch(setCustomers([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
+export const getUnblockedCustomers = (authUser, values) => async dispatch => {
+    try {
+        const formData = {
+            ...values,
+            blockType: BLOCK_TYPES.CUSTOMER
+        }
+        const res = await customersApis.fetchUnBlockedCustomersAccounts(authUser, formData);
+
+        if (res.data){
+            dispatch(setUnBlockedCustomers(res.data));
+            // dispatch(setTotalCount(res.totalCount));
+            // dispatch(setCurrentPage(res.currentPage));
+            // dispatch(setPageSize(res.pageSize));
+        }
+        else{
+            dispatch(setUnBlockedCustomers([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+export const getPinResets = (authUser, values) => async dispatch => {
+    try {
+        const res = await customersApis.fetchPinRequests(authUser, values);
+
+        if (res.data){
+            dispatch(setPinResets(res.data));
+        }
+        else{
+            dispatch(setPinResets([]));
             dispatch(setTotalCount(0));
             dispatch(setCurrentPage(1));
             dispatch(setPageSize(50));

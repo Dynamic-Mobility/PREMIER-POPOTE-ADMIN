@@ -35,12 +35,12 @@ const AccountsSelectionList = props => {
                     id: selectedAccount?.id,
                     customerId: selectedAccount?.customerId,
                     ip: ipAddress,
-                    browser: browser?.toString(),
-                    userId: ""
+                    browser: browser,
+                    userId: authUser.user?.userid
                 }
             });
-            const res = await customersApis.approveAccounts(authUser, formData[0]);
-            if (!res?.success){
+            const res = await customersApis.approveAccounts(authUser, formData);
+            if (res?.success){
                 toast.success(res?.errorMessage ?? "Account(s) approved successfully!");
                 setIsLoading(false);
                 onClose?.();
