@@ -150,6 +150,55 @@ class CustomersApis {
             })
         })
     }
+
+    //Security Questions
+    fetchCustomerSecurityQuestions(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.FETCH_SECURITY_QUESTIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    fetchUnapprovedSecurityQuestions(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.FETCH_UNAPPROVED_SECURITY_QUESTIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    resetSecurityQuestions(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.RESET_SECURITY_QUESTIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    approveSecurityQuestionsReset(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.APPROVE_SECURITY_QUESTIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
     approveUpdatedCustomer(auth, values){
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(auth);

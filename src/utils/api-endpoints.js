@@ -23,6 +23,12 @@ export const API_URL = {
     BLOCK_UNBLOCK_CUSTOMER: '/api/v1/customer/blockaccount',
     ENABLE_DISABLE_CUSTOMER: '/api/v1/customer/togglecustomeracc',
 
+
+    FETCH_SECURITY_QUESTIONS: '/api/v1/customer/getcustomersecurityqtns',
+    APPROVE_SECURITY_QUESTIONS: '/api/v1/customer/approvecustomersecurityqtns',
+    FETCH_UNAPPROVED_SECURITY_QUESTIONS: '/api/v1/customer/getunapprovedresetcustomersecurityqtns',
+    RESET_SECURITY_QUESTIONS: '/api/v1/customer/resetcustomersecurityqtns',
+
     FETCH_UPDATED_CUSTOMERS: '/api/v1/customer/geteditedcustomers',
     APPROVE_UPDATED_CUSTOMER: '/api/v1/customer/approveedited',
 
@@ -121,6 +127,11 @@ export const APP_API_URL = {
     BLOCK_UNBLOCK_CUSTOMER: '/api/admin/customers/block-unblock-customer',
 
     ENABLE_DISABLE_CUSTOMER: '/api/admin/customers/enable-disable-customer',
+
+    FETCH_SECURITY_QUESTIONS: '/api/admin/customers/fetch-security-questions',
+    APPROVE_SECURITY_QUESTIONS: '/api/admin/customers/approve-security-questions-resets',
+    FETCH_UNAPPROVED_SECURITY_QUESTIONS: '/api/admin/customers/unapproved-security-questions-reset',
+    RESET_SECURITY_QUESTIONS: '/api/admin/customers/get-security-questions-resets',
 
     FETCH_UPDATED_CUSTOMERS: '/api/admin/customers/get-updated',
     APPROVE_UPDATED_CUSTOMER: '/api/admin/customers/approve-updated',

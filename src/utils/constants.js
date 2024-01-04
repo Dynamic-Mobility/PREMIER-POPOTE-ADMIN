@@ -121,7 +121,8 @@ export const PAGES_PATHS = {
     USER_ROLES: '/dashboard/roles/user-roles',
     MANAGE_USERS: '/dashboard/users/existing',
     APPROVE_USERS: '/dashboard/users/approve',
-    APPROVE_PIN_RESETS: '/dashboard/customers/approve-pin-resets'
+    APPROVE_PIN_RESETS: '/dashboard/customers/approve-pin-resets',
+    APPROVE_SECURITY_QUESTIONS_RESETS: '/dashboard/customers/approve-security-questions-resets',
 
 }
 

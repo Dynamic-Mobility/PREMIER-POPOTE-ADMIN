@@ -4,7 +4,7 @@ import {BLOCK_TYPES} from "../../utils/constants";
 
 const initialState = {
     customers : [],
-    unapprovedCustomers: [],
+    unapprovedCustomers: [], securityQuestionsResets: [],
     updatedCustomers: [],
     pendingAccounts: [],
     blockedAccounts: [],
@@ -23,6 +23,9 @@ const customerSlice = createSlice({
     reducers:{
         setCustomers: (state,action) =>{
             state.customers = action.payload;
+        },
+        setSecurityQuestionsResets: (state,action) =>{
+            state.securityQuestionsResets = action.payload;
         },
         setPendingAccounts: (state,action) =>{
             state.pendingAccounts = action.payload;
@@ -67,6 +70,7 @@ export const {
     setPendingAccounts,
     setBlockedCustomers,
     setUnBlockedAccounts,
+    setSecurityQuestionsResets,
     setCustomers,
     setTotalCount,
     setCurrentPage,
@@ -177,6 +181,26 @@ export const getPinResets = (authUser, values) => async dispatch => {
         }
         else{
             dispatch(setPinResets([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
+export const getSecurityQuestionsResets = (authUser, values) => async dispatch => {
+    try {
+        const res = await customersApis.fetchUnapprovedSecurityQuestions(authUser, values);
+
+        if (res.data){
+            dispatch(setSecurityQuestionsResets(res.data));
+        }
+        else{
+            dispatch(setSecurityQuestionsResets([]));
             dispatch(setTotalCount(0));
             dispatch(setCurrentPage(1));
             dispatch(setPageSize(50));
