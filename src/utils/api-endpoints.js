@@ -25,7 +25,7 @@ export const API_URL = {
 
 
     FETCH_SECURITY_QUESTIONS: '/api/v1/customer/getcustomersecurityqtns',
-    APPROVE_SECURITY_QUESTIONS: '/api/v1/customer/approvecustomersecurityqtns',
+    APPROVE_SECURITY_QUESTIONS: '/api/v1/customer/approveresetcustomersecurityquestions',
     FETCH_UNAPPROVED_SECURITY_QUESTIONS: '/api/v1/customer/getunapprovedresetcustomersecurityqtns',
     RESET_SECURITY_QUESTIONS: '/api/v1/customer/resetcustomersecurityqtns',
 

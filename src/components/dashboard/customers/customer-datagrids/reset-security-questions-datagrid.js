@@ -1,8 +1,8 @@
 import React from "react";
 import { Column} from "devextreme-react/data-grid";
 import DMTDatagrid from "../../../@dmt-components/data-grid";
-import DMTChip from "../../../@dmt-components/chip";
 import ResetSecurityQuestionsApproval from "../customer-approval/reset-security-questions-approval";
+import {formatDate} from "../../../../utils/helper-functions";
 
 const ResetSecurityQuestionsDatagrid = (props) => {
   const { data, onRefresh } = props;
@@ -11,17 +11,11 @@ const ResetSecurityQuestionsDatagrid = (props) => {
           <ResetSecurityQuestionsApproval onRefresh={onRefresh} customer={data}/>
       )
   }
-    const actionChannel = ({ displayValue, data }) => {
-        return (
-            <>
-                <DMTChip
-                    color={'secondary'}
-                    label={displayValue}
-                />
-            </>
 
-        );
-    }
+
+  const actionFormatDate = ({ displayValue }) => {
+      return formatDate(displayValue, 'Do MMM YYYY h:mm:ss a')
+  }
 
   return (
     <>
@@ -30,16 +24,9 @@ const ResetSecurityQuestionsDatagrid = (props) => {
      >
          <Column  minWidth={250} dataField="name" caption="Name"/>
          <Column  minWidth={150} dataField="customerIdNo" caption="ID No" />
-         <Column  minWidth={150} dataField="phoneNumber" caption="Phone Number" />
+         <Column  minWidth={150} dataField="phone" caption="Phone Number" />
          <Column
-             dataField="email"
-             caption="Email"
-             minWidth={200}
-             visible={false}
-             allowFiltering={false}
-         />
-         <Column
-             dataField="createdBy"
+             dataField="createdByName"
              caption="Initiated By"
              minWidth={200}
              allowFiltering={false}
@@ -48,7 +35,7 @@ const ResetSecurityQuestionsDatagrid = (props) => {
              dataField="createdOn"
              caption="Date"
              minWidth={150}
-             format={'datetime'}
+             cellRender={actionFormatDate}
              allowFiltering={false}
          />
          <Column
