@@ -8,6 +8,7 @@ import MKTypography from "../../@mui-components/typography";
 import MKButton from "../../@mui-components/button";
 import OTPInput from "react-otp-input";
 import { alpha } from '@mui/material'
+import CountDownButton from "../../@dmt-components/buttons/countdown-button";
 
 const OTP_LENGTH = 4;
 
@@ -116,14 +117,19 @@ const OtpForm = (props) => {
                         </MKTypography>
                     </MKBox>
                     <MKBox sx={{ display: "flex", mt: 2, justifyContent: "center" }}>
-                        <MKButton
-                            disabled={formik.isSubmitting}
+                        <CountDownButton
+                            label={"Resend OTP"}
                             onClick={handleResendOTP}
-                            variant={'text'}
-                            color={'primary'}
-                        >
-                            Resend OTP
-                        </MKButton>
+                        />
+
+                        {/*<MKButton*/}
+                        {/*    disabled={formik.isSubmitting}*/}
+                        {/*    onClick={handleResendOTP}*/}
+                        {/*    variant={'text'}*/}
+                        {/*    color={'primary'}*/}
+                        {/*>*/}
+                        {/*    Resend OTP*/}
+                        {/*</MKButton>*/}
                         <MKButton
                             color={"primary"}
                             type={"submit"}

@@ -45,7 +45,7 @@ const ConfirmationDialog = props => {
                         <MKTypography variant={'h5'} color={'warning'} gutterBottom>
                             {"Confirmation"}
                         </MKTypography>
-                        <MKTypography gutterBottom>
+                        <MKTypography align={'center'} gutterBottom>
                             {message}
                         </MKTypography>
                         {showReason && (

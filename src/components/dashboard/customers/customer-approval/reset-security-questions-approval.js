@@ -57,7 +57,7 @@ const ResetSecurityQuestionsApproval = props => {
         const browser = getBrowserDetails();
         const ipAddress = await getIPAddress();
         const formData = {
-            customerId: customer?.id,
+            customerId: customer?.customerId,
             customerUserId: customer?.customerUserId,
             approvedBy: authUser?.user?.userid ?? "",
             actionType: dialogProps?.reject ? APPROVAL_ACTION_TYPES.REJECT : APPROVAL_ACTION_TYPES.APPROVE,

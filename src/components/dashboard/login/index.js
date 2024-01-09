@@ -8,7 +8,6 @@ import {
   Box,
   IconButton,
   InputAdornment,
-  TextField,
 } from "@mui/material";
 import DMTTextInput from "../../@dmt-components/form/text-input";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -63,21 +62,20 @@ export const LoginForm = (props) => {
         userId: decodedToken?.userid
       }
 
-      await login(userDetail);
-      const returnUrl = router.query.returnUrl || "/dashboard";
-      router.push(returnUrl).catch(console.error);
+      // await login(userDetail);
+      // const returnUrl = router.query.returnUrl || "/dashboard";
+      // router.push(returnUrl).catch(console.error);
 
-      // await authApi.validateOTP(userDetail?.token, formData).then( async res => {
-      //   console.log("OTP_RES",res);
-      //   if (res?.success){
-      //     await login(userDetail);
-      //     const returnUrl = router.query.returnUrl || "/dashboard";
-      //     router.push(returnUrl).catch(console.error);
-      //   }
-      // }).catch(error => {
-      //   toast.error(error?.message ?? "An error occurred while processing request");
-      //   console.log(error.message);
-      // })
+      await authApi.validateOTP(userDetail?.token, formData).then( async res => {
+        if (res?.success){
+          await login(userDetail);
+          const returnUrl = router.query.returnUrl || "/dashboard";
+          router.push(returnUrl).catch(console.error);
+        }
+      }).catch(error => {
+        toast.error(error?.message ?? "An error occurred while processing request");
+        console.log(error.message);
+      })
     }
     catch (e) {
 
@@ -87,14 +85,14 @@ export const LoginForm = (props) => {
 
   }
 
-  const handleOnResendOTP = async() => {
+  const handleOnResendOTP = async(callbackFunc) => {
     try{
       const decodedToken = await authApi.decodeToken(userDetail.token);
       const formData = {
         userId: decodedToken?.userid,
       }
       const res = await authApi.resendOTP(userDetail.token,formData);
-      console.log(res);
+      callbackFunc?.();
     }
     catch (e) {
       console.log(e.message)
