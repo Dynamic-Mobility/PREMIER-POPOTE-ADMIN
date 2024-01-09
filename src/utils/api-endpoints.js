@@ -12,7 +12,8 @@ export const API_URL = {
 
     FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
     ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
-    GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
+    // GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
+    GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithuserinput',
     FETCH_ALL_CUSTOMERS: '/api/v1/customer/getallcustomers',
     FETCH_CUSTOMER_BY_ID: '/api/v1/customer/getallcustomers',
     FETCH_UNAPPROVED_CUSTOMERS: '/api/v1/customer/getallcustomersunapproved',

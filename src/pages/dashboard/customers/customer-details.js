@@ -48,7 +48,7 @@ const CustomerDetailsPage = () => {
                     setSearchAccNo(cifNumber);
                 }
                 // if customer is found get their accounts
-                await getCustomerAccounts(res?.cif_no);
+                await getCustomerAccounts(res?.idno);
             }
             else{
                 handleOnReset();
@@ -113,7 +113,7 @@ const CustomerDetailsPage = () => {
                     custExist: true,
                 })
                 await getCustomerById(res.id);
-                await  getCustomerAccounts(customer.cif_no);
+                await  getCustomerAccounts(customer.idno);
             }
             else{
                 toast.error(res?.errorMessage ?? 'Unable to process request. Try again!');

@@ -113,7 +113,7 @@ const ViewCustomerPage = () => {
         try{
            const res = await customersApis.fetchCustomerId(authUser, customerId);
             setExistingCustomer(res);
-            await getCustomerAccounts(res?.cif);
+            await getCustomerAccounts(res?.customerIdNo);
         }
         catch (e) {
             console.log(e.message);
