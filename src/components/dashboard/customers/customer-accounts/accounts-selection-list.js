@@ -47,9 +47,9 @@ const AccountsSelectionList = props => {
                 await onRefresh?.();
             }
             else{
-                toast.error(res?.errorMessage ?? "An error occurred! Try again!");
+                toast.error(res?.errorMessage ?? res?.error ?? "An error occurred! Try again!");
             }
-            console.log(res);
+            // console.log(res);
         }
         catch (e) {
             console.log(e?.message);

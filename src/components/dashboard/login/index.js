@@ -72,6 +72,9 @@ export const LoginForm = (props) => {
           const returnUrl = router.query.returnUrl || "/dashboard";
           router.push(returnUrl).catch(console.error);
         }
+        else{
+          toast.error(res?.error ?? "An error occurred while processing request");
+        }
       }).catch(error => {
         toast.error(error?.message ?? "An error occurred while processing request");
         console.log(error.message);
