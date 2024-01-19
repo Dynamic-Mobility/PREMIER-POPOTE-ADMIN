@@ -123,6 +123,8 @@ export const PAGES_PATHS = {
     APPROVE_USERS: '/dashboard/users/approve',
     APPROVE_PIN_RESETS: '/dashboard/customers/approve-pin-resets',
     APPROVE_SECURITY_QUESTIONS_RESETS: '/dashboard/customers/approve-security-questions-resets',
+    APPROVE_TXN_PIN_RESETS: '/dashboard/customers/approve-transaction-pin-resets'
+
 
 }
 

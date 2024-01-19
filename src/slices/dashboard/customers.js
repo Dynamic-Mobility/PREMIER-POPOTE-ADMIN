@@ -4,7 +4,9 @@ import {BLOCK_TYPES} from "../../utils/constants";
 
 const initialState = {
     customers : [],
-    unapprovedCustomers: [], securityQuestionsResets: [],
+    unapprovedCustomers: [],
+    securityQuestionsResets: [],
+    txnPinResets:[],
     updatedCustomers: [],
     pendingAccounts: [],
     blockedAccounts: [],
@@ -26,6 +28,9 @@ const customerSlice = createSlice({
         },
         setSecurityQuestionsResets: (state,action) =>{
             state.securityQuestionsResets = action.payload;
+        },
+        setTxnPinReset: (state,action) =>{
+            state.txnPinResets = action.payload;
         },
         setPendingAccounts: (state,action) =>{
             state.pendingAccounts = action.payload;
@@ -77,6 +82,7 @@ export const {
     setPageSize,
     setUpdatedCustomers,
     setPinResets,
+    setTxnPinReset,
 } = customerSlice.actions;
 
 export const getAllCustomers = (authUser, values) => async dispatch => {
@@ -201,6 +207,25 @@ export const getSecurityQuestionsResets = (authUser, values) => async dispatch =
         }
         else{
             dispatch(setSecurityQuestionsResets([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+export const getTxnPinResets = (authUser, values) => async dispatch => {
+    try {
+        const res = await customersApis.fetchUnapprovedTxnPinResets(authUser, values);
+
+        if (res.data){
+            dispatch(setTxnPinReset(res.data));
+        }
+        else{
+            dispatch(setTxnPinReset([]));
             dispatch(setTotalCount(0));
             dispatch(setCurrentPage(1));
             dispatch(setPageSize(50));

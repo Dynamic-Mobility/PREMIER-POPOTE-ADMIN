@@ -24,6 +24,10 @@ export const API_URL = {
     BLOCK_UNBLOCK_CUSTOMER: '/api/v1/customer/blockaccount',
     ENABLE_DISABLE_CUSTOMER: '/api/v1/customer/togglecustomeracc',
 
+    APPROVE_TXN_PIN_RESETS: '/api/v1/customer/approveresettransactionpinrequests',
+    FETCH_UNAPPROVED_TXN_PIN_RESETS: '/api/v1/customer/getunapprovedtransactionpinresetrequests',
+    RESET_TXN_PIN: '/api/v1/customer/resettransactionpin',
+
 
     FETCH_SECURITY_QUESTIONS: '/api/v1/customer/getcustomersecurityqtns',
     APPROVE_SECURITY_QUESTIONS: '/api/v1/customer/approveresetcustomersecurityquestions',
@@ -128,6 +132,11 @@ export const APP_API_URL = {
     BLOCK_UNBLOCK_CUSTOMER: '/api/admin/customers/block-unblock-customer',
 
     ENABLE_DISABLE_CUSTOMER: '/api/admin/customers/enable-disable-customer',
+
+
+    APPROVE_TXN_PIN_RESETS: '/api/admin/customers/approve-txn-pin-resets',
+    FETCH_UNAPPROVED_TXN_PIN_RESETS: '/api/admin/customers/unapproved-txn-pin-resets',
+    RESET_TXN_PIN: '/api/admin/customers/reset-txn-pin',
 
     FETCH_SECURITY_QUESTIONS: '/api/admin/customers/fetch-security-questions',
     APPROVE_SECURITY_QUESTIONS: '/api/admin/customers/approve-security-questions-resets',

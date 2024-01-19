@@ -175,10 +175,46 @@ class CustomersApis {
         })
     }
 
+    fetchUnapprovedTxnPinResets(auth, values){
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(auth);
+            axiosInstance.post(APP_API_URL.FETCH_UNAPPROVED_TXN_PIN_RESETS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
     resetSecurityQuestions(authUser, values) {
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(authUser);
             axiosInstance.post(APP_API_URL.RESET_SECURITY_QUESTIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    resetTransactionPin(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.RESET_TXN_PIN, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    approveTxnPinReset(authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.APPROVE_TXN_PIN_RESETS, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))
