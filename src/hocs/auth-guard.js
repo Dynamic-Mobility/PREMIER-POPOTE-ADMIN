@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/use-auth";
 import { useRouter } from "next/router";
 import {SplashScreen} from "../components/splash-screen";
 import { useCallback } from "react";
+import IdleTimerGuard from "./idle-timer-guard";
 
 export const AuthGuard = (props) => {
     const { children } = props;
@@ -45,7 +46,11 @@ export const AuthGuard = (props) => {
     // If got here, it means that the redirect did not occur, and that tells us that the user is
     // authenticated / authorized.
 
-    return <>{children}</>;
+    return (<>
+            <IdleTimerGuard/>
+           {children}
+    </>
+    );
 };
 
 AuthGuard.propTypes = {

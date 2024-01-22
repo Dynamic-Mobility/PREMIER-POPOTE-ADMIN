@@ -1,5 +1,6 @@
-import { backendAxiosInstance } from "../../../../api-requests/backend-axios-instance";
-import { API_METHODS,API_URL } from "../../../../utils/api-endpoints";
+import { backendAxiosInstance } from "../../../../../api-requests/backend-axios-instance";
+import { API_METHODS,API_URL } from "../../../../../utils/api-endpoints";
+import {formatMultipleQuery} from "../../../../../utils/helper-functions";
 
 export const config = {
     api: {
@@ -9,7 +10,7 @@ export const config = {
     }
 }
 export default async function handler(req, res) {
-     if (req.method === API_METHODS.POST) {
+    if (req.method === API_METHODS.POST) {
         try {
             if (!req.headers?.authorization){
                 res.status(401).send('Unauthorized');
@@ -17,9 +18,13 @@ export default async function handler(req, res) {
             let config = {
                 headers: {
                     'Authorization': req.headers.authorization,
-                }
+                },
+
             };
-            const body = req.body;
+
+            const body = req.body
+
+            //if it contains the active property
 
             if (body?.active){
                 config = {
@@ -30,7 +35,7 @@ export default async function handler(req, res) {
                 }
             }
 
-            await backendAxiosInstance.post(`${API_URL.FETCH_ALL_CUSTOMERS}`,body, config)
+            await backendAxiosInstance.post(`${API_URL.FETCH_CUSTOMER_REPORT}/${body.reportType}`,body, config)
                 .then(response => {
                     res.status(200).json(response.data);
                 })

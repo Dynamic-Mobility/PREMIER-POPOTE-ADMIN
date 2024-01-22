@@ -104,7 +104,7 @@ export const PAGE_PERMISSIONS = {
         value: 3
     },
 };
-
+export const INACTIVITY_TIMEOUT =  3000000 //Set to 5 minutes
 export const PAGES_PATHS = {
     DASHBOARD: '/dashboard/',
     EXISTING_CUSTOMERS: '/dashboard/customers/all',

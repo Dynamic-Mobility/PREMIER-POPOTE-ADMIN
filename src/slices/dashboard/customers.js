@@ -4,6 +4,8 @@ import {BLOCK_TYPES} from "../../utils/constants";
 
 const initialState = {
     customers : [],
+    activeCustomers: [],
+    inactiveCustomers: [],
     unapprovedCustomers: [],
     securityQuestionsResets: [],
     txnPinResets:[],
@@ -25,6 +27,12 @@ const customerSlice = createSlice({
     reducers:{
         setCustomers: (state,action) =>{
             state.customers = action.payload;
+        },
+        setActiveCustomers: (state,action) =>{
+            state.activeCustomers = action.payload;
+        },
+        setInActiveCustomers: (state,action) =>{
+            state.inactiveCustomers = action.payload;
         },
         setSecurityQuestionsResets: (state,action) =>{
             state.securityQuestionsResets = action.payload;
@@ -69,6 +77,8 @@ const customerSlice = createSlice({
 });
 
 export const {
+    setActiveCustomers,
+    setInActiveCustomers,
     setUnapprovedCustomers,
     setUnBlockedCustomers,
     setBlockedAccounts,
@@ -106,6 +116,49 @@ export const getAllCustomers = (authUser, values) => async dispatch => {
         console.log(e.message);
     }
 }
+export const getActiveCustomers = (authUser, values) => async dispatch => {
+    try {
+        const res = await customersApis.fetchAllCustomers(authUser, values);
+        if (res.data){
+            dispatch(setActiveCustomers(res.data));
+            dispatch(setTotalCount(res.totalCount));
+            dispatch(setCurrentPage(res.currentPage));
+            dispatch(setPageSize(res.pageSize));
+        }
+        else{
+            dispatch(setActiveCustomers([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+export const getInactiveCustomers = (authUser, values) => async dispatch => {
+    try {
+        const res = await customersApis.fetchAllCustomers(authUser, values);
+        if (res.data){
+            dispatch(setInActiveCustomers(res.data));
+            dispatch(setTotalCount(res.totalCount));
+            dispatch(setCurrentPage(res.currentPage));
+            dispatch(setPageSize(res.pageSize));
+        }
+        else{
+            dispatch(setInActiveCustomers([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
 
 
 export const getUpdatedCustomers = (authUser, values) => async dispatch => {

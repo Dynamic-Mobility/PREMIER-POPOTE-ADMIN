@@ -10,6 +10,8 @@ export const API_URL = {
 
     /***************** CUSTOMERS **********************/
 
+    FETCH_CUSTOMER_REPORT: '/api/v1/reports/getcustomerreports',
+
     FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
     ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
     // GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
@@ -82,6 +84,7 @@ export const API_URL = {
     APPROVE_USERS: '/api/v1/account/approveusers',
     ENABLE_DISABLE_USERS: '/api/v1/account/toggleuser',
 
+
     /************************ TRANSACTIONS ****************************/
 
     FETCH_ALL_TRANSACTIONS: '/api/v1/transactions/getalltransaction',
@@ -118,6 +121,8 @@ export const APP_API_URL = {
     RESEND_OTP: '/api/admin/account/resend-otp',
 
     /***************** CUSTOMERS **********************/
+
+    FETCH_CUSTOMER_REPORT: '/api/admin/customers/reports/fetch-reports',
 
     FETCH_CUSTOMER_CIF: '/api/admin/customers/fetch-by-cif',
     ADD_UPDATE_CUSTOMERS: '/api/admin/customers/add-update-customers',
