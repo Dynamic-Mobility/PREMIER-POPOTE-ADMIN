@@ -12,6 +12,8 @@ import CustomerSetLimits from "../customer-set-limits";
 import RoleBasedGuard from "../../../../hocs/role-based-guard";
 import {PAGE_PERMISSIONS, PAGES_PATHS} from "../../../../utils/constants";
 import EnableDisableCustomerDialog from "./enable-disable-customer";
+import ResetSecurityQuestions from "./reset-security-questions";
+import ResetTransactionPin from "./reset-transaction-pin";
 
 const CustomerActions = props => {
     const {customer, onAddUpdate, onReset, existingCustomer, onRefresh } = props;
@@ -69,7 +71,7 @@ const CustomerActions = props => {
                             {/*    Recreate Key*/}
                             {/*</MKButton>*/}
                             <CustomerResetPin customer={customer} existingCustomer={existingCustomer}>
-                                {"Reset Pin"}
+                                {"Reset Login Pin"}
                             </CustomerResetPin>
                             <EnableDisableCustomerDialog
                                 existingCustomer={existingCustomer}
@@ -77,6 +79,16 @@ const CustomerActions = props => {
                                 onRefresh={onRefresh}
                             />
                             <BlockUnblockCustomerDialog
+                                existingCustomer={existingCustomer}
+                                customer={customer}
+                                onRefresh={onRefresh}
+                            />
+                            <ResetSecurityQuestions
+                                existingCustomer={existingCustomer}
+                                customer={customer}
+                                onRefresh={onRefresh}
+                            />
+                            <ResetTransactionPin
                                 existingCustomer={existingCustomer}
                                 customer={customer}
                                 onRefresh={onRefresh}

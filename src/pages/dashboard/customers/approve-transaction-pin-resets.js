@@ -1,24 +1,23 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import ExistingCustomersDatagrid from "../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
 import MKBox from "../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../store";
-import {getAllCustomers} from "../../../slices/dashboard/customers";
+import {getTxnPinResets} from "../../../slices/dashboard/customers";
 import {useAuth} from "../../../hooks/use-auth";
 import {AuthGuard} from "../../../hocs/auth-guard";
 import RoleBasedGuard from "../../../hocs/role-based-guard";
 import {PAGES_PATHS} from "../../../utils/constants";
-import {formatDate, splitString} from "../../../utils/helper-functions";
-import {transactionsApis} from "../../../api-requests/transactions-apis";
-import {customersApis} from "../../../api-requests/customers-api";
 
-const title = "Existing Customers";
+import TransactionPinResetDatagrid
+  from "../../../components/dashboard/customers/customer-datagrids/transaction-pin-resets-datagrid";
 
-const Customers = () => {
+const title = "Approve Transaction Pin Reset";
+
+const  ApproveTransactionPinReset = () => {
   const initialFilters = {
     name: "",
     idnumber: "",
@@ -28,7 +27,7 @@ const Customers = () => {
   }
   const [filters, setFilters] = useState(initialFilters);
   const dispatch = useDispatch();
-  const { customers, pageSize, currentPage} = useSelector(( { customers }) => customers);
+  const { txnPinResets , pageSize, currentPage} = useSelector(( { customers }) => customers);
   const authUser = useAuth();
 
   const handleOnChangeFilters = values => {
@@ -42,35 +41,26 @@ const Customers = () => {
       pageSize,
       pageNumber: currentPage,
     }
-    await dispatch(getAllCustomers(authUser,values ))
+    await dispatch(getTxnPinResets(authUser,values ))
   }
 
   const handleOnSearch = async () => {
-    await fetchAllCustomers();
+    await fetchPinResets();
   }
 
-  const fetchAllCustomers = async () => {
+  const fetchPinResets = async () => {
     const values = {
       ...filters,
       pageSize,
       pageNumber: currentPage,
+
    }
-    await dispatch(getAllCustomers(authUser,values ))
+    await dispatch(getTxnPinResets(authUser,values ))
   }
-
-  const getCustomerReports = useCallback(async (filters, reportType) => {
-    const values = {
-      ...filters,
-      reportType,
-      pageSize,
-      pageNumber: currentPage,
-    }
-    return await  customersApis.fetchCustomerReport(authUser, values);
-  },[authUser?.user]);
 
 
   useEffect(() => {
-    fetchAllCustomers();
+    fetchPinResets();
   }, [])
 
   return (
@@ -92,7 +82,6 @@ const Customers = () => {
             <Grid item>
               <CustomerActionsButton {...{
                 filters,
-                onExport: reportType => getCustomerReports(filters, reportType),
                 onChangeFilters: handleOnChangeFilters,
                 onResetFilters: handleOnResetFilters,
                 onSearch: handleOnSearch
@@ -101,7 +90,7 @@ const Customers = () => {
           </Grid>
           </MKBox>
           <Card sx={{ p: 1 }}>
-            <ExistingCustomersDatagrid data={customers} />
+            <TransactionPinResetDatagrid data={txnPinResets} onRefresh={fetchPinResets} />
           </Card>
         </MKBox>
 
@@ -109,18 +98,18 @@ const Customers = () => {
   );
 };
 
-Customers.getLayout = (page) => {
+ApproveTransactionPinReset.getLayout = (page) => {
   return (
     <>
-       <AuthGuard>
-          <ModernLayout>
-            <RoleBasedGuard path={PAGES_PATHS.EXISTING_CUSTOMERS} page={true}>
-              {page}
-            </RoleBasedGuard>
-          </ModernLayout>
-       </AuthGuard>
+      <AuthGuard>
+        <ModernLayout>
+          <RoleBasedGuard path={PAGES_PATHS.APPROVE_TXN_PIN_RESETS} page={true}>
+            {page}
+          </RoleBasedGuard>
+        </ModernLayout>
+      </AuthGuard>
     </>
   );
 };
 
-export default Customers;
+export default ApproveTransactionPinReset;

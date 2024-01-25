@@ -44,6 +44,8 @@ const LinkAccountModal = (props) => {
             const res = await customersApis.linkAccounts(authUser, formData);
             if (res.success) {
                 toast.success(Boolean(res?.errorMessage) ? res?.errorMessage : "Account(s) linked successfully!");
+                handleClose();
+                await onRefresh?.();
             } else {
                 toast.error(res?.errorMessage ?? "An error occurred while processing request!");
             }

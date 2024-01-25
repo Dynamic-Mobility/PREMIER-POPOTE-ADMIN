@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import ExistingCustomersDatagrid from "../../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "../../../../store";
 import {getAllCustomers} from "../../../../slices/dashboard/customers";
 import {useAuth} from "../../../../hooks/use-auth";
 import {AuthGuard} from "../../../../hocs/auth-guard";
+import {customersApis} from "../../../../api-requests/customers-api";
 
 const title = "Registered Customers";
 
@@ -53,6 +54,16 @@ const Customers = () => {
         await dispatch(getAllCustomers(authUser,values ))
     }
 
+    const getCustomerReports = useCallback(async (filters, reportType) => {
+        const values = {
+            ...filters,
+            reportType,
+            pageSize,
+            pageNumber: currentPage,
+        }
+        return await  customersApis.fetchCustomerReport(authUser, values);
+    },[authUser?.user]);
+
 
     useEffect(() => {
         fetchAllCustomers();
@@ -77,6 +88,7 @@ const Customers = () => {
                         <Grid item>
                             <CustomerActionsButton {...{
                                 filters,
+                                onExport: reportType => getCustomerReports(filters, reportType),
                                 onChangeFilters: handleOnChangeFilters,
                                 onResetFilters: handleOnResetFilters,
                                 onSearch: handleOnSearch

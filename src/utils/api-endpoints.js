@@ -10,9 +10,12 @@ export const API_URL = {
 
     /***************** CUSTOMERS **********************/
 
+    FETCH_CUSTOMER_REPORT: '/api/v1/reports/getcustomerreports',
+
     FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
     ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
-    GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
+    // GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
+    GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithuserinput',
     FETCH_ALL_CUSTOMERS: '/api/v1/customer/getallcustomers',
     FETCH_CUSTOMER_BY_ID: '/api/v1/customer/getallcustomers',
     FETCH_UNAPPROVED_CUSTOMERS: '/api/v1/customer/getallcustomersunapproved',
@@ -22,6 +25,16 @@ export const API_URL = {
     VALIDATE_RESET_PIN_OTP: '/api/v1/customer/approveresetpin',
     BLOCK_UNBLOCK_CUSTOMER: '/api/v1/customer/blockaccount',
     ENABLE_DISABLE_CUSTOMER: '/api/v1/customer/togglecustomeracc',
+
+    APPROVE_TXN_PIN_RESETS: '/api/v1/customer/approveresettransactionpinrequests',
+    FETCH_UNAPPROVED_TXN_PIN_RESETS: '/api/v1/customer/getunapprovedtransactionpinresetrequests',
+    RESET_TXN_PIN: '/api/v1/customer/resettransactionpin',
+
+
+    FETCH_SECURITY_QUESTIONS: '/api/v1/customer/getcustomersecurityqtns',
+    APPROVE_SECURITY_QUESTIONS: '/api/v1/customer/approveresetcustomersecurityquestions',
+    FETCH_UNAPPROVED_SECURITY_QUESTIONS: '/api/v1/customer/getunapprovedresetcustomersecurityqtns',
+    RESET_SECURITY_QUESTIONS: '/api/v1/customer/resetcustomersecurityqtns',
 
     FETCH_UPDATED_CUSTOMERS: '/api/v1/customer/geteditedcustomers',
     APPROVE_UPDATED_CUSTOMER: '/api/v1/customer/approveedited',
@@ -71,6 +84,7 @@ export const API_URL = {
     APPROVE_USERS: '/api/v1/account/approveusers',
     ENABLE_DISABLE_USERS: '/api/v1/account/toggleuser',
 
+
     /************************ TRANSACTIONS ****************************/
 
     FETCH_ALL_TRANSACTIONS: '/api/v1/transactions/getalltransaction',
@@ -108,6 +122,8 @@ export const APP_API_URL = {
 
     /***************** CUSTOMERS **********************/
 
+    FETCH_CUSTOMER_REPORT: '/api/admin/customers/reports/fetch-reports',
+
     FETCH_CUSTOMER_CIF: '/api/admin/customers/fetch-by-cif',
     ADD_UPDATE_CUSTOMERS: '/api/admin/customers/add-update-customers',
     GET_ACCOUNT_SWITCHBY_CIF: '/api/admin/customers/get-account-switch',
@@ -121,6 +137,16 @@ export const APP_API_URL = {
     BLOCK_UNBLOCK_CUSTOMER: '/api/admin/customers/block-unblock-customer',
 
     ENABLE_DISABLE_CUSTOMER: '/api/admin/customers/enable-disable-customer',
+
+
+    APPROVE_TXN_PIN_RESETS: '/api/admin/customers/approve-txn-pin-resets',
+    FETCH_UNAPPROVED_TXN_PIN_RESETS: '/api/admin/customers/unapproved-txn-pin-resets',
+    RESET_TXN_PIN: '/api/admin/customers/reset-txn-pin',
+
+    FETCH_SECURITY_QUESTIONS: '/api/admin/customers/fetch-security-questions',
+    APPROVE_SECURITY_QUESTIONS: '/api/admin/customers/approve-security-questions-resets',
+    FETCH_UNAPPROVED_SECURITY_QUESTIONS: '/api/admin/customers/unapproved-security-questions-reset',
+    RESET_SECURITY_QUESTIONS: '/api/admin/customers/get-security-questions-resets',
 
     FETCH_UPDATED_CUSTOMERS: '/api/admin/customers/get-updated',
     APPROVE_UPDATED_CUSTOMER: '/api/admin/customers/approve-updated',

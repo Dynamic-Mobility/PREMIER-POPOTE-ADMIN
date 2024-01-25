@@ -2,7 +2,6 @@ import {useState} from "react";
 import MKButton from "../../../@mui-components/button";
 import DMTDialog from "../../../@dmt-components/dialog";
 import DialogContent from "@mui/material/DialogContent";
-import {BLOCK_ACTION_TYPES, BLOCK_TYPES, CHANNEL_TYPES} from "../../../../utils/constants";
 import MKTypography from "../../../@mui-components/typography";
 import MKBox from "../../../@mui-components/box";
 import * as React from "react";
@@ -12,73 +11,39 @@ import {useAuth} from "../../../../hooks/use-auth";
 import DMTTextInput from "../../../@dmt-components/form/text-input";
 import {toast} from "react-toastify";
 import {getBrowserDetails, getIPAddress} from "../../../../utils/helper-functions";
-import MenuItem from "@mui/material/MenuItem";
 
-const BlockUnblockUnlinkAccount = props => {
-    const {
-        existingCustomer,
-        disabled = false,
-        action= BLOCK_ACTION_TYPES.BLOCK,
-        account,
-        label = "Block Customer",
-        type = "button",
-        blockType= BLOCK_TYPES.CUSTOMER,
-        onClose,
-        onRefresh
-    } = props;
+const ResetTransactionPin = props => {
+    const { existingCustomer, disabled = false, customer, onRefresh } = props;
     const [openDialog, setOpenDialog] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
     const [reason, setReason] = useState("");
     const authUser = useAuth();
 
-    const getMessage = () => {
-        let message;
-        if (Boolean(existingCustomer)){
-            message = (
-                <MKTypography align={'center'} gutterBottom>
-                    {`Are you sure you want to block customer - `}
-                    <b>{existingCustomer?.name} ?</b>
-                </MKTypography>
-            )
-        }
-        if (Boolean(account)){
-            message = (
-                <MKTypography align={'center'} gutterBottom>
-                    {`Are you sure you want to ${action} account - `}
-                    <b>{account?.account} ?</b>
-                </MKTypography>
-            )
-        }
-        return message;
-    }
+
+    const action= "Reset Transaction Pin";
 
     const handleOnChange = e => {
         setReason(e.target.value);
     }
 
     const handleOnProceed = async () => {
-        setIsLoading(true)
         const ipAddress = await getIPAddress();
-        const browser = await getBrowserDetails();
+        const browser = getBrowserDetails();
         const formData = {
-            userId: "",
-            branchCode: "",
-            customerId: Boolean(existingCustomer) ? existingCustomer?.id : "",
-            customerUserId: Boolean(existingCustomer) ? existingCustomer?.customerUserId : "",
+            userId: authUser.user?.userid,
+            customerId: existingCustomer?.id,
+            customerUserId: existingCustomer?.customerUserId,
             reason: reason,
-            actionType: action,
-            accountId: Boolean(account) ? account?.id : "",
-            blockType: blockType,
             ip: ipAddress,
             browser: browser
         }
+        setIsLoading(true)
         try{
-            const res = await customersApis.blockUnblockCustomer(authUser, formData)
+            const res = await customersApis.resetTransactionPin(authUser, formData)
             if (res.success){
                 toast.success(res?.errorMessage ?? "Operation is successful!");
                 handleOnClose();
-                onClose?.();
-                await onRefresh?.();
+                onRefresh?.();
             }
             else{
                 toast.error(res?.errorMessage ?? "An error occurred! Try again Later")
@@ -99,26 +64,14 @@ const BlockUnblockUnlinkAccount = props => {
 
     return (
         <>
-            {type === "button" && (
-                <MKButton
-                    color={'primary'}
-                    variant={'outlined'}
-                    onClick={handleOnOpen}
-                    disabled={disabled}
-                >
-                    {label}
-                </MKButton>
-            )}
-            {type === "menu" && (
-                <MenuItem
-                    color={'primary'}
-                    variant={'outlined'}
-                    onClick={handleOnOpen}
-                    disabled={disabled}
-                >
-                    {label}
-                </MenuItem>
-            )}
+            <MKButton
+                color={'primary'}
+                variant={'outlined'}
+                onClick={handleOnOpen}
+                disabled={disabled}
+            >
+                {action}
+            </MKButton>
             <DMTDialog
                 open={openDialog}
                 onClose={handleOnClose}
@@ -127,15 +80,20 @@ const BlockUnblockUnlinkAccount = props => {
                     <form onSubmit={e => { e.preventDefault(); handleOnProceed()} }>
                         <MKBox sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
                             <MKTypography sx={{ mb: 2}} color={'primary'} variant={'h5'} align={'center'} gutterBottom>
-                                {label}
+                                {action}
                             </MKTypography>
-                            {getMessage()}
+                            <MKTypography align={'center'} gutterBottom>
+                                {`Are you sure you want to ${action.toLowerCase()} - `}
+                                <b>{existingCustomer?.name} ?</b>
+                            </MKTypography>
                             <MKBox sx={{ width: '100%'}}>
                                 <DMTTextInput
                                     multiline={true}
                                     minRows={3}
                                     fullWidth={true}
                                     required={true}
+                                    // error={Boolean(!reason)}
+                                    // helperText={Boolean(!reason) && "Reason is required!"}
                                     value={reason}
                                     placeholder={'Write reason here...'}
                                     onChange={handleOnChange}
@@ -158,12 +116,10 @@ const BlockUnblockUnlinkAccount = props => {
                             </MKBox>
                         </MKBox>
                     </form>
-
-
                 </DialogContent>
             </DMTDialog>
         </>
     )
 }
 
-export default BlockUnblockUnlinkAccount;
+export default ResetTransactionPin;

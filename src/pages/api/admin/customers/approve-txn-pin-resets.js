@@ -14,23 +14,14 @@ export default async function handler(req, res) {
             if (!req.headers?.authorization){
                 res.status(401).send('Unauthorized');
             }
-            let config = {
+            const config = {
                 headers: {
                     'Authorization': req.headers.authorization,
                 }
             };
             const body = req.body;
 
-            if (body?.active){
-                config = {
-                    ...config,
-                    params: {
-                        active: body.active,
-                    }
-                }
-            }
-
-            await backendAxiosInstance.post(`${API_URL.FETCH_ALL_CUSTOMERS}`,body, config)
+            await backendAxiosInstance.post(`${API_URL.APPROVE_TXN_PIN_RESETS}`,body, config)
                 .then(response => {
                     res.status(200).json(response.data);
                 })

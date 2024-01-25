@@ -30,7 +30,7 @@ const PersonalizedLimits = props => {
 
     const handleOnFoundCustomer = async customer => {
         setCustomerFound(customer);
-        await fetchAccounts(customer?.cif_no);
+        await fetchAccounts(customer?.idno);
     }
     const handleOnBack = () => {
         if (customer){

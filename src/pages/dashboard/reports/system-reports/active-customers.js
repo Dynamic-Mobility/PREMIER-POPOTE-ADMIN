@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import ExistingCustomersDatagrid from "../../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
@@ -7,9 +7,10 @@ import Head from "next/head";
 import CustomerActionsButton from "../../../../components/dashboard/customers/filters/customer-actions-button";
 import MKBox from "../../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../../store";
-import {getAllCustomers} from "../../../../slices/dashboard/customers";
+import {getActiveCustomers} from "../../../../slices/dashboard/customers";
 import {useAuth} from "../../../../hooks/use-auth";
 import {AuthGuard} from "../../../../hocs/auth-guard";
+import {customersApis} from "../../../../api-requests/customers-api";
 
 const title = "Active Customers";
 
@@ -20,10 +21,11 @@ const ActiveCustomersPage = () => {
     phonenumber: "",
     cifNumber: "",
     email: "",
+    active: "true",
   }
   const [filters, setFilters] = useState(initialFilters);
   const dispatch = useDispatch();
-  const { customers, pageSize, currentPage} = useSelector(( { customers }) => customers);
+  const { activeCustomers , pageSize, currentPage} = useSelector(( { customers }) => customers);
   const authUser = useAuth();
 
   const handleOnChangeFilters = values => {
@@ -37,7 +39,7 @@ const ActiveCustomersPage = () => {
       pageSize,
       pageNumber: currentPage,
     }
-    await dispatch(getAllCustomers(authUser,values ))
+    await dispatch(getActiveCustomers(authUser,values ))
   }
 
   const handleOnSearch = async () => {
@@ -50,8 +52,18 @@ const ActiveCustomersPage = () => {
       pageSize,
       pageNumber: currentPage,
     }
-    await dispatch(getAllCustomers(authUser,values ))
+    await dispatch(getActiveCustomers(authUser,values ))
   }
+
+  const getCustomerReports = useCallback(async (filters, reportType) => {
+    const values = {
+      ...filters,
+      reportType,
+      pageSize,
+      pageNumber: currentPage,
+    }
+    return await  customersApis.fetchCustomerReport(authUser, values);
+  },[authUser?.user]);
 
 
   useEffect(() => {
@@ -77,6 +89,7 @@ const ActiveCustomersPage = () => {
               <Grid item>
                 <CustomerActionsButton {...{
                   filters,
+                  onExport: reportType => getCustomerReports(filters, reportType),
                   onChangeFilters: handleOnChangeFilters,
                   onResetFilters: handleOnResetFilters,
                   onSearch: handleOnSearch
@@ -85,7 +98,7 @@ const ActiveCustomersPage = () => {
             </Grid>
           </MKBox>
           <Card sx={{ p: 1 }}>
-            <ExistingCustomersDatagrid data={customers} />
+            <ExistingCustomersDatagrid data={activeCustomers} />
           </Card>
         </MKBox>
 

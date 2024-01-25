@@ -43,10 +43,9 @@ export default async function handler(req, res) {
                     'Authorization': req.headers.authorization,
                 }
             };
-            const body = req.body.cif;
-            console.log("SWITCH_CIF ",body);
+            const cif = req.body.cif;
 
-            await backendAxiosInstance.post(`${API_URL.GET_ACCOUNT_SWITCHBY_CIF}/${body}`,{}, config)
+            await backendAxiosInstance.post(`${API_URL.GET_ACCOUNT_SWITCHBY_CIF}/${cif}`,{}, config)
                 .then(response => {
                     res.status(200).json(response.data);
                 })

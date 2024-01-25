@@ -14,7 +14,7 @@ const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
 });
 
-export const MenuDots = ({ data }) => {
+export const MenuDots = ({ data, existingCustomer, onRefresh }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -46,15 +46,19 @@ export const MenuDots = ({ data }) => {
         }}
       >
           <BlockUnblockUnlinkAccount
-              label={"Block Account"}
+              label={data?.localStatus === 'Blocked' ? "Unblock Account" : "Block Account"}
+              existingCustomer={existingCustomer}
+              onRefresh={onRefresh}
               type={"menu"}
               account={data}
-              action={BLOCK_ACTION_TYPES.BLOCK}
+              action={data?.localStatus === 'Blocked' ? BLOCK_ACTION_TYPES.UNBLOCK : BLOCK_ACTION_TYPES.BLOCK }
               blockType = {BLOCK_TYPES.ACCOUNT}
               onClose={handleClose}
           />
           <BlockUnblockUnlinkAccount
               label={"Unlink Account"}
+              existingCustomer={existingCustomer}
+              onRefresh={onRefresh}
               type={"menu"}
               account={data}
               action={BLOCK_ACTION_TYPES.UNLINK}
@@ -78,7 +82,7 @@ const filterAccounts = (options) => {
 
 
 const AccountDetailsDatagrid = (props) => {
-  const { data, cifResponse } = props;
+  const { data, cifResponse, onRefresh, existingCustomer } = props;
 
   const linkedAccounts = filterAccounts(data);
 
@@ -111,7 +115,7 @@ const AccountDetailsDatagrid = (props) => {
   const actionLink = ({ data, rowIndex }) => {
     return (
       <div>
-        <MenuDots data={data} />
+        <MenuDots data={data} existingCustomer={existingCustomer} onRefresh={onRefresh} />
       </div>
     );
   };
@@ -120,7 +124,7 @@ const AccountDetailsDatagrid = (props) => {
     <>
         <MKBox sx={{ my:1, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
             <MKTypography fontWeight="bold">{"Linked Accounts"}</MKTypography>
-            <LinkAccountModal data={data} cifResponse={cifResponse} />
+            <LinkAccountModal data={data} cifResponse={cifResponse} onRefresh={onRefresh} />
         </MKBox>
 
           <DataGrid
@@ -134,18 +138,19 @@ const AccountDetailsDatagrid = (props) => {
             wordWrapEnabled={true}
             // height={"70vh"}
           >
+             <Column
+                 caption="Action"
+                 width={120}
+                 alignment={"center"}
+                 allowFiltering={false}
+                 cellRender={actionLink}
+             />
             <Column minWidth={150} dataField="account" caption="A/C Number" />
             <Column minWidth={250} dataField="longname" caption="A/C Name" />
             <Column minWidth={100} dataField="currencyCode" caption="Currency Code" />
-            <Column minWidth={110} cellRender={formatStatus} dataField="status" caption="Status" />
-            <Column minWidth={150} cellRender={formatApprovalStatus} dataField="localStatus" caption="Approval Status" />
-            <Column
-              caption="Action"
-              width={120}
-              alignment={"center"}
-              allowFiltering={false}
-              cellRender={actionLink}
-            />
+            <Column minWidth={110} cellRender={formatStatus} dataField="status" caption="A/C IMAL Status" />
+            <Column minWidth={150} cellRender={formatApprovalStatus} dataField="localStatus" caption="Status" />
+
           </DataGrid>
 
 

@@ -1,24 +1,22 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../components/@mui-components/typography";
-import ExistingCustomersDatagrid from "../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
 import ModernLayout from "../../../components/layouts/modern";
 import Head from "next/head";
 import CustomerActionsButton from "../../../components/dashboard/customers/filters/customer-actions-button";
 import MKBox from "../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../store";
-import {getAllCustomers} from "../../../slices/dashboard/customers";
+import {getSecurityQuestionsResets} from "../../../slices/dashboard/customers";
 import {useAuth} from "../../../hooks/use-auth";
 import {AuthGuard} from "../../../hocs/auth-guard";
 import RoleBasedGuard from "../../../hocs/role-based-guard";
 import {PAGES_PATHS} from "../../../utils/constants";
-import {formatDate, splitString} from "../../../utils/helper-functions";
-import {transactionsApis} from "../../../api-requests/transactions-apis";
-import {customersApis} from "../../../api-requests/customers-api";
+import ResetSecurityQuestionsDatagrid
+  from "../../../components/dashboard/customers/customer-datagrids/reset-security-questions-datagrid";
 
-const title = "Existing Customers";
+const title = "Approve Security Questions Reset";
 
-const Customers = () => {
+const  ApproveSecurityQuestionResetsPage = () => {
   const initialFilters = {
     name: "",
     idnumber: "",
@@ -28,7 +26,7 @@ const Customers = () => {
   }
   const [filters, setFilters] = useState(initialFilters);
   const dispatch = useDispatch();
-  const { customers, pageSize, currentPage} = useSelector(( { customers }) => customers);
+  const { securityQuestionsResets , pageSize, currentPage} = useSelector(( { customers }) => customers);
   const authUser = useAuth();
 
   const handleOnChangeFilters = values => {
@@ -42,35 +40,26 @@ const Customers = () => {
       pageSize,
       pageNumber: currentPage,
     }
-    await dispatch(getAllCustomers(authUser,values ))
+    await dispatch(getSecurityQuestionsResets(authUser,values ))
   }
 
   const handleOnSearch = async () => {
-    await fetchAllCustomers();
+    await fetchSecurityQuestionResets();
   }
 
-  const fetchAllCustomers = async () => {
+  const fetchSecurityQuestionResets = async () => {
     const values = {
       ...filters,
       pageSize,
       pageNumber: currentPage,
+
    }
-    await dispatch(getAllCustomers(authUser,values ))
+    await dispatch(getSecurityQuestionsResets(authUser,values ))
   }
-
-  const getCustomerReports = useCallback(async (filters, reportType) => {
-    const values = {
-      ...filters,
-      reportType,
-      pageSize,
-      pageNumber: currentPage,
-    }
-    return await  customersApis.fetchCustomerReport(authUser, values);
-  },[authUser?.user]);
 
 
   useEffect(() => {
-    fetchAllCustomers();
+    fetchSecurityQuestionResets();
   }, [])
 
   return (
@@ -92,7 +81,6 @@ const Customers = () => {
             <Grid item>
               <CustomerActionsButton {...{
                 filters,
-                onExport: reportType => getCustomerReports(filters, reportType),
                 onChangeFilters: handleOnChangeFilters,
                 onResetFilters: handleOnResetFilters,
                 onSearch: handleOnSearch
@@ -101,7 +89,7 @@ const Customers = () => {
           </Grid>
           </MKBox>
           <Card sx={{ p: 1 }}>
-            <ExistingCustomersDatagrid data={customers} />
+            <ResetSecurityQuestionsDatagrid data={securityQuestionsResets} onRefresh={fetchSecurityQuestionResets} />
           </Card>
         </MKBox>
 
@@ -109,18 +97,18 @@ const Customers = () => {
   );
 };
 
-Customers.getLayout = (page) => {
+ApproveSecurityQuestionResetsPage.getLayout = (page) => {
   return (
     <>
-       <AuthGuard>
-          <ModernLayout>
-            <RoleBasedGuard path={PAGES_PATHS.EXISTING_CUSTOMERS} page={true}>
-              {page}
-            </RoleBasedGuard>
-          </ModernLayout>
-       </AuthGuard>
+      <AuthGuard>
+        <ModernLayout>
+          <RoleBasedGuard path={PAGES_PATHS.APPROVE_SECURITY_QUESTIONS_RESETS} page={true}>
+            {page}
+          </RoleBasedGuard>
+        </ModernLayout>
+      </AuthGuard>
     </>
   );
 };
 
-export default Customers;
+export default ApproveSecurityQuestionResetsPage;

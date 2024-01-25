@@ -102,7 +102,7 @@ const CustomerResetPin = props => {
                 color={'primary'}
                 onClick={handleOnOpenDialog}
             >
-                {"Reset Pin"}
+                {"Reset Login Pin"}
             </MKButton>
             <DMTDialog
                 open={openDialog}
@@ -117,7 +117,7 @@ const CustomerResetPin = props => {
                         flexDirection: 'column'
                     }}
                 >
-                    {"Reset Customer Pin"}
+                    {"Reset Login Pin"}
                 </DialogTitle>
                 <DialogContent>
                     <MKBox>
