@@ -50,7 +50,7 @@ const TransactionPinResetDatagrid = (props) => {
      >
          <Column  minWidth={250} dataField="name" caption="Name" cellRender={actionDisplay} />
          <Column  minWidth={150} dataField="customerIdNo" caption="ID No" />
-         <Column  minWidth={150} dataField="phoneNumber" caption="Phone Number" />
+         <Column  minWidth={150} dataField="phone" caption="Phone Number" />
          <Column
              dataField="email"
              caption="Email"
@@ -59,7 +59,7 @@ const TransactionPinResetDatagrid = (props) => {
              allowFiltering={false}
          />
          <Column
-             dataField="channelType"
+             dataField="registeredPlatforms"
              caption="Channel Type"
              minWidth={150}
              allowFiltering={false}
@@ -68,14 +68,15 @@ const TransactionPinResetDatagrid = (props) => {
          <Column
              dataField="pinResetByName"
              caption="Initiated By"
+             visible={false}
              minWidth={200}
              allowFiltering={false}
          />
          <Column
-             dataField="dateInitiated"
+             dataField="createdOn"
              caption="Date"
              minWidth={150}
-             format={'datetime'}
+             //format={'datetime'}
              allowFiltering={false}
          />
          <Column
