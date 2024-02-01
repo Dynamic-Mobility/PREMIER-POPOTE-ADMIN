@@ -14,6 +14,7 @@ import {PAGE_PERMISSIONS, PAGES_PATHS} from "../../../../utils/constants";
 import EnableDisableCustomerDialog from "./enable-disable-customer";
 import ResetSecurityQuestions from "./reset-security-questions";
 import ResetTransactionPin from "./reset-transaction-pin";
+import ManageDevices from "./manage-devices";
 
 const CustomerActions = props => {
     const {customer, onAddUpdate, onReset, existingCustomer, onRefresh } = props;
@@ -92,6 +93,10 @@ const CustomerActions = props => {
                                 existingCustomer={existingCustomer}
                                 customer={customer}
                                 onRefresh={onRefresh}
+                            />
+                            <ManageDevices
+                                existingCustomer={existingCustomer}
+                                customer={customer}
                             />
                         </ButtonGroup>
 

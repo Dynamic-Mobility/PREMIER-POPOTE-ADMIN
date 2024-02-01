@@ -45,6 +45,16 @@ export const getAllUnApprovedUsers = (authUser) => async (dispatch) =>{
 }
 
 
+export const getAuditTrail = (authUser, values) => async (dispatch) =>{
+    try{
+        const res = await usersApis.fetchAuditTrail(authUser, values);
+        dispatch(setUnapproved(res));
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
 
 
 export default userSlice.reducer;

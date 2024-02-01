@@ -2,10 +2,77 @@ import useAxios from "../hooks/use-axios";
 import {APP_API_URL} from "../utils/api-endpoints";
 
 class CustomersApis {
+    fetchDevices (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_DEVICES, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+
+    enableDisableDevices (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.ENABLE_DISABLE_DEVICE, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
     fetchCustomerReport (authUser, values) {
         return new Promise((resolve, reject) => {
             const axiosInstance = useAxios(authUser);
             axiosInstance.post(APP_API_URL.FETCH_CUSTOMER_REPORT, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    fetchInCompleteRegistrationsReport (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_INCOMPLETE_REGISTRATIONS_REPORT, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    fetchInCompleteRegistrations (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_INCOMPLETE_REGISTRATIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    fetchFailedRegistrations (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_FAILED_REGISTRATIONS, values).then( response => {
+                resolve(response.data)
+            }).catch(e => {
+                reject(new Error(e.message))
+                console.log(e.message)
+            })
+        })
+    }
+    fetchFailedRegistrationsReport (authUser, values) {
+        return new Promise((resolve, reject) => {
+            const axiosInstance = useAxios(authUser);
+            axiosInstance.post(APP_API_URL.FETCH_FAILED_REGISTRATIONS_REPORT, values).then( response => {
                 resolve(response.data)
             }).catch(e => {
                 reject(new Error(e.message))

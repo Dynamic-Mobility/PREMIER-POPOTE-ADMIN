@@ -100,4 +100,10 @@ export const removeFromSessionLocally = (key) => {
 }
 
 
+export const toUpperCase = (value) => {
+    if (Boolean(value)){
+        return value.toUpperCase();
+    }
+}
+
 

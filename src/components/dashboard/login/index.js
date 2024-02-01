@@ -95,7 +95,13 @@ export const LoginForm = (props) => {
         userId: decodedToken?.userid,
       }
       const res = await authApi.resendOTP(userDetail.token,formData);
-      callbackFunc?.();
+      if (res?.success){
+        toast.success(res?.errorMessage)
+        callbackFunc?.();
+      }
+      else{
+        toast.error(res?.errorMessage ?? "An error occurred, please try again");
+      }
     }
     catch (e) {
       console.log(e.message)

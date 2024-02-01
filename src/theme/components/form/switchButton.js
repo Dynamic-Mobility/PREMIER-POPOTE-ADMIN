@@ -16,14 +16,14 @@ export default {
 
   styleOverrides: {
     switchBase: {
-      color: gradients.dark.main,
+      //color: gradients.dark.main,
 
       "&:hover": {
         backgroundColor: transparent.main,
       },
 
       "&.Mui-checked": {
-        color: gradients.dark.main,
+        //color: gradients.dark.main,
 
         "&:hover": {
           backgroundColor: transparent.main,

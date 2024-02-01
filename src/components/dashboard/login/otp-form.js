@@ -50,8 +50,8 @@ const OtpForm = (props) => {
         },
     });
 
-    const handleResendOTP = async () => {
-        await onResendOTP();
+    const handleResendOTP = async (callbackFunc) => {
+        await onResendOTP(callbackFunc);
     };
 
     const handleOnChange = (value) => {

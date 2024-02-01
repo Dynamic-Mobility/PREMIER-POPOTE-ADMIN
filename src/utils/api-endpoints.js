@@ -12,6 +12,14 @@ export const API_URL = {
 
     FETCH_CUSTOMER_REPORT: '/api/v1/reports/getcustomerreports',
 
+    FETCH_FAILED_REGISTRATIONS: '/api/v1/customer/failedregistrations',
+    FETCH_FAILED_REGISTRATIONS_REPORT: '/api/v1/reports/getcustomerfailedregistrationsreport',
+    FETCH_INCOMPLETE_REGISTRATIONS: '/api/v1/customer/incompleteregistrations',
+    FETCH_INCOMPLETE_REGISTRATIONS_REPORT: '/api/v1/reports/getcustomerincompleteregistrationsreport',
+
+    FETCH_DEVICES: '/api/v1/customer/getcustomerdevices',
+    ENABLE_DISABLE_DEVICE: '/api/v1/customer/togglecustomerdevices',
+
     FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
     ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
     // GET_ACCOUNT_SWITCHBY_CIF: '/api/v1/customer/getaccountswithcif',
@@ -105,6 +113,8 @@ export const API_URL = {
     FETCH_TRANSFERS_TRANSACTIONS: '/api/v1/transactions/gettransferstransaction',
     FETCH_TRANSFERS_TRANSACTIONS_REPORT: '/api/v1/reports/gettransferstransactionreport',
 
+    FETCH_AUDIT_TRAIL: '/api/v1/audit/getusersaudittrail',
+    FETCH_AUDIT_TRAIL_REPORT: '/api/v1/audit/getusersaudittrail',
 
 }
 
@@ -123,6 +133,14 @@ export const APP_API_URL = {
     /***************** CUSTOMERS **********************/
 
     FETCH_CUSTOMER_REPORT: '/api/admin/customers/reports/fetch-reports',
+
+    FETCH_FAILED_REGISTRATIONS: '/api/admin/customers/fetch-failed-registrations',
+    FETCH_FAILED_REGISTRATIONS_REPORT: '/api/admin/customers/reports/failed-registrations-report',
+    FETCH_INCOMPLETE_REGISTRATIONS: '/api/admin/customers/fetch-incomplete-registrations',
+    FETCH_INCOMPLETE_REGISTRATIONS_REPORT: '/api/admin/customers/reports/incomplete-registrations-report',
+
+    FETCH_DEVICES: '/api/admin/customers/devices/fetch-all',
+    ENABLE_DISABLE_DEVICE: '/api/admin/customers/devices/enable-disable-device',
 
     FETCH_CUSTOMER_CIF: '/api/admin/customers/fetch-by-cif',
     ADD_UPDATE_CUSTOMERS: '/api/admin/customers/add-update-customers',
@@ -219,6 +237,8 @@ export const APP_API_URL = {
     FETCH_TRANSFERS_TRANSACTIONS: '/api/admin/transactions/fetch-transfers',
     FETCH_TRANSFERS_TRANSACTIONS_REPORT: '/api/admin/transactions/reports/fetch-transfers',
 
+    FETCH_AUDIT_TRAIL: '/api/admin/users/fetch-audit-trail',
+    FETCH_AUDIT_TRAIL_REPORT: '/api/admin/users/reports/audit-trail-report',
 }
 
 export const API_METHODS = {

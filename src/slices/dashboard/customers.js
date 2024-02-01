@@ -6,6 +6,8 @@ const initialState = {
     customers : [],
     activeCustomers: [],
     inactiveCustomers: [],
+    incompleteRegistrations: [],
+    failedRegistrations: [],
     unapprovedCustomers: [],
     securityQuestionsResets: [],
     txnPinResets:[],
@@ -33,6 +35,12 @@ const customerSlice = createSlice({
         },
         setInActiveCustomers: (state,action) =>{
             state.inactiveCustomers = action.payload;
+        },
+        setFailedRegistrations: (state,action) =>{
+            state.failedRegistrations = action.payload;
+        },
+        setInCompleteRegistrations: (state,action) =>{
+            state.incompleteRegistrations = action.payload;
         },
         setSecurityQuestionsResets: (state,action) =>{
             state.securityQuestionsResets = action.payload;
@@ -81,9 +89,9 @@ export const {
     setInActiveCustomers,
     setUnapprovedCustomers,
     setUnBlockedCustomers,
-    setBlockedAccounts,
+    setInCompleteRegistrations,
+    setFailedRegistrations,
     setPendingAccounts,
-    setBlockedCustomers,
     setUnBlockedAccounts,
     setSecurityQuestionsResets,
     setCustomers,
@@ -159,7 +167,49 @@ export const getInactiveCustomers = (authUser, values) => async dispatch => {
     }
 }
 
+export const getIncompleteRegistrations = (authUser, values) => async dispatch => {
+    try {
+        const res = await customersApis.fetchInCompleteRegistrations(authUser, values);
+        if (res.data){
+            dispatch(setInCompleteRegistrations(res.data));
+            dispatch(setTotalCount(res.totalCount));
+            dispatch(setCurrentPage(res.currentPage));
+            dispatch(setPageSize(res.pageSize));
+        }
+        else{
+            dispatch(setInCompleteRegistrations([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
 
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
+export const getFailedRegistrations = (authUser, values) => async dispatch => {
+    try {
+        const res = await customersApis.fetchFailedRegistrations(authUser, values);
+        if (res.data){
+            dispatch(setFailedRegistrations(res.data));
+            dispatch(setTotalCount(res.totalCount));
+            dispatch(setCurrentPage(res.currentPage));
+            dispatch(setPageSize(res.pageSize));
+        }
+        else{
+            dispatch(setFailedRegistrations([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
 
 export const getUpdatedCustomers = (authUser, values) => async dispatch => {
     try {

@@ -94,7 +94,7 @@ export default createTheme({
     MuiTextField: { ...textField },
     MuiMenu: { ...menu },
     MuiMenuItem: { ...menuItem },
-    MuiSwitch: { ...switchButton },
+    // MuiSwitch: { ...switchButton },
     MuiDivider: { ...divider },
     // MuiTableContainer: { ...tableContainer },
     // MuiTableHead: { ...tableHead },

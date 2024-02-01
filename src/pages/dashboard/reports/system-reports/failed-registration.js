@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Card, Grid } from "@mui/material";
 import MKTypography from "../../../../components/@mui-components/typography";
 import ExistingCustomersDatagrid from "../../../../components/dashboard/customers/customer-datagrids/existing-customers-datagrid";
@@ -7,9 +7,12 @@ import Head from "next/head";
 import CustomerActionsButton from "../../../../components/dashboard/customers/filters/customer-actions-button";
 import MKBox from "../../../../components/@mui-components/box";
 import {useDispatch, useSelector} from "../../../../store";
-import {getAllCustomers} from "../../../../slices/dashboard/customers";
+import {getFailedRegistrations} from "../../../../slices/dashboard/customers";
 import {useAuth} from "../../../../hooks/use-auth";
 import {AuthGuard} from "../../../../hocs/auth-guard";
+import FailedRegistrationsDatagrid
+    from "../../../../components/dashboard/reports/system-reports/failed-registration-datagrid";
+import {customersApis} from "../../../../api-requests/customers-api";
 
 const title = "Failed Registrations";
 
@@ -23,7 +26,7 @@ const FailedRegistrationPage = () => {
     }
     const [filters, setFilters] = useState(initialFilters);
     const dispatch = useDispatch();
-    const { customers, pageSize, currentPage} = useSelector(( { customers }) => customers);
+    const { failedRegistrations, pageSize, currentPage} = useSelector(( { customers }) => customers);
     const authUser = useAuth();
 
     const handleOnChangeFilters = values => {
@@ -37,26 +40,37 @@ const FailedRegistrationPage = () => {
             pageSize,
             pageNumber: currentPage,
         }
-        await dispatch(getAllCustomers(authUser,values ))
+        await dispatch(getFailedRegistrations(authUser,values ))
     }
 
     const handleOnSearch = async () => {
-        await fetchAllCustomers();
+        await fetchFailedRegistrations();
     }
 
-    const fetchAllCustomers = async () => {
+    const fetchFailedRegistrations = async () => {
         const values = {
             ...filters,
             pageSize,
             pageNumber: currentPage,
         }
-        await dispatch(getAllCustomers(authUser,values ))
+        await dispatch(getFailedRegistrations(authUser,values ))
     }
 
+    const getCustomerReports = useCallback(async (filters, reportType) => {
+        const values = {
+            ...filters,
+            reportType,
+            pageSize,
+            pageNumber: currentPage,
+        }
+        return await  customersApis.fetchFailedRegistrationsReport(authUser, values);
+    },[authUser?.user]);
 
-    // useEffect(() => {
-    //     fetchAllCustomers();
-    // }, [])
+    useEffect(() => {
+        fetchFailedRegistrations();
+    }, [])
+
+
 
     return (
         <>
@@ -77,6 +91,7 @@ const FailedRegistrationPage = () => {
                         <Grid item>
                             <CustomerActionsButton {...{
                                 filters,
+                                onExport: reportType => getCustomerReports(filters, reportType),
                                 onChangeFilters: handleOnChangeFilters,
                                 onResetFilters: handleOnResetFilters,
                                 onSearch: handleOnSearch
@@ -85,7 +100,7 @@ const FailedRegistrationPage = () => {
                     </Grid>
                 </MKBox>
                 <Card sx={{ p: 1 }}>
-                    <ExistingCustomersDatagrid data={[]} />
+                    <FailedRegistrationsDatagrid data={failedRegistrations} />
                 </Card>
             </MKBox>
 
