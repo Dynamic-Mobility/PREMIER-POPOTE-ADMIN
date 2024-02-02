@@ -93,6 +93,17 @@ class UsersApis {
             })
         })
     }
+    fetchUserReport (authUser, values) {
+            return new Promise((resolve, reject) => {
+                const axiosInstance = useAxios(authUser);
+                axiosInstance.post(APP_API_URL.FETCH_USER_REPORT, values).then( response => {
+                    resolve(response.data)
+                }).catch(e => {
+                    reject(new Error(e.message))
+                    console.log(e.message)
+                })
+            })
+        }
 
 
 

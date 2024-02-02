@@ -91,6 +91,7 @@ export const API_URL = {
     UPDATE_USERS: '/api/v1/account/updateuser',
     APPROVE_USERS: '/api/v1/account/approveusers',
     ENABLE_DISABLE_USERS: '/api/v1/account/toggleuser',
+    FETCH_USER_REPORT: '/api/v1/reports/getuserreport',
 
 
     /************************ TRANSACTIONS ****************************/
@@ -216,6 +217,7 @@ export const APP_API_URL = {
     UPDATE_USERS: '/api/admin/users/update-user',
     APPROVE_USERS: '/api/admin/users/approve-users',
     ENABLE_DISABLE_USERS: '/api/admin/users/enable-disable-user',
+    FETCH_USER_REPORT: '/api/admin/users/reports/users-report',
 
     /************************ TRANSACTIONS ****************************/
 

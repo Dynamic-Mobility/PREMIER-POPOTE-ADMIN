@@ -7,12 +7,15 @@ import Card from "@mui/material/Card";
 import ModernLayout from "../../../../components/layouts/modern";
 import {useDispatch, useSelector} from "../../../../store";
 import {useAuth} from "../../../../hooks/use-auth";
-import {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import UsersDatagrid from "../../../../components/dashboard/users/users-datagrid";
 import {getAllUsers} from "../../../../slices/dashboard/users";
 import {ButtonGroup} from "@mui/material";
 import RefreshButton from "../../../../components/@dmt-components/refresh-button";
 import {AuthGuard} from "../../../../hocs/auth-guard";
+import ExportButton from "../../../../components/@dmt-components/export-button";
+import ExportButtonMenu from "../../../../components/@dmt-components/export-button-menu";
+import {usersApis} from "../../../../api-requests/users-apis";
 
 
 const title = "System Users";
@@ -25,6 +28,12 @@ const SystemUsersPage = () => {
     const fetchAllUsers = useCallback(async () => {
         await dispatch(getAllUsers(authUser));
     },[authUser?.user]);
+
+
+    const handleOnExport = useCallback(async (reportType) => {
+       return await usersApis.fetchUserReport(authUser,{ reportType });
+    },[authUser?.user])
+
 
     useEffect(() => {
         fetchAllUsers();
@@ -48,17 +57,16 @@ const SystemUsersPage = () => {
                         </Grid>
                         <Grid item>
                             <ButtonGroup
-                                fullWidth
-                                variant="contained"
-                                aria-label="vertical outlined button group"
+                                color={'primary'} aria-label="action buttons"
                             >
+                                <ExportButtonMenu onExport={handleOnExport}/>
                                 <RefreshButton onRefresh={fetchAllUsers}/>
                             </ButtonGroup>
                         </Grid>
                     </Grid>
                 </MKBox>
                 <Card sx={{p:1, minHeight: '80vh'}}>
-                    <UsersDatagrid data={users} onRefresh={fetchAllUsers}/>
+                    <UsersDatagrid data={users} onRefresh={fetchAllUsers} showReport={true}/>
                 </Card>
             </MKBox>
         </>

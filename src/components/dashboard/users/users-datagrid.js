@@ -10,7 +10,7 @@ import DMTChip from "../../@dmt-components/chip";
 import UserDetailsDrawer from "./user-details-drawer";
 
 const UsersDatagrid = props => {
-    const { data, onRefresh } = props;
+    const { data, onRefresh, showReport = false } = props;
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -126,6 +126,7 @@ const UsersDatagrid = props => {
                 <Column minWidth={150} dataField="status" caption="Status" cellRender={renderStatus} />
                 <Column
                     caption="Actions"
+                    visible={!showReport}
                     minWidth={130}
                     alignment={"center"}
                     allowFiltering={false}
