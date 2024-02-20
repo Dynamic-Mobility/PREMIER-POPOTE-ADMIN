@@ -10,6 +10,7 @@ const useIdleTimer = ({timeout, onIdle}) => {
         timerRef.current = setTimeout(onIdle, remainingTime);
         setShowWarning(false);
         setRemainingTime(timeout);
+        console.log('TIMEOUT', timeout)
     };
 
     const handleUserActivity = () => {

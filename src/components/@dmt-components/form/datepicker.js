@@ -27,8 +27,8 @@ const DMTDatePicker = props => {
     return (
         <>
             <DatePicker
-                openTo="day"
-                views={['day', 'month', 'year']}
+                //openTo="day"
+                //views={['day', 'month', 'year']}
                 inputFormat={inputFormat}
                 maxDate = {maxDate}
                 minDate={minDate}

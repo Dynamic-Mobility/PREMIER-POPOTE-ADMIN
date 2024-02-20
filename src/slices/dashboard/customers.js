@@ -7,6 +7,7 @@ const initialState = {
     activeCustomers: [],
     inactiveCustomers: [],
     incompleteRegistrations: [],
+    unapprovedDevices: [],
     failedRegistrations: [],
     unapprovedCustomers: [],
     securityQuestionsResets: [],
@@ -18,6 +19,7 @@ const initialState = {
     unblockedCustomers: [],
     unblockedAccounts: [],
     pinResets: [],
+    disabledCustomers: [],
     totalCount: 0,
     pageSize: 250,
     currentPage: 1,
@@ -29,6 +31,12 @@ const customerSlice = createSlice({
     reducers:{
         setCustomers: (state,action) =>{
             state.customers = action.payload;
+        },
+        setDisabledCustomers: (state,action) =>{
+            state.disabledCustomers = action.payload;
+        },
+        setUnapprovedDevices: (state,action) =>{
+            state.unapprovedDevices = action.payload;
         },
         setActiveCustomers: (state,action) =>{
             state.activeCustomers = action.payload;
@@ -85,6 +93,7 @@ const customerSlice = createSlice({
 });
 
 export const {
+    setUnapprovedDevices,
     setActiveCustomers,
     setInActiveCustomers,
     setUnapprovedCustomers,
@@ -101,7 +110,31 @@ export const {
     setUpdatedCustomers,
     setPinResets,
     setTxnPinReset,
+    setDisabledCustomers
 } = customerSlice.actions;
+
+
+export const getDisabledCustomers = (authUser, values) => async dispatch => {
+    try {
+        const res = await customersApis.fetchUnapprovedDisabledCustomers(authUser, values);
+        if (res.data){
+            dispatch(setDisabledCustomers(res.data));
+            dispatch(setTotalCount(res.totalCount));
+            dispatch(setCurrentPage(res.currentPage));
+            dispatch(setPageSize(res.pageSize));
+        }
+        else{
+            dispatch(setDisabledCustomers([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
 
 export const getAllCustomers = (authUser, values) => async dispatch => {
     try {
@@ -265,12 +298,32 @@ export const getUnblockedCustomers = (authUser, values) => async dispatch => {
 
         if (res.data){
             dispatch(setUnBlockedCustomers(res.data));
-            // dispatch(setTotalCount(res.totalCount));
-            // dispatch(setCurrentPage(res.currentPage));
-            // dispatch(setPageSize(res.pageSize));
         }
         else{
             dispatch(setUnBlockedCustomers([]));
+            dispatch(setTotalCount(0));
+            dispatch(setCurrentPage(1));
+            dispatch(setPageSize(50));
+        }
+
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
+export const getUnapprovedDevices = (authUser, values) => async dispatch => {
+    try {
+        const formData = {
+            ...values,
+        }
+        const res = await customersApis.fetchUnapprovedDevices(authUser, formData);
+
+        if (res.data){
+            dispatch(setUnapprovedDevices(res.data));
+        }
+        else{
+            dispatch(setUnapprovedDevices([]));
             dispatch(setTotalCount(0));
             dispatch(setCurrentPage(1));
             dispatch(setPageSize(50));

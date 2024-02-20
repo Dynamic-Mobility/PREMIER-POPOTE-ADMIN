@@ -20,15 +20,14 @@ import DMTChip from "../../../../@dmt-components/chip";
 import {customersApis} from "../../../../../api-requests/customers-api";
 import {toast} from "react-toastify";
 import {useAuth} from "../../../../../hooks/use-auth";
+import AddDevice from "./add-device";
 
 const DeviceList = props => {
-    const { devices, isLoading, existingCustomer, onRefresh } = props;
+    const { devices, isLoading, existingCustomer, onRefresh, isNew = false } = props;
     const authUser = useAuth();
-
     const handleOnToggle = async (deviceId) => {
         await enableDisableDevice(deviceId);
     }
-
     const enableDisableDevice = async (deviceId) => {
      try{
          const formData = {
@@ -77,18 +76,22 @@ const DeviceList = props => {
                         <ListItem
                             sx={{ backgroundColor: 'background.paper', p:1 }}
                             secondaryAction={
+                                !isNew ?
                                 <FormControlLabel
+                                    sx={{ mt: 2}}
                                     checked={device?.active}
                                     onChange={() => handleOnToggle(device.deviceId)}
                                     control={<Switch />}
                                 />
+                                    :
+                                   <AddDevice customer={existingCustomer} onRefresh={onRefresh} device={device} />
                             }
 
                         >
                             <ListItemAvatar>
                                 <MKBox
                                     component={"img"}
-                                    src={device?.osType === 1 ? "/static/android.jpg" : "/static/ios2.jpg"}
+                                    src={device?.osType === 1 ? "/static/android.jpg"  : device?.osType === 1 ? "/static/ios2.jpg" : "/static/android.jpg"}
                                     sx={{ width: 50}}
                                 />
                             </ListItemAvatar>
@@ -132,7 +135,7 @@ const DeviceList = props => {
                                 </MKTypography>
                                 <MKTypography variant={"caption"}>
                                     <b> {"OS: "} </b>
-                                        {device?.osType === 1 ? "Android" : "IOS"}
+                                        {device?.osType === 1 ? "Android" : device?.osType === 0 ? "IOS" : "Unknown"}
                                 </MKTypography>
                             </MKBox>
                         </Collapse>

@@ -177,24 +177,24 @@ const TransactionDetailsDrawer = props => {
                             isLoading={false}
                         />
                         <PropertyItem
-                            label={"Error Message"}
+                            label={"Response Message"}
                             value={transaction?.errorMsg}
                             isLoading={false}
                         />
-                        {Boolean(transaction?.location) && (
-                            <MKBox>
-                                <PropertyItem
-                                    label={"Location"}
-                                    value={transaction?.location}
-                                    isLoading={false}
-                                />
-                                <GoogleMapComponent
-                                    lat={eval(transaction?.location)?.[0]}
-                                    lng={eval(transaction?.location)?.[1]}
-                                    height={"200px"}
-                                />
-                            </MKBox>
-                        )}
+                        {/*{Boolean(transaction?.location) && (*/}
+                        {/*    <MKBox>*/}
+                        {/*        <PropertyItem*/}
+                        {/*            label={"Location"}*/}
+                        {/*            value={transaction?.location}*/}
+                        {/*            isLoading={false}*/}
+                        {/*        />*/}
+                        {/*        <GoogleMapComponent*/}
+                        {/*            lat={eval(transaction?.location)?.[0]}*/}
+                        {/*            lng={eval(transaction?.location)?.[1]}*/}
+                        {/*            height={"200px"}*/}
+                        {/*        />*/}
+                        {/*    </MKBox>*/}
+                        {/*)}*/}
 
                     </MKBox>
                 </MKBox>

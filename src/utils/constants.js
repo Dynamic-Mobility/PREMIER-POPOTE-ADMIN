@@ -104,7 +104,7 @@ export const PAGE_PERMISSIONS = {
         value: 3
     },
 };
-export const INACTIVITY_TIMEOUT =  3000000 //Set to 5 minutes
+export const INACTIVITY_TIMEOUT =  150000 //Set to 5 minutes
 export const PAGES_PATHS = {
     DASHBOARD: '/dashboard/',
     EXISTING_CUSTOMERS: '/dashboard/customers/all',
@@ -123,9 +123,8 @@ export const PAGES_PATHS = {
     APPROVE_USERS: '/dashboard/users/approve',
     APPROVE_PIN_RESETS: '/dashboard/customers/approve-pin-resets',
     APPROVE_SECURITY_QUESTIONS_RESETS: '/dashboard/customers/approve-security-questions-resets',
-    APPROVE_TXN_PIN_RESETS: '/dashboard/customers/approve-transaction-pin-resets'
-
-
+    APPROVED_DISABLED_CUSTOMERS: '/dashboard/customers/approve-disabled-customers',
+    APPROVE_TXN_PIN_RESETS: '/dashboard/customers/approve-transaction-pin-resets',
 }
 
 

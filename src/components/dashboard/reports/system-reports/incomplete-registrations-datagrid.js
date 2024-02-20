@@ -57,7 +57,7 @@ const IncompleteRegistrationsDatagrid = (props) => {
             data={data}
           >
             <Column minWidth={100} dataField="cif" caption="CIF No" />
-            <Column cellRender={actionDisplay}  minWidth={250} dataField="name" caption=" Customer Name" />
+            <Column  minWidth={250} dataField="name" caption=" Customer Name" />
             <Column minWidth={120} dataField="idNumber" caption="ID No" />
             <Column minWidth={120} dataField="accountNo" caption="A/C No" />
             <Column minWidth={180} dataField="phone" caption="Phone Number" />
@@ -67,14 +67,14 @@ const IncompleteRegistrationsDatagrid = (props) => {
               minWidth={200}
               allowFiltering={false}
             />
+            {/*  <Column*/}
+            {/*  dataField="registrationStatusName"*/}
+            {/*  caption="Stage"*/}
+            {/*  minWidth={150}*/}
+            {/*  allowFiltering={false}*/}
+            {/*/>*/}
               <Column
-              dataField="registrationStatusName"
-              caption="Stage"
-              minWidth={150}
-              allowFiltering={false}
-            />
-              <Column
-                  dataField="registeredPlatform"
+                  dataField="platform"
                   caption="Channel"
                   minWidth={120}
                   allowFiltering={false}

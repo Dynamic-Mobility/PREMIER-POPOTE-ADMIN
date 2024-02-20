@@ -96,7 +96,7 @@ const AuditTrailFilterPanel = props => {
                         <Grid item xs={12} md={6}>
                             <DMTTextInput
                                 label={'Start Date'}
-                                type={'datetime-local'}
+                                type={'date'}
                                 value={filters.startDate}
                                 onChange={e => handleOnStartDate( e.target.value)}
                                 fullWidth={true}
@@ -111,7 +111,7 @@ const AuditTrailFilterPanel = props => {
                         <Grid item xs={12} md={6}>
                             <DMTTextInput
                                 label={'End Date'}
-                                type={'datetime-local'}
+                                type={'date'}
                                 value={filters.endDate}
                                 onChange={e => handleOnEndDate( e.target.value)}
                                 fullWidth={true}

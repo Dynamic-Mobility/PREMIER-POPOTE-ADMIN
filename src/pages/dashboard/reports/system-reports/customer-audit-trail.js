@@ -8,30 +8,36 @@ import {Card} from "@mui/material";
 import {
     setPageSize,
     setActivePage,
-    setFilters,
-    fetchAuditTrail,
-    resetFilters
+    fetchCustomerAuditTrail
 } from "../../../../slices/dashboard/audit-trail";
 import ModernLayout from "../../../../components/layouts/modern";
-import {useCallback, useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useAuth} from "../../../../hooks/use-auth";
-import {formatDate} from "../../../../utils/helper-functions";
 import {AuthGuard} from "../../../../hocs/auth-guard";
-import {usersApis} from "../../../../api-requests/users-apis";
-import AuditTrailDataGrid from "../../../../components/dashboard/reports/system-reports/audit-trail/audit-trail-datagrid";
-import AuditTrailActionButtons
-    from "../../../../components/dashboard/reports/system-reports/audit-trail/audit-trail-action-buttons";
+import {customersApis} from "../../../../api-requests/customers-api";
+import CustomerActionButtons from "../../../../components/dashboard/customers/filters/customer-actions-button";
+import CustomerAuditTrailDatagrid
+    from "../../../../components/dashboard/reports/system-reports/customer-audit-trail/customer-audit-trail-datagrid";
+import {getInactiveCustomers} from "../../../../slices/dashboard/customers";
 
 
-const title = "User Audit Trail";
+const title = "Customer Audit Trail";
 
-const AuditTrailPage = () => {
+const CustomerAuditTrailPage = () => {
+    const initialFilters = {
+        name: "",
+        idnumber: "",
+        phonenumber: "",
+        cifNumber: "",
+        email: "",
+        active: "false",
+    }
     const dispatch = useDispatch();
     const authUser = useAuth();
+    const [filters, setFilters] = useState(initialFilters);
 
     const {
-        auditTrail,
-        filters,
+        customerAuditTrail,
         pageSize,
         activePage,
         totalRecords
@@ -49,62 +55,54 @@ const AuditTrailPage = () => {
         dispatch(setActivePage(value));
     }
 
-    const handleOnReset = () => {
-        dispatch(resetFilters());
+    const handleOnReset = async () => {
+        setFilters(initialFilters);
+        const values = {
+            ...initialFilters,
+            pageSize,
+            pageNumber: 1,
+        }
+        await dispatch(fetchCustomerAuditTrail(authUser,values ))
     }
 
     const handleOnSetFilters = filters => {
-        dispatch(setFilters(filters));
+        setFilters(filters);
     }
     const handleSetActivePage= value => {
         dispatch(setActivePage(value));
     }
 
+    const handleOnChangeFilters = values => {
+        setFilters(values);
+    }
 
 
-    const getAuditTrail = useCallback(async (filters, pageSize, activePage) => {
+    const handleOnSearch = async () => {
+        await getAuditTrail(pageSize, 1);
+        dispatch(setActivePage(1));
+    }
+
+
+    const getAuditTrail = useCallback(async (pageSize, activePage) => {
         const values = {
-
-            username: filters.username,
-            department: filters.department,
-            branch: filters.branch,
-            loginDate: filters.startDate && filters.endDate ?
-                [
-                    formatDate(filters.startDate, "DD MMM YYYY HH:mm"),
-                    formatDate(filters.endDate, "DD MMM YYYY HH:mm")
-                ] : null,
-            loggedIn: filters.loggedIn,
-            email: filters.email,
-            active: filters.active,
+            ...filters,
             pageNumber: activePage,
             pageSize: pageSize
         };
-        await dispatch(fetchAuditTrail(authUser, values));
-    },[authUser?.user]);
+        await dispatch(fetchCustomerAuditTrail(authUser, values));
+    },[authUser?.user, filters]);
 
-    const getAuditTrailReports = useCallback(async (filters, reportType) => {
+    const getAuditTrailReports = useCallback(async ( filters, reportType) => {
         const values = {
-            reportType: reportType,
-            username: filters.username,
-            department: filters.department,
-            branch: filters.branch,
-            loginDate: filters.startDate && filters.endDate ?
-                [
-                    formatDate(filters.startDate, "DD MMM YYYY HH:mm"),
-                    formatDate(filters.endDate, "DD MMM YYYY HH:mm")
-                ] : null,
-            loggedIn: filters.loggedIn,
-            email: filters.email,
-            active: filters.active,
-            pageNumber: activePage,
-            pageSize: pageSize
+            ...filters,
+            reportType
         }
-        return await  usersApis.fetchAuditTrailReport(authUser, values);
-    },[authUser?.user]);
+        return await  customersApis.fetchCustomerAuditTrailReport(authUser, values);
+    },[authUser?.user, filters]);
 
 
     useEffect(() => {
-        getAuditTrail(filters, pageSize, activePage);
+        getAuditTrail(pageSize, activePage);
     },[])
 
     return (
@@ -126,11 +124,12 @@ const AuditTrailPage = () => {
                             <MKTypography variant="h5">{title}</MKTypography>
                         </Grid>
                         <Grid item>
-                            <AuditTrailActionButtons
+                            <CustomerActionButtons
                                 {...{
                                     setFilters: handleOnSetFilters,
                                     setActivePage: handleSetActivePage,
-                                    onFilter: getAuditTrail,
+                                    onChangeFilters: handleOnChangeFilters  ,
+                                    onSearch: handleOnSearch,
                                     onExport: reportType => getAuditTrailReports(filters, reportType),
                                     onResetFilters: handleOnReset,
                                     filters,
@@ -141,8 +140,8 @@ const AuditTrailPage = () => {
                     </Grid>
                 </MKBox>
                 <Card sx={{p:1}}>
-                    <AuditTrailDataGrid
-                        data={auditTrail}
+                    <CustomerAuditTrailDatagrid
+                        data={customerAuditTrail}
                         limit={pageSize}
                         totalRecords={totalRecords}
                         activePage={activePage}
@@ -155,7 +154,7 @@ const AuditTrailPage = () => {
     );
 };
 
-AuditTrailPage.getLayout = (page) => (
+CustomerAuditTrailPage.getLayout = (page) => (
     <AuthGuard>
         <ModernLayout>
             {page}
@@ -163,4 +162,4 @@ AuditTrailPage.getLayout = (page) => (
     </AuthGuard>
 );
 
-export default AuditTrailPage;
+export default CustomerAuditTrailPage;

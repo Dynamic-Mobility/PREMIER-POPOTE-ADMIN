@@ -1,4 +1,4 @@
-import {alpha, Drawer, IconButton} from "@mui/material";
+import {alpha, Collapse, Drawer, IconButton, Tab, Tabs} from "@mui/material";
 import MKBox from "../../../../@mui-components/box";
 import CloseIcon from "@mui/icons-material/Close";
 import MKTypography from "../../../../@mui-components/typography";
@@ -9,8 +9,10 @@ import DeviceList from "./device-list";
 
 const DevicesDrawer = props => {
     const { open, onClose, customer, existingCustomer} = props;
+    const [activeTab, setActiveTab] = useState(0);
     const authUser = useAuth();
     const [devices, setDevices] = useState([]);
+    const [newDevices, setNewDevices] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchAllDevices = useCallback(async () => {
@@ -30,12 +32,34 @@ const DevicesDrawer = props => {
             setIsLoading(false);
         }
     },[authUser, isLoading, existingCustomer]);
+    const fetchNewDevices = useCallback(async () => {
+        try{
+            setIsLoading(true)
+            const formData = {
+                customerId: existingCustomer?.id,
+                customerUserId: existingCustomer?.customerUserId,
+            };
+            const res = await customersApis.fetchNewDevices(authUser, formData);
+            setNewDevices(res?.data);
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+        finally {
+            setIsLoading(false);
+        }
+    },[authUser, isLoading, existingCustomer]);
+
+    const handleChange = (e, newValue) => {
+        setActiveTab(newValue);
+    }
 
 
 
     useEffect(() => {
         if (open){
             fetchAllDevices();
+            fetchNewDevices();
         }
 
     },[open]);
@@ -61,18 +85,43 @@ const DevicesDrawer = props => {
                         <MKTypography color={'primary'} variant={"h6"} align={"center"} gutterBottom>
                             {"Manage Devices"}
                         </MKTypography>
-                        <MKBox>
-                            <DeviceList
-                                devices={devices}
-                                isLoading={isLoading}
-                                existingCustomer={existingCustomer}
-                                onRefresh={fetchAllDevices}
-                            />
+                        <MKBox sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Tabs value={activeTab} onChange={handleChange} aria-label="basic tabs example">
+                                <Tab label="Existing Devices" {...a11yProps(0)} />
+                                <Tab label="New Devices" {...a11yProps(1)} />
+                            </Tabs>
+                        </MKBox>
+                        <MKBox sx={{ mt: 1}}>
+                            <Collapse in={Boolean(activeTab === 0) }>
+                                <DeviceList
+                                    devices={devices}
+                                    isLoading={isLoading}
+                                    existingCustomer={existingCustomer}
+                                    onRefresh={fetchAllDevices}
+                                />
+                            </Collapse>
+                            <Collapse in={Boolean(activeTab === 1) }>
+                                <DeviceList
+                                    isNew={true}
+                                    devices={newDevices}
+                                    isLoading={isLoading}
+                                    existingCustomer={existingCustomer}
+                                    onRefresh={fetchNewDevices}
+                                />
+                            </Collapse>
+
                         </MKBox>
                     </MKBox>
                 </Drawer>
             </div>
     )
+}
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
 }
 
 export default DevicesDrawer;

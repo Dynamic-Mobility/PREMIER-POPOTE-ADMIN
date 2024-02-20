@@ -65,13 +65,13 @@ const ExistingCustomersDatagrid = (props) => {
         return displayValue;
     }
 
-    const actionStatus = ({ data }) => {
-        const color = data?.status === 'Active' ? 'success' : data.status === 'Locked' ? 'warning' : 'error';
+    const actionStatus = ({ displayValue }) => {
+        const color = displayValue === 'Active' ? 'success' : displayValue === 'Locked' ? 'warning' : 'error';
         return (
             <>
                 <DMTChip
                     color={color}
-                    label={data?.status}
+                    label={displayValue}
                 />
             </>
         )
@@ -94,7 +94,14 @@ const ExistingCustomersDatagrid = (props) => {
             />
               <Column
                   dataField="status"
-                  caption="Status"
+                  caption="Account Status"
+                  minWidth={150}
+                  allowFiltering={false}
+                  cellRender={actionStatus}
+              />
+              <Column
+                  dataField="customerStatus"
+                  caption="Customer Status"
                   minWidth={150}
                   allowFiltering={false}
                   cellRender={actionStatus}

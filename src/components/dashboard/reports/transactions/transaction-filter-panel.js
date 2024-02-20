@@ -14,6 +14,7 @@ import {useAuth} from "../../../../hooks/use-auth";
 import {CHANNEL_TYPES} from "../../../../utils/constants";
 import {getAutoCompleteValue} from "../../../../utils/helper-functions";
 import {getAutocompleteMultipleValues} from "../../../../utils/fileHelper";
+import DMTDatePicker from "../../../@dmt-components/form/datepicker";
 
 
 const TransactionFilterPanel = props => {
@@ -60,8 +61,13 @@ const TransactionFilterPanel = props => {
 
     const handleOnStartDate = value => {
         if (filters.endDate === null || filters.endDate < value){
-            handleOnFilterChange('startDate', value);
-            handleOnFilterChange('endDate', value);
+            setFilters({
+                ...filters,
+                startDate: value,
+                endDate: value
+            })
+            // handleOnFilterChange('startDate', value);
+            // handleOnFilterChange('endDate', value);
             return
         }
         handleOnFilterChange('startDate', value);;
@@ -69,8 +75,13 @@ const TransactionFilterPanel = props => {
     const handleOnEndDate = value => {
         // console.log(value);
         if (filters.startDate  === null || filters.startDate > value){
-            handleOnFilterChange('startDate', value);
-            handleOnFilterChange('endDate', value);
+            setFilters({
+                ...filters,
+                startDate: value,
+                endDate: value
+            })
+            // handleOnFilterChange('startDate', value);
+            // handleOnFilterChange('endDate', value);
             return
         }
         handleOnFilterChange('endDate', value);
@@ -140,19 +151,19 @@ const TransactionFilterPanel = props => {
                         )}
 
                         <Grid item xs={12} md={6}>
-                            <DMTTextInput
-                                label={'Start Date'}
-                                type={'datetime-local'}
-                                value={filters.startDate}
-                                onChange={e => handleOnStartDate( e.target.value)}
-                                fullWidth={true}
-                                inputProps={{
-                                    autoComplete: 'off', // disable autocomplete and autofill
-                                }}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
+                            {/*<DMTTextInput*/}
+                            {/*    label={'Start Date'}*/}
+                            {/*    type={'date'}*/}
+                            {/*    value={filters.startDate}*/}
+                            {/*    onChange={e => handleOnStartDate( e.target.value)}*/}
+                            {/*    fullWidth={true}*/}
+                            {/*    inputProps={{*/}
+                            {/*        autoComplete: 'off', // disable autocomplete and autofill*/}
+                            {/*    }}*/}
+                            {/*    InputLabelProps={{*/}
+                            {/*        shrink: true,*/}
+                            {/*    }}*/}
+                            {/*/>*/}
                             {/*<DateTimePicker*/}
                             {/*    disableFuture*/}
                             {/*    label="Start Date"*/}
@@ -163,31 +174,31 @@ const TransactionFilterPanel = props => {
                             {/*    onChange={handleOnStartDate}*/}
                             {/*    renderInput={(params) => <DMTTextInput {...params} />}*/}
                             {/*/>*/}
-                            {/*<DMTDatePicker*/}
-                            {/*    label={'Start Date'}*/}
-                            {/*    fullWidth*/}
-                            {/*    type={'search'}*/}
-                            {/*    inputFormat="dd-MMM-yyyy"*/}
-                            {/*    disableFuture = {true}*/}
-                            {/*    name={''}*/}
-                            {/*    value={filters.startDate}*/}
-                            {/*    onChange={handleOnStartDate}*/}
-                            {/*/>*/}
+                            <DMTDatePicker
+                                label={'Start Date'}
+                                fullWidth
+                                type={'search'}
+                                inputFormat="dd-MMM-yyyy"
+                                disableFuture = {true}
+                                name={''}
+                                value={filters.startDate}
+                                onChange={handleOnStartDate}
+                            />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <DMTTextInput
-                                label={'End Date'}
-                                type={'datetime-local'}
-                                value={filters.endDate}
-                                onChange={e => handleOnEndDate( e.target.value)}
-                                fullWidth={true}
-                                inputProps={{
-                                    autoComplete: 'off', // disable autocomplete and autofill
-                                }}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
+                            {/*<DMTTextInput*/}
+                            {/*    label={'End Date'}*/}
+                            {/*    type={'date'}*/}
+                            {/*    value={filters.endDate}*/}
+                            {/*    onChange={e => handleOnEndDate( e.target.value)}*/}
+                            {/*    fullWidth={true}*/}
+                            {/*    inputProps={{*/}
+                            {/*        autoComplete: 'off', // disable autocomplete and autofill*/}
+                            {/*    }}*/}
+                            {/*    InputLabelProps={{*/}
+                            {/*        shrink: true,*/}
+                            {/*    }}*/}
+                            {/*/>*/}
                             {/*<DateTimePicker*/}
                             {/*    disableFuture*/}
                             {/*    label="End Date"*/}
@@ -198,16 +209,16 @@ const TransactionFilterPanel = props => {
                             {/*    onChange={handleOnEndDate}*/}
                             {/*    renderInput={(params) => <DMTTextInput {...params} />}*/}
                             {/*    />*/}
-                            {/*<DMTDatePicker*/}
-                            {/*    label={'End Date'}*/}
-                            {/*    type={'search'}*/}
-                            {/*    inputFormat="dd-MMM-yyyy"*/}
-                            {/*    fullWidth*/}
-                            {/*    disableFuture = {true}*/}
-                            {/*    name={'endDate'}*/}
-                            {/*    value={filters.endDate}*/}
-                            {/*    onChange={handleOnEndDate}*/}
-                            {/*/>*/}
+                            <DMTDatePicker
+                                label={'End Date'}
+                                type={'search'}
+                                inputFormat="dd-MMM-yyyy"
+                                fullWidth
+                                disableFuture = {true}
+                                name={'endDate'}
+                                value={filters.endDate}
+                                onChange={handleOnEndDate}
+                            />
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <Autocomplete

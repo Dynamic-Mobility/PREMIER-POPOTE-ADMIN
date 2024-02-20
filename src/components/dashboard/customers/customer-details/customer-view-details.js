@@ -12,6 +12,7 @@ const CustomerViewDetails = props => {
     }
 
     const color = existingCustomer?.status === 'Active' ? 'success' : existingCustomer?.status === 'Locked' ? 'warning' : 'error';
+    const colorStatus = existingCustomer?.customerStatus === 'Active' ? 'success' : existingCustomer?.customerStatus === 'Locked' ? 'warning' : 'error';
 
     const displayValue = (value) => {
         if (Boolean(value)){
@@ -152,6 +153,20 @@ const CustomerViewDetails = props => {
                                 <DMTChip
                                     color={color}
                                     label={displayValue(existingCustomer?.status)}
+                                />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell sx={{ fontWeight: 'bold', backgroundColor: 'grey.200'}}>
+                                {"Customer Status"}
+                            </TableCell>
+                            <TableCell sx={{backgroundColor: 'grey.200'}}>
+                                -- NA --
+                            </TableCell>
+                            <TableCell>
+                                <DMTChip
+                                    color={colorStatus}
+                                    label={displayValue(existingCustomer?.customerStatus)}
                                 />
                             </TableCell>
                         </TableRow>

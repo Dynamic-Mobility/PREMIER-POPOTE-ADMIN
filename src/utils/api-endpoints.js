@@ -1,7 +1,8 @@
 //------------------------ Backend APIs ----------------------//
 export const API_URL = {
     /***************** AUTH **********************/
-    LOGIN: '/api/v1/auth/login',
+    // LOGIN: '/api/v1/auth/login',
+    LOGIN: '/api/v1/auth/adlogin',
     LOGOUT: '/api/v1/auth/logout',
     REFRESH_TOKEN: '/api/v1/auth/refresh',
     GET_USER_MENUS: '/api/v1/account/getmenus',
@@ -19,6 +20,10 @@ export const API_URL = {
 
     FETCH_DEVICES: '/api/v1/customer/getcustomerdevices',
     ENABLE_DISABLE_DEVICE: '/api/v1/customer/togglecustomerdevices',
+    FETCH_NEW_DEVICES: '/api/v1/customer/getcustomernewdevices',
+    FETCH_DEVICE_APPROVALS: '/api/v1/customer/getcustomerunregistereddevices',
+    ADD_NEW_DEVICE : '/api/v1/customer/addnewcustomerdevices',
+    APPROVE_NEW_DEVICE: '/api/v1/customer/approvenewcustomerdevice',
 
     FETCH_CUSTOMER_CIF: '/api/v1/customer/fetchcustomercif',
     ADD_UPDATE_CUSTOMERS: '/api/v1/customer/addupdatecustomerdetails',
@@ -54,6 +59,10 @@ export const API_URL = {
     APPROVE_UNBLOCKED_CUSTOMERS: '/api/v1/customer/approveunblocked',
     FETCH_PIN_RESETS: '/api/v1/customer/getresetpinrequests',
     APPROVE_PIN_RESETS: '/api/v1/customer/approveresetpinrequest',
+
+    FETCH_UNAPPROVED_DISABLED_CUSTOMERS: '/api/v1/customer/getunapproveddeactivatedcustomers',
+    APPROVED_DISABLED_CUSTOMERS: '/api/v1/customer/approvedeactivatedcustomers',
+    DISABLE_CUSTOMERS: '/api/v1/customer/deactivatecustomer',
 
     /************************ SETTINGS ****************************/
 
@@ -114,9 +123,17 @@ export const API_URL = {
     FETCH_TRANSFERS_TRANSACTIONS: '/api/v1/transactions/gettransferstransaction',
     FETCH_TRANSFERS_TRANSACTIONS_REPORT: '/api/v1/reports/gettransferstransactionreport',
 
-    FETCH_AUDIT_TRAIL: '/api/v1/audit/getusersaudittrail',
-    FETCH_AUDIT_TRAIL_REPORT: '/api/v1/audit/getusersaudittrail',
 
+
+    /************************ AUDIT TRAIL  ****************************/
+
+    FETCH_AUDIT_TRAIL: '/api/v1/audit/getusersaudittrail',
+    FETCH_AUDIT_TRAIL_REPORT: '/api/v1/reports/getuserauditreport',
+
+    FETCH_CUSTOMER_AUDIT_TRAIL: '/api/v1/audit/getcustomersaudittrail',
+    FETCH_CUSTOMER_AUDIT_TRAIL_REPORT: '/api/v1/reports/getcustomerauditreport',
+
+    FETCH_OTP_REQUESTS: '/api/v1/customer/getallcommunication',
 }
 
 
@@ -142,6 +159,10 @@ export const APP_API_URL = {
 
     FETCH_DEVICES: '/api/admin/customers/devices/fetch-all',
     ENABLE_DISABLE_DEVICE: '/api/admin/customers/devices/enable-disable-device',
+    FETCH_NEW_DEVICES: '/api/admin/customers/devices/fetch-new',
+    FETCH_DEVICE_APPROVALS: '/api/admin/customers/devices/fetch-unaaproved',
+    ADD_NEW_DEVICE : '/api/admin/customers/devices/add-device',
+    APPROVE_NEW_DEVICE: '/api/admin/customers/devices/approve-device',
 
     FETCH_CUSTOMER_CIF: '/api/admin/customers/fetch-by-cif',
     ADD_UPDATE_CUSTOMERS: '/api/admin/customers/add-update-customers',
@@ -179,6 +200,10 @@ export const APP_API_URL = {
 
     FETCH_PIN_RESETS: '/api/admin/customers/get-pin-resets',
     APPROVE_PIN_RESETS: '/api/admin/customers/approve-pin-resets',
+
+    FETCH_UNAPPROVED_DISABLED_CUSTOMERS: '/api/admin/customers/get-unapproved-disabled-customers',
+    APPROVED_DISABLED_CUSTOMERS: '/api/admin/customers/approve-disabled-customers',
+    DISABLE_CUSTOMERS: '/api/admin/customers/disable-customers',
 
     /************************ SETTINGS ****************************/
 
@@ -239,8 +264,17 @@ export const APP_API_URL = {
     FETCH_TRANSFERS_TRANSACTIONS: '/api/admin/transactions/fetch-transfers',
     FETCH_TRANSFERS_TRANSACTIONS_REPORT: '/api/admin/transactions/reports/fetch-transfers',
 
+
+    /************************ AUDIT TRAIL  ****************************/
+
     FETCH_AUDIT_TRAIL: '/api/admin/users/fetch-audit-trail',
     FETCH_AUDIT_TRAIL_REPORT: '/api/admin/users/reports/audit-trail-report',
+    FETCH_CUSTOMER_AUDIT_TRAIL: '/api/admin/customers/fetch-audit-trail',
+    FETCH_CUSTOMER_AUDIT_TRAIL_REPORT: '/api/admin/customers/reports/audit-trail-report',
+
+
+    FETCH_OTP_REQUESTS: '/api/admin/users/fetch-otp',
+
 }
 
 export const API_METHODS = {

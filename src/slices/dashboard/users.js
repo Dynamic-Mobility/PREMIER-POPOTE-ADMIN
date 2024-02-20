@@ -5,6 +5,7 @@ import {usersApis} from "../../api-requests/users-apis";
 const initialState = {
     users : [],
     unapprovedUsers : [],
+    otpRequests: [],
 }
 
 const userSlice = createSlice({
@@ -17,18 +18,33 @@ const userSlice = createSlice({
        setUnapproved: (state,action) =>{
             state.unapprovedUsers = action.payload;
         },
+        setOTPRequests: (state, action) => {
+           state.otpRequests = action.payload
+        }
     }
 })
-export const  { setUsers, setUnapproved,setProfiles } = userSlice.actions;
+export const  { setUsers, setOTPRequests, setUnapproved,setProfiles } = userSlice.actions;
 
 
 export const getAllUsers = (authUser) => async (dispatch) =>{
     try{
         const res = await usersApis.fetchAllUsers(authUser);
-        dispatch(setUsers(res));
+        dispatch(setUsers(res.data));
     }
     catch (e) {
      console.log(e.message);
+    }
+}
+
+
+export const getOTPRequests = (authUser, values) => async dispatch => {
+    try{
+        const res = await usersApis.fetchOTPRequests(authUser, values);
+        dispatch(setOTPRequests(res.data));
+    }
+    catch (e) {
+        dispatch(setOTPRequests([]));
+        console.log(e.message);
     }
 }
 

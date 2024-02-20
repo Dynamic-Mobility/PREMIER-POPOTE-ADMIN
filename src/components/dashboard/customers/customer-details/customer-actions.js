@@ -15,6 +15,7 @@ import EnableDisableCustomerDialog from "./enable-disable-customer";
 import ResetSecurityQuestions from "./reset-security-questions";
 import ResetTransactionPin from "./reset-transaction-pin";
 import ManageDevices from "./manage-devices";
+import DisableCustomerButton from "./disable-customer";
 
 const CustomerActions = props => {
     const {customer, onAddUpdate, onReset, existingCustomer, onRefresh } = props;
@@ -67,12 +68,8 @@ const CustomerActions = props => {
                             aria-label="vertical outlined button group"
                         >
                             <CustomerSetLimits customer={customer} accounts={[]}/>
-
-                            {/*<MKButton variant="outlined" color="primary">*/}
-                            {/*    Recreate Key*/}
-                            {/*</MKButton>*/}
                             <CustomerResetPin customer={customer} existingCustomer={existingCustomer}>
-                                {"Reset Login Pin"}
+                                {"Reset Login Pin/Password"}
                             </CustomerResetPin>
                             <EnableDisableCustomerDialog
                                 existingCustomer={existingCustomer}
@@ -100,6 +97,11 @@ const CustomerActions = props => {
                             />
                         </ButtonGroup>
 
+                        <DisableCustomerButton
+                            existingCustomer={existingCustomer}
+                            customer={customer}
+                            onRefresh={onRefresh}
+                        />
                     </RoleBasedGuard>
                 </Collapse>
         </>

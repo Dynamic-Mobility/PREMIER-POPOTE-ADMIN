@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {usersApis} from "../../api-requests/users-apis";
+import {customersApis} from "../../api-requests/customers-api";
 
 const initialState = {
     auditTrail : [],
+    customerAuditTrail: [],
     pageSize: 100,
     totalRecords: 0,
     activePage: 1,
@@ -24,6 +26,9 @@ const auditTrailSlice = createSlice({
         setUserAuditTrail: (state,action) =>{
             state.auditTrail = action.payload;
         },
+        setCustomerAuditTrail: (state, action) => {
+          state.customerAuditTrail = action.payload;
+        },
         setActivePage: (state, action) => {
             state.activePage = action.payload;
         },
@@ -44,7 +49,8 @@ export const {
     setActivePage,
     setTotalRecords,
     setPageSize,
-    setFilters
+    setFilters,
+    setCustomerAuditTrail,
 } = auditTrailSlice.actions;
 
 export const resetFilters = () => dispatch => {
@@ -53,7 +59,18 @@ export const resetFilters = () => dispatch => {
 export const fetchAuditTrail = (authUser, filters) => async dispatch => {
     try{
         const res = await usersApis.fetchAuditTrail(authUser, filters);
-        dispatch(setUserAuditTrail(res));
+        dispatch(setUserAuditTrail(res.data));
+        dispatch(setTotalRecords(res?.totalPages))
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+}
+
+export const fetchCustomerAuditTrail = (authUser, filters) => async dispatch => {
+    try{
+        const res = await customersApis.fetchCustomerAuditTrail(authUser, filters);
+        dispatch(setCustomerAuditTrail(res.data));
         //dispatch(setTotalRecords(res?.totalPages))
     }
     catch (e) {
